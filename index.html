@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=10.5" />
+  <link rel="stylesheet" href="style.css?v=11.8" />
   <!-- Home V3 — Figma "R2 / OPT2_01_Home_01_Desktop" -->
-  <link rel="stylesheet" href="style-home.css?v=10.5" />
+  <link rel="stylesheet" href="style-home.css?v=11.8" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
     html.lp-boot .nav__logo, html.lp-boot .nav__menu, html.lp-boot .nav__actions,
@@ -43,10 +43,10 @@
       </a>
 
       <nav class="nav__menu" aria-label="Main navigation">
-        <a href="#" class="nav__link" data-mega="work">Work</a>
+        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
         <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="#" class="nav__link" data-mega="about">About</a>
-        <a href="#" class="nav__link">Connect</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
+        <a href="Connect.html" class="nav__link">Connect</a>
       </nav>
 
       <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
@@ -76,27 +76,22 @@
       </div>
     </div>
 
-    <!-- Desktop mega-menu — R2 "02_Menu" (nodes 12036-2 / 12036-585 / 12037-628):
-         a 530 × 724 white panel grows out of the top-right corner, *behind*
-         the stacked menu above, so the section links read straight off the
-         white. Sub-links sit to their left; the line-art fills the bottom.
-         No section label any more — the orange link + dot is the label.
-
-         Stuck (nodes 12058-8 / 12058-319) the bar is only the pill, so the
-         panel drops below it and carries its own copy of the four sections —
-         `.nav__mega-menu`, hidden until then. -->
+    <!-- Desktop mega-menu — R2 "02_Menu": a 530 × 724 white card in the
+         top-right corner, growing down from the top edge, sitting *behind*
+         the stacked menu so the section links read off the white. Stuck,
+         it drops below the pill and carries its own copy of the four
+         sections (`.nav__mega-menu`). Same markup as the home page. -->
     <div class="nav__mega" id="nav-mega" aria-hidden="true">
       <div class="nav__mega-menu">
-        <a href="#" class="nav__link" data-mega="work">Work</a>
+        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
         <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="#" class="nav__link" data-mega="about">About</a>
-        <a href="#" class="nav__link">Connect</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
+        <a href="Connect.html" class="nav__link">Connect</a>
       </div>
       <div class="nav__mega-panel" data-mega-panel="work">
         <img class="nav__mega-art" src="assets/images/menu-work-v3.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">Overview</a></li>
-          <li><a href="#">Approach</a></li>
+          <li><a href="Approach.html">Approach</a></li>
           <li><a href="#">Our Priorities</a></li>
           <li><a href="#">Our Initiatives</a></li>
           <li><a href="#">Partnership</a></li>
@@ -105,21 +100,17 @@
       <div class="nav__mega-panel" data-mega-panel="impact">
         <img class="nav__mega-art" src="assets/images/menu-impact.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">Overview</a></li>
-          <li><a href="#">Learning</a></li>
+          <li><a href="Learning.html">Learning</a></li>
           <li><a href="Listing.html">Our Stories</a></li>
-          <li><a href="#">News</a></li>
+          <li><a href="News.html">News</a></li>
         </ul>
       </div>
       <div class="nav__mega-panel" data-mega-panel="about">
         <img class="nav__mega-art" src="assets/images/menu-about-v3.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">Overview</a></li>
-          <li><a href="#">Our Origin</a></li>
-          <li><a href="#">Our Purpose</a></li>
-          <li><a href="#">Values</a></li>
+          <li><a href="Ethos.html">Our Ethos</a></li>
           <li><a href="#">Peoples</a></li>
-          <li><a href="#">Our Institutes</a></li>
+          <li><a href="Institutes.html">Our Institutes</a></li>
         </ul>
       </div>
     </div>
@@ -145,8 +136,7 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">Work</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">Overview</a>
-              <a href="#">Approach</a>
+              <a href="Approach.html">Approach</a>
               <a href="#">Our Priorities</a>
               <a href="#">Our Initiatives</a>
               <a href="#">Partnership</a>
@@ -157,10 +147,9 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">Overview</a>
-              <a href="#">Learning</a>
+              <a href="Learning.html">Learning</a>
               <a href="Listing.html">Our Stories</a>
-              <a href="#">News</a>
+              <a href="News.html">News</a>
             </div>
           </div>
         </div>
@@ -168,17 +157,14 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">Overview</a>
-              <a href="#">Our Origin</a>
-              <a href="#">Our Purpose</a>
-              <a href="#">Values</a>
+              <a href="Ethos.html">Our Ethos</a>
               <a href="#">Peoples</a>
-              <a href="#">Our Institutes</a>
+              <a href="Institutes.html">Our Institutes</a>
             </div>
           </div>
         </div>
         <div class="nav__mobile-item">
-          <a href="#" class="nav__mobile-link">Connect</a>
+          <a href="Connect.html" class="nav__mobile-link">Connect</a>
         </div>
       </nav>
 
@@ -190,10 +176,10 @@
           <a href="#" class="nav__mobile-sublink">Join our team</a>
         </nav>
         <nav class="nav__mobile-col" aria-label="Legal">
-          <a href="#" class="nav__mobile-sublink">Privacy Policy</a>
-          <a href="#" class="nav__mobile-sublink">Disclaimer</a>
-          <a href="#" class="nav__mobile-sublink">Sitemap</a>
-          <a href="#" class="nav__mobile-sublink">Accessibility</a>
+          <a href="Privacy.html" class="nav__mobile-sublink">Privacy Policy</a>
+          <a href="Disclaimer.html" class="nav__mobile-sublink">Disclaimer</a>
+          <a href="Sitemap.html" class="nav__mobile-sublink">Sitemap</a>
+          <a href="Accessibility.html" class="nav__mobile-sublink">Accessibility</a>
         </nav>
       </div>
 
@@ -646,10 +632,10 @@
         </div>
 
         <nav class="footer-v3__legal" aria-label="Legal navigation">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Sitemap</a>
-          <a href="#">Accessibility</a>
+          <a href="Privacy.html">Privacy Policy</a>
+          <a href="Disclaimer.html">Disclaimer</a>
+          <a href="Sitemap.html">Sitemap</a>
+          <a href="Accessibility.html">Accessibility</a>
         </nav>
 
       </div>
@@ -672,16 +658,16 @@
       </button>
     </div>
     <div class="search-overlay__inner">
-      <form class="search-overlay__field" role="search" action="#">
+      <form class="search-overlay__field" role="search" action="Search.html" method="get">
         <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
-        <input class="search-overlay__input" type="search" placeholder="Looking for..." aria-label="Search" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="Looking for..." aria-label="Search" />
       </form>
       <p class="search-overlay__label">Whats hot</p>
       <nav class="search-overlay__hot" aria-label="Popular searches">
-        <a href="#">Scholarship</a>
-        <a href="#">Funding for innovative</a>
-        <a href="#">Join us</a>
-        <a href="#">Events</a>
+        <a href="Search.html?q=Scholarship">Scholarship</a>
+        <a href="Search.html?q=Funding+for+innovative">Funding for innovative</a>
+        <a href="Search.html?q=Join+us">Join us</a>
+        <a href="Search.html?q=Events">Events</a>
       </nav>
     </div>
   </div>
@@ -693,6 +679,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=10.5"></script>
+  <script src="script.js?v=11.8"></script>
 </body>
 </html>

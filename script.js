@@ -1235,7 +1235,53 @@ window.__pageZoom = function () {
     ['.article__main > *', 0],
     /* the related rail is a single column, so each item simply rises as it
        reaches the viewport — no in-group stagger to express */
-    ['.article__related-title', 0], ['.article__related-item', 0]
+    ['.article__related-title', 0], ['.article__related-item', 0],
+
+    /* Story.html — the same components in the other arrangement. The
+       head, the lead image and the rail arrive first; the copy column
+       is taken as a whole the way `.article__main > *` is, so anything
+       added to it later joins in with no code change here. */
+    /* the head is the shared `.article__title` / `.article__subtitle`
+       and is already covered above; the lead image is the first child
+       of the copy column and comes in with the rest of it */
+    ['.story__meta-inner', 0],
+    ['.story__main > *', 0],
+    ['.story__related-title', 0], ['.story__related-item', 0],
+
+    /* Connect.html — the two body columns arrive together (they are one
+       row, not a sequence), then the funding panel under them. The
+       details rows and the form fields are deliberately NOT listed: the
+       column is one block and lifting eleven labelled rows one at a time
+       reads as a list loading, not as a page arriving. */
+    ['.connect__col--info', 0], ['.connect__col--aside', 120],
+    ['.connect__funding', 0],
+
+    /* Approach.html — the opening line, then each section's own blocks.
+       `.longform__section > *` catches the eyebrow, heading, copy,
+       figure and the two lists the same way `.article__main > *` does on
+       Articles.html, so anything added to a section later joins in with
+       no code change. The five value plates and the five strategy rows
+       are named separately so each set ripples in order. */
+    ['.longform__lede', 0],
+    /* the two lists are skipped here — their rows are named below and
+       reveal one at a time, so fading the container over them as well
+       would put two fades on the same pixels */
+    ['.longform__section > :not(.ethos__values):not(.strategy-list)', 0],
+    ['.ethos__value:nth-child(1)', 0], ['.ethos__value:nth-child(2)', 110],
+    ['.ethos__value:nth-child(3)', 220], ['.ethos__value:nth-child(4)', 330],
+    ['.ethos__value:nth-child(5)', 440],
+    ['.strategy:nth-child(1)', 0], ['.strategy:nth-child(2)', 90],
+    ['.strategy:nth-child(3)', 180], ['.strategy:nth-child(4)', 270],
+    ['.strategy:nth-child(5)', 360],
+    ['.longform__cta', 0],
+
+    /* Institutes.html and Institute.html — the opening
+       copy, then the cards. The cards are `.story-card`s, already
+       covered above, and take their stagger from `columnOf` like every
+       other card grid on the site. */
+    ['.institutes__lede', 0],
+    ['.institute-card', 0], ['.institutes__foot', 0],
+    ['.institute__lede', 0], ['.institute__text', 100]
   ];
 
   /* When a block is considered "in view".
@@ -2935,4 +2981,84 @@ window.__pageZoom = function () {
 
     show(0);
   });
+})();
+
+
+/* ----------------------------------------------------------------
+   16. Search results — the query, the counts, and the tabs.
+
+   There is no back end, so the rows are in the markup and this only
+   does the three things that would otherwise be hand-maintained and
+   wrong within a week:
+
+     · echoes the `?q=` term into the field and the count line, so the
+       page a reader lands on says what they actually searched for;
+     · counts each group off the DOM rather than off numbers typed into
+       the HTML — add or delete a row and every count follows;
+     · shows one group at a time when a tab is picked.
+
+   Everything degrades to "all results, correct total" with JS off,
+   because that is the state the markup is written in.
+   ---------------------------------------------------------------- */
+(function () {
+  const wrap = document.querySelector('[data-search-results]');
+  if (!wrap) return;
+
+  const rows  = Array.prototype.slice.call(wrap.querySelectorAll('.s-result'));
+  const tabs  = Array.prototype.slice.call(document.querySelectorAll('.s-tab'));
+  const empty = document.querySelector('[data-search-empty]');
+  const field = document.querySelector('[data-search-input]');
+  const line  = document.querySelector('[data-search-count]');
+
+  /* ── the term ───────────────────────────────────────────────────
+     `URLSearchParams` gives back the decoded string, which is then put
+     into the page with `textContent` — never innerHTML. A search term
+     is the one piece of this page that comes from outside it, and it
+     arrives straight off the URL bar. */
+  const term = (new URLSearchParams(window.location.search).get('q') || '').trim();
+  if (field) field.value = term;
+  if (line && term) {
+    const em = document.createElement('span');
+    em.className = 'search__term';
+    em.textContent = '\u201C' + term + '\u201D';
+    line.appendChild(document.createTextNode(' for '));
+    line.appendChild(em);
+  }
+
+  /* ── counts, read off the rows ─────────────────────────────────── */
+  const counts = { all: rows.length };
+  rows.forEach(function (r) {
+    const g = r.getAttribute('data-group');
+    counts[g] = (counts[g] || 0) + 1;
+  });
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    const n = counts[el.getAttribute('data-count')] || 0;
+    el.textContent = String(n);
+    const tab = el.closest('.s-tab');
+    /* a tab with nothing in it stays visible and stops being clickable
+       (see `.s-tab[data-empty]`) — the zero is the answer */
+    if (tab && n === 0) tab.setAttribute('data-empty', '');
+  });
+
+  /* ── the tabs ──────────────────────────────────────────────────── */
+  function show(group) {
+    let shown = 0;
+    rows.forEach(function (r) {
+      const on = group === 'all' || r.getAttribute('data-group') === group;
+      r.hidden = !on;
+      if (on) shown++;
+    });
+    tabs.forEach(function (t) {
+      const on = t.getAttribute('data-tab') === group;
+      t.classList.toggle('is-on', on);
+      t.setAttribute('aria-selected', String(on));
+    });
+    if (empty) empty.hidden = shown !== 0;
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+  });
+  const reset = document.querySelector('[data-tab-reset]');
+  if (reset) reset.addEventListener('click', function () { show('all'); });
 })();

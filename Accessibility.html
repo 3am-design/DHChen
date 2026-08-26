@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Accessibility — The D. H. Chen Foundation</title>
+  <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
+  <link rel="stylesheet" href="style.css?v=11.8" />
+  <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
+       page's own module (§11). Same pair of files as Listing / Articles. -->
+  <link rel="stylesheet" href="style-home.css?v=11.8" />
+</head>
+<body class="accessibility-page inner-v3">
+
+
+  <!-- ============================================================
+       00 — NAVIGATION   (V3: search left · logo centred · stacked menu right)
+       ============================================================ -->
+  <header class="nav nav--v3" id="nav">
+    <div class="nav__inner">
+
+      <a href="index.html" class="nav__logo" aria-label="D. H. Chen Foundation home">
+        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
+      </a>
+
+      <nav class="nav__menu" aria-label="Main navigation">
+        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
+        <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
+        <a href="Connect.html" class="nav__link">Connect</a>
+      </nav>
+
+      <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
+           with it. It is its own button rather than the one in
+           `.nav__actions` moved across: that group is what the sticky pill
+           is built out of, and an absolutely-placed child of it is at the
+           mercy of the landing translate, which makes it the containing
+           block for as long as it runs. Only ever one of the two is on
+           screen (see style-home.css). -->
+      <button class="nav__search-btn nav__search-btn--stacked" aria-label="Search">
+        <img src="assets/icons/icon-search.svg" alt="" />
+      </button>
+
+      <div class="nav__actions">
+        <!-- sticky bar only: the seal joins search + hamburger inside the
+             white pill (Figma R2 "stick" / node 12014-44) -->
+        <a href="index.html" class="nav__seal" aria-label="D. H. Chen Foundation home">
+          <img src="assets/icons/logo-seal.svg" alt="" />
+        </a>
+        <button class="nav__search-btn" aria-label="Search">
+          <img src="assets/icons/icon-search.svg" alt="" />
+        </button>
+        <a href="#" class="nav__lang">中文</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <img src="assets/icons/icon-hamburger.svg" alt="" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop mega-menu — R2 "02_Menu": a 530 × 724 white card in the
+         top-right corner, growing down from the top edge, sitting *behind*
+         the stacked menu so the section links read off the white. Stuck,
+         it drops below the pill and carries its own copy of the four
+         sections (`.nav__mega-menu`). Same markup as the home page. -->
+    <div class="nav__mega" id="nav-mega" aria-hidden="true">
+      <div class="nav__mega-menu">
+        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
+        <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
+        <a href="Connect.html" class="nav__link">Connect</a>
+      </div>
+      <div class="nav__mega-panel" data-mega-panel="work">
+        <img class="nav__mega-art" src="assets/images/menu-work-v3.svg" alt="" aria-hidden="true" />
+        <ul class="nav__mega-links">
+          <li><a href="Approach.html">Approach</a></li>
+          <li><a href="#">Our Priorities</a></li>
+          <li><a href="#">Our Initiatives</a></li>
+          <li><a href="#">Partnership</a></li>
+        </ul>
+      </div>
+      <div class="nav__mega-panel" data-mega-panel="impact">
+        <img class="nav__mega-art" src="assets/images/menu-impact.svg" alt="" aria-hidden="true" />
+        <ul class="nav__mega-links">
+          <li><a href="Learning.html">Learning</a></li>
+          <li><a href="Listing.html">Our Stories</a></li>
+          <li><a href="News.html">News</a></li>
+        </ul>
+      </div>
+      <div class="nav__mega-panel" data-mega-panel="about">
+        <img class="nav__mega-art" src="assets/images/menu-about-v3.svg" alt="" aria-hidden="true" />
+        <ul class="nav__mega-links">
+          <li><a href="Ethos.html">Our Ethos</a></li>
+          <li><a href="#">Peoples</a></li>
+          <li><a href="Institutes.html">Our Institutes</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true">
+
+      <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
+      <div class="nav__mobile-bar">
+        <a href="#" class="nav__mobile-lang">中文</a>
+        <div class="nav__mobile-bar-actions">
+          <button class="nav__mobile-search" aria-label="Search">
+            <img src="assets/icons/icon-search.svg" alt="" />
+          </button>
+          <button class="nav__mobile-close" aria-label="Close menu">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary nav — big, left-aligned -->
+      <nav class="nav__mobile-links" aria-label="Mobile navigation">
+        <div class="nav__mobile-item">
+          <button type="button" class="nav__mobile-link" aria-expanded="false">Work</button>
+          <div class="nav__mobile-sub">
+            <div class="nav__mobile-sub-inner">
+              <a href="Approach.html">Approach</a>
+              <a href="#">Our Priorities</a>
+              <a href="#">Our Initiatives</a>
+              <a href="#">Partnership</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav__mobile-item">
+          <button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
+          <div class="nav__mobile-sub">
+            <div class="nav__mobile-sub-inner">
+              <a href="Learning.html">Learning</a>
+              <a href="Listing.html">Our Stories</a>
+              <a href="News.html">News</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav__mobile-item">
+          <button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
+          <div class="nav__mobile-sub">
+            <div class="nav__mobile-sub-inner">
+              <a href="Ethos.html">Our Ethos</a>
+              <a href="#">Peoples</a>
+              <a href="Institutes.html">Our Institutes</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav__mobile-item">
+          <a href="Connect.html" class="nav__mobile-link">Connect</a>
+        </div>
+      </nav>
+
+      <!-- Secondary links from the footer, two columns -->
+      <div class="nav__mobile-secondary">
+        <nav class="nav__mobile-col" aria-label="Get involved">
+          <a href="#" class="nav__mobile-sublink">Partner with us</a>
+          <a href="#" class="nav__mobile-sublink">Stay connected</a>
+          <a href="#" class="nav__mobile-sublink">Join our team</a>
+        </nav>
+        <nav class="nav__mobile-col" aria-label="Legal">
+          <a href="Privacy.html" class="nav__mobile-sublink">Privacy Policy</a>
+          <a href="Disclaimer.html" class="nav__mobile-sublink">Disclaimer</a>
+          <a href="Sitemap.html" class="nav__mobile-sublink">Sitemap</a>
+          <a href="Accessibility.html" class="nav__mobile-sublink">Accessibility</a>
+        </nav>
+      </div>
+
+      <div class="nav__mobile-social">
+        <a href="#" class="nav__mobile-social-link" aria-label="LinkedIn">
+          <img src="assets/icons/icon-linkedin.svg" alt="LinkedIn" />
+        </a>
+        <a href="#" class="nav__mobile-social-link" aria-label="Instagram">
+          <img src="assets/icons/icon-instagram.svg" alt="Instagram" />
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+
+    <!-- ============================================================
+         ACCESSIBILITY — text only. Head, one reading column, nothing
+         else; the module is §16 in style-home.css.
+         ============================================================ -->
+    <article class="article legal" id="legal">
+
+      <header class="article__head">
+
+        <nav class="listing__crumb article__crumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="listing__crumb-sep">/</span>
+          <div class="listing__crumb-drop">
+            <span class="listing__crumb-toggle" aria-current="page">
+              Accessibility
+              <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div class="listing__crumb-menu" role="menu">
+              <a href="Privacy.html" role="menuitem">Privacy Policy</a>
+              <a href="Disclaimer.html" role="menuitem">Disclaimer</a>
+              <a href="Accessibility.html" role="menuitem" aria-current="page">Accessibility</a>
+              <a href="Sitemap.html" role="menuitem">Sitemap</a>
+            </div>
+          </div>
+          <span class="listing__crumb-sep">/</span>
+        </nav>
+
+        <h1 class="article__title">Accessibility</h1>
+        <p class="article__subtitle">How we try to make this site usable by everyone</p>
+      </header>
+
+      <div class="legal__body">
+
+        <p class="legal__meta">Last updated March 2026</p>
+
+          <p class="article__text legal__text">We want this website to be usable by as many people as possible, including those who browse with a keyboard, a screen reader, magnification, or with motion reduced.</p>
+        <nav class="legal__toc" aria-label="On this page">
+          <p class="legal__toc-label">On this page</p>
+          <ul class="legal__toc-list">
+            <li><a href="#what-we-aim-for">What we aim for</a></li>
+            <li><a href="#what-the-site-does">What the site does</a></li>
+            <li><a href="#known-limitations">Known limitations</a></li>
+            <li><a href="#tell-us-about-a-problem">Tell us about a problem</a></li>
+          </ul>
+        </nav>
+
+        <section class="legal__section" id="what-we-aim-for">
+          <h2 class="legal__heading">What we aim for</h2>
+          <p class="article__text legal__text">We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.1 at Level AA. That is a target rather than a claim of compliance &mdash; where we fall short, we would rather say so than not say anything.</p>
+        </section>
+
+        <section class="legal__section" id="what-the-site-does">
+          <h2 class="legal__heading">What the site does</h2>
+          <ul class="legal__list">
+            <li>Every page can be operated from the keyboard alone, and the focus outline is never removed without a visible replacement.</li>
+            <li>Headings are used in order, so a screen reader can be used to move through a page by structure rather than by reading it end to end.</li>
+            <li>Images that carry meaning have text alternatives; images that are decoration are hidden from assistive technology rather than described.</li>
+            <li>Body text meets the contrast ratio for normal text against the page background.</li>
+            <li>The page reflows to a single column without horizontal scrolling down to 320px wide.</li>
+            <li>Animation and scroll effects are switched off entirely for anyone whose system asks for reduced motion.</li>
+          </ul>
+        </section>
+
+        <section class="legal__section" id="known-limitations">
+          <h2 class="legal__heading">Known limitations</h2>
+          <p class="article__text legal__text">We know about the following, and are working on them:</p>          <ul class="legal__list">
+            <li>Some documents offered for download are PDFs that have not been tagged for screen readers.</li>
+            <li>A small number of older images do not yet have text alternatives.</li>
+            <li>The image carousel on story pages advances by button; it does not yet expose a live region announcing the change.</li>
+          </ul>
+        </section>
+
+        <section class="legal__section" id="tell-us-about-a-problem">
+          <h2 class="legal__heading">Tell us about a problem</h2>
+          <p class="article__text legal__text">If something on this site stops you doing what you came to do, please tell us &mdash; it is the fastest way for us to find it. Write to <a href="mailto:info@dhchenfoundation.com">info@dhchenfoundation.com</a> or call <a href="tel:+85239792622">+852 3979 2622</a>, and tell us the page and what happened. We aim to reply within five working days.</p>
+        </section>
+
+        <div class="legal__also">
+          <p class="legal__also-label">Also in this section</p>
+          <div class="legal__also-links">
+            <a href="Privacy.html">Privacy Policy</a>
+            <a href="Disclaimer.html">Disclaimer</a>
+            <a href="Sitemap.html">Sitemap</a>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+  </main>
+
+
+
+  <!-- ============================================================
+       05 — FOOTER
+       ============================================================ -->
+  <!-- ============================================================
+       07 — COLOUR BAR
+       ============================================================ -->
+  <div class="wrap">
+    <!-- draws itself left → right as it comes into view -->
+    <div class="colourbar" data-motion="bar" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       08 — FOOTER (V3)
+       ============================================================ -->
+  <footer class="footer-v3" id="footer">
+    <div class="wrap">
+
+      <div class="footer-v3__inner">
+
+        <a href="index.html" aria-label="D. H. Chen Foundation home">
+          <img src="assets/images/logo-footer-compassion.svg" alt="#Compassion in Action 慈之以行" class="footer-v3__logo" />
+        </a>
+
+        <div class="footer-v3__col">
+          <nav class="footer-v3__nav" aria-label="Footer navigation">
+            <a href="#">Partner with us</a>
+            <a href="#">Stay connected</a>
+            <a href="#">Join our team</a>
+          </nav>
+          <div class="footer-v3__social">
+            <a href="#" aria-label="LinkedIn">
+              <span class="footer-v3__social-icon footer-v3__social-icon--linkedin" aria-hidden="true"></span>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <span class="footer-v3__social-icon footer-v3__social-icon--instagram" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-v3__legal" aria-label="Legal navigation">
+          <a href="Privacy.html">Privacy Policy</a>
+          <a href="Disclaimer.html">Disclaimer</a>
+          <a href="Sitemap.html">Sitemap</a>
+          <a href="Accessibility.html">Accessibility</a>
+        </nav>
+
+      </div>
+
+      <p class="footer-v3__copyright">
+        © 2026 The D. H. Chen Foundation. All rights reserved<span class="footer-v3__copy-sep">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="https://www.assembly.com.hk" target="_blank" rel="noopener">Website designed by Assembly</a>
+      </p>
+
+    </div>
+  </footer>
+
+  <!-- Full-screen search overlay (opened from the nav search icon) -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+    <div class="search-overlay__bar">
+      <a href="index.html" class="search-overlay__logo" aria-label="D. H. Chen Foundation home">
+        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
+      </a>
+      <button class="search-overlay__close" type="button" aria-label="Close search">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="search-overlay__inner">
+      <form class="search-overlay__field" role="search" action="Search.html" method="get">
+        <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="Looking for..." aria-label="Search" />
+      </form>
+      <p class="search-overlay__label">Whats hot</p>
+      <nav class="search-overlay__hot" aria-label="Popular searches">
+        <a href="Search.html?q=Scholarship">Scholarship</a>
+        <a href="Search.html?q=Funding+for+innovative">Funding for innovative</a>
+        <a href="Search.html?q=Join+us">Join us</a>
+        <a href="Search.html?q=Events">Events</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Custom cursor (desktop pointers only; script enables it) -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__label">DISCOVER</span>
+    <img class="cursor__arrow" src="assets/icons/icon-arrow.svg" alt="" />
+  </div>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="script.js?v=11.8"></script>
+</body>
+</html>

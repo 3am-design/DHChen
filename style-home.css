@@ -3083,3 +3083,1423 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
     --hero-giant: calc((100vw - 2 * var(--gm-mob)) / 10.4);
   }
 }
+
+
+/* ================================================================
+   11 — CONNECT + APPROACH  (the two new inner pages)
+
+   Both ride on the article shell: `.article` supplies the canvas
+   width, the 50px margins and the top inset (§09), and `.article__head`
+   supplies the centred breadcrumb / title / subtitle. Everything below
+   the head is this section.
+
+   They share one grid — the same twelve columns and 40px gutter the
+   article body uses — so a paragraph on Approach sits on exactly the
+   measure a paragraph on Articles.html does, and the two pages read as
+   the same site rather than two near-misses.
+
+   Nothing here is scoped to `body.connect-page` / `body.approach-page`:
+   the module classes (.connect, .ethos) are unique already, and
+   keying off the body would only make every selector one step harder to
+   override.
+   ================================================================ */
+
+/* ── shared: the body grid ───────────────────────────────────────
+   `.article__body` puts its main column at 3/9 to leave the right-hand
+   columns for the related rail. Neither of these pages has a rail, so
+   the content is centred on the canvas instead — 3/11 on Approach (a
+   reading measure, wider than the article's because there is no rail
+   pulling it left) and a 6 + 6 split on Connect. */
+.connect__body,
+.longform__body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gg);
+  max-width: 1820px;
+  margin: 0 auto;
+}
+.longform__col { grid-column: 3 / 11; min-width: 0; }
+
+/* Section rhythm. One token, used by both pages, so the vertical
+   spacing is a property of the module and not of each block: 110px at
+   1920 (the gap R2 leaves between an article's last paragraph and the
+   next block, 115) coming down to 56 on a phone. */
+.connect,
+.longform { --sec-gap: clamp(56px, 5.7vw, 110px); }
+
+
+/* ================================================================
+   11a — CONNECT
+   ================================================================ */
+
+/* Half the drawn grid each: details on columns 1–3 of the six the
+   design is laid out on, the picture and the mailto on 4–6.
+
+   Written as 1/7 and 7/13 because this box is subdivided into twelve —
+   and twelve nests exactly inside six here, since the gutter is the
+   same 40px in both: two twelfth-columns plus a gutter (115 + 40 + 115
+   at 1820) is one sixth-column (270). So `1 / 7` IS columns 1–3 of the
+   overlay, to the pixel.
+
+   It used to stop at `1 / 6`, five twelfths — which is two and a half
+   of the drawn columns, so the card's right edge fell in the middle of
+   a column instead of on a gutter. */
+.connect__col--info {
+  grid-column: 1 / 7;
+  min-width: 0;
+  /* A plate, like the four B panels on the landing and the news cards:
+     same `--c-panel` ground, same square corners. The contact details
+     are the one block on this page that is a set of facts rather than
+     prose, and the plate is how this site says "this is a thing, not a
+     paragraph".
+
+     `align-self: start` so the card is as tall as its own content — a
+     grid item stretches by default, which would have run the ground
+     down to meet the taller column beside it and left a long empty
+     tail under the social icons. */
+  align-self: start;
+  background: var(--c-panel);
+  padding: clamp(28px, 2.9vw, 56px);
+}
+.connect__col--aside { grid-column: 7 / 13; min-width: 0; }
+
+.connect__heading {
+  font-family: var(--f-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 40px;
+  color: var(--c-black);
+}
+
+/* ── contact details ─────────────────────────────────────────────
+   A <dl>: each row really is a term and its value, and the label
+   column is what makes the block scannable. `dt` and `dd` are wrapped
+   in a div per row so the two-column layout survives — a bare dl
+   cannot put a dt and its dd on one grid row. */
+.connect__list {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.connect__item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 8px 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.connect__list .connect__item:last-child { border-bottom: none; padding-bottom: 0; }
+.connect__label {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  color: var(--c-orange);
+}
+.connect__value {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-black);
+}
+/* Only the links inside a value are interactive, so only they take the
+   hover — the address is not a link and must not look like one. */
+.connect__value a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
+  transition: color var(--ease), text-decoration-color var(--ease);
+}
+.connect__value a:hover { color: var(--c-orange); text-decoration-color: currentColor; }
+
+/* Borrows the footer's icon masks rather than re-cutting them — same
+   two glyphs, same source, so they can never drift apart. Only the
+   spacing above them belongs to this page. */
+.connect__social { display: flex; gap: 16px; margin-top: 40px; }
+
+/* ── aside ───────────────────────────────────────────────────────
+   The right-hand column with the form gone. It keeps the same track,
+   so the page still reads as two columns rather than one column with
+   a lot of empty peach beside it: a picture at the top of it, then the
+   one thing the page asks you to do.
+
+   The photo is the article's figure ratio (890 : 462 is what every
+   image on Articles.html is cut to) so a reader coming from a story
+   page meets the same shape. */
+.connect__media { margin-bottom: 40px; }
+.connect__media img {
+  width: 100%;
+  aspect-ratio: 890 / 462;
+  object-fit: cover;
+}
+.connect__email-cta { margin-top: 28px; }
+
+/* ── funding contact ─────────────────────────────────────────────
+   The page's one CTA, and the only block on it that is not a general
+   enquiry — so it gets the orange panel `.article__highlight` uses,
+   widened to the full content measure and given a two-column interior:
+   the foundation mark on the left, the copy and the pill on the right. */
+.connect__funding {
+  max-width: 1820px;
+  margin: var(--sec-gap) auto 0;
+  background: var(--c-orange);
+  color: var(--c-white);
+  padding: clamp(36px, 3.4vw, 64px);
+  /* Still the twelve columns, now with nothing in the left of them: the
+     mark is gone, and with it the reason the copy was pushed across to
+     column 3. It opens on the panel's own padding like every other
+     block on the site, and stops a column short on the right so the
+     paragraph never runs the full width of an 1820 panel. */
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  align-items: start;
+}
+.connect__funding-copy { grid-column: 1 / 11; }
+/* The mark is a colour logo on an orange ground; knocking it back to
+   flat white is the only way it reads, and a brightness/invert filter
+   does that without needing a second file. */
+.connect__funding-eyebrow {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  color: rgba(255, 255, 255, 0.75);
+}
+.connect__funding-title {
+  font-family: var(--f-serif);
+  font-size: clamp(28px, 2.4vw, 46px);
+  font-weight: 400;
+  line-height: 1.16;
+  margin-top: 10px;
+}
+.connect__funding-text {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  margin-top: 22px;
+  max-width: 44em;
+}
+.connect__funding-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 60px;
+  margin-top: 30px;
+}
+/* the shared row styling is black-on-peach; on the orange panel the
+   whole row is white and the rule under it has to go */
+.connect__funding-contacts .connect__item {
+  border-bottom: none;
+  padding-bottom: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+}
+.connect__funding-contacts .connect__label { color: rgba(255, 255, 255, 0.75); }
+.connect__funding-contacts .connect__value { color: var(--c-white); }
+.connect__funding-contacts .connect__value a { text-decoration-color: rgba(255, 255, 255, 0.5); }
+.connect__funding-contacts .connect__value a:hover { color: var(--c-white); text-decoration-color: currentColor; }
+.connect__funding-cta { margin-top: 34px; }
+
+/* An orange pill on an orange panel is invisible, so the CTA starts in
+   the state the normal pill only reaches on hover, and hovers the other
+   way — back to the orange ground with a white keyline to hold its
+   shape. Same component, same arrow (which is `currentColor` and
+   follows on its own), one modifier. */
+.btn-pill--invert {
+  background: var(--c-white);
+  color: var(--c-orange);
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: background var(--ease), color var(--ease), box-shadow var(--ease);
+}
+.btn-pill--invert:hover {
+  background: transparent;
+  color: var(--c-white);
+  box-shadow: inset 0 0 0 1px var(--c-white);
+}
+
+
+/* ================================================================
+   11b — APPROACH
+   ================================================================ */
+
+/* The opening line, set like the home page's `.intro-v3`: serif, large,
+   and the only thing between the title and the first section. */
+.longform__lede {
+  font-family: var(--f-serif);
+  font-size: var(--t-lede);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--c-black);
+}
+
+.longform__section { margin-top: var(--sec-gap); }
+
+.longform__eyebrow {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+  color: var(--c-orange);
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 32px;
+}
+.longform__heading {
+  font-family: var(--f-serif);
+  font-size: clamp(28px, 2.4vw, 46px);
+  font-weight: 400;
+  line-height: 1.16;
+  color: var(--c-black);
+}
+/* A second heading inside a section that has already opened with one —
+   Our Purpose runs the quote, then the strategies under their own
+   title. It steps down so the section still reads as one thing with a
+   subdivision, rather than as two sections that lost their rule. */
+.longform__heading--sub {
+  font-size: clamp(24px, 1.8vw, 34px);
+  margin-top: 48px;
+}
+
+.longform__media { margin-top: 44px; }
+.longform__media img { width: 100%; aspect-ratio: 890 / 462; object-fit: cover; }
+
+/* The pull quote is `.article__quote` verbatim; only the space around it
+   is this page's, because here it opens a section instead of sitting
+   between two paragraphs. */
+.longform__quote { margin: 0 0 44px; }
+
+/* ── the five principles ─────────────────────────────────────────
+   White plates on the peach, three across then two — a 3-col track with
+   the last row centred would need a second grid, so the row simply runs
+   short and the plates keep their width. That is how the news grid
+   behaves at its own breakpoints, and it looks deliberate rather than
+   like a gap. */
+.ethos__values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: 44px;
+}
+.ethos__value {
+  background: var(--c-panel);
+  padding: 32px 30px 36px;
+  display: flex;
+  flex-direction: column;
+  transition: background var(--ease), color var(--ease);
+}
+.ethos__value-num {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--c-orange);
+  transition: color var(--ease);
+}
+.ethos__value-name {
+  font-family: var(--f-serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-top: 18px;
+}
+.ethos__value-desc {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  margin-top: 12px;
+  transition: color var(--ease);
+}
+/* the same flip the pills and the tags do, so hovering anything on this
+   site means the same thing */
+.ethos__value:hover { background: var(--c-orange); color: var(--c-white); }
+.ethos__value:hover .ethos__value-num,
+.ethos__value:hover .ethos__value-desc { color: var(--c-white); }
+
+/* ── the five strategies ─────────────────────────────────────────
+   A ladder rather than a grid: these are five steps of one approach and
+   are read in order, so they run full width, one under the next, with a
+   hairline between. The number sits in its own column so the names line
+   up whatever their length. */
+.strategy-list { margin-top: 44px; }
+.strategy {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 0 clamp(20px, 2vw, 40px);
+  padding: 30px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.strategy:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+.strategy__num {
+  font-family: var(--f-serif);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--c-orange);
+}
+.strategy__name {
+  font-family: var(--f-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 40px;
+  color: var(--c-black);
+}
+.strategy__desc {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  margin-top: 8px;
+  max-width: 52em;
+}
+/* The second line under a strategy: what the move actually looks like
+   in practice. Set a step down from `__desc` so the row still reads as
+   one item with a summary and a gloss, not as two equal paragraphs. */
+.strategy__note {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--c-grey);
+  margin-top: 10px;
+  max-width: 52em;
+  opacity: 0.85;
+}
+
+.longform__highlight { margin: var(--sec-gap) 0 0; }
+
+/* a single pill closing a section, as opposed to the row of them that
+   closes the page — it needs the space above that the row gets from
+   `--sec-gap`, but not the section break */
+.longform__inline-cta { margin-top: 32px; }
+
+.longform__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: var(--sec-gap);
+}
+
+
+/* ================================================================
+   11c — the two pages on smaller screens
+
+   Both bodies collapse at the same two points as the rest of the site
+   (§00's 1024 tablet step and the 767 phone breakpoint), and they
+   collapse for the same reason each time: the twelve-column grid stops
+   being able to hold two things side by side.
+   ================================================================ */
+
+@media (max-width: 1279px) {
+  /* the indented reading measure gives up its side columns before the
+     two-column blocks give up their split — the copy is what runs out
+     of room first */
+  .longform__col { grid-column: 2 / 12; }
+}
+
+@media (max-width: 1023px) {
+  .longform__col { grid-column: 1 / -1; }
+  /* the two columns already sit on the drawn grid at every width; only
+     the funding panel's copy widens, and it widens by a whole drawn
+     column (five sixths → the full six) rather than by one twelfth */
+  .connect__funding-copy { grid-column: 1 / 13; }
+  .connect__item { grid-template-columns: 120px minmax(0, 1fr); }
+  .ethos__values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .connect__body,
+  .longform__body {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+  .connect__col--info,
+  .connect__col--aside { grid-column: auto; }
+  /* the aside follows the details down the page, with the section gap
+     between them rather than the gutter that was holding them apart */
+  .connect__col--aside { margin-top: var(--sec-gap); }
+
+  .connect__heading { font-size: 26px; line-height: 34px; }
+  .connect__col--info { padding: 28px 24px 32px; }
+  .connect__item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .connect__media img { aspect-ratio: 4 / 3; }
+
+  .connect__funding { grid-template-columns: minmax(0, 1fr); }
+  .connect__funding-copy { grid-column: auto; }
+  .connect__funding-contacts { gap: 20px; }
+
+  .ethos__values { grid-template-columns: minmax(0, 1fr); }
+  .strategy {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .strategy__num { font-size: 22px; }
+  .strategy__name { font-size: 24px; line-height: 32px; }
+  .longform__media img { aspect-ratio: 4 / 3; }
+}
+
+
+/* ================================================================
+   12 — INNER PAGES: BLACK COPY → GREY
+
+   R2 moved the home page's copy off black onto a flat #808080, but the
+   inner pages kept style.css's black — so Listing, Articles and the two
+   new pages read a shade harder than the page they are reached from.
+   This is the same move, applied to them: every component that sets
+   `--c-black` (or inherits it from the body) becomes `--c-grey`.
+
+   `:where(.inner-v3)` rather than `.inner-v3` — deliberately. The
+   selector needs to be page-scoped but must NOT gain specificity from
+   it, because style.css is full of two-class state rules that have to
+   keep winning:
+
+     .story-card:hover .story-card__title   → orange
+     .article__tag:hover                    → white on orange
+     .article__related-item:hover .…name    → orange
+     .connect__value a:hover                → orange
+
+   A plain `.inner-v3 .story-card__title` (0,2,0) ties with the hover
+   rule and, loading later, would beat it — the cards would stop turning
+   orange under the pointer. `:where()` contributes nothing, so each of
+   these rules is (0,1,0), still beats the bare (0,1,0) in style.css on
+   load order, and still loses to every state rule. Nothing else had to
+   change.
+
+   NOT in here, on purpose:
+     · `.article__quote p`, `.…-eyebrow`, `.…__label` — already orange
+     · `.article__highlight p`, the funding panel — white on orange
+     · `.listing__crumb-sep`, `.article__testimonial-role` — already
+       set in black-alpha, and both land near this grey anyway; greying
+       them outright would flatten the one step of hierarchy they carry
+   ================================================================ */
+
+/* ── listing: breadcrumb, title, filter bar, pager ─────────────── */
+:where(.inner-v3) .listing__crumb,
+:where(.inner-v3) .listing__crumb-toggle,
+:where(.inner-v3) .listing__crumb-menu a,
+:where(.inner-v3) .listing__filter-menu a,
+:where(.inner-v3) .listing__title,
+:where(.inner-v3) .listing__filter-toggle,
+:where(.inner-v3) .listing__clear,
+:where(.inner-v3) .pager__num,
+:where(.inner-v3) .pager__total { color: var(--c-grey); }
+
+/* ── story cards ───────────────────────────────────────────────── */
+:where(.inner-v3) .story-card__title,
+:where(.inner-v3) .story-card__desc,
+:where(.inner-v3) .story-card__tag { color: var(--c-grey); }
+
+/* ── article ───────────────────────────────────────────────────── */
+:where(.inner-v3) .article__title,
+:where(.inner-v3) .article__tag,
+:where(.inner-v3) .article__section-title,
+:where(.inner-v3) .article__send,
+:where(.inner-v3) .article__text,
+:where(.inner-v3) .article__pill,
+:where(.inner-v3) .article__download,
+:where(.inner-v3) .article__testimonial-quote,
+:where(.inner-v3) .article__testimonial-name,
+:where(.inner-v3) .article__related-title,
+:where(.inner-v3) .article__related-name,
+:where(.inner-v3) .article__related-desc { color: var(--c-grey); }
+
+/* ── connect ───────────────────────────────────────────────────── */
+:where(.inner-v3) .legal__heading,
+:where(.inner-v3) .legal__meta,
+:where(.inner-v3) .sitemap__group-title,
+:where(.inner-v3) .story__fact-value,
+:where(.inner-v3) .story__lede,
+:where(.inner-v3) .s-result__kind,
+:where(.inner-v3) .s-result__title,
+:where(.inner-v3) .s-result__desc,
+:where(.inner-v3) .s-result__path,
+:where(.inner-v3) .search__count,
+:where(.inner-v3) .search__empty,
+:where(.inner-v3) .connect__heading,
+:where(.inner-v3) .connect__value { color: var(--c-grey); }
+/* the underline under a linked value was a black tint of the old black
+   type; on grey it has to come off the new colour or it reads as a
+   second, darker rule under the words */
+:where(.inner-v3) .connect__value a { text-decoration-color: rgba(128, 128, 128, 0.45); }
+
+/* ── approach ──────────────────────────────────────────────────── */
+/* ── institutes / institute ────────────────────────────────────── */
+:where(.inner-v3) .institutes__lede,
+:where(.inner-v3) .institutes__heading,
+:where(.inner-v3) .institutes__text,
+:where(.inner-v3) .institutes__foot-text,
+:where(.inner-v3) .institute-card__title,
+:where(.inner-v3) .institute-card__lede,
+:where(.inner-v3) .institute-card__text,
+:where(.inner-v3) .institute__lede,
+:where(.inner-v3) .institute__text { color: var(--c-grey); }
+
+/* ── ethos ─────────────────────────────────────────────────────── */
+:where(.inner-v3) .longform__lede,
+:where(.inner-v3) .longform__heading,
+:where(.inner-v3) .ethos__value-name,
+:where(.inner-v3) .strategy__name { color: var(--c-grey); }
+/* the value plate still flips to white on orange under the pointer —
+   `.ethos__value:hover .…` is (0,2,0) and outranks these */
+
+
+/* ================================================================
+   13 — APPROACH (the institutes) + one INSTITUTE
+
+   Two pages, almost no new CSS: both are the article head over the
+   listing's own card grid, and the card is `.story-card` unchanged.
+   What is here is the introduction each page opens with and the one
+   thing that genuinely differs — the institutes grid runs three
+   across, not four.
+   ================================================================ */
+
+.institutes,
+.institute { --sec-gap: clamp(56px, 5.7vw, 110px); }
+
+/* The introduction sits on the article's reading measure rather than
+   the full canvas the cards below use: a single paragraph set 1820
+   wide is unreadable, and centring it under a centred title is what
+   the article head already does. */
+/* The cap goes on the paragraphs, NOT on the box around them: on the
+   institutes page the card grid is a child of `__body`, so capping the
+   box at a reading measure took the grid down with it and the cards
+   came out two-thirds the width they have on the listing. */
+.institutes__body,
+.institute__body { text-align: center; }
+.institutes__lede,
+.institute__lede,
+.institute__text { max-width: 890px; margin-inline: auto; }
+.institutes__lede,
+.institute__lede {
+  font-family: var(--f-serif);
+  font-size: var(--t-lede);
+  font-weight: 400;
+  line-height: 1.45;
+}
+.institute__text {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  margin-top: 24px;
+}
+
+/* ── the section's own introduction ──────────────────────────────
+   Left-aligned on the reading measure, under the centred lede — the
+   same shape the ethos sections use, so the two About/Work landing
+   pages open the same way. */
+.institutes__intro {
+  max-width: 890px;
+  margin: var(--sec-gap) auto 0;
+  text-align: left;
+}
+.institutes__eyebrow {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+  color: var(--c-orange);
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 32px;
+}
+.institutes__heading {
+  font-family: var(--f-serif);
+  font-size: clamp(28px, 2.4vw, 46px);
+  font-weight: 400;
+  line-height: 1.16;
+}
+.institutes__text {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  margin-top: 24px;
+}
+
+/* ── the institute card ──────────────────────────────────────────
+   The story card is right for twelve results in a grid and wrong for
+   these five: they are the section, not a sample of it, and each one
+   has a paragraph to carry. So they run full width, one under the
+   next, picture on the left.
+
+   Not a link element, unlike the story card — there is a pill inside
+   it, and a button inside a link is invalid and unpredictable to
+   operate. The whole plate still responds on hover; the pill is what
+   you click. */
+.institutes__list {
+  max-width: 1565px;
+  margin: var(--sec-gap) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.4vw, 46px);
+}
+.institute-card {
+  background: var(--c-white);
+  display: grid;
+  grid-template-columns: 42% minmax(0, 1fr);
+  align-items: stretch;
+  transition: background var(--ease);
+}
+/* The picture fills its half whatever the copy beside it runs to —
+   `height: 100%` on a stretched grid item, so a longer paragraph makes
+   the image taller rather than leaving a band of white under it. */
+.institute-card__media { overflow: hidden; }
+.institute-card__media img {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.institute-card:hover .institute-card__media img { transform: scale(1.04); }
+
+.institute-card__body {
+  padding: clamp(28px, 3vw, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+/* the same per-institute palette the story cards use, so an institute
+   is the same colour wherever it appears */
+.institute-card__eyebrow {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--cat, var(--c-orange));
+}
+.institute-card__eyebrow[data-cat="education-excellence"] { --cat: var(--cat-education-excellence); }
+.institute-card__eyebrow[data-cat="wellbeing"]            { --cat: var(--cat-wellbeing); }
+.institute-card__eyebrow[data-cat="mindful-living"]       { --cat: var(--cat-mindful-living); }
+.institute-card__eyebrow[data-cat="above-beyond"]         { --cat: var(--cat-above-beyond); }
+.institute-card__eyebrow[data-cat="impact-strategy"]      { --cat: var(--cat-impact-strategy); }
+
+.institute-card__title {
+  font-family: var(--f-serif);
+  font-size: clamp(26px, 2.1vw, 40px);
+  font-weight: 400;
+  line-height: 1.18;
+  margin-top: 14px;
+}
+.institute-card__lede {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  margin-top: 20px;
+}
+.institute-card__text {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  margin-top: 16px;
+}
+/* the tags sit on the white plate, so the story card's #fff4ec chip
+   still reads; only the spacing is this card's */
+/* the gap above the pill is carried here, not as padding on the pill:
+   `.btn-pill` is the flex box that centres its own label, so padding on
+   it pushes the label off-centre inside the capsule instead of moving
+   the capsule down */
+.institute-card__tags { margin-top: 24px; margin-bottom: 32px; }
+/* pushed to the foot of the card so the pills line up across a stack of
+   cards whose paragraphs are different lengths */
+.institute-card__cta { margin-top: auto; }
+
+/* ── the closing block ───────────────────────────────────────────── */
+.institutes__foot {
+  max-width: 890px;
+  margin: var(--sec-gap) auto 0;
+  text-align: center;
+}
+.institutes__foot-text {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+}
+.institutes__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.institute__grid { margin-top: var(--sec-gap); }
+
+/* `.story-card` was an <article> and is now an <a>; it inherits the
+   link colour from `a { color: inherit }` in the reset, so nothing
+   about the type changes. The hover already existed. */
+
+@media (max-width: 1023px) {
+  /* 42% of a tablet is not enough picture to be worth the column it
+     costs, and the paragraph beside it starts breaking every third
+     word — so the card stacks: picture over copy. */
+  .institute-card { grid-template-columns: minmax(0, 1fr); }
+  .institute-card__media img { min-height: 0; aspect-ratio: 16 / 9; }
+}
+@media (max-width: 767px) {
+  .institutes__body,
+  .institutes__intro,
+  .institutes__foot,
+  .institute__body { text-align: left; }
+  .institutes__cta { justify-content: flex-start; }
+  .institute-card__lede { font-size: 17px; line-height: 26px; }
+}
+
+
+/* ================================================================
+   14 — SEARCH RESULTS
+
+   The page is the article shell again (head + the §09 top inset), and
+   under it three things that are its own: the field, the tab row, and
+   the result rows. The pager is the listing's, unchanged.
+   ================================================================ */
+
+.search__body {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ── the field ───────────────────────────────────────────────────
+   A rule, not a box. The overlay's field is the same idea (a loupe, a
+   line, and nothing else) and this is the on-page version of it, so
+   the two read as the same control in two places. */
+.search__field {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 14px;
+  transition: border-color var(--ease);
+}
+.search__field:focus-within { border-bottom-color: var(--c-orange); }
+/* Painted, not filtered. The glyph is a mask and `background` fills it,
+   so it is exactly `--c-orange` rather than whatever a filter chain
+   lands on. The source is inlined as a data URI for the same reason the
+   pill's arrow is (§06): Chrome will not load an external mask image
+   over `file://`, and a double-clicked copy of the page would show the
+   field with no loupe at all. */
+.search__field-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background: var(--c-orange);
+  -webkit-mask-image: var(--icon);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  --icon: url("data:image/svg+xml,%3Csvg preserveAspectRatio=%22xMidYMid meet%22 width=%2229%22 height=%2228.9997%22 overflow=%22visible%22 style=%22display: block;%22 viewBox=%220 0 29 28.9997%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22%3E %3Cg id=%22Group%22%3E %3Cpath id=%22Vector%22 d=%22M28.6457 26.9371L20.3989 18.6903C21.9963 16.7171 22.9581 14.2099 22.9581 11.4791C22.9581 5.14988 17.8082 0 11.479 0C5.14983 0 0 5.14983 0 11.479C0 17.8082 5.14989 22.9581 11.4791 22.9581C14.2099 22.9581 16.7171 21.9963 18.6903 20.3989L26.9371 28.6457C27.1727 28.8813 27.482 28.9997 27.7914 28.9997C28.1008 28.9997 28.4101 28.8813 28.6457 28.6457C29.1182 28.1732 29.1181 27.4095 28.6457 26.9371ZM11.4791 20.5414C6.48144 20.5414 2.41666 16.4767 2.41666 11.479C2.41666 6.48138 6.48144 2.41661 11.4791 2.41661C16.4767 2.41661 20.5415 6.48138 20.5415 11.479C20.5415 16.4767 16.4767 20.5414 11.4791 20.5414Z%22 fill=%22black%22/%3E %3C/g%3E %3C/svg%3E");
+}
+.search__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--f-serif);
+  font-size: clamp(22px, 2vw, 34px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--c-grey);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search__input:focus { outline: none; }
+.search__input::placeholder { color: rgba(0, 0, 0, 0.28); }
+/* the clear "×" Safari and Chrome add to type=search fights the rule */
+.search__input::-webkit-search-decoration,
+.search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.search__submit {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--c-orange);
+  color: var(--c-white);
+  transition: transform var(--ease);
+}
+.search__submit svg { width: 18px; height: 11px; }
+.search__submit:hover { transform: translateX(2px); }
+
+.search__count {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  margin-top: 28px;
+}
+/* the term itself, echoed back — orange, because it is the one thing on
+   the line the reader supplied */
+.search__term { color: var(--c-orange); }
+
+/* ── the tab row ─────────────────────────────────────────────────
+   Same white pill as `.article__tag`, with a count riding inside it,
+   and the same orange flip on hover — except that here the flip is
+   also the selected state, so the current tab simply stays flipped. */
+.s-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.s-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--c-white);
+  border-radius: 100px;
+  padding: 9px 20px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--c-grey);
+  white-space: nowrap;
+  transition: background var(--ease), color var(--ease);
+}
+.s-tab__count {
+  font-size: 12px;
+  /* not `opacity`, which would fade the whole chip's colour with it —
+     this keeps the count a step back at both states */
+  color: var(--c-orange);
+  transition: color var(--ease);
+}
+.s-tab:hover { background: var(--c-orange); color: var(--c-white); }
+.s-tab:hover .s-tab__count { color: rgba(255, 255, 255, 0.75); }
+.s-tab.is-on { background: var(--c-orange); color: var(--c-white); }
+.s-tab.is-on .s-tab__count { color: rgba(255, 255, 255, 0.75); }
+.s-tab:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+/* a tab with nothing behind it is still shown — a count of 0 is an
+   answer — but it stops inviting a click */
+.s-tab[data-empty] { opacity: 0.45; pointer-events: none; }
+
+/* ── a result ────────────────────────────────────────────────────
+   Copy left, thumbnail right, hairline between rows: the shape the
+   article's related rail already uses, opened out to the full measure.
+   A row with no picture simply leaves the right-hand track empty, so
+   the titles all start on the same line whether or not there is an
+   image beside them. */
+.s-results { display: block; }
+.s-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: clamp(20px, 3vw, 56px);
+  align-items: start;
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+/* One colour for every kind of result, and that colour is the page's
+   grey. The per-category palette the story cards carry is doing a job
+   there — six colours across twelve cards is how the listing shows you
+   the categories exist. Here the same six would be decoration: the
+   label already says which section a result came from, in words.
+
+   Grey rather than the orange the site's other small labels use,
+   because on this page the whole row turns orange under the pointer:
+   a label that was already orange would be the one thing on the row
+   that did not respond. */
+.s-result__kind {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--c-grey);
+}
+
+.s-result__title {
+  font-family: var(--f-serif);
+  font-size: clamp(22px, 1.7vw, 30px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--c-grey);
+  margin-top: 10px;
+  transition: color var(--ease);
+}
+.s-result__desc {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  margin-top: 12px;
+  max-width: 62em;
+}
+/* where the result lives, so a reader can tell two similarly-named
+   things apart before clicking */
+.s-result__path {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--c-grey);
+  opacity: 0.7;
+  margin-top: 14px;
+}
+.s-result__thumb {
+  aspect-ratio: 220 / 140;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+.s-result__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1); }
+/* the whole row lights up, not just its title — a search result is one
+   thing to click, so it behaves as one thing under the pointer */
+.s-result { transition: color var(--ease); }
+.s-result:hover .s-result__kind,
+.s-result:hover .s-result__title,
+.s-result:hover .s-result__desc,
+.s-result:hover .s-result__path { color: var(--c-orange); }
+/* the path is held back by opacity at rest; on hover it comes up with
+   the rest so the row is one flat colour rather than three tints of it */
+.s-result:hover .s-result__path { opacity: 1; }
+.s-result:hover .s-result__thumb img { transform: scale(1.05); }
+
+/* ── nothing in this tab ─────────────────────────────────────────── */
+.search__empty {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  padding: 56px 0;
+  text-align: center;
+}
+.search__empty-link {
+  color: var(--c-orange);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.search__pager { margin-top: 56px; }
+
+@media (max-width: 767px) {
+  /* the thumbnail gives up its column and goes under the copy — at
+     phone width a 220px picture beside the text leaves the title on
+     three words a line */
+  .s-result {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .s-result__thumb { aspect-ratio: 16 / 9; }
+  .s-tabs { gap: 8px; padding-bottom: 28px; }
+  .s-tab { padding: 8px 16px; font-size: 13px; }
+}
+
+
+/* ================================================================
+   15 — STORY  (the alternate article arrangement)
+
+   Articles.html and Story.html are the same components in two
+   layouts. Everything the two share is left in style.css §article and
+   is NOT restated here — this section is only the arrangement, plus
+   the handful of overrides the arrangement forces on components that
+   were written for the other one.
+
+   Articles.html            Story.html
+   ─────────────────────    ─────────────────────
+   head centred             head left, on the grid
+   no lead image            lead image opens the page
+   copy on cols 3–8         copy on cols 5–12
+   related rail, right      related row across the foot
+   tags in the head         tags in the rail
+   share by the H2          share in the rail
+   ================================================================ */
+
+.story { --sec-gap: clamp(56px, 5.7vw, 110px); }
+
+/* ── head ────────────────────────────────────────────────────────
+   Shared with every other inner page: `.article__head`, centred and
+   capped at 900, with the breadcrumb centred above the title. The
+   story used to left-align both — which made this the only page on
+   the site whose title did not sit where the others do. The
+   arrangement this page is here to demonstrate is the BODY; the head
+   has no reason to differ.
+   Nothing to declare: the element carries `.article__head` and gets
+   it all from style.css. */
+
+/* ── lead image ──────────────────────────────────────────────────
+   The one thing on this page with no counterpart on Articles.html —
+   and it sits INSIDE the copy column, not across the page above it.
+   Opening on a full-width band would mean the two-column layout only
+   started below the fold; this way the rail is beside the reader from
+   the first picture onward.
+   Cut to the ratio every other image on the site uses (890 : 462), so
+   it reads as the same kind of object as the carousel below it. */
+.story__lead { margin: 0; }
+.story__lead img {
+  width: 100%;
+  aspect-ratio: 890 / 462;
+  object-fit: cover;
+}
+.story__lead-caption { display: block; margin-top: 16px; }
+
+/* ── body: copy left, rail right ─────────────────────────────────
+   Articles.html's tracks exactly — not mirrored, not the full-canvas
+   width the landing-style pages use:
+
+     copy   cols 3–8   (`.article__main`)      883 at 1920
+     rail   cols 9–12  (`.article__related`)   capped at 495
+
+   So the copy opens on column 2 of the drawn six-column grid and the
+   rail sits where the related list sits on the other article page.
+   What differs between the two pages is WHAT is in that rail — here it
+   is the story's own credits, and the related list moves to a row
+   across the foot.
+
+   `grid-row: 1` on both because the rail comes FIRST in the source:
+   credits before copy is the right reading order once the page stacks,
+   but without a row the sparse auto-placement cursor, already past
+   column 9, would push the copy onto a second row.
+
+   The breakpoints below step at Articles.html's own widths (1440,
+   1024), so a reader moving between the two pages never meets the
+   layout changing at a different moment. */
+.story__body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gg);
+  max-width: 1820px;
+  margin: 0 auto;
+}
+.story__meta {
+  grid-column: 9 / 13;
+  grid-row: 1;
+  max-width: 495px;      /* the rail width `.article__related` is capped at */
+  min-width: 0;
+  position: relative;
+}
+.story__main { grid-column: 3 / 9; grid-row: 1; min-width: 0; }
+
+/* The rail is what makes this arrangement worth having: the credits,
+   the tags and the two actions stay on screen for the whole read
+   rather than scrolling away with the head. Same sticky offset as the
+   article's related rail so the two pages settle at the same height. */
+.story__meta-inner {
+  position: sticky;
+  top: 110px;
+  padding-left: 40px;
+  border-left: 1px solid #FFCCA9;   /* same divider as `.article__related-inner` */
+}
+
+.story__facts { display: flex; flex-direction: column; gap: 22px; }
+.story__fact-label {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--c-orange);
+}
+.story__fact-value {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  margin-top: 4px;
+}
+.story__fact-value a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(128, 128, 128, 0.45);
+  transition: color var(--ease), text-decoration-color var(--ease);
+}
+.story__fact-value a:hover { color: var(--c-orange); text-decoration-color: currentColor; }
+
+/* `.article__tags` centres itself for the centred head it was written
+   for; in a left rail it starts at the left like everything else */
+.story__tags { justify-content: flex-start; margin-top: 32px; }
+
+.story__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+/* `.article__send` is absolutely positioned against `.article__main-head`
+   on Articles.html — there is no such box here, and it sits in the row
+   with the download instead. */
+.story__send { position: static; flex-shrink: 0; }
+.story__download { margin-top: 0; }
+
+/* the opening line, a step up from the body copy */
+.story__lede {
+  font-family: var(--f-serif);
+  font-size: var(--t-lede);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--c-grey);
+  margin-top: clamp(28px, 2.6vw, 48px);
+}
+
+/* ── related: a row, not a rail ──────────────────────────────────
+   `.article__related-item` is a two-column row (copy | thumb) with a
+   rule above it, built to stack down a narrow rail. As a card in a
+   three-up row it turns the other way: picture on top, rule gone. */
+.story__related {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gg);
+  max-width: 1820px;
+  margin: var(--sec-gap) auto 0;
+}
+/* on the body's tracks, so the page has one left edge and one right
+   edge the whole way down */
+.story__related-title,
+.story__related-grid { grid-column: 3 / 13; }
+.story__related-title { font-size: 16px; margin-bottom: 28px; }
+.story__related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+.story__related-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: stretch;
+  padding: 0;
+  border-top: 0;
+  background: var(--c-panel);
+}
+/* `:first-of-type` in style.css zeroes the padding for the rail's first
+   item; every card here needs the same, whichever one it is */
+.story__related-item:first-of-type { padding-top: 0; }
+.story__related-thumb {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+.story__related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.story__related-item .article__related-text { padding: 26px 28px 30px; }
+.story__related-item:hover .story__related-thumb img { transform: scale(1.05); }
+
+/* ── narrower ────────────────────────────────────────────────────── */
+/* `.article__main` widens from 3–8 to 2–9 here, reclaiming the column
+   it was leaving on the outside; this reclaims the one on the other. */
+@media (max-width: 1440px) {
+  .story__main { grid-column: 2 / 9; }
+  .story__related-title,
+  .story__related-grid { grid-column: 2 / 13; }
+}
+@media (max-width: 1024px) {
+  /* Below this the rail is too narrow to hold a credit line on one row,
+     and sticky positioning stops being useful on a stacked page — so the
+     rail becomes a band across the top of the body instead. */
+  .story__body,
+  .story__related {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 900px;      /* `.article__body`'s stacked cap */
+  }
+  .story__meta,
+  .story__main,
+  .story__related-title,
+  .story__related-grid { grid-column: auto; grid-row: auto; }
+  .story__related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story__meta { max-width: none; margin-bottom: 48px; }
+  .story__meta-inner {
+    position: static;
+    padding-left: 0;
+    padding-bottom: 36px;
+    border-left: 0;
+    border-bottom: 1px solid #FFCCA9;
+  }
+  .story__facts { flex-direction: row; flex-wrap: wrap; gap: 20px 56px; }
+}
+@media (max-width: 767px) {
+  .story__lead img { aspect-ratio: 4 / 3; }
+  .story__facts { flex-direction: column; gap: 18px; }
+  .story__related-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ================================================================
+   16 — LEGAL  (Privacy Policy · Disclaimer · Accessibility · Sitemap)
+
+   The plainest pages on the site: a centred head, one reading column,
+   and nothing else. No pictures, no pull quotes, no rail — a reader
+   arrives here to find one clause and leave, so the only thing that
+   matters is that the headings are findable and the measure is
+   comfortable.
+
+   Body copy is `.article__text`, so these pages track the article
+   pages' type without restating it.
+   ================================================================ */
+
+.legal { --sec-gap: clamp(44px, 4.2vw, 76px); }
+
+/* 890 is the article's own column — the measure this site has already
+   settled on for continuous prose. Centred, because there is no second
+   column for it to sit beside. */
+.legal__body {
+  max-width: 890px;
+  margin: 0 auto;
+}
+
+.legal__meta {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--c-grey);
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* ── contents ────────────────────────────────────────────────────
+   Worth the space on a policy with ten clauses and not on a page with
+   three, so it is a block each page opts into rather than a fixture. */
+.legal__toc { margin-top: 32px; }
+.legal__toc-label {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--c-orange);
+}
+.legal__toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+.legal__toc-list a {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  transition: color var(--ease);
+}
+.legal__toc-list a:hover { color: var(--c-orange); }
+
+.legal__section { margin-top: var(--sec-gap); }
+/* the anchor lands under the sticky nav rather than behind it */
+.legal__section { scroll-margin-top: 120px; }
+.legal__heading {
+  font-family: var(--f-serif);
+  font-size: clamp(24px, 1.9vw, 30px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--c-grey);
+}
+.legal__list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.legal__list li {
+  position: relative;
+  padding-left: 22px;
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+}
+.legal__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-orange);
+}
+.legal__text a,
+.legal__list a {
+  color: var(--c-orange);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* the other three legal pages, so they are reachable from each other
+   and not only from the footer */
+.legal__also {
+  margin-top: var(--sec-gap);
+  padding-top: 36px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.legal__also-label {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--c-orange);
+  margin-bottom: 18px;
+}
+.legal__also-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.legal__also-links a {
+  background: var(--c-white);
+  border-radius: 100px;
+  padding: 8px 20px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  color: var(--c-grey);
+  transition: background var(--ease), color var(--ease);
+}
+.legal__also-links a:hover { background: var(--c-orange); color: var(--c-white); }
+
+/* ── the sitemap page ────────────────────────────────────────────
+   Not prose, so it gets the full canvas and a column per section
+   instead of the 890 reading measure. */
+.sitemap__body {
+  max-width: 1820px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sec-gap) var(--grid-gap);
+}
+.sitemap__group-title {
+  font-family: var(--f-serif);
+  font-size: clamp(22px, 1.7vw, 28px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--c-grey);
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.sitemap__links { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+.sitemap__links a,
+.sitemap__links span {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+  transition: color var(--ease);
+}
+.sitemap__links a:hover { color: var(--c-orange); }
+/* a child page, indented under the one it hangs off */
+.sitemap__links .is-sub { padding-left: 20px; font-size: 15px; }
+/* named in the map but not built yet — shown, because a sitemap that
+   hides them is not a map of the site that is planned */
+.sitemap__links span { opacity: 0.45; }
+
+@media (max-width: 1023px) {
+  .sitemap__body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 599px) {
+  .sitemap__body { grid-template-columns: minmax(0, 1fr); }
+}

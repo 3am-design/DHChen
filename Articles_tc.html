@@ -16,10 +16,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=10.5" />
+  <link rel="stylesheet" href="style.css?v=11.8" />
   <!-- R2 nav / footer / canvas — same sheet the EN pages load. Nothing in
        the nav, mega, colour bar or footer blocks is scoped to a language. -->
-  <link rel="stylesheet" href="style-home.css?v=10.5" />
+  <link rel="stylesheet" href="style-home.css?v=11.8" />
 </head>
 <body class="listing-page article-page inner-v3">
 
@@ -78,7 +78,6 @@
       <div class="nav__mega-panel" data-mega-panel="work">
         <img class="nav__mega-art" src="assets/images/menu-work-v3.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">概覽</a></li>
           <li><a href="#">工作方式</a></li>
           <li><a href="#">關注範疇</a></li>
           <li><a href="#">項目與計劃</a></li>
@@ -88,7 +87,6 @@
       <div class="nav__mega-panel" data-mega-panel="impact">
         <img class="nav__mega-art" src="assets/images/menu-impact.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">概覽</a></li>
           <li><a href="#">學習與洞察</a></li>
           <li><a href="Listing_tc.html">我們的故事</a></li>
           <li><a href="#">最新消息</a></li>
@@ -97,7 +95,6 @@
       <div class="nav__mega-panel" data-mega-panel="about">
         <img class="nav__mega-art" src="assets/images/menu-about-v3.svg" alt="" aria-hidden="true" />
         <ul class="nav__mega-links">
-          <li><a href="#">概覽</a></li>
           <li><a href="#">基金會源起</a></li>
           <li><a href="#">我們的使命</a></li>
           <li><a href="#">核心價值</a></li>
@@ -128,7 +125,6 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">我們的工作</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">概覽</a>
               <a href="#">工作方式</a>
               <a href="#">關注範疇</a>
               <a href="#">項目與計劃</a>
@@ -140,7 +136,6 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">影響與成果</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">概覽</a>
               <a href="#">學習與洞察</a>
               <a href="Listing_tc.html">我們的故事</a>
               <a href="#">最新消息</a>
@@ -151,7 +146,6 @@
           <button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
           <div class="nav__mobile-sub">
             <div class="nav__mobile-sub-inner">
-              <a href="#">概覽</a>
               <a href="#">基金會源起</a>
               <a href="#">我們的使命</a>
               <a href="#">核心價值</a>
@@ -209,13 +203,13 @@
           <a href="index_tc.html">首頁</a>
           <span class="listing__crumb-sep">/</span>
           <div class="listing__crumb-drop">
-            <a href="#" class="listing__crumb-toggle">
+            <a href="Listing_tc.html" class="listing__crumb-toggle">
               影響與成果
               <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <div class="listing__crumb-menu" role="menu">
               <a href="#" role="menuitem">我們的工作</a>
-              <a href="#" role="menuitem">影響與成果</a>
+              <a href="Listing_tc.html" role="menuitem">影響與成果</a>
               <a href="#" role="menuitem">關於我們</a>
               <a href="#" role="menuitem">聯繫我們</a>
             </div>
@@ -484,9 +478,9 @@
       </button>
     </div>
     <div class="search-overlay__inner">
-      <form class="search-overlay__field" role="search" action="#">
+      <form class="search-overlay__field" role="search" action="Search.html" method="get">
         <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
-        <input class="search-overlay__input" type="search" placeholder="搜尋..." aria-label="Search" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="搜尋..." aria-label="Search" />
       </form>
       <p class="search-overlay__label">焦點資訊</p>
       <nav class="search-overlay__hot" aria-label="Popular searches">
@@ -505,6 +499,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=10.5"></script>
+  <script src="script.js?v=11.8"></script>
 </body>
 </html>
