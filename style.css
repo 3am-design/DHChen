@@ -1,0 +1,3726 @@
+/* ================================================================
+   D. H. Chen Foundation — Stylesheet
+   Desktop: 1920px | 6-col | 50px margin | 40px gutter
+   Mobile:   440px | 4-col | 20px margin | 15px gutter
+   Breakpoint: 767px
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   Serif webfont — Baskervville, self-hosted and metric-matched
+   -----------------------------------------------------------------
+   The design was drawn against macOS's system Baskerville, which does
+   not exist on Windows: the stack fell through to Libre Baskerville
+   there, a much heavier and 28% wider design, so the same page read as
+   two different typefaces depending on the machine.
+
+   Baskervville (two v's, OFL, from Google Fonts) is the ANRT revival of
+   the same Baskerville and is the closest match available as a webfont —
+   but it is still drawn ~10% larger: measured at 150px, the banner's
+   longest line runs 3004px against system Baskerville's 2729, which
+   pushed the headline onto a fourth line and into the description.
+
+   `size-adjust` closes that gap in the font itself rather than by
+   retuning every type size on the site: 91% (2729 ÷ 3004 = 90.9, and the
+   ratio holds across strings, so the two faces differ by a near-uniform
+   scale) makes Baskervville set to the same measure as the Baskerville
+   the design was drawn in. Every existing size, line break and max-width
+   therefore still means what it meant — and now means it on every
+   platform, because nothing resolves to a system font any more.
+
+   Self-hosted rather than linked: the file is what guarantees the
+   metrics, and `size-adjust` cannot be applied to Google's own
+   @font-face rules anyway. Latin + latin-ext subsets, as served.
+   ---------------------------------------------------------------- */
+@font-face {
+  font-family: 'Baskervville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 91%;
+  src: url('assets/fonts/baskervville-regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Baskervville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 91%;
+  src: url('assets/fonts/baskervville-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Baskervville';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 91%;
+  src: url('assets/fonts/baskervville-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Baskervville';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 91%;
+  src: url('assets/fonts/baskervville-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ----------------------------------------------------------------
+   CSS Variables
+   ---------------------------------------------------------------- */
+:root {
+  /* ── Page zoom ───────────────────────────────────────────────────
+     The whole page is scaled like browser zoom, on two independent
+     axes, and `--zoom` is their product — the one number anything that
+     has to undo the scaling should divide by.
+
+       --zoom-w  the 1920 design reads ~10% too large below 1800px.
+                 This is a *layout* correction: things that are sized
+                 off the design canvas rather than off the window (the
+                 banner headline) divide it back out so they keep the
+                 proportion the design gave them.
+
+       --zoom-h  short windows. A 1920 × 1000 design on a laptop that
+                 only offers ~700px of viewport lands with everything
+                 correct-but-oversized — the type is right for the
+                 width and much too big for the height. Stepping the
+                 whole page down is what a reader does by hand with
+                 ⌘− , so the page does it for them. Nothing divides
+                 this one back out: shrinking IS the point.
+
+     Anything that must fill the window (a 100vh banner) divides by the
+     product, because viewport units are measured on the real window and
+     then scaled with everything else.
+
+     Tuning: the ladder below is the only place to touch. `--zoom-h` is
+     multiplied on top of `--zoom-w`, so .8 here on a 1440px laptop is
+     0.9 × 0.8 = 0.72 — the same rendering as pressing ⌘− once on a page
+     that was already at 90%. */
+  --zoom-w: 1;
+  --zoom-h: 1;
+  --zoom: calc(var(--zoom-w) * var(--zoom-h));
+
+  /* The design canvas, in the zoomed page's own coordinates. Every section
+     that caps itself at the 1920 drawing and centres the remainder measures
+     from here rather than writing 1920 directly, because a zoomed body lays
+     out 1/zoom wider than the window: a literal 1920 stops short of a 1920
+     window and leaves a gap down both sides — a hair of one at 0.9, an
+     obvious pair of them once the short-window ladder goes lower. Dividing
+     the zoom out puts the cap back where it is drawn, so the canvas fills
+     any window up to 1920 *real* pixels and only starts centring past it. */
+  --canvas: calc(1920px / var(--zoom));
+
+  /* Colours */
+  --c-bg:      #fff2e9;
+  --c-white:   #ffffff;
+  --c-black:   #000000;
+  --c-orange:  #ff6900;
+
+  /* Fonts — Latin glyphs render in the self-hosted, metric-matched
+     Baskervville above (which is why it leads the stack and the macOS system
+     Baskerville only backs it up, for a failed font load); CJK glyphs fall
+     through to a real Song serif — Noto Serif TC webfont (loaded on the TC
+     pages) first, then each platform's system Song (iOS Songti,
+     Android/desktop Noto/Source Han, Windows SimSun/PMingLiU). Without these,
+     iOS maps generic `serif` to PingFang (sans). */
+  --f-serif: Baskervville, Baskerville, Georgia, 'Noto Serif TC', 'Noto Serif CJK TC', 'Source Han Serif TC', 'Songti TC', 'Songti SC', 'PMingLiU', 'MingLiU', SimSun, serif;
+  --f-sans:  'Fira Sans', Arial, sans-serif;
+
+  /* Grid — desktop */
+  --gm:  50px;   /* margin */
+  --gg:  40px;   /* gutter */
+
+  /* Grid — mobile */
+  --gm-mob: 20px;
+  --gg-mob: 15px;
+
+  /* Transitions */
+  --ease: 0.25s ease;
+
+  /* Logo height — fluid so it scales down (keeping aspect; never squeezed
+     horizontally) as the bar runs out of room. ~216px wide at 74px.
+     Shared by the nav and the search overlay so they always match. */
+  --logo-h: clamp(42px, 4.8vw, 74px);
+}
+
+
+/* ----------------------------------------------------------------
+   Reset
+   ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* html bg = white so the page visually ends where the footer's white ends
+   (otherwise the peach body bg shows in any canvas area past the content) */
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; background: var(--c-white); overflow-x: clip; }
+html.lenis-on { scroll-behavior: auto; }   /* Lenis supplies the easing */
+/* Lenis recommended helpers */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+/* iOS Safari samples the body's background-COLOR to tint the status bar and
+   the floating bottom toolbar — and re-samples as you scroll, so a peach
+   background-color made the top flip (peach hero vs. white nav) and the bottom
+   stay peach. We keep background-color WHITE so both chrome areas are always
+   white. The peach page canvas (which the ambient blur glows shine over through
+   the transparent sections) is painted as a background-IMAGE on top, stopping
+   220px before the end so the white footer/page-end stays white. */
+body {
+  background-color: var(--c-white);
+  background-image: linear-gradient(to bottom,
+              var(--c-bg) 0%,
+              var(--c-bg) calc(100% - 220px),
+              transparent calc(100% - 220px));
+  color: var(--c-black);
+  font-family: var(--f-sans);
+  overflow-x: clip;
+  position: relative;
+  width: 100%;
+}
+img  { display: block; max-width: 100%; height: auto; }
+a    { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; padding: 0; }
+ul   { list-style: none; }
+
+
+/* ----------------------------------------------------------------
+   Layout grid overlay — toggled with the "G" key (script.js).
+   Mirrors the design grid: max 1920, 50px margins, 6 cols, 40px gutter
+   (mobile: 20px margins, 4 cols, 15px gutter). Columns tinted light orange.
+   ---------------------------------------------------------------- */
+#layout-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  display: none;
+}
+#layout-grid.layout-grid--on { display: block; }
+.layout-grid__inner {
+  max-width: var(--canvas);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gm);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0 var(--gg);
+}
+.layout-grid__col { background: rgba(255, 105, 0, 0.12); }   /* light orange */
+@media (max-width: 767px) {
+  .layout-grid__inner {
+    padding: 0 var(--gm-mob);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 var(--gg-mob);
+  }
+  .layout-grid__col:nth-child(n+5) { display: none; }  /* mobile = 4 cols */
+}
+
+
+/* ----------------------------------------------------------------
+   Shared utilities
+   ---------------------------------------------------------------- */
+.text-orange { color: var(--c-orange); }
+
+/* Section label (small uppercase-ish medium text) */
+.label {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--c-black);
+}
+.label--center { text-align: center; }
+
+/* Bullet list with dot */
+.bullet-list { display: flex; flex-direction: column; gap: 30px; }
+.bullet-list__item {
+  position: relative;
+  padding-left: 20px;
+  font-family: var(--f-sans);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+  color: var(--c-black);
+}
+.bullet-list__item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 11px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-black);
+}
+.bullet-list--sm { gap: 26px; }
+.bullet-list--sm .bullet-list__item { font-size: 20px; line-height: 26px; }
+
+/* Pillar cards + Our Foundation use orange dots */
+.pillar-card .bullet-list__item::before,
+.intro__bullets .bullet-list__item::before { background: var(--c-orange); }
+
+/* Circle CTA button — white circle; on hover it grows rightward
+   into a full rounded pill behind the label */
+.btn-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 24px;        /* room inside the pill when expanded */
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--c-black);
+  cursor: pointer;
+}
+.btn-circle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  background: var(--c-white);
+  transition: width 0.35s ease, background-color 0.25s ease;
+}
+/* hover: the pill expands and the whole button goes orange with white text */
+.btn-circle:hover::before { width: 100%; background: var(--c-orange); }
+.btn-circle:hover { color: var(--c-white); }
+.btn-circle:hover .btn-circle__arrow { filter: brightness(0) invert(1); }
+.btn-circle__ring {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+}
+.btn-circle__arrow { width: 15px; pointer-events: none; flex-shrink: 0; }
+.btn-circle__label { position: relative; }
+
+
+/* ----------------------------------------------------------------
+   Custom cursor — orange dot that morphs:
+   · links/buttons   → slightly larger ring
+   · news slider     → big circle with "DISCOVER"
+   · slider edges    → circle with an arrow (click = prev/next)
+   Enabled by script.js only on fine pointers (body.has-custom-cursor).
+   ---------------------------------------------------------------- */
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor .news__carousel-wrap,
+body.has-custom-cursor .news-card,
+body.has-custom-cursor .news-card__tag,
+body.has-custom-cursor .story-card,
+body.has-custom-cursor .story-card__tag { cursor: none; }
+/* The list above only covers the elements that were known to carry their
+   own cursor, so anything else with a UA cursor (and Safari in
+   particular, which likes to bring the arrow back on scroll or on
+   re-entering the window) shows the system pointer *on top of* the orange
+   dot. Blanket it instead, and leave text fields their caret. */
+body.has-custom-cursor *:not(input):not(textarea):not(select) { cursor: none !important; }
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 0 solid var(--c-orange);   /* solid dot idle; ring grows on hover (magnet) */
+  background: var(--c-orange);        /* solid orange dot */
+  display: none;                /* shown when the script enables it */
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform;
+  transition: width 0.22s ease, height 0.22s ease, opacity 0.25s ease,
+              background-color 0.1s ease, border-color 0.1s ease,
+              border-width 0.18s ease;
+}
+body.has-custom-cursor .cursor { display: flex; }
+/* On orange surfaces the orange dot vanishes → flip the dot white. The ring
+   that grows on hover (magnet) keeps a transparent fill + white border, so we
+   only whiten the *fill* when not wrapping a target.
+   Covers the full-screen search overlay and any orange content block tagged
+   with the .cursor-dark hook (see script.js). */
+body.search-open .cursor,
+.cursor--on-dark { border-color: var(--c-white); }
+body.search-open .cursor:not(.cursor--magnet):not(.cursor--ring),
+.cursor--on-dark:not(.cursor--magnet):not(.cursor--ring) { background: var(--c-white); }
+/* (the ring's centre dot is whitened further down, next to where it is
+   drawn — stated here it tied with `.cursor::after` and lost on order,
+   which left an orange dot inside a white ring on the orange menu) */
+
+.cursor__label {
+  position: absolute;
+  opacity: 0;
+  color: var(--c-white);
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+.cursor__arrow {
+  position: absolute;
+  width: 18px;
+  opacity: 0;
+  filter: brightness(0) invert(1);   /* white arrow on the orange circle */
+  transition: opacity 0.2s ease;
+}
+
+/* magnetised onto a button — size is set inline to wrap the target. The
+   stroke thins back to 2.5px so the ring reads as a slim frame around the
+   target (and keeps the +9 wrap math in engage() correct). */
+.cursor--magnet   { background: transparent; border-width: 2.5px; }
+/* Drawn into the target and gone — only the search button uses this, so
+   what you see is the one big orange disc and nothing else.
+   Width/height, never `scale`: the cursor is positioned by a scripted
+   `transform`, and the standalone `scale` property composes *before*
+   `transform`, which would scale the translation too and fling the dot
+   off towards the top-left. Collapsing the box is safe — the transform
+   already carries translate(-50%,-50%), so it shrinks on the spot. */
+.cursor--absorb { width: 0; height: 0; border-width: 0; opacity: 0; }
+/* Search: the wrap is a solid disc rather than a ring, with the glyph
+   knocked out white on top of it (script adds `is-search-hot`, which
+   lifts the whole nav over the cursor — see script §6). */
+.cursor--magnet.cursor--fill { background: var(--c-orange); border-width: 0; }
+
+/* Search: an orange disc opens under the glyph, which knocks out white.
+   Drawn by the button itself, not by the cursor — in the sticky state the
+   pill's own white background paints above the cursor (`.nav` is a single
+   stacking context), so a cursor-drawn disc simply disappeared there. */
+.nav__search-btn::before {
+  content: '';
+  position: absolute;
+  /* 69% wider than the button (two 30% steps). A percentage inset resolves
+     against the button itself, so the disc keeps the same ratio in the
+     shrunk sticky state. 40px button → 67.6px disc. */
+  inset: -34.5%;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--c-orange);
+  scale: 0;
+  transition: scale var(--ease);
+}
+.nav__search-btn:hover::before { scale: 1; }
+
+/* D — the sticky pill's hamburger: the cursor still wraps it, and the
+   rules themselves go orange */
+.nav__hamburger:hover img {
+  filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
+          brightness(102%) contrast(104%);
+}
+.nav__hamburger img { transition: filter var(--ease); }
+
+/* nav links / 中文 / search use plain colour hovers (see NAVIGATION) — with
+   one addition: over a menu link the solid dot opens into a ring with a small
+   dot held at its centre, so the pointer answers the hover as well as the type
+   does. The centre dot is a pseudo-element rather than markup, so every page
+   gets it from the one `.cursor` div they all already carry.
+   Size, not `scale`: the cursor is positioned by a scripted `transform` (see
+   the note on `--absorb`), so the width/height transition is what animates the
+   opening and the dot stays exactly under the pointer while it does. */
+.cursor::after {
+  content: '';
+  position: absolute;
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 50%;
+  background: var(--c-orange);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.cursor--ring {
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border-width: 1.5px;
+}
+.cursor--ring::after { opacity: 1; }
+/* on an orange ground the whole cursor knocks out white — the ring's stroke
+   (up with the other on-dark rules) and the dot inside it, here, after the
+   dot's own orange so it actually wins */
+body.search-open .cursor::after,
+.cursor--on-dark::after { background: var(--c-white); }
+
+/* solid states over the news slider */
+.cursor--discover,
+.cursor--prev,
+.cursor--next     { background: var(--c-orange); border-color: var(--c-orange); }
+.cursor--discover { width: 96px; height: 96px; }
+.cursor--discover .cursor__label { opacity: 1; }
+.cursor--prev,
+.cursor--next     { width: 56px; height: 56px; }
+.cursor--prev .cursor__arrow { opacity: 1; transform: rotate(180deg); }
+.cursor--next .cursor__arrow { opacity: 1; }
+.cursor--hidden   { opacity: 0; }
+
+
+/* ----------------------------------------------------------------
+   Landing sequence (script-driven; no-JS users never see any of it)
+   logo splash → headline + dots → photos + bottom text → menu drop
+   ---------------------------------------------------------------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: var(--c-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+.preloader img { height: var(--logo-h); width: auto; transition: opacity 0.5s ease; }  /* match the nav logo */
+.preloader.logo-out img { opacity: 0; }
+.preloader.out { opacity: 0; pointer-events: none; }
+
+html.lock-scroll { overflow: hidden !important; }
+
+/* staged hero entrance — `translate` composes with existing transforms.
+   The bottom block cascades internally: logomark → description → cue. */
+.hero__headline-wrap {
+  transition: opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero__logomark {
+  transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero__description {
+  transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,
+              translate 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+.hero__scroll {
+  transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s,
+              translate 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+}
+body.lp-h1 .hero__headline-wrap { opacity: 0; translate: 0 34px; }
+body.lp-h2 .hero__logomark,
+body.lp-h2 .hero__description,
+body.lp-h2 .hero__scroll       { opacity: 0; translate: 0 22px; }
+
+/* menu drops in from the top, logo → links → actions */
+.nav__logo    { transition: opacity 0.7s ease,        translate 0.7s ease; }
+.nav__menu    { transition: opacity 0.7s ease 0.12s,  translate 0.7s ease 0.12s; }
+.nav__actions { transition: opacity 0.7s ease 0.24s,  translate 0.7s ease 0.24s; }
+/* the stacked loupe belongs to the menu it sits under, so it waits with it
+   rather than standing on the peach on its own while the opening plays */
+.nav__search-btn--stacked { transition: opacity 0.7s ease 0.12s, translate 0.7s ease 0.12s; }
+body.lp-nav .nav__logo,
+body.lp-nav .nav__menu,
+body.lp-nav .nav__search-btn--stacked,
+body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
+
+/* ----------------------------------------------------------------
+   Scroll reveal — content floats up as it enters the viewport;
+   stagger comes from per-element transition delays set by script.
+   ---------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  translate: 0 40px;
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  translate: 0 0;
+}
+
+
+/* ================================================================
+   00 — NAVIGATION
+   ================================================================ */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  transition: background var(--ease), box-shadow var(--ease);
+}
+/* Sticky state (Figma "Sticky"): white bar, 60px tall, thin grey rule
+   underneath; logo and type scale down slightly. */
+.nav--scrolled {
+  background: var(--c-white);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+}
+.nav--scrolled .nav__inner    { height: 60px; }
+.nav--scrolled .nav__logo-img { height: 44px; }
+.nav--scrolled .nav__link     { font-size: 16px; }
+.nav--scrolled .nav__lang     { font-size: 13px; }
+.nav--scrolled .nav__search-btn img { width: 21px; height: 21px; }
+
+.nav__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;  /* logo | MENU centred | actions */
+  align-items: center;
+  height: 104px;                        /* 74px logo + 15px gap top & bottom */
+  padding: 0 var(--gm);
+  max-width: var(--canvas);
+  margin: 0 auto;
+  transition: height var(--ease);
+}
+
+/* Logo — left column of grid */
+.nav__logo { display: flex; align-items: center; }
+.nav__logo-img { height: var(--logo-h); width: auto; display: block; transition: height var(--ease); }  /* ≈216px wide at 74px */
+
+/* Desktop menu — centre column of the 3-col grid */
+.nav__menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 71px;  /* matches Figma spacing between links */
+}
+.nav__link {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: color var(--ease);
+}
+.nav__link:hover { color: var(--c-orange); }
+/* Hover: the type goes orange and a dot leads it in from the left. The
+   cursor no longer wraps these — it stays the plain travelling dot.
+   Absolutely placed so nothing shifts when it appears. */
+.nav__link { position: relative; }
+.nav__link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 11px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  translate: 0 -50%;
+  scale: 0;
+  transition: scale var(--ease);
+}
+.nav__link:hover::before { scale: 1; }
+/* current section — small orange dot beneath the link */
+.nav__link--active { position: relative; }
+.nav__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: -11px; left: 50%;
+  transform: translateX(-50%);
+  width: 5.5px; height: 5.5px;
+  border-radius: 50%;
+  background: var(--c-orange);
+}
+
+/* Actions — right column, right-aligned */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;   /* Figma: 中文 → search spacing */
+  justify-content: flex-end;
+}
+.nav__lang { font-family: var(--f-sans); font-size: 15px; transition: color var(--ease); }
+.nav__lang:hover { color: var(--c-orange); }
+/* 中文 takes the dot underneath instead, like the active-section marker */
+.nav__lang { position: relative; }
+.nav__lang::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  translate: -50% 0;
+  scale: 0;
+  transition: scale var(--ease);
+}
+.nav__lang:hover::after { scale: 1; }
+
+/* Search button — round hit area; icon turns orange on hover */
+.nav__search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* the 29px glyph centred in the 40px tap target leaves a 5.5px gap to the
+     button edge — nudge right so the icon itself sits flush on the col-6
+     margin line (reset on mobile, where the hamburger is the last item) */
+  margin-right: -5.5px;
+}
+.nav__search-btn img {
+  width: 29px;
+  height: 29px;       /* force exact square — search viewBox is 29×29 */
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: filter var(--ease);
+}
+/* knocked out white on the orange disc */
+.nav__search-btn:hover img,
+.nav--v3 .nav__search-btn:hover img,
+.nav--v3.nav--scrolled .nav__search-btn:hover img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg)
+          brightness(210%) contrast(100%);
+}
+
+/* Hamburger — mobile only */
+.nav__hamburger {
+  display: none;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.nav__hamburger img {
+  width: 32px;
+  height: auto;
+  aspect-ratio: 39.5 / 10;  /* hamburger viewBox ratio */
+  display: block;
+  object-fit: contain;
+}
+
+/* Mobile menu — full-screen white overlay (mobile only).
+   Everything that is not the section headings reads in the footer's
+   #808080 rather than black: 中文, the search glyph, the close X, the
+   sub-links, the secondary links and the social icons. The two icon sets
+   are masks of a pure-black source, so `invert(50%)` maps them to exactly
+   that grey. `--c-grey` carries a literal fallback because the inner pages
+   load style.css on its own, without the home stylesheet that defines it. */
+.nav__mobile-menu {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 200;                 /* above the fixed nav (100) */
+  background: var(--c-white);
+  color: var(--c-grey, #808080);   /* footer grey, not black */
+  flex-direction: column;
+  /* 56, twice the 28 it used to sit on: the social row was landing too
+     close to the bottom edge of the screen. `env()` is still added on top,
+     so on a notched phone the home indicator is cleared as well. */
+  padding: 0 var(--gm-mob) calc(env(safe-area-inset-bottom) + 56px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* circular reveal radiating from the hamburger (JS sets --reveal-x/y) */
+  visibility: hidden;
+  clip-path: circle(0% at var(--reveal-x, 92%) var(--reveal-y, 6%));
+  transition: clip-path 0.85s cubic-bezier(0.7, 0, 0.3, 1), visibility 0s linear 0.85s;
+}
+.nav__mobile-menu--open {
+  visibility: visible;
+  clip-path: circle(150% at var(--reveal-x, 92%) var(--reveal-y, 6%));
+  transition: clip-path 0.85s cubic-bezier(0.7, 0, 0.3, 1);   /* slow-start, smooth */
+}
+
+/* Top bar inside the overlay: 中文 left · search + close right */
+.nav__mobile-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;                 /* match the nav bar height */
+  flex-shrink: 0;
+}
+.nav__mobile-lang {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--c-grey, #808080);   /* footer grey, not black */
+}
+.nav__mobile-bar-actions { display: flex; align-items: center; gap: 14px; }
+.nav__mobile-search {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+}
+.nav__mobile-search img {
+  width: 21px; height: 21px; object-fit: contain;
+  filter: invert(50%);               /* icon → #808080 */
+}
+/* X close — two crossed bars */
+.nav__mobile-close {
+  position: relative;
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+}
+.nav__mobile-close span {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 22px; height: 1.5px;     /* same X as the search overlay close */
+  background: var(--c-grey, #808080);
+}
+.nav__mobile-close span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.nav__mobile-close span:last-child  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* Primary links — big, left-aligned, orange */
+.nav__mobile-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 24px;
+}
+.nav__mobile-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.nav__mobile-link {
+  font-family: var(--f-serif);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--c-orange);
+  /* underline draws in left→right on hover (replaces the cursor-frame affordance) */
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1.5px;
+  transition: background-size 0.35s ease;
+}
+.nav__mobile-link:hover { background-size: 100% 1.5px; }
+/* section toggles are buttons — strip the native chrome (keep the underline bg) */
+button.nav__mobile-link {
+  border: none;
+  padding: 0 0 2px;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* 2nd-level panel — fully hidden until the section is tapped (display:none, so
+   no peek is possible), then the links pop in one after another (first → last). */
+.nav__mobile-sub { display: none; }
+.nav__mobile-item.is-open .nav__mobile-sub { display: block; }
+.nav__mobile-sub-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0 18px 4px;
+}
+.nav__mobile-sub a {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  color: var(--c-grey, #808080);   /* footer grey, not black */
+  /* underline draws in on hover (no cursor frame, no colour fade) */
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1px;
+  transition: background-size 0.3s ease;
+}
+.nav__mobile-sub a:hover { background-size: 100% 1px; }
+/* stagger each link in as the panel opens */
+.nav__mobile-item.is-open .nav__mobile-sub a {
+  animation: navSubIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(1) { animation-delay: 0s; }
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(2) { animation-delay: 0.06s; }
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(3) { animation-delay: 0.12s; }
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(4) { animation-delay: 0.18s; }
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(5) { animation-delay: 0.24s; }
+.nav__mobile-item.is-open .nav__mobile-sub a:nth-child(6) { animation-delay: 0.30s; }
+@keyframes navSubIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Secondary links from the footer — two columns */
+.nav__mobile-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-top: auto;            /* push to the lower part of the screen */
+  padding-top: 48px;
+}
+/* These are the footer's two link columns, so they keep the footer's
+   rhythm: a 22px line box, and the four legal links spelling out the same
+   height as the three on the left —
+     3 × 22 + 2 × 22  =  4 × 22 + 3 × (22 / 3)  =  110
+   Without it the right column simply ran a row longer than the left. */
+.nav__mobile-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+.nav__mobile-col + .nav__mobile-col {
+  gap: calc(22px / 3);
+  align-self: start;
+}
+/* the legal column is the footer's small type too — 13 against the 16 on
+   the left, in the same 22px line box so the two columns still align */
+.nav__mobile-col + .nav__mobile-col .nav__mobile-sublink { font-size: 13px; }
+.nav__mobile-sublink {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  color: var(--c-grey, #808080);   /* footer grey, not black */
+}
+
+.nav__mobile-social {
+  display: flex;
+  gap: 24px;
+  margin-top: 32px;
+}
+.nav__mobile-social-link img {
+  width: 26px; height: 26px; object-fit: contain;
+  filter: invert(50%);               /* icon → #808080 */
+}
+
+
+/* ================================================================
+   SEARCH OVERLAY — full-screen orange search (Figma "Desktop_Search")
+   Opened from the desktop search button or the mobile menu's search.
+   ================================================================ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  /* Opening the overlay scroll-locks the page, which gives html a
+     padding-right of the scrollbar width. The overlay is fixed and so spans
+     the full viewport — without the same gutter its centre sits ~7px right
+     of the page's, and the logo would visibly step sideways as the wipe
+     passes over the nav one. */
+  padding-right: var(--sbw, 0px);
+  z-index: 300;                 /* above nav (100) and mobile menu (200) */
+  background: var(--c-orange);
+  visibility: hidden;
+  /* circular reveal radiating from the search button (JS sets --reveal-x/y) */
+  clip-path: circle(0% at var(--reveal-x, 90%) var(--reveal-y, 6%));
+  transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1), visibility 0s linear 0.8s;
+}
+.search-overlay--open {
+  visibility: visible;
+  clip-path: circle(150% at var(--reveal-x, 90%) var(--reveal-y, 6%));
+  transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);   /* slow-start, smooth */
+}
+/* top bar mirrors .nav__inner exactly, so the logo lines up with the nav logo
+   and the close sits on the same right-hand grid margin */
+.search-overlay__bar {
+  /* Mirrors the nav exactly: three tracks with the logo dead centre, and the
+     close on the right margin, where 8465-2 draws it (63px at x1807 / y24 —
+     the same 50px margin everything else in the bar keeps). It used to sit
+     on the left, to swap in place with the search button; the button has
+     since moved under the stacked menu, so the two no longer trade places
+     and the close simply takes the corner the design gives it. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 104px;
+  max-width: var(--canvas);
+  margin: 0 auto;
+  padding: 0 var(--gm);
+}
+.search-overlay__logo  { grid-column: 2; }
+.search-overlay__close { grid-column: 3; grid-row: 1; justify-self: end; }
+
+/* On the V3 home the nav is not a 104px centred bar — it is top-padded with
+   the logo at y 32 — so the overlay bar has to follow, or the logo jumps as
+   the overlay wipes over it. Same position, same size, no jump. */
+body.home-v3 .search-overlay__bar {
+  height: auto;
+  align-items: start;
+  padding-top: 32px;
+  padding-bottom: 24px;
+}
+/* 8465-2 draws it as a 63px ring at y24, and the bar's own inset is 32 —
+   so it rides 8px up out of that to land on the design's line. */
+body.home-v3 .search-overlay__close {
+  align-self: start;
+  margin-top: -8px;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+body.home-v3 .search-overlay__close span { width: 22px; }
+.search-overlay__logo { display: block; }
+.search-overlay__logo img {
+  height: var(--logo-h); width: auto; display: block;   /* matches the nav logo */
+  filter: brightness(0) invert(1);                      /* logo → white */
+}
+.search-overlay__close {
+  position: relative;
+  width: 63px; height: 63px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: background var(--ease);
+}
+.search-overlay__close:hover { background: var(--c-white); border-color: var(--c-white); }
+.search-overlay__close:hover span { background: var(--c-orange); }
+.search-overlay__close span {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 22px; height: 1.5px;
+  background: var(--c-white);
+}
+.search-overlay__close span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.search-overlay__close span:last-child  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.search-overlay__inner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(816px, calc(100vw - 2 * var(--gm)));
+}
+.search-overlay__field {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 14px;
+}
+.search-overlay__icon {
+  width: 29px; height: 29px;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);             /* icon → white */
+}
+.search-overlay__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: var(--f-serif);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--c-white);
+}
+.search-overlay__input::placeholder { color: var(--c-white); opacity: 1; }
+/* drop the browser's native clear (×) / decoration inside the search field */
+.search-overlay__input::-webkit-search-cancel-button,
+.search-overlay__input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.search-overlay__label {
+  margin-top: 26px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--c-white);
+  opacity: 0.4;
+}
+.search-overlay__hot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 34px;
+  margin-top: 12px;
+}
+.search-overlay__hot a {
+  font-family: var(--f-sans);
+  font-size: 20px;
+  color: var(--c-white);
+  /* underline that draws in from left to right on hover (no fade) */
+  padding-bottom: 4px;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1px;
+  transition: background-size 0.35s ease;
+}
+.search-overlay__hot a:hover { background-size: 100% 1px; }
+
+/* 767, not 700: the nav switches to its mobile layout at 767, and the bar
+   here is a copy of it. The 67px window between the two left the overlay
+   wearing its desktop bar over a phone nav. */
+@media (max-width: 767px) {
+  .search-overlay__bar { height: 78px; padding: 0 var(--gm-mob); }   /* matches mobile nav */
+  /* The close keeps its desktop ring on a phone too — the X on its own
+     read as an unfinished button next to the ringed one everywhere else. */
+  .search-overlay__field { gap: 12px; }
+  .search-overlay__icon { width: 24px; height: 24px; }
+  .search-overlay__input { font-size: 28px; }
+  .search-overlay__hot { gap: 12px 24px; }
+  .search-overlay__hot a { font-size: 17px; }
+
+  /* V3 home: the phone nav is a plain 72px bar with the lockup centred in
+     it — not the desktop's top-padded one — so the overlay bar follows it
+     here instead, or the logo drops 17px as the wipe passes over it. Same
+     height, same centring, same margins, so the lockup lands on the exact
+     pixel it already occupies (it is already the nav's own `--logo-h`).
+     The close then centres in that bar too, which puts its ring
+     concentric with the search button it opened from. */
+  body.home-v3 .search-overlay__bar {
+    height: 72px;
+    align-items: center;
+    padding: 0 var(--gm-mob);
+  }
+  /* Same ring as the desktop close, sized for the phone: 67.6px is the
+     width of the hover disc on a 40px desktop button, and centring that
+     on the phone's own button would hang it 6px off the left edge and
+     2px off the top of the bar. 48px keeps the ring clear of both, with
+     its left edge on the page margin, and the X scales with it (the
+     desktop ratio is 22 / 67.6). */
+  body.home-v3 .search-overlay__close {
+    align-self: center;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+  }
+  body.home-v3 .search-overlay__close span { width: 16px; }
+}
+
+
+/* ================================================================
+   01 — HERO
+   ================================================================ */
+.hero {
+  position: relative;
+  /* first screen fills the browser height, clamped 600–1200px.
+     `vh` is the real window while the page around it is zoomed, so the
+     height is divided back out — otherwise the banner covers only
+     `--zoom` of the screen. `dvh` is the same number with the mobile
+     browser's collapsing toolbars taken into account. */
+  height: clamp(600px, calc(100vh / var(--zoom)), 1200px);
+  height: clamp(600px, calc(100dvh / var(--zoom)), 1200px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1000px;          /* depth for the 3D photo scene */
+}
+
+/* 3D flying photos — planes travel from deep space toward the viewer */
+.hero__scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+  pointer-events: none;
+  z-index: 1;
+}
+.hero__plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 194px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  will-change: transform, opacity;
+  opacity: 0;
+}
+/* soft fog keeps the centre readable (brand peach, like the ref's mask) */
+.hero__fog {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center,
+              rgba(255, 242, 233, 0.95) 0%,
+              rgba(255, 242, 233, 0.4) 26%,
+              transparent 58%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* flying orange dots — same flight as the photos, but tiny */
+.hero__plane--dot {
+  width: 22px;
+  height: 22px;
+  background: var(--c-orange);
+  box-shadow: none;
+}
+/* once the scene is running, the static photo/dot sets step aside */
+.hero--scene .hero__photos,
+.hero--scene .hero__dot { display: none; }
+
+/* Background blobs */
+.hero__blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero__blob--white-top {
+  width: 1000px; height: 1000px;
+  top: -7px; left: calc(50% + 79px - 500px);
+  background: radial-gradient(circle, rgba(255,255,255,.5) 0%, transparent 70%);
+}
+.hero__blob--orange-left {
+  width: 1736px; height: 1736px;
+  top: 267px; left: calc(50% - 1451px);
+  background: radial-gradient(circle, rgba(255,105,0,.3) 0%, transparent 70%);
+}
+.hero__blob--white-right {
+  width: 1396px; height: 1396px;
+  top: -640px; left: calc(50% + 77px);
+  background: radial-gradient(circle, rgba(255,255,255,.2) 0%, transparent 70%);
+}
+
+/* Scattered photos — absolute inside hero */
+.hero__photos { position: absolute; inset: 0; pointer-events: none; }
+.hero__photo  { position: absolute; overflow: hidden; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Placeholder bg when image missing */
+.hero__photo { background: rgba(0,0,0,.06); }
+
+/* Positions as % of 1920×1000 canvas (inset = top right bottom left) */
+.hero__photo--1 { top:14.3%;  right:80.36%; bottom:75.7%;  left:11.51%; }
+.hero__photo--2 { top:25.9%;  right:68.07%; bottom:67.9%;  left:26.93%; }
+.hero__photo--3 { top:63.79%; right:73.52%; bottom:29.3%;  left:20.89%; }
+.hero__photo--4 { top:73.9%;  right:80.26%; bottom:11.6%;  left:8.02%;  }
+.hero__photo--5 { top:27.8%;  right:19.99%; bottom:62.7%;  left:72.34%; }
+.hero__photo--6 { top:51.6%;  right:6.92%;  bottom:33.3%;  left:80.83%; }
+.hero__photo--7 { top:63.8%;  right:25.16%; bottom:27.2%;  left:67.51%; }
+.hero__photo--8 { top:23.6%;  right:30.52%; bottom:73.3%;  left:66.93%; }
+
+/* Orange dots */
+.hero__dot {
+  position: absolute;
+  width: 11px; height: 11px;
+  background: var(--c-orange);
+  pointer-events: none;
+  z-index: 2;
+}
+/* Positions in px (1920-wide canvas) — converted to % for scaling */
+.hero__dot--1 { left: 60.78%; top: 29.5%;  }
+.hero__dot--2 { left: 17.86%; top: 58.5%;  }
+.hero__dot--3 { left: 88.91%; top: 84.6%;  }
+.hero__dot--4 { left: 82.24%; top: 38.7%;  }
+
+/* Headline — upper portion, centred */
+.hero__headline-wrap {
+  position: absolute;
+  top: 37%;          /* 373 / 1000 — scales with the fluid hero height */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  text-align: center;
+  z-index: 2;
+}
+.hero__headline {
+  font-family: var(--f-serif);
+  font-size: 70px;
+  font-weight: 400;
+  line-height: 80px;
+  color: var(--c-black);
+}
+
+/* Logo mark + description — anchored near bottom */
+.hero__bottom {
+  position: absolute;
+  bottom: 91px;       /* Figma: description ends 91px above fold */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
+  width: 751px;
+  text-align: center;
+  z-index: 2;
+}
+.hero__logomark img { height: 37px; width: auto; margin: 0 auto; }
+.hero__description {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 25px;
+  color: var(--c-black);
+}
+
+/* Scroll indicator — sits in flow between hero and intro so the line
+   visibly crosses the section boundary (Figma: dot 40px above the fold,
+   line running ~38px into the next section) */
+.hero__scroll {
+  position: relative;
+  z-index: 5;
+  height: 0;
+  /* transform, not margin — a negative margin on a 0-height block
+     collapses and drags the next section up over the hero */
+  transform: translateY(-44px);   /* dot(6) + gap(5) + line(33) = 44, so the line ends exactly at the fold */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+/* line ends right at the fold — it doesn't run into the white section */
+.hero__scroll-line { width: 1px; height: 33px; flex-shrink: 0; background: var(--c-orange); opacity: 0.7; margin-top: 5px; }   /* 30% lighter than the dot/ring */
+.hero__scroll-dot  {
+  position: relative;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--c-orange); flex-shrink: 0;
+}
+/* outer ring — pulses lighter/darker in place (no scaling) to hint "scroll down".
+   Even sizes keep translate(-50%,-50%) on whole pixels so the dot stays centred. */
+.hero__scroll-dot::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 16px; height: 16px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid var(--c-orange);
+  animation: scrollRingPulse 1.7s ease-in-out infinite;
+}
+@keyframes scrollRingPulse {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 1; }
+}
+
+
+/* ----------------------------------------------------------------
+   Ambient background glows (Figma page-level blurs)
+   Zero-height anchor at the hero/intro boundary (Figma y=998);
+   positions below are figma_y − 998 / centre-relative x.
+   They paint beneath the sections: opaque section backgrounds cover
+   them, transparent areas let them glow through.
+   ---------------------------------------------------------------- */
+.bg-blurs {
+  position: relative;
+  height: 0;
+  pointer-events: none;
+}
+.bg-blur { position: absolute; max-width: none; }
+.bg-blur--1 { width: 1536px; left: calc(50% - 575px); top:  -12px; }  /* white glow */
+.bg-blur--2 { width: 1375px; left: calc(50% - 702px); top: 1436px; }  /* orange */
+.bg-blur--3 { width: 1396px; left: calc(50% - 612px); top: 2238px; }  /* faint white */
+.bg-blur--4 { width: 1000px; left: calc(50% - 335px); top: 3214px; }  /* white */
+
+
+/* ================================================================
+   02 — INTRO  (Our Foundation + The Challenge)
+   ================================================================ */
+.intro {
+  position: relative;
+  overflow: hidden;
+  /* fade from body bg (peach) into white for foundation section, then back to transparent */
+  background: linear-gradient(to bottom, #fff 0%, #fff 45%, transparent 70%);
+}
+
+/* ── Our Foundation ───────────────────────────────────────────────
+   Figma: label x=51 / headline x=673 / bullets x=52 y=212 / video x=672 y=212
+   → grid areas, video column starts 672px from the left edge.        */
+.intro__foundation {
+  display: grid;
+  grid-template-columns: minmax(0, 580fr) minmax(0, 1200fr);  /* cols 1–2 (580) : cols 3–6 (1200), gutter = column-gap */
+  grid-template-areas:
+    "label   headline"
+    "bullets video";
+  padding: 84px var(--gm) 60px;
+  column-gap: var(--gg);
+  row-gap: 40px;   /* breathing room between headline and video/bullets */
+  max-width: var(--canvas);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.intro__label   { grid-area: label; padding-top: 6px; }
+.intro__bullets { grid-area: bullets; align-self: start; }
+.intro__video   { grid-area: video; }
+
+.intro__foundation-headline {
+  grid-area: headline;
+  font-family: var(--f-serif);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 50px;
+  color: var(--c-black);
+}
+
+/* Video thumbnail */
+.intro__video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1200 / 595;
+  overflow: hidden;
+  background: rgba(0,0,0,.08);
+}
+.intro__video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.intro__video:hover .intro__video-thumb { transform: scale(1.04); }
+/* Play button — white circle with orange triangle; orange on hover */
+.intro__play-btn {
+  position: absolute;
+  bottom: 20px; left: 20px;
+  width: 83px; height: 83px;
+  border-radius: 50%;
+  background: var(--c-white);
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color 0.25s ease;
+}
+.intro__play-btn img { display: none; }
+.intro__play-btn::before {
+  content: '';
+  width: 0; height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-left: 16px solid var(--c-orange);   /* −20% */
+  border-top-width: 9.6px;
+  border-bottom-width: 9.6px;
+  margin-left: 5.6px;
+  transition: border-left-color 0.25s ease;
+}
+/* hovering the play button OR anywhere on the video flips it orange */
+.intro__play-btn:hover,
+.intro__video:hover .intro__play-btn { background: var(--c-orange); }
+.intro__play-btn:hover::before,
+.intro__video:hover .intro__play-btn::before { border-left-color: var(--c-white); }
+
+
+/* ── The Challenge ────────────────────────────────────────────────
+   Figma: text col x=50 w=487; circles start x=670; label y=940 /
+   headline y=1048 / body y=1160 / button y=1282 (circles top y=870). */
+.challenge {
+  position: relative;
+  display: grid;
+  /* 6-col grid: text = cols 1–2 (620), circles = cols 3–6 (1200). Both side
+     margins are var(--gm) so the circle cluster ends on the grid's right
+     margin (col-6 edge) instead of bleeding into the margin. */
+  grid-template-columns: minmax(0, 620fr) minmax(0, 1200fr);
+  align-items: center;   /* vertically centre the text block against the circles */
+  padding: 60px var(--gm) 80px;
+  max-width: var(--canvas);
+  margin: 0 auto;
+  overflow: hidden;  /* circles overflow right — clip here */
+  /* Fluid circle diameter: 437px at 1920, scales down with viewport so the
+     3rd circle never clips. 437/1920 ≈ 22.8vw. */
+  --circle-d: clamp(300px, 22.8vw, 437px);
+}
+
+/* LEFT text — a single block, vertically centred against the circle cluster */
+.challenge__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.challenge__headline {
+  margin-top: 24px;
+  max-width: 487px;
+  font-family: var(--f-sans);
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 40px;
+  color: var(--c-black);
+}
+.challenge__body {
+  margin-top: 31px;
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 25px;
+  color: var(--c-black);
+  max-width: 465px;
+}
+.challenge__btn {
+  margin-top: 39px;
+}
+
+/* RIGHT: 3 circles going right and stepping down */
+.challenge__circles {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  /* circle 1 starts on the col-3 line (grid cell left); the cluster runs to
+     the col-6 / right-margin line — aligned to the grid, not the page edge */
+  justify-content: flex-start;
+}
+
+.challenge__circle {
+  position: relative;
+  flex-shrink: 0;
+  /* Sized as a % of the circles' grid cell (cols 3–6) so the 3 overlapping
+     circles fill that cell EXACTLY at any width. 100% / 2.748 ≈ 36.4%
+     (cluster width = circle + 2×(1−0.126)·circle = 2.748·circle). Using % (not
+     vw) keeps them locked to the grid even under the page's 0.9 zoom. */
+  width: 36.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Thin orange outline ring — transparent interior (matches Figma) */
+  border: 1.5px solid var(--c-orange);
+  /* let the circle title scale with the circle's own size at every breakpoint */
+  container-type: inline-size;
+}
+/* Overlap (0.126) and vertical step (0.204 / 0.407) as % of the cell width
+   (= the same fraction of the circle, since circle = 36.4% of the cell) */
+.challenge__circle--2 { margin-left: -4.59%; margin-top: 7.43%; }
+.challenge__circle--3 { margin-left: -4.59%; margin-top: 14.85%; }
+
+/* No separate bg div — the circle element IS the ring */
+
+.challenge__circle-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 36px;
+}
+/* Figma: icon floats at 24.5% from the top; title is dead-centred */
+.challenge__circle-icon {
+  position: absolute;
+  top: 24.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+.challenge__circle-title {
+  font-family: var(--f-serif);
+  /* 8% of the circle's width → proportional at every breakpoint (cqw) */
+  font-size: clamp(16px, 8cqw, 32px);
+  font-weight: 400;
+  line-height: 1.18;
+  color: var(--c-black);
+}
+.challenge__circle-tag {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--c-orange);
+  position: absolute;
+  bottom: 20%;         /* ~3/4 down the circle; % so it tracks the fluid size */
+  left: 0; right: 0;
+  text-align: center;
+}
+
+
+/* ================================================================
+   03 — PILLARS
+   ================================================================ */
+.pillars {
+  position: relative;
+  padding: 40px 0 80px;
+  overflow: hidden;
+}
+
+.pillars__heading-wrap {
+  text-align: center;
+  padding: 0 var(--gm) 85px;
+  position: relative;
+  z-index: 1;
+}
+.pillars__heading {
+  font-family: var(--f-serif);
+  font-size: 70px;
+  font-weight: 400;
+  line-height: 80px;
+  color: var(--c-black);
+}
+
+/* Decorative arc SVG behind the cards.
+   top: 225px keeps the top curl + dot in the gap below the heading at
+   every viewport width (at 159px it crossed the heading text once the
+   layout narrowed).                                                    */
+.pillars__arc {
+  position: absolute;
+  top: 213px;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;      /* match the wave line */
+  /* No clip-path — that breaks z-index stacking.
+     The img aspect-ratio forces a natural height so SVG overflow
+     is bounded; parent .pillars { overflow: hidden } clips the rest. */
+}
+.pillars__arc img,
+.pillars__arc svg {
+  width: 100%;
+  display: block;
+  aspect-ratio: 2009.85 / 1150.77;   /* viewBox ratio — constrains rendered height */
+}
+#arc-dot { opacity: 0; transition: opacity 0.3s ease; }
+
+/* Two pillar cards side by side */
+.pillars__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gg);
+  padding: 0 var(--gm);
+  position: relative;
+  z-index: 1;
+  max-width: var(--canvas);
+  margin: 0 auto;
+}
+
+.pillar-card {
+  background: var(--c-white);
+  min-height: 737px;
+  padding: 59px 67px 75px 67px;   /* bottom 75 lifts the bullet list off the card edge */
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 430px;
+  position: relative;
+  z-index: 1;
+  flex: 1;            /* fill card height so bullets can pin to the bottom */
+}
+/* Figma pins the bullet list near the bottom of the card */
+.pillar-card__text > .bullet-list { margin-top: auto; }
+.pillar-card__title {
+  font-family: var(--f-serif);
+  font-size: 50px;
+  font-weight: 400;
+  line-height: normal;
+}
+.pillar-card__body {
+  font-family: var(--f-sans);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 30px;
+  /* stay full width (≈430) down through the second-largest breakpoint, only
+     narrowing once the card gets genuinely tight; the illustration bleeds from
+     the lower-right so the upper body copy can run wider without clashing */
+  max-width: min(31vw, 430px);
+}
+/* Illustrations — Figma positions within the 890×737 card */
+.pillar-card__illustration {
+  position: absolute;
+  pointer-events: none;
+}
+.pillar-card__illustration img,
+.pillar-card__illustration svg { width: 100%; height: auto; display: block; }
+.pillar-card__illustration svg { overflow: visible; }
+
+/* ── Draw-on-scroll animations (script.js arms + triggers on view) ──────
+   stroke art (hands, circle rings): JS sets dasharray/offset, CSS eases it.
+   filled art (flower): JS fetches + inlines it, traces each shape's outline,
+   then fills it in — the same "drawn by hand" feel. */
+[data-draw="stroke"] path { transition: stroke-dashoffset 1.6s ease; }
+
+[data-draw="sketch"] path {
+  stroke-width: 0.75px;
+  /* outline traces on (1.8s) → colour fills in → the tracing stroke fades
+     out so the final shape matches the original filled art (no extra weight) */
+  transition: stroke-dashoffset 1.8s ease,
+              fill-opacity 0.9s ease 1.3s,
+              stroke-opacity 0.6s ease 2.1s;
+}
+
+/* Challenge circle outline drawn as an SVG ring (JS injects it) */
+.challenge__circle.has-ring { border-color: transparent; }
+.challenge__circle-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+.challenge__circle-ring circle { transition: stroke-dashoffset 1.6s ease; }
+.pillar-card--issues .pillar-card__illustration {
+  width: 33%;          /* a touch larger */
+  right: 7%;
+  top: auto;
+  bottom: -8%;         /* bleed off the card bottom, like the sector card */
+}
+.pillar-card--sector .pillar-card__illustration {
+  width: 53%;          /* a touch larger */
+  right: -5.4%;        /* bleeds off the card's right edge */
+  top: 26.6%;
+}
+
+
+/* ── Our Approach ───────────────────────────────────────────────── */
+.approach {
+  position: relative;
+  z-index: 1;          /* keep cards/bubbles above the footer wave line */
+  padding-top: 64px;
+  max-width: var(--canvas);
+  margin: 0 auto;
+}
+
+/* 5-card container using a 3-col grid
+   Top row  (3 orange): columns 1 2 3
+   Bottom row (2 white): columns 1-2 centre area
+   Vertical stagger via margin-top                              */
+.approach__cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 43px;
+  padding: 20px var(--gm) 60px;
+  /* rows: top 3 + bubbles row (zero-height spacer) + bottom 2 */
+  grid-template-rows: auto 0 auto;
+}
+
+/* Orange cards — row 1 */
+.approach-card {
+  width: 100%;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* text block sits vertically centred in the card */
+  gap: 12px;
+  align-self: start;
+}
+.approach-card--orange { background: var(--c-orange); min-height: 210px; max-width: 600px; }
+.approach-card--white  { background: var(--c-white);  min-height: 210px; }
+
+/* Vertical stagger + per-card horizontal alignment to match Figma scatter
+   (Figma card tops relative to the cards area: c3=0, c1=76, c2=168)      */
+.approach-card--1 { grid-column: 1; grid-row: 1; margin-top: 76px;  transform: rotate(-5.55deg); justify-self: start; }
+.approach-card--2 { grid-column: 2; grid-row: 1; margin-top: 168px; transform: rotate(4.62deg);  justify-self: center; }
+.approach-card--3 { grid-column: 3; grid-row: 1; margin-top: 0;     transform: rotate(-6.54deg); justify-self: end; }
+
+/* Decorative bubbles sit between the two rows — placed in a zero-height grid row */
+.approach__bubbles {
+  grid-column: 1 / 4;
+  grid-row: 2;
+  position: relative;
+  height: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.pillar-bubble {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.pillar-bubble img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+/* Decorative dots scattered between the cards (Figma) */
+.approach-dot {
+  position: absolute;
+  border-radius: 50%;
+}
+.approach-dot--orange { background: var(--c-orange); }
+.approach-dot--white  { background: var(--c-white); }
+/* Positions from Figma (1920 layout). The bubbles row is a zero-height
+   spacer sitting between the two card rows; horizontal positions use %
+   of the container so they track the grid at every viewport width.    */
+.pillar-bubble--1 { width:145px; height:145px; left: 35.0%; top: -420px; }
+.pillar-bubble--2 { width:186px; height:186px; left:  7.1%; top:   37px; }
+.pillar-bubble--3 { width:115px; height:115px; left: 68.4%; top:  -57px; }
+.pillar-bubble--4 { width:106px; height:106px; left: 29.3%; top:  367px; }
+.pillar-bubble--5 { width: 85px; height: 85px; left: 84.9%; top: -142px; }
+.approach-dot--1 { width:17px; height:17px; left:57.4%; top:-416px; }
+.approach-dot--2 { width:51px; height:51px; left:19.2%; top:  13px; }
+.approach-dot--3 { width:16px; height:16px; left:18.8%; top: 347px; }
+.approach-dot--4 { width:24px; height:24px; left:86.6%; top: 355px; }
+.approach-dot--5 { width:55px; height:55px; left:10.6%; top:-399px; }
+.approach-dot--6 { width:51px; height:51px; left:53.2%; top:-326px; }
+
+/* ── Idle float — a gentle wandering drift, varied per element so the group
+   never moves in unison. Uses the `translate` property so the JS cursor
+   parallax (which uses `transform`) and the responsive `scale` all compose.
+   Per-element amplitude (--fx/--fy), duration (--fd) and phase (--fdl). */
+@keyframes approach-float {
+  0%   { translate: 0 0; }
+  25%  { translate: var(--fx) calc(var(--fy) * 0.35); }
+  50%  { translate: calc(var(--fx) * 0.25) var(--fy); }
+  75%  { translate: calc(var(--fx) * -0.6) calc(var(--fy) * 0.55); }
+  100% { translate: 0 0; }
+}
+.pillar-bubble, .approach-dot {
+  animation: approach-float var(--fd, 7s) ease-in-out var(--fdl, 0s) infinite;
+  will-change: translate, transform;
+}
+.pillar-bubble--1 { --fx:  9px; --fy: -11px; --fd: 7.5s; --fdl: -1s;   }
+.pillar-bubble--2 { --fx: -7px; --fy:  12px; --fd: 9s;   --fdl: -3.5s; }
+.pillar-bubble--3 { --fx: 11px; --fy:   8px; --fd: 6.5s; --fdl: -2s;   }
+.pillar-bubble--4 { --fx: -9px; --fy:  -9px; --fd: 8.2s; --fdl: -5s;   }
+.pillar-bubble--5 { --fx:  6px; --fy:  13px; --fd: 7s;   --fdl: -0.5s; }
+.approach-dot--1  { --fx: -8px; --fy:  10px; --fd: 6s;   --fdl: -2.5s; }
+.approach-dot--2  { --fx: 10px; --fy:  -7px; --fd: 8.8s; --fdl: -4s;   }
+.approach-dot--3  { --fx: -6px; --fy: -12px; --fd: 7.3s; --fdl: -1.5s; }
+.approach-dot--4  { --fx:  8px; --fy:   9px; --fd: 6.8s; --fdl: -3s;   }
+.approach-dot--5  { --fx:-11px; --fy:   6px; --fd: 9.5s; --fdl: -0.8s; }
+.approach-dot--6  { --fx:  7px; --fy: -10px; --fd: 7.8s; --fdl: -5.5s; }
+@media (prefers-reduced-motion: reduce) {
+  .pillar-bubble, .approach-dot, .hero__scroll-dot::before { animation: none; }
+  .nav__mobile-item.is-open .nav__mobile-sub a { animation: none; }
+}
+
+/* White cards — row 2: card 4 in col 1, card 5 in col 2, col 3 empty */
+/* translateX is a % of the card's column width so the scatter scales with the grid
+   (Figma: c4 top = 457, c5 top = 570 from the cards area → minus row-1 height 424) */
+.approach-card--4 { grid-column: 1; grid-row: 3; margin-top: 33px;  transform: translateX(74%) rotate(0deg); }
+.approach-card--5 { grid-column: 2; grid-row: 3; margin-top: 146px; transform: translateX(87%) rotate(-7.7deg); }
+
+/* Card title & body colours */
+.approach-card__title {
+  font-family: var(--f-serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--c-white);
+}
+.approach-card__title--orange { color: var(--c-orange); }
+.approach-card__body {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-white);
+}
+.approach-card__body--dark { color: var(--c-black); }
+.approach-card__icon { width: 21px; height: 21px; flex-shrink: 0; }
+.approach-card__icon img { width: 100%; }
+
+/* Figma: the button sits level with the bottom of card 5 (centre-left
+   empty space), not below the cards — pull it up into the cards area. */
+.approach__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: -50px;
+  padding-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ================================================================
+   04 — NEWS
+   ================================================================ */
+.news {
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  /* Figma: page fades to white behind the lower part of the news section,
+     so the footer below sits on solid white */
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 55%, #ffffff 100%);
+}
+
+.news__heading {
+  font-family: var(--f-serif);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 50px;
+  color: var(--c-black);
+  text-align: center;
+  margin-bottom: 36px;
+  padding: 0 var(--gm);
+}
+
+.news__filters {
+  display: flex;
+  justify-content: center;
+  gap: 56px;
+  /* visible gap to the cards = this + the wrap's 30px tilt padding */
+  margin-bottom: 14px;
+}
+.news__filter {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--c-black);
+  cursor: pointer;
+  position: relative;
+  /* no bottom padding — keeps the magnet ring centred on the text */
+  transition: color var(--ease);
+}
+.news__filter:hover { color: var(--c-orange); }
+.news__filter--active::after {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: 50%;
+  transform: translateX(-50%);
+  width: 5.5px; height: 5.5px;
+  border-radius: 50%;
+  background: var(--c-orange);
+}
+
+/* ── Carousel / slider ──
+   The active card is always centred in the viewport; side cards bleed
+   off-screen and tilt ±3° (set by JS as .is-prev / .is-next).
+   JS auto-advances every 3s.                                          */
+.news__carousel-wrap {
+  overflow: hidden;
+  cursor: grab;
+  /* touch: native horizontal scroll handles dragging (default touch-action
+     routes horizontal swipes to this scroller, vertical to the page).
+     mouse: the JS pointer-drag below takes over (touch-action ignores mouse). */
+  /* top padding so the tilted side cards' corners aren't cropped */
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+.news__carousel-wrap:active { cursor: grabbing; }
+
+.news__carousel {
+  --news-card-w: 890px;
+  display: flex;
+  gap: 61px;
+  /* end padding lets the first/last card reach the viewport centre */
+  padding-left: max(0px, calc(50vw - var(--news-card-w) / 2));
+  padding-right: max(0px, calc(50vw - var(--news-card-w) / 2));
+  width: max-content;
+  user-select: none;
+}
+
+.news-card {
+  flex: 0 0 var(--news-card-w);
+  width: var(--news-card-w);
+  height: 450px;
+  background: var(--c-white);
+  display: flex;
+  overflow: hidden;
+  /* tilt + arc offset are set inline by JS (wheel effect):
+     the centred card sits at the top of a huge circle, neighbours
+     drop and tilt ±3° along its rim                              */
+  will-change: transform;
+}
+
+.news-card__image {
+  width: 445px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: rgba(0,0,0,.08);
+}
+.news-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.news-card:hover .news-card__image img { transform: scale(1.06); }
+/* hover the card → title + description turn orange (card is clickable) */
+.news-card { cursor: pointer; }
+.news-card__title,
+.news-card__description { transition: color var(--ease); }
+.news-card:hover .news-card__title,
+.news-card:hover .news-card__description { color: var(--c-orange); }
+
+.news-card__body {
+  flex: 1;
+  padding: 78px 49px 44px 63px;   /* Figma offsets within the 445px text half */
+  display: flex;
+  flex-direction: column;
+}
+.news-card__title {
+  font-family: var(--f-serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--c-black);
+}
+.news-card__description {
+  font-family: var(--f-sans);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 30px;
+  color: var(--c-black);
+  flex: 1;
+  margin-top: 32px;
+}
+.news-card__category {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--c-orange);
+  margin-top: auto;
+}
+/* tag pills (same look as the inner-page story cards) */
+.news-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.news-card__tag {
+  background: #fff4ec;
+  border-radius: 100px;
+  padding: 5px 15px;
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--c-black);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+.news-card__tag:hover { background: var(--c-orange); color: var(--c-white); }
+/* show at most two tags on the homepage news cards */
+.news-card__tags li:nth-child(n+3) { display: none; }
+
+.news__cta { display: flex; justify-content: center; margin-top: 12px; }
+
+/* Keep news content above the footer wave line that sweeps behind it */
+.news > * { position: relative; z-index: 1; }
+
+
+/* ================================================================
+   05 — FOOTER
+   ================================================================ */
+/* Figma: the white area starts where the news section ends (the news
+   section carries the peach→white fade). Footer itself is solid white.
+   Layout: logo left (x=50) | nav links + social (x=1290) | legal (x=1600);
+   copyright is left-aligned with the nav column.                        */
+.footer {
+  position: relative;
+  /* no overflow:hidden — the wave line extends up past the footer */
+  background: var(--c-white);
+}
+
+/* Decorative wave line (Figma Vector 2):
+   starts at the end of the Pillars section and ends 109px above the
+   page bottom. script.js pins the top edge to the Pillars boundary at
+   runtime (the aspect-ratio below is only the no-JS fallback).         */
+.footer__wave {
+  position: absolute;
+  left: -8%;            /* -154 / 1920 */
+  bottom: 109px;
+  width: 116%;          /* 2227 / 1920 */
+  aspect-ratio: 2228.87 / 1555.14;
+  pointer-events: none;
+  opacity: 0.8;         /* match the arc line */
+}
+.footer__wave svg { width: 100%; height: 100%; display: block; }
+
+.footer__gradient { display: none; }
+
+.footer__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 310px 270px;
+  align-items: start;
+  padding: 48px var(--gm) 0;
+  max-width: var(--canvas);
+  margin: 0 auto;
+}
+
+.footer__logo img   { height: 45px; width: auto; }
+.footer__logo       { display: flex; align-items: flex-start; }
+
+/* Middle column: nav links with social icons beneath */
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+}
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* hit area = the text itself, not the column */
+  gap: 33px;
+}
+.footer__nav-link {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  transition: color var(--ease);
+}
+.footer__nav-link:hover { color: var(--c-orange); }
+
+.footer__legal-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* hit area = the text itself, not the column */
+  gap: 16px;
+}
+.footer__legal-link {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  transition: color var(--ease);
+}
+.footer__legal-link:hover { color: var(--c-orange); }
+
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 29px;
+}
+/* LinkedIn's glyph fills its viewBox more than Instagram's, so it gets
+   a slightly smaller box to look optically equal */
+.footer__social-link img { width: 27px; height: 27px; object-fit: contain; transition: filter var(--ease); }
+.footer__social-link:last-child img { width: 26px; height: 26px; }
+/* colorise the black icons to brand orange on hover */
+.footer__social-link:hover img {
+  filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg) brightness(102%) contrast(104%);
+}
+
+/* Copyright — left-aligned with the nav column (Figma x=1290) */
+.footer__copyright {
+  position: relative;
+  z-index: 1;
+  max-width: var(--canvas);
+  margin: 0 auto;
+  padding: 100px var(--gm) 56px;
+}
+.footer__copyright p {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--c-black);
+  margin-left: calc(100% - 580px);  /* align with nav column start */
+}
+.footer__credit { transition: color var(--ease); }
+.footer__credit:hover { color: var(--c-orange); }
+
+/* Snap the footer to the 6-col grid at desktop widths (where the columns
+   are wide enough for the labels): logo cols 1–2, nav + social on col 5,
+   legal on col 6, copyright spanning cols 5–6. Below 1280 the columns get
+   too narrow for the labels, so the base 3-col layout above stays in use. */
+@media (min-width: 1281px) {
+  .footer__inner {
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: var(--gg);
+  }
+  .footer__logo      { grid-column: 1 / 3; }
+  .footer__col       { grid-column: 5; }
+  .footer__legal-nav { grid-column: 6; }
+
+  .footer__copyright {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: var(--gg);
+  }
+  .footer__copyright p { grid-column: 5 / 7; margin-left: 0; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — page zoom. Two ladders, one `zoom`.
+
+   Mobile keeps its own dedicated layout and is left at 1:1 throughout;
+   everything here starts at 768. `--zoom` is 1 unless a ladder below
+   moves it, so this rule is a no-op on any window neither ladder
+   claims. See the note on `:root` for what the two axes mean.
+   ================================================================ */
+@media (min-width: 768px) {
+  body { zoom: var(--zoom); }
+}
+
+/* ── Width: below 1800 the 1920 design reads ~10% too large ────── */
+@media (min-width: 768px) and (max-width: 1800px) {
+  :root { --zoom-w: 0.9; }
+}
+
+/* ── Height: short windows ──────────────────────────────────────
+   The case this was written for is a laptop — a ThinkBook-class 16:10
+   panel where the browser's own chrome leaves ~700px of page. The
+   design is 1920 × 1000: sized on width alone every heading is right
+   and every one of them is too big, because there is a third of the
+   height missing and nothing in the layout knows it.
+
+   1280 rather than 1024 is the floor on purpose — 1024 × 768 is an iPad
+   in landscape, which has its own breakpoints tuned a few hundred lines
+   down and should not also be zoomed. Above 1800 the ladder still
+   applies: a wide-and-short window (a dragged-down window on a big
+   display) has exactly the same problem.
+
+   Four steps rather than one so that dragging a window down walks the
+   page there instead of dropping it. Floors at .75 — past that the type
+   stops being small and starts being unreadable, and the answer is a
+   different layout, not more zoom. */
+@media (min-width: 1280px) and (max-height: 900px) { :root { --zoom-h: 0.92; } }
+@media (min-width: 1280px) and (max-height: 820px) { :root { --zoom-h: 0.86; } }
+@media (min-width: 1280px) and (max-height: 740px) { :root { --zoom-h: 0.80; } }
+@media (min-width: 1280px) and (max-height: 660px) { :root { --zoom-h: 0.75; } }
+
+
+/* ================================================================
+   RESPONSIVE — 1440px
+   ================================================================ */
+@media (max-width: 1440px) {
+  .hero__headline  { font-size: 58px; line-height: 66px; }
+  .hero__headline-wrap { width: 920px; }
+  .hero__bottom    { bottom: 90px; }
+  .pillars__heading { font-size: 56px; line-height: 64px; }
+  .pillar-card { min-height: 620px; }
+  .pillar-card__title { font-size: 42px; }
+  .approach__cards { grid-template-columns: repeat(3, 1fr); }
+  .approach-card { width: 100%; }
+  /* cards grow taller in the narrower columns — push row 2 down */
+  .approach-card--4 { margin-top: 85px; }
+  .approach-card--5 { margin-top: 200px; }
+  .news__carousel { --news-card-w: 760px; }
+  .news-card { height: 420px; }
+  .news-card__image { width: 380px; }
+}
+
+
+/* Short browser windows — keep the hero composition from cramping */
+@media (min-width: 768px) and (max-height: 800px) {
+  .hero__headline-wrap { top: 32%; }
+  .hero__headline { font-size: 52px; line-height: 60px; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — Challenge 3:3 (768–1230px)
+   The 4-col horizontal circle row no longer fits, so keep a 3:3 split
+   (text left half, circles right half) but switch the circles to the
+   mobile cluster (vertical Venn) so they nest instead of overflowing.
+   Below 768 the whole section stacks (see the mobile block).
+   ================================================================ */
+@media (min-width: 768px) and (max-width: 1230px) {
+  .challenge {
+    grid-template-columns: 1fr 1fr;          /* 3 cols : 3 cols */
+    column-gap: var(--gg);
+    align-items: center;                      /* text centred against the circles */
+    padding: 60px var(--gm) 80px;
+  }
+  .challenge__headline { font-size: clamp(22px, 2.4vw, 32px); line-height: 1.3; }   /* +2pt */
+  .challenge__body     { max-width: 100%; }
+
+  /* Venn cluster sized as a % of the right grid cell (3 cols) so it fills the
+     full column width WITHOUT bleeding past col 6: circle 1 sits on the cell's
+     left edge (col 4), circle 2 on the right edge (col 6). circle = 100%/1.71. */
+  .challenge__circles {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .challenge__circle    { width: 58.5%; height: auto; aspect-ratio: 1; }
+  .challenge__circle--1 { margin-left: 0; margin-top: 0; }
+  .challenge__circle--2 { align-self: flex-end;   margin-left: 0; margin-right: 0; margin-top: -39.5%; }
+  .challenge__circle--3 { align-self: flex-start; margin-left: 3.74%; margin-top: -22.76%; }
+  .challenge__circle-content { padding: 24px 20px; gap: 8px; }
+  .challenge__circle-icon    { width: 26px; height: 26px; }
+  .challenge__circle-tag     { font-size: 11px; bottom: 20%; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — 1024px
+   ================================================================ */
+@media (max-width: 1024px) {
+  .hero__headline  { font-size: 46px; line-height: 54px; }
+  .hero__headline-wrap { width: 640px; top: 34%; }
+  .hero__bottom    { width: 600px; bottom: 80px; }
+
+  .intro__foundation { padding: 60px var(--gm); }
+  .intro__foundation-headline { font-size: 32px; line-height: 42px; }
+
+  .pillars__heading { font-size: 46px; line-height: 54px; }
+  .pillar-card__title { font-size: 36px; }
+  .pillar-card__body { font-size: 18px; line-height: 26px; }
+  .pillar-card { padding: 40px; }
+  /* keep the bullet list no larger than the body copy above it */
+  .bullet-list--sm .bullet-list__item { font-size: 16px; line-height: 22px; }
+
+  .approach__cards { grid-template-columns: repeat(3, 1fr); column-gap: 28px; }
+  .approach-card { width: 100%; padding: 24px 28px; }
+  .approach-card__title { font-size: 24px; }
+  /* shrink the photo bubbles so they don't crowd the narrower cards */
+  /* use the `scale` property (not transform) so the cursor-parallax transform
+     and the float translate still apply on top */
+  .pillar-bubble, .approach-dot { scale: 0.72; transform-origin: top left; }
+
+  .news__carousel { --news-card-w: 680px; }
+  .news-card { height: 400px; }
+  .news-card__image { width: 320px; }
+  .news-card__title { font-size: 22px; }
+  .news-card__description { font-size: 17px; line-height: 26px; }
+
+  .footer__inner { grid-template-columns: 1fr 280px 220px; }
+  .footer__copyright p { margin-left: calc(100% - 500px); }
+}
+
+
+/* ================================================================
+   RESPONSIVE — Mobile (≤ 767px)
+   ================================================================ */
+@media (max-width: 767px) {
+
+  /* Nav — Figma mobile keeps the search icon next to the hamburger.
+     The centre menu column is display:none, so the grid must drop to
+     two columns or the actions get auto-placed into the middle slot. */
+  .nav__inner { padding: 0 var(--gm-mob); height: 78px; grid-template-columns: 1fr auto; }
+  .nav__menu  { display: none; }
+  .nav__lang  { display: none; }
+  .nav__actions { gap: 8px; }
+  /* generous tap targets */
+  .nav__search-btn { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; margin-right: 0; }
+  .nav__search-btn img { width: 21px; height: 21px; }
+  .nav__hamburger  { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; }
+  .nav__hamburger img { width: 39px; }
+  /* full-screen mobile menu styles live in the base NAVIGATION block */
+
+  /* Hero — lock to one full screen on mobile (svh tracks the real
+     viewport so it never grows taller than the visible area) */
+  .hero { height: 100vh; height: 100svh; }
+
+  /* Hero glow blobs — Figma mobile (node 8001:370). Colours/opacities already
+     match; only size + position change. left = centre-x − radius. */
+  .hero__blob--white-top   { width: 364px; height: 364px; top:  284px; left: calc(50% - 182px); }  /* white  .5 */
+  .hero__blob--orange-left { width: 633px; height: 633px; top:  343px; left: calc(50% - 468px); }  /* orange .3 */
+  .hero__blob--white-right { width: 509px; height: 509px; top: -105px; left: calc(50% - 177px); }  /* white  .2 */
+
+  /* Page glow blurs — Figma mobile (node 8001:362). Offsets are figma_y − 958
+     (the intro/hero boundary the .bg-blurs anchor sits at); left = centre−radius
+     as a % of the 440 frame. PNG colours already match each Figma fill. */
+  .bg-blur--1 { width: 1237px; left: calc(37.5% - 643px); top:  401px; }  /* white  (intro)        */
+  .bg-blur--2 { width:  883px; left: calc(37.5% - 469px); top: 2640px; }  /* orange (approach)     */
+  .bg-blur--4 { width:  768px; left: calc(37.5% - 347px); top: 3052px; }  /* white  (pillars/news) */
+  .bg-blur--3 { width:  980px; left: calc(62.5% - 463px); top: 3483px; }  /* white  (news/footer)  */
+  .hero__plane { width: 200px; height: 129px; }
+  /* dots must shrink with the planes (200/300) — desktop 22px → ~15px,
+     otherwise the flying dots look oversized next to the photos */
+  .hero__plane--dot { width: 15px; height: 15px; }
+  .hero__scroll { transform: translateY(-49px); }   /* dot(6)+gap(5)+line(38)=49, ends at the fold */
+  .hero__scroll-line { height: 38px; }              /* ~30% shorter on mobile */
+  .hero__headline-wrap { width: 350px; top: 36%; }
+  .hero__headline  { font-size: 43px; line-height: 47px; }
+  .hero__headline br { display: none; }   /* natural wrap matches Figma mobile */
+  .hero__bottom    { width: 361px; bottom: 75px; gap: 10px; }
+  .hero__logomark img { height: 29px; }   /* +20% on mobile (was 24px) */
+  .hero__description { font-size: 12px; line-height: 18px; }
+
+  /* Hide excess hero photos on mobile (Figma keeps 6 of 8) */
+  .hero__photo--7,
+  .hero__photo--8 { display: none; }
+
+  /* Reposition photos for 440px viewport (Figma mobile coords) */
+  .hero__photo--1 { top:17.5%; left:54.2%; right:auto; bottom:auto; width:140px; height:90px; }
+  .hero__photo--2 { top:26.8%; left:11.1%; right:auto; bottom:auto; width: 96px; height:62px; }
+  .hero__photo--3 { top:76.1%; left: 4.2%; right:auto; bottom:auto; width: 71px; height:46px; }
+  .hero__photo--4 { top:69.2%; left:53.3%; right:auto; bottom:auto; width:138px; height:89px; }
+  .hero__photo--5 { top:61.3%; left:79.2%; right:auto; bottom:auto; width: 49px; height:31px; }
+  .hero__photo--6 { top:64.2%; left:13.7%; right:auto; bottom:auto; width:107px; height:69px; }
+
+  /* Orange dots — mobile positions (px on 440-wide canvas → %) */
+  .hero__dot--1 { left:28.4%; top:20.3%; }
+  .hero__dot--2 { left: 9.8%; top:46.1%; }
+  .hero__dot--3 { left:84.8%; top:32.7%; }
+  .hero__dot--4 { left:94.4%; top:70.2%; }
+
+  /* Intro Foundation — Figma mobile order: label → headline → bullets → video */
+  .intro__foundation {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "headline"
+      "bullets"
+      "video";
+    padding: 44px var(--gm-mob) 40px;
+    row-gap: 24px;
+  }
+  .intro__label { text-align: center; padding-top: 0; }
+  .intro__foundation-headline { font-size: 25px; line-height: 33px; text-align: center; }
+  .bullet-list { gap: 14px; }
+  .bullet-list__item { font-size: 15px; line-height: normal; }
+  .intro__play-btn { width: 46px; height: 46px; }
+  .intro__play-btn::before {
+    border-left-width: 9.6px;   /* −20% */
+    border-top-width: 5.6px;
+    border-bottom-width: 5.6px;
+    margin-left: 3.2px;
+  }
+
+  /* Challenge — Figma mobile order: label → headline → circles → body → button */
+  .challenge {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "headline"
+      "circles"
+      "body"
+      "btn";
+    grid-template-rows: auto;     /* reset the base 4-row template for the 5-row stack */
+    column-gap: 0;
+    align-items: initial;
+    padding: 40px var(--gm-mob) 80px;
+    overflow: hidden;
+  }
+  /* let the wrapped text items re-flow into the grid so circles sit between
+     the headline and body (Figma mobile order) */
+  .challenge__text     { display: contents; }
+  .challenge__label    { grid-area: label; text-align: center; padding-top: 12px; }
+  .challenge__headline { grid-area: headline; font-size: 20px; line-height: 26px; margin: 14px auto 0; max-width: 330px; text-align: center; }
+  .challenge__body     { grid-area: body; font-size: 14px; line-height: 25px; max-width: 80vw; margin: 26px auto 0; text-align: center; }
+  .challenge__btn      { grid-area: btn; margin: 26px auto 0; align-self: center; justify-self: center; }
+  .challenge__circles  { grid-area: circles; }
+
+  /* Mobile circles — Figma stagger: 1 bleeds left, 2 right, 3 centre-left.
+     The cluster is a fixed 400px block kept centred, so the composition
+     holds together on phones wider than the 440 design.               */
+  .challenge__circles {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 26px auto 0;
+    width: 400px;
+    max-width: 100%;
+  }
+  .challenge__circle { width: 234px; height: 234px; }
+  .challenge__circle--1 { margin-left: -23px; }
+  .challenge__circle--2 { align-self: flex-end; margin-left: 0; margin-top: -158px; margin-right: -23px; }
+  .challenge__circle--3 { align-self: flex-start; margin-left: 15px; margin-top: -91px; }
+  .challenge__circle-title { line-height: 1.2; }   /* size from the shared cqw rule */
+  .challenge__circle-content { padding: 28px 20px; gap: 8px; }
+  .challenge__circle-icon { width: 24px; height: 24px; }
+  .challenge__circle-tag { font-size: 10px; bottom: 48px; }
+
+  /* Pillars */
+  .pillars { padding: 24px 0 48px; }
+  .pillars__heading-wrap { padding: 0 var(--gm-mob) 32px; }
+  .pillars__heading { font-size: 43px; line-height: 47px; max-width: 330px; margin: 0 auto; }
+  .pillars__heading br { display: none; }
+  /* arc kept on mobile — Figma mobile geometry (node 8001:484):
+     x=-1086 / y=195 / w=2009 on the 440 frame → only the right half of the
+     sweep shows on screen, curving through the space beside the cards */
+  .pillars__arc { display: block; top: 265px; left: -247%; width: 457%; opacity: 0.8; }
+
+  .pillars__cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 var(--gm-mob);
+  }
+  .pillar-card { min-height: 382px; padding: 43px 25px 32px; }
+  /* left-aligned on mobile too (was centred) — matches desktop */
+  .pillar-card__title { font-size: 30px; text-align: left; }
+  /* body copy ends at the 2nd of the 4 mobile cols, leaving cols 3–4 clear
+     for the card illustration. 85px = 2×margin(20) + 3×gutter(15);
+     −10px backs out the card's 25px left padding vs the col-2 edge. */
+  .pillar-card__body  { font-size: 14px; line-height: 24px; text-align: left; max-width: calc((100vw - 85px) / 2 - 10px); }
+  .bullet-list--sm { gap: 18px; }
+  .bullet-list--sm .bullet-list__item { font-size: 14px; line-height: 18px; }   /* ≤ body (14) */
+
+  /* Card illustrations — bigger now the body is held to 2 cols; the flower
+     bottom-bleeds off the card like the hands one. */
+  .pillar-card--issues .pillar-card__illustration { width: 144px; right: 16px; top: auto; bottom: -16px; }
+  .pillar-card--sector .pillar-card__illustration { width: 225px; right: -14px; top: auto; bottom: -16px; }
+
+  /* Approach cards — stacked with Figma offsets */
+  .approach { padding-top: 40px; }
+  .approach__cards {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px var(--gm-mob) 40px;
+    gap: 16px;
+  }
+  .approach-card { width: 328px !important; min-height: 118px; padding: 20px 24px; margin-top: 0 !important; align-self: center; }
+  /* Rotations + slight horizontal scatter (Figma mobile) */
+  .approach-card--1 { transform: rotate(-5.55deg) translateX(-12px); }
+  .approach-card--2 { transform: rotate(4.62deg)  translateX(-21px); }
+  .approach-card--3 { transform: rotate(-6.54deg) translateX(37px); }
+  .approach-card--4 { transform: rotate(0deg)     translateX(7px); }
+  .approach-card--5 { transform: rotate(-4deg); }
+  .approach-card__title { font-size: 22px; }
+  .approach-card__body  { font-size: 12px; line-height: 17px; }
+  .approach__cta { margin-top: 0; padding-bottom: 40px; }
+
+  /* Bubbles — Figma mobile keeps the photo circles (in front of the
+     cards, as in the design); dots hidden */
+  .approach__bubbles {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    grid-column: auto;
+    grid-row: auto;
+    z-index: 1;
+  }
+  .pillar-bubble { transform: none; scale: none; }   /* reset the ≤1024 scale */
+  .approach-dot { display: none; }
+  /* offsets are relative to the centred card column (440 design width),
+     so they hold their place on wider phones too */
+  .pillar-bubble--1 { width: 75px; height: 75px; left: calc(50% + 120px); top: 123px; }
+  .pillar-bubble--2 { width: 90px; height: 90px; left: calc(50% - 210px); top: 330px; }
+  .pillar-bubble--3 { width: 50px; height: 50px; left: calc(50% - 190px); top: 822px; }
+  .pillar-bubble--4 { width: 50px; height: 50px; left: calc(50% - 133px); top: -24px; }
+  .pillar-bubble--5 { width: 43px; height: 43px; left: calc(50% + 154px); top: 533px; }
+
+  /* News */
+  .news { padding: 48px 0 48px; }
+  .news__heading { font-size: 25px; line-height: 33px; padding: 0 var(--gm-mob); }
+  .news__filters { gap: 46px; padding: 0 var(--gm-mob); margin-bottom: 4px; }
+  .news__filter  { font-size: 14px; }
+
+  .news__carousel { gap: 17px; --news-card-w: 365px; }
+  /* native scroll-snap centres cards smoothly on touch — replaces the JS
+     snap-back that felt like a catch/stutter after releasing a drag */
+  .news__carousel-wrap { scroll-snap-type: x mandatory; }
+  /* Mobile: match the inner-page story card — padded white card with the
+     text on top and the image pinned to the bottom (Figma mobile). */
+  .news-card {
+    height: auto;
+    flex-direction: column;
+    padding: 30px 27px;
+    scroll-snap-align: center;
+  }
+  /* Figma mobile: no tilt — JS skips the wheel transform under 768px */
+  .news-card__image {
+    order: 2;                      /* image drops to the bottom of the card */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 306 / 187;
+    margin-top: 20px;
+  }
+  /* body grows to fill the (equal-height) card so the category + tags sink to
+     the bottom, lining up with the image across every card in the row */
+  .news-card__body  { order: 1; padding: 0; flex: 1; }
+  .news-card__title { font-size: 22px; line-height: 28px; }
+  .news-card__description { font-size: 15px; line-height: 22px; margin-top: 12px; flex: none; }
+  .news-card__category { font-size: 12px; margin-top: auto; padding-top: 18px; }
+  .news-card__tags { margin-top: 12px; }
+  .news-card__tag { font-size: 11px; padding: 4px 13px; }
+
+  /* Buttons scale down slightly (Figma mobile) */
+  .btn-circle { font-size: 12px; }
+
+  /* Footer wave — Figma mobile (node 8001:361): x=-110, w=1394 (317% of 440),
+     bottom edge 245px above the page bottom. The JS pins the top to the
+     pillars boundary (lead 60 = Figma). At these proportions the curve passes
+     to the RIGHT of the centred footer logo, as in the design. */
+  .footer__wave {
+    left: -25%;
+    width: 317%;
+    bottom: -5px;   /* lowered per request (Figma 245 − 250 total) */
+  }
+
+  /* Footer — Figma mobile: logo / links row / social / copyright; no legal */
+  .footer__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 0;
+    padding: 72px var(--gm-mob) 0;
+  }
+  .footer__logo        { justify-content: center; }
+  .footer__logo img    { height: 34px; }   /* −20% on mobile (was 43px) */
+  .footer__col         { gap: 36px; margin-top: 80px; }
+  .footer__nav         { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px 24px; }
+  .footer__nav-link    { font-size: 15px; }
+  .footer__legal-nav   { display: none; }
+  .footer__social      { justify-content: center; }
+  .footer__social-link img { width: 26px; height: 26px; }
+  .footer__social-link:last-child img { width: 25px; height: 25px; }
+  .footer__copyright   { padding: 24px var(--gm-mob) 52px; text-align: center; }
+  .footer__copyright p { margin-left: 0; }
+  .footer__copy-sep    { display: none; }
+  .footer__copy-line   { display: block; line-height: 18px; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — 430px / 390px (smallest)
+   ================================================================ */
+@media (max-width: 430px) {
+  .hero__headline-wrap { width: 320px; }
+  .hero__headline { font-size: 38px; line-height: 43px; }
+  .hero__bottom   { width: 320px; }
+  .approach-card  { width: 290px !important; }
+  .news__carousel { --news-card-w: 320px; }
+  .challenge__circle { width: 210px; height: 210px; }
+  .challenge__circle--2 { margin-top: -140px; }
+  .challenge__circle--3 { margin-top: -80px; }
+  .challenge__circle-title { font-size: 16px; }
+}
+@media (max-width: 390px) {
+  .hero__headline { font-size: 34px; line-height: 40px; }
+  .approach-card  { width: 260px !important; }
+  .news__carousel { --news-card-w: 285px; }
+}
+
+
+/* ================================================================
+   INNER PAGE — LISTING (Our Stories)
+   Centred content: breadcrumb · title · filter bar · card grid · pager
+   ================================================================ */
+/* solid white nav for inner pages (no hero behind it) */
+.nav--solid { background: var(--c-white); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+
+.listing {
+  position: relative;
+  max-width: var(--canvas);
+  margin: 0 auto;
+  padding: 140px var(--gm) 125px;
+}
+
+/* background decor — soft orange/white glows + a faint sweeping line.
+   inset:0 (not 100vw) on purpose: the body carries `zoom: var(--zoom)` above
+   768px and a 100vw box gets scaled with it, which shifts/jumps on resize. The body
+   peach already covers the edges and the footer fade is full-width, so the
+   decor only needs to span the (full-width below 1920) listing. */
+.listing__decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* soft organic blur glows (same PNGs as the homepage) */
+.listing__blur { position: absolute; max-width: none; pointer-events: none; }
+.listing__blur--a { width: 1200px; right: -260px; top: -420px; opacity: 0.85; }  /* orange, top-right */
+.listing__blur--b { width: 1500px; left: 50%; transform: translateX(-50%); top: -120px; opacity: 0.25; } /* faint white wash, top */
+.listing__blur--c { width: 1000px; left: -320px; top: 140px; opacity: 0.6; }     /* orange, left */
+.listing__line {
+  position: absolute;
+  /* start ~100px below the top of the first card row (grid top ≈ 394px) */
+  top: 455px;
+  /* full-bleed across the viewport (over-sized so neither zoom state nor a
+     >1920 viewport leaves a side gap); body overflow-x:clip trims the excess.
+     Divided by the zoom because that is the whole point of the over-size: a
+     zoomed body lays out 1/zoom wider than the window, so a fixed 116vw that
+     covered the 0.9 state left a bare strip once the short-window ladder took
+     it lower. */
+  left: 50%;
+  width: calc(116vw / var(--zoom));
+  transform: translateX(-50%);
+  /* DEFINITE height — height:auto / aspect-ratio let preserveAspectRatio="none"
+     collapse the svg to 0px (invisible flat line) in some browsers. */
+  height: 64vw;
+  max-height: 1200px;
+  display: block;
+  z-index: 0;            /* behind the cards (which are position:relative z-index:1) */
+  pointer-events: none;
+}
+/* soft fade into the white footer (no sharp peach→white edge).
+   anchored to the footer top and full viewport width so it never leaves a
+   seam — the white belongs to the footer and bleeds up over the page end */
+.listing-page .footer { position: relative; }
+.listing-page .footer::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: -120px;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--c-white));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* breadcrumb (sits just under the nav; "Impact" is a dropdown) */
+.listing__crumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--c-black);
+}
+.listing__crumb a { transition: color var(--ease); }
+.listing__crumb a:hover { color: var(--c-orange); }
+.listing__crumb-sep { color: rgba(0,0,0,0.4); }
+
+.listing__crumb-drop { position: relative; display: inline-flex; }
+.listing__crumb-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+.listing__crumb-toggle:hover { color: var(--c-orange); }
+.listing__crumb-toggle .listing__chev { width: 10px; height: 7px; }
+.listing__crumb-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 170px;
+  background: var(--c-white);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.1);
+  padding: 6px;
+  display: none;
+  z-index: 30;
+  text-align: left;
+}
+.listing__crumb-drop.is-open .listing__crumb-menu { display: block; }
+/* breadcrumb: open on HOVER (the toggle itself is a link that navigates on
+   click). A transparent bridge fills the gap so moving from the toggle down
+   into the menu doesn't drop the hover. */
+.listing__crumb-drop:hover .listing__crumb-menu,
+.listing__crumb-drop:focus-within .listing__crumb-menu { display: block; }
+.listing__crumb-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -12px;
+  height: 12px;
+}
+
+/* title */
+.listing__title {
+  font-family: var(--f-serif);
+  font-size: 70px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  margin: 30px 0 36px;
+}
+
+/* filter bar (each item is a dropdown) */
+.listing__filters {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px;
+  max-width: 1306px;
+  margin: 0 auto 56px;
+}
+.listing__filter {
+  position: relative;
+  flex: 1 1 0;
+  max-width: 270px;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  transition: border-color var(--ease);
+}
+.listing__filter-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 9px;
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+/* hover: line + text (and chevron, via currentColor) go orange — no box/outline */
+.listing__filter:hover { border-color: var(--c-orange); }
+.listing__filter:hover .listing__filter-toggle,
+.listing__filter.is-open .listing__filter-toggle { color: var(--c-orange); }
+.listing__filter.is-open { border-color: var(--c-orange); }
+.listing__filter-toggle:focus,
+.listing__filter-toggle:focus-visible,
+.listing__crumb-toggle:focus,
+.listing__crumb-toggle:focus-visible { outline: none; }
+.listing__chev { width: 12px; height: 8px; flex-shrink: 0; color: currentColor; transition: transform var(--ease); }
+.listing__filter.is-open .listing__chev,
+.listing__crumb-drop.is-open .listing__chev,
+.listing__crumb-drop:hover .listing__chev,
+.listing__crumb-drop:focus-within .listing__chev { transform: rotate(180deg); }
+
+/* dropdown menus (filter + breadcrumb share the look) */
+.listing__filter-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 100%;
+  background: var(--c-white);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.1);
+  padding: 6px;
+  display: none;
+  z-index: 30;
+}
+.listing__filter.is-open .listing__filter-menu { display: block; }
+.listing__filter-menu a,
+.listing__crumb-menu a {
+  display: block;
+  padding: 9px 12px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  color: var(--c-black);
+  border-radius: 7px;
+  white-space: nowrap;
+  transition: background var(--ease), color var(--ease);
+}
+.listing__filter-menu a:hover,
+.listing__crumb-menu a:hover { color: var(--c-orange); }
+
+.listing__clear {
+  flex-shrink: 0;
+  align-self: center;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 100px;
+  padding: 7px 18px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  color: var(--c-black);
+  transition: background var(--ease), color var(--ease), border-color var(--ease);
+}
+.listing__clear:hover { background: var(--c-orange); border-color: var(--c-orange); color: var(--c-white); }
+
+/* card grid */
+.listing__grid {
+  display: grid;
+  /* minmax(0,1fr) — NOT 1fr (= minmax(auto,1fr)). The auto floor is the item's
+     min-content, which for a card with an image becomes the image's intrinsic
+     width, so the tracks refuse to shrink and the grid overflows on resize.    */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 56px 40px;
+  max-width: 1565px;
+  margin: 0 auto;
+}
+
+.story-card {
+  background: var(--c-white);
+  padding: 30px 27px 30px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;          /* let the card shrink inside its grid track */
+  position: relative;
+  z-index: 1;            /* sit above the background line (.listing__line, z-index:0) */
+}
+.story-card__title {
+  font-family: var(--f-serif);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 32px;
+  color: var(--c-black);
+}
+.story-card__desc {
+  font-family: var(--f-sans);
+  /* 400, not 300. The home page sets its body copy — `.ventures__text`,
+     `.funding__text`, `.panel__copy`, `.panel__note` — at the default 400,
+     and the inner pages were the only place running Fira Sans Light at the
+     same 16/25. While the copy was black the difference was easy to miss;
+     on the R2 grey it is not, and the inner pages read a stop lighter than
+     the page they are reached from. Same colour, same size, same leading —
+     only the weight was out. */
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--c-black);
+  margin-top: 14px;
+}
+/* The category line is the one coloured thing on a card, and it takes its
+   colour FROM the category (R2 OPT1_02_Listing, 8009:2 — twelve cards, the
+   same label text in six different colours, which is the design showing the
+   mechanism rather than the mapping).
+
+   The palette is the brand colour bar with one substitution: the bar's
+   yellow-green #c6c925 is replaced by #816da2. That is not an oversight in
+   the design — 12px of #c6c925 on the peach ground is close to invisible,
+   where the other five all hold.
+
+   A category with no entry here falls back to orange, so a new one is never
+   invisible — it just has not been given its colour yet. */
+:root {
+  --cat-education-excellence: #ff6900;   /* colour bar 1 */
+  --cat-wellbeing:            #2e8d46;   /* colour bar 2 */
+  --cat-mindful-living:       #36a4a5;   /* colour bar 4 */
+  --cat-above-beyond:         #e88793;   /* colour bar 5 */
+  --cat-impact-strategy:      #573c83;   /* colour bar 6 */
+  --cat-dventures:            #816da2;   /* stands in for the bar's yellow */
+}
+.story-card__category {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--cat, var(--c-orange));
+  margin-top: 22px;
+}
+.story-card__category[data-cat="education-excellence"] { --cat: var(--cat-education-excellence); }
+.story-card__category[data-cat="wellbeing"]            { --cat: var(--cat-wellbeing); }
+.story-card__category[data-cat="mindful-living"]       { --cat: var(--cat-mindful-living); }
+.story-card__category[data-cat="above-beyond"]         { --cat: var(--cat-above-beyond); }
+.story-card__category[data-cat="impact-strategy"]      { --cat: var(--cat-impact-strategy); }
+.story-card__category[data-cat="dventures"]            { --cat: var(--cat-dventures); }
+.story-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.story-card__tag {
+  background: #fff4ec;
+  border-radius: 100px;
+  padding: 4px 13px;
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--c-black);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+/* only the tag the cursor is actually over turns orange (not all tags on
+   card hover) — the cursor also drops the DISCOVER state over a tag (see JS) */
+.story-card__tag:hover { background: var(--c-orange); color: var(--c-white); }
+.story-card__thumb {
+  margin-top: auto;          /* bottom-align the image across the row */
+  aspect-ratio: 306 / 187;
+  overflow: hidden;
+  background: rgba(0,0,0,0.05);
+}
+/* keep a little breathing room above a bottom-pinned image */
+.story-card__tags { margin-bottom: 20px; }
+.story-card__tags:last-child { margin-bottom: 0; }
+/* text-only + logo cards: drop the category + tags to the bottom of the card */
+.story-card--text .story-card__category,
+.story-card--logo .story-card__category { margin-top: auto; }
+
+/* logo card — brand logo sits at the top, above the title */
+.story-card__logo {
+  height: 50px;
+  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+}
+.story-card__logo img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+/* per-logo sizing — both left-aligned to the card/text edge */
+.story-card__logo img[src*="logo-pfpw"]  { height: 40px; }   /* -20% */
+.story-card__logo img[src*="logo-barts"] { height: 55px; }   /* tuned size */
+.story-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.story-card:hover .story-card__thumb img { transform: scale(1.05); }
+/* hover: copy turns orange */
+.story-card__title, .story-card__desc { transition: color var(--ease); }
+.story-card { cursor: pointer; }
+.story-card:hover .story-card__title,
+.story-card:hover .story-card__desc { color: var(--c-orange); }
+
+/* pagination */
+.listing__pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 90px;
+}
+.pager__arrow {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--c-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--ease), transform var(--ease);
+}
+.pager__arrow:hover { opacity: 0.88; }
+.pager__arrow--prev:hover { transform: translateX(-2px); }
+.pager__arrow--next:hover { transform: translateX(2px); }
+.pager__arrow img { width: 20px; filter: brightness(0) invert(1); }
+.pager__arrow--prev img { transform: rotate(180deg); }
+/* current page — white circle with dark number (orange arrows flank it) */
+.pager__num {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--c-white);
+  color: var(--c-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-sans);
+  font-size: 19px;
+  margin-left: 6px;
+}
+.pager__total {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  color: var(--c-black);
+  margin-right: 12px;
+}
+
+
+/* ── Listing responsive ───────────────────────────────────────────
+   The card design itself never changes across breakpoints — only the
+   number of columns does (4 → 3 → 2 → 1). The grid is fluid between
+   breakpoints, so resizing the window never breaks the card area.      */
+@media (max-width: 1280px) { .listing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1024px) { .listing__title { font-size: 56px; } }
+@media (max-width: 900px)  { .listing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 32px; } }
+@media (max-width: 767px) {
+  .listing { padding: 104px var(--gm-mob) 130px; }
+  .listing__title { font-size: 38px; margin: 16px 0 32px; }
+  .listing__crumb { font-size: 13px; }
+  .listing__filters {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 18px 24px;
+    margin-bottom: 36px;
+  }
+  .listing__filter { flex: 1 1 40%; max-width: none; font-size: 15px; }
+  /* clear-all drops onto its own row (the grown filters fill each row),
+     centred via auto side margins */
+  .listing__clear { margin: 6px auto 0; }
+  /* column gap never wider than the page side margin */
+  .listing__grid { gap: 22px var(--gm-mob); }
+  .listing__pager { margin-top: 56px; }
+  /* keep the desktop circle:arrow:number proportions (62/20/19) at 46px */
+  .pager__arrow, .pager__num { width: 46px; height: 46px; }
+  .pager__arrow img { width: 15px; }
+  .pager__num { font-size: 14px; }
+}
+@media (max-width: 600px) {
+  .listing__grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+
+
+/* ================================================================
+   INNER PAGE — ARTICLE (story detail, e.g. "Project Fuel")
+   Centred header (breadcrumb · title · subtitle · tags) above a
+   two-column body: rich article (left) + Related Articles (right).
+   Reuses the listing breadcrumb component + footer fade.
+   ================================================================ */
+.article {
+  position: relative;
+  max-width: var(--canvas);
+  margin: 0 auto;
+  padding: 140px var(--gm) 120px;
+}
+
+/* background decor — soft orange/white glows (same PNGs as listing) */
+.article__decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.article__blur { position: absolute; max-width: none; pointer-events: none; }
+.article__blur--a { width: 1100px; right: -280px; top: -360px; opacity: 0.8; }    /* orange, top-right */
+.article__blur--b { width: 1600px; left: 50%; transform: translateX(-50%); top: 4%; opacity: 0.7; }  /* white wash, upper */
+.article__blur--c { width: 1000px; left: -320px; top: 52%; opacity: 0.5; }        /* orange, lower-left */
+.article__blur--d { width: 1500px; right: -380px; top: 60%; opacity: 0.6; }       /* white wash, lower-right */
+
+/* ── header ──────────────────────────────────────────────────── */
+.article__head {
+  max-width: 900px;
+  margin: 0 auto 72px;
+  text-align: center;
+}
+.article__crumb { margin-bottom: 36px; }
+
+.article__title {
+  font-family: var(--f-serif);
+  font-size: 70px;
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--c-black);
+}
+.article__subtitle {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--c-orange);
+  margin-top: 16px;
+}
+.article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+.article__tags li { display: flex; }
+.article__tag {
+  background: var(--c-white);
+  border-radius: 100px;
+  padding: 7px 20px;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--c-black);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+.article__tag:hover { background: var(--c-orange); color: var(--c-white); }
+/* mouse uses the custom cursor for affordance (no extra outline); keep a ring
+   for keyboard users only */
+.article__tag:focus { outline: none; }
+.article__tag:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+
+/* ── body grid ───────────────────────────────────────────────────
+   Follows the Figma page grid (12 columns, 40px gutter) rather than a
+   symmetric centred block: the article body starts at column 3 (a wide
+   left indent under the centred title) and the related rail sits on the
+   right columns. At 1920 this lands the main column at x=360 / 890 wide
+   and the related rail at x=1290, exactly as designed.                 */
+.article__body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gg);
+  max-width: 1820px;
+  margin: 0 auto;
+}
+.article__main {
+  grid-column: 3 / 9;          /* cols 3–8 → 890px wide, indented from the left */
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* section title row + share button.
+   The share is absolutely positioned (not a flex sibling) so its rendering
+   never depends on flex/native-button quirks — this is what makes it show
+   reliably in Safari as well as Chrome. */
+.article__main-head {
+  position: relative;
+}
+.article__section-title {
+  font-family: var(--f-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 40px;
+  color: var(--c-black);
+  padding-right: 64px;          /* leave room for the share button */
+}
+.article__send {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-white);
+  border: none;
+  border-radius: 50%;
+  color: var(--c-black);
+  cursor: pointer;
+  /* reset Safari's native button chrome so the circle + glyph render */
+  -webkit-appearance: none;
+  appearance: none;
+  transition: color var(--ease), transform var(--ease);
+}
+.article__send svg { width: 20px; height: 20px; display: block; }
+.article__send:hover { transform: translateY(-1px); background: var(--c-orange); color: var(--c-white); }
+.article__send--copied::after {
+  content: 'Link copied';
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: var(--f-sans);
+  font-size: 12px;
+  color: var(--c-white);
+  background: var(--c-black);
+  padding: 5px 10px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.article__text {
+  font-family: var(--f-sans);
+  /* 400, not 300. The home page sets its body copy — `.ventures__text`,
+     `.funding__text`, `.panel__copy`, `.panel__note` — at the default 400,
+     and the inner pages were the only place running Fira Sans Light at the
+     same 16/25. While the copy was black the difference was easy to miss;
+     on the R2 grey it is not, and the inner pages read a stop lighter than
+     the page they are reached from. Same colour, same size, same leading —
+     only the weight was out. */
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  color: var(--c-black);
+  margin-top: 24px;
+}
+
+/* image carousel */
+.article__figure { margin: 40px 0 0; }
+.article__figure-media {
+  aspect-ratio: 890 / 462;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+  /* the slides stack on this box rather than following each other, so the
+     figure keeps its height no matter how many there are */
+  position: relative;
+}
+.article__figure-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Every slide but the first is stacked on top and held at zero opacity;
+   the script moves `is-on` along them. Written so that WITHOUT the script
+   (or before it runs) the first image is the one that shows — no blank
+   frame, and no-JS visitors still get the picture the caption describes. */
+.article__figure-media img + img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.article__figure-media img.is-on { opacity: 1; }
+.article__figure-media.is-ready img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.article__figure-media.is-ready img.is-on { opacity: 1; }
+/* the arrows are inert until there is more than one slide to move between */
+.article__carousel-arrow[disabled] { opacity: 0.35; pointer-events: none; }
+.article__figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 16px;
+}
+.article__caption {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--c-grey, #808080);
+}
+.article__carousel-nav { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+/* The nav reads in the same #808080 as the rest of the page's secondary
+   type, not black — the count, the two arrows, and the caption beside them.
+   (`--c-grey` is declared in style-home.css, so the literal is carried as a
+   fallback for any page that loads style.css on its own.) */
+.article__carousel-count {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  color: var(--c-grey, #808080);
+  min-width: 34px;
+  text-align: center;
+}
+.article__carousel-bar { color: #c7c7c7; margin: 0 7px; }
+.article__carousel-arrow {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-grey, #808080);
+  transition: transform var(--ease), color var(--ease);
+}
+.article__carousel-arrow svg { width: 20px; height: 12px; display: block; }
+/* the whole hover: the glyph goes brand orange. The cursor stays the plain
+   travelling dot over these — script §8's magnet skips `.article__carousel-nav`. */
+.article__carousel-arrow:hover { color: var(--c-orange); }
+.article__carousel-arrow--prev:hover { transform: translateX(-2px); }
+.article__carousel-arrow--next:hover { transform: translateX(2px); }
+
+/* pull quote */
+.article__quote {
+  position: relative;
+  margin: 60px 0;
+  padding-right: 100px;
+}
+.article__quote p {
+  font-family: var(--f-serif);
+  font-size: 50px;
+  font-weight: 400;
+  /* A RATIO, not the design's 60px. 50 × 1.2 is exactly that 60, so the
+     desktop is unchanged — but the breakpoints below only ever restated
+     the font size, so a fixed 60px stayed put while the type shrank and
+     the quote ended up on a 2.2 line. Now the leading follows the size. */
+  line-height: 1.2;
+  color: var(--c-orange);
+}
+.article__quote-mark {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 105px;
+  height: 95px;
+  transform: rotate(180deg);   /* source glyph is an opening quote; design uses closing */
+  pointer-events: none;
+}
+
+/* two images side by side (square corners) */
+.article__duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 40px;
+}
+.article__duo-media {
+  aspect-ratio: 430 / 272;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+.article__duo-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* video (square corners) */
+.article__video {
+  position: relative;
+  margin-top: 40px;
+  overflow: hidden;
+  aspect-ratio: 890 / 462;
+  background: rgba(0, 0, 0, 0.05);
+}
+.article__video img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* play button — same as the homepage intro video (CSS triangle in a white
+   circle; flips to orange fill + white triangle on hover / video hover) */
+.article__play {
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  width: 83px;
+  height: 83px;
+  border-radius: 50%;
+  background: var(--c-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--ease);
+}
+.article__play::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-left: 16px solid var(--c-orange);
+  border-top-width: 9.6px;
+  border-bottom-width: 9.6px;
+  margin-left: 5.6px;
+  transition: border-left-color var(--ease);
+}
+.article__play:hover,
+.article__video:hover .article__play { background: var(--c-orange); }
+.article__play:hover::before,
+.article__video:hover .article__play::before { border-left-color: var(--c-white); }
+
+/* related-project pills */
+.article__btn-row { display: flex; flex-wrap: wrap; gap: 44px; margin-top: 16px; }
+.article__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+.article__pill-circle {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--c-orange);
+  color: var(--c-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--ease), color var(--ease);
+}
+.article__pill-circle svg { width: 15px; height: 8px; }
+.article__pill:hover { color: var(--c-orange); }
+.article__pill:hover .article__pill-circle { background: var(--c-orange); color: var(--c-white); }
+
+/* orange highlight box (square corners) */
+.article__highlight {
+  background: var(--c-orange);
+  color: var(--c-white);
+  padding: 48px 56px 52px;
+  margin: 50px 0;
+}
+.article__highlight-icon {
+  display: block;
+  width: 41px;
+  height: 41px;
+}
+.article__highlight p {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  margin-top: 26px;
+}
+
+/* download button */
+.article__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+.article__download-circle {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--c-orange);
+  color: var(--c-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--ease), color var(--ease);
+}
+.article__download-circle svg { width: 15px; height: 15px; display: block; }
+.article__download:hover { color: var(--c-orange); }
+.article__download:hover .article__download-circle { background: var(--c-orange); color: var(--c-white); }
+
+/* testimonial card (white, square corners) */
+.article__testimonial {
+  position: relative;
+  background: var(--c-white);
+  padding: 45px 60px 50px;
+  margin-top: 48px;
+}
+.article__testimonial-avatar {
+  width: 91px;
+  height: 91px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+.article__testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.article__testimonial-mark {
+  position: absolute;
+  top: 44px;
+  right: 56px;
+  width: 43px;
+  height: 39px;
+  transform: rotate(180deg);   /* match design: closing quote */
+  pointer-events: none;
+}
+.article__testimonial-quote {
+  font-family: var(--f-sans);
+  /* 400, not 300. The home page sets its body copy — `.ventures__text`,
+     `.funding__text`, `.panel__copy`, `.panel__note` — at the default 400,
+     and the inner pages were the only place running Fira Sans Light at the
+     same 16/25. While the copy was black the difference was easy to miss;
+     on the R2 grey it is not, and the inner pages read a stop lighter than
+     the page they are reached from. Same colour, same size, same leading —
+     only the weight was out. */
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--c-black);
+  margin-top: 36px;
+}
+.article__testimonial-author { display: block; margin-top: 28px; }
+.article__testimonial-name {
+  display: block;
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--c-black);
+}
+.article__testimonial-role {
+  display: block;
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 4px;
+}
+
+/* ── related sidebar ─────────────────────────────────────────────
+   After scroll, the sidebar sticks and sits vertically centred on
+   the right of the viewport (top:50% + translateY(-50%)). It only
+   centres while it fits; on stacked layouts the sticky is removed.   */
+.article__related {
+  grid-column: 9 / 13;           /* right columns */
+  max-width: 495px;              /* design rail width — keeps the right gutter */
+  position: relative;            /* column stretches to the full body-grid height */
+}
+/* The rail starts aligned to the top of the content tile (in normal flow),
+   then sticks to the top of the viewport once the page scrolls past it, and
+   releases again at the bottom of the article column. The light-orange divider
+   lives on this inner wrapper so it is only as tall as the list (it stops at
+   the bottom of the last related item, not the full article height). */
+.article__related-inner {
+  position: sticky;
+  top: 110px;
+  padding-left: 40px;
+  border-left: 1px solid #FFCCA9;   /* light-orange divider */
+}
+.article__related-title {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--c-black);
+  margin-bottom: 20px;
+}
+.article__related-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  padding: 22px 0;
+  border-top: 1px solid #FFCCA9;
+}
+.article__related-item:first-of-type { border-top: 0; padding-top: 4px; }
+.article__related-name {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+.article__related-desc {
+  font-family: var(--f-sans);
+  /* 400, not 300. The home page sets its body copy — `.ventures__text`,
+     `.funding__text`, `.panel__copy`, `.panel__note` — at the default 400,
+     and the inner pages were the only place running Fira Sans Light at the
+     same 16/25. While the copy was black the difference was easy to miss;
+     on the R2 grey it is not, and the inner pages read a stop lighter than
+     the page they are reached from. Same colour, same size, same leading —
+     only the weight was out. */
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-black);
+  margin-top: 8px;
+}
+.article__related-thumb {
+  width: 129px;
+  height: 87px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.05);
+}
+.article__related-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.article__related-item:hover .article__related-name { color: var(--c-orange); }
+.article__related-item:hover .article__related-thumb img { transform: scale(1.05); }
+
+/* ── Article responsive ──────────────────────────────────────── */
+@media (max-width: 1440px) {
+  /* tighten the big left indent on smaller desktops: main moves to col 2 */
+  .article__main { grid-column: 2 / 9; }
+  .article__related { grid-column: 9 / 13; }
+}
+@media (max-width: 1024px) {
+  .article__title { font-size: 56px; }
+  /* sidebar drops below the article and spans full width — drop the grid + sticky */
+  .article__body { grid-template-columns: minmax(0, 1fr); gap: 64px; max-width: 900px; }
+  .article__main { grid-column: auto; }
+  .article__related {
+    grid-column: auto;
+    max-width: none;
+    border-top: 1px solid #FFCCA9;
+    padding-top: 36px;
+  }
+  .article__related-inner { position: static; padding-left: 0; border-left: 0; }
+}
+@media (max-width: 767px) {
+  .article { padding: 104px var(--gm-mob) 120px; }
+  .article__head { margin-bottom: 48px; }
+  .article__crumb { margin-bottom: 24px; }
+  .article__title { font-size: 38px; }
+  .article__section-title { font-size: 30px; }
+  /* The mark is 105px wide at full size and sits at `right: 0`, so the
+     padding has to clear it or it prints over the end of the lines — the
+     old 50px cleared less than half of it. Scaled down to 54 here, with
+     64 of padding to keep the glyph and the words apart the way the design
+     draws them. `font-size` was being set on an <img>, which did nothing. */
+  .article__quote { padding-right: 64px; margin: 44px 0; }
+  .article__quote p { font-size: 32px; }
+  .article__quote-mark { width: 54px; height: auto; top: 6px; }
+  .article__duo { grid-template-columns: 1fr; gap: 16px; }
+  .article__highlight { padding: 34px 28px 38px; }
+  /* On a phone the orange panel reads as body copy, so it is set as body
+     copy — the same 16/25 and the same 300 as `.article__text` right below
+     it. It was only being given the size: the desktop `line-height: 30px`
+     stayed behind on the smaller type and opened it out to a 1.9 leading
+     against the running text's 1.56, which is what made the panel look
+     like a different, looser typeface. */
+  .article__highlight p {
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 300;
+  }
+  .article__testimonial { padding: 34px 28px 38px; }
+  /* Same as the orange panel above: on a phone the testimonial is running
+     text, so it is set as running text — 16/25 weight 300, exactly
+     `.article__text`. (Its 20/30 was at least a consistent 1.5; it was
+     simply too large next to the body copy on a narrow column.) */
+  .article__testimonial-quote {
+    font-size: 16px;
+    line-height: 25px;
+  }
+  /* The name comes down to the body size too but keeps its weight, so it
+     still reads as the attribution rather than more copy. */
+  .article__testimonial-name { font-size: 16px; }
+  .article__btn-row { gap: 16px 28px; }
+  .article__play { width: 62px; height: 62px; left: 18px; bottom: 18px; }
+  .article__play::before {
+    border-left-width: 12px;
+    border-top-width: 7.2px;
+    border-bottom-width: 7.2px;
+    margin-left: 4px;
+  }
+  /* related items: keep thumb but allow stack on very small screens */
+  .article__related-thumb { width: 104px; height: 70px; }
+}
+@media (max-width: 430px) {
+  .article__related-item { grid-template-columns: minmax(0, 1fr); }
+  .article__related-thumb { display: none; }
+}
+
+
+/* ================================================================
+   NAV — desktop mega menu (hover-opened)
+   Centred white panel below the nav: link list (left) + line-art
+   illustration (bottom-right), matching the Figma "Menu" frames.
+   ================================================================ */
+.nav__mega {
+  position: absolute;
+  top: 104px;                /* just below the 104px nav bar */
+  left: 50%;
+  width: min(819px, calc(100vw - 60px));
+  transform: translateX(-50%) translateY(-10px);
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+}
+.nav--scrolled .nav__mega { top: 76px; }   /* follows the shrunk nav, with a small gap below it */
+.nav--mega-open .nav__mega {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* panel matches the Figma frame: 819 × 396. Label, illustration and links
+   are all absolutely placed per the design, so the panel needs no padding. */
+.nav__mega-panel {
+  position: relative;
+  min-height: 396px;
+  background: var(--c-white);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.08);
+  overflow: hidden;          /* clip the illustration to the panel */
+  display: none;
+}
+.nav__mega-panel.is-active { display: block; }
+
+/* small orange section label, top-left */
+.nav__mega-label {
+  position: absolute;
+  top: 36px;
+  left: 50px;
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-orange);
+}
+
+/* link list — right side of the panel */
+.nav__mega-links {
+  list-style: none;
+  position: absolute;
+  top: 26px;
+  left: 590px;
+  z-index: 1;
+}
+.nav__mega-links a {
+  display: inline-block;
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  color: var(--c-black);
+  transition: color var(--ease);
+}
+.nav__mega-links a:hover { color: var(--c-orange); }
+
+/* illustration — left side, positioned per the Figma layout for each section */
+.nav__mega-art { position: absolute; width: auto; height: auto; pointer-events: none; }
+.nav__mega-panel[data-mega-panel="work"]   .nav__mega-art { width: 541px; left: 35px; bottom: 0; }
+.nav__mega-panel[data-mega-panel="impact"] .nav__mega-art { width: 584px; left: 0;    top: 102px; }
+.nav__mega-panel[data-mega-panel="about"]  .nav__mega-art { width: 442px; left: 0;    top: 85px; }
+
+/* draw-in animation for the inlined illustration (same timing as the pillars):
+   each shape traces its outline, the fill inks in while the line is still down,
+   then the tracing stroke drops — an overlapping handoff with no dead pause */
+.nav__mega-art path {
+  transition: stroke-dashoffset 1.6s ease,
+              fill-opacity 0.9s ease 1.3s,
+              stroke-opacity 0.6s ease 2.1s;
+}
+
+/* the hovered section stays orange while its panel is open */
+.nav__link--mega-active { color: var(--c-orange); }
+
+/* hover-menu is desktop-only; small screens use the hamburger overlay */
+@media (max-width: 900px) { .nav__mega { display: none; } }
+
+/* ============================================================
+   CHINESE (zh-Hant) — SERIF FONT STACK
+   ------------------------------------------------------------
+   iOS Safari (WebKit) bug: when the first family in a stack is a
+   real system font (Baskerville), WebKit renders missing glyphs
+   (CJK) with *Baskerville's own* system fallback — PingFang, a
+   sans — instead of continuing down the author's list. So the
+   Chinese never reaches Noto Serif TC / Songti and shows as sans.
+   Fix: on the TC pages, lead the serif stack with the CJK serif
+   (webfont first, then each platform's system Song). The few Latin
+   tokens in these headings render in Noto Serif TC's Latin, which
+   is consistent on a Chinese page. English pages keep Baskerville
+   first (the base --f-serif), untouched. */
+html[lang="zh-Hant"] {
+  --f-serif: 'Noto Serif TC', 'Songti TC', 'Songti SC', 'Source Han Serif TC', 'Noto Serif CJK TC', 'PMingLiU', 'MingLiU', SimSun, Baskervville, Baskerville, Georgia, serif;
+  /* The same gap on the sans side, and it matters now that the body copy on
+     these pages is Chinese: `--f-sans` is Fira Sans, which has no CJK at
+     all, so every Chinese paragraph fell through to whatever the browser
+     picked by itself — PingFang on a Mac, JhengHei on Windows, something
+     else again on Android. Naming each platform's own CJK sans keeps the
+     fallback a decision rather than an accident. Fira Sans stays in front
+     for the Latin runs (numerals, "D'Ventures"), as the serif does. */
+  --f-sans: 'Fira Sans', 'PingFang TC', 'PingFang HK', 'Noto Sans TC', 'Source Han Sans TC', 'Microsoft JhengHei', 'Heiti TC', Arial, sans-serif;
+}
+
+/* ============================================================
+   CHINESE (zh-Hant) — SERIF HEADING TRIM
+   ------------------------------------------------------------
+   The big Baskerville headings fall back to a CJK serif (宋體)
+   for Chinese, which renders heavier/larger at the same px.
+   Trim each serif heading down a touch (≈2–5px, proportional
+   to its size). Scoped to the TC pages via <html lang="zh-Hant">
+   and mirrored across every breakpoint so the English build and
+   the mobile layouts are untouched.
+   ============================================================ */
+html[lang="zh-Hant"] .hero__headline             { font-size: 65px; }
+html[lang="zh-Hant"] .pillars__heading           { font-size: 65px; }
+html[lang="zh-Hant"] .pillar-card__title         { font-size: 46px; }
+html[lang="zh-Hant"] .intro__foundation-headline { font-size: 36px; }
+html[lang="zh-Hant"] .news__heading              { font-size: 36px; }
+html[lang="zh-Hant"] .approach-card__title       { font-size: 29px; }
+html[lang="zh-Hant"] .challenge__circle-title    { font-size: clamp(15px, 7.4cqw, 29px); }
+html[lang="zh-Hant"] .nav__mobile-link           { font-size: 40px; }
+html[lang="zh-Hant"] .search-overlay__input      { font-size: 36px; }
+
+/* Hero description — keep glyphs/spacing normal but narrow the text column
+   ~20% so the line wraps earlier. max-width is relative to .hero__bottom,
+   and the block stays centred (text-align:center + auto margins). */
+html[lang="zh-Hant"] .hero__description { max-width: 80%; margin-left: auto; margin-right: auto; }
+
+/* Challenge headline — trim ~2px (句字收細 2pt) */
+html[lang="zh-Hant"] .challenge__headline { font-size: 28px; }
+
+@media (max-width: 1440px) {
+  html[lang="zh-Hant"] .hero__headline     { font-size: 54px; }
+  html[lang="zh-Hant"] .pillars__heading   { font-size: 52px; }
+  html[lang="zh-Hant"] .pillar-card__title { font-size: 39px; }
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
+  html[lang="zh-Hant"] .hero__headline { font-size: 49px; }
+}
+
+@media (max-width: 1024px) {
+  html[lang="zh-Hant"] .hero__headline             { font-size: 43px; }
+  html[lang="zh-Hant"] .intro__foundation-headline { font-size: 29px; }
+  html[lang="zh-Hant"] .pillars__heading           { font-size: 43px; }
+  html[lang="zh-Hant"] .pillar-card__title         { font-size: 34px; }
+  html[lang="zh-Hant"] .approach-card__title       { font-size: 22px; }
+  html[lang="zh-Hant"] .challenge__headline        { font-size: clamp(20px, 2.4vw, 30px); }
+}
+
+@media (max-width: 767px) {
+  html[lang="zh-Hant"] .hero__headline             { font-size: 40px; }
+  html[lang="zh-Hant"] .intro__foundation-headline { font-size: 23px; }
+  html[lang="zh-Hant"] .pillars__heading           { font-size: 40px; }
+  html[lang="zh-Hant"] .pillar-card__title         { font-size: 28px; }
+  html[lang="zh-Hant"] .approach-card__title       { font-size: 20px; }
+  html[lang="zh-Hant"] .news__heading              { font-size: 23px; }
+}
+
+@media (max-width: 430px) {
+  html[lang="zh-Hant"] .hero__headline { font-size: 35px; }
+}
+
+@media (max-width: 390px) {
+  html[lang="zh-Hant"] .challenge__circle-title { font-size: 15px; }
+  html[lang="zh-Hant"] .hero__headline          { font-size: 32px; }
+}
