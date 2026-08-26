@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <title>Our Institutes — The D. H. Chen Foundation</title>
+  <title>Partnership — The D. H. Chen Foundation</title>
   <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,7 +15,7 @@
        page's own module (§11). Same pair of files as Listing / Articles. -->
   <link rel="stylesheet" href="style-home.css?v=12.4" />
 </head>
-<body class="institutes-page inner-v3">
+<body class="partnership-page inner-v3">
 
 
   <!-- ============================================================
@@ -29,9 +29,9 @@
       </a>
 
       <nav class="nav__menu" aria-label="Main navigation">
-        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
+        <a href="Approach.html" class="nav__link nav__link--active" data-mega="work">Work</a>
         <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="Ethos.html" class="nav__link nav__link--active" data-mega="about">About</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
         <a href="Connect.html" class="nav__link">Connect</a>
       </nav>
 
@@ -69,9 +69,9 @@
          sections (`.nav__mega-menu`). Same markup as the home page. -->
     <div class="nav__mega" id="nav-mega" aria-hidden="true">
       <div class="nav__mega-menu">
-        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
+        <a href="Approach.html" class="nav__link nav__link--active" data-mega="work">Work</a>
         <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="Ethos.html" class="nav__link nav__link--active" data-mega="about">About</a>
+        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
         <a href="Connect.html" class="nav__link">Connect</a>
       </div>
       <div class="nav__mega-panel" data-mega-panel="work">
@@ -182,17 +182,15 @@
   <main>
 
     <!-- ============================================================
-         APPROACH — the five Institutes.
+         PARTNERSHIP — copy, then the partner wall.
 
-         The card is `.story-card`, unchanged: same white plate, same
-         coloured category line, same bottom-aligned thumbnail as the
-         Our Stories grid. Only the track count differs (three, not
-         four), because five institutes on a four-column grid leave one
-         card stranded on its own row. The category colours were already
-         a per-institute palette in style.css, so each card arrives
-         wearing its own.
+         The home page runs these thirteen marks as a marquee, because
+         there they are one band inside a busy page and the movement is
+         what makes them read as a set. Here they ARE the page, so they
+         stand still: a four-column grid, four rows down, each mark
+         fitted into the same box it gets on the home page.
          ============================================================ -->
-    <section class="article institutes" id="institutes">
+    <article class="article longform partnership" id="partnership">
 
       <header class="article__head">
 
@@ -200,8 +198,8 @@
           <a href="index.html">Home</a>
           <span class="listing__crumb-sep">/</span>
           <div class="listing__crumb-drop">
-            <a href="Ethos.html" class="listing__crumb-toggle">
-              About
+            <a href="Approach.html" class="listing__crumb-toggle">
+              Work
               <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <div class="listing__crumb-menu" role="menu">
@@ -214,165 +212,124 @@
           <span class="listing__crumb-sep">/</span>
           <div class="listing__crumb-drop">
             <span class="listing__crumb-toggle" aria-current="page">
-              Our Institutes
+              Partnership
               <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
             <div class="listing__crumb-menu" role="menu">
-              <a href="Ethos.html" role="menuitem">Our Ethos</a>
-              <a href="#" role="menuitem">Peoples</a>
-              <a href="Institutes.html" role="menuitem" aria-current="page">Our Institutes</a>
+              <a href="Approach.html" role="menuitem">Approach</a>
+              <a href="#" role="menuitem">Our Priorities</a>
+              <a href="#" role="menuitem">Our Initiatives</a>
+              <a href="Partnership.html" role="menuitem" aria-current="page">Partnership</a>
             </div>
           </div>
           <span class="listing__crumb-sep">/</span>
         </nav>
 
-        <h1 class="article__title">Our Institutes</h1>
-        <p class="article__subtitle">Where the work lives</p>
+        <h1 class="article__title">Partnership</h1>
+        <p class="article__subtitle">Who we work with, and how</p>
       </header>
 
-      <div class="institutes__body">
-        <p class="institutes__lede">
-          Our work runs through five institutes. Each one carries the same philosophy into a
-          different corner of the sector, and each one is answerable for the change it sets out
-          to make.
-        </p>
+      <div class="longform__body">
+        <div class="longform__col">
 
+          <p class="longform__lede">
+            A great deal of what we do is introduction. Putting two organisations in a room because
+            between them they have the whole answer is often worth more than either could have done
+            with the money alone.
+          </p>
+
+          <section class="longform__section">
+            <p class="longform__eyebrow">How we partner</p>
+            <h2 class="longform__heading">Alongside, not above</h2>
+            <p class="article__text">
+              We back our partners&rsquo; judgement about their own field ahead of our own. That means
+              multi-year commitments rather than annual ones, unrestricted funding where the work
+              calls for it, and a say in design rather than only in reporting.
+            </p>
+            <p class="article__text">
+              It also means staying through the difficult stretches. A partnership that only holds
+              while a programme is going well is not a partnership; it is a grant with a longer
+              cover letter.
+            </p>
+          </section>
+
+          <section class="longform__section">
+            <p class="longform__eyebrow">What we look for</p>
+            <h2 class="longform__heading">Four things, in this order</h2>
+            <ol class="strategy-list">
+              <li class="strategy">
+                <span class="strategy__num">01</span>
+                <div class="strategy__text">
+                  <h3 class="strategy__name">A shared measure of success</h3>
+                  <p class="strategy__desc">We agree at the start what would count as the work having
+                    mattered, and we agree it together rather than imposing it.</p>
+                </div>
+              </li>
+              <li class="strategy">
+                <span class="strategy__num">02</span>
+                <div class="strategy__text">
+                  <h3 class="strategy__name">Something we can add beyond money</h3>
+                  <p class="strategy__desc">Convening, expertise, shared services, or an introduction
+                    that would not otherwise have happened.</p>
+                </div>
+              </li>
+              <li class="strategy">
+                <span class="strategy__num">03</span>
+                <div class="strategy__text">
+                  <h3 class="strategy__name">A path to standing on its own</h3>
+                  <p class="strategy__desc">We ask what would still be running if we stopped funding,
+                    and we design backwards from the answer.</p>
+                </div>
+              </li>
+              <li class="strategy">
+                <span class="strategy__num">04</span>
+                <div class="strategy__text">
+                  <h3 class="strategy__name">Willingness to say what went wrong</h3>
+                  <p class="strategy__desc">The learning we publish is only worth reading if it
+                    includes the parts that did not work.</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+        </div>
       </div>
 
-      <!-- ── the five institutes, as full-width cards ─────────────
-           Picture on the left, the copy and its Discover pill on the
-           right. Deliberately not the story card: these five are the
-           spine of the section rather than twelve results in a grid,
-           and at this size each one can carry a paragraph and its
-           focus tags instead of a single line. -->
-      <div class="institutes__list">
-          <article class="institute-card">
-            <div class="institute-card__media">
-              <img src="assets/images/news-3.png" alt="Institute of Education Excellence" loading="lazy" />
-            </div>
-            <div class="institute-card__body">
-              <p class="institute-card__eyebrow" data-cat="education-excellence">Education Excellence</p>
-              <h2 class="institute-card__title">Institute of Education Excellence</h2>
-              <p class="institute-card__lede">Investing in teachers, schools and students so that education reaches further than the classroom.</p>
-              <p class="institute-card__text">Programmes that treat education as more than attainment — life exploration, compassionate communication, and the confidence to act on what a young person cares about.</p>
-              <ul class="story-card__tags institute-card__tags">
-                <li class="story-card__tag">Education</li>
-                <li class="story-card__tag">Capacity Building</li>
-              </ul>
-              <a href="Institute.html" class="btn-pill institute-card__cta">
-                Discover
-                <span class="btn-pill__arrow" aria-hidden="true"></span>
-              </a>
-            </div>
-          </article>
+      <!-- ── the partner wall ─────────────────────────────────────── -->
+      <section class="partners" aria-labelledby="partners-title">
+        <p class="partners__label" id="partners-title">Partners &amp; collaborators</p>
+        <ul class="partners__grid">
+          <li class="partners__item"><img src="assets/images/partners/partner-1.svg" alt="Lane Crawford" loading="lazy" /></li>
+          <li class="partners__item"><img src="assets/images/partners/partner-2.svg" alt="Chow Sang Sang" loading="lazy" /></li>
+          <li class="partners__item"><img src="assets/images/partners/partner-3.svg" alt="Emphasis" loading="lazy" /></li>
+          <li class="partners__item"><img src="assets/images/partners/partner-4.svg" alt="Chinachem Group" loading="lazy" /></li>
+          <li class="partners__item"><img src="assets/images/partners/partner-5.svg" alt="Harbour Plaza" loading="lazy" /></li>
+          <li class="partners__item"><img src="assets/images/partners/partner-6.svg" alt="The Hong Kong Polytechnic University" loading="lazy" /></li>
+          <li class="partners__item" style="--s: .69"><img src="assets/images/partners/partner-7.svg" alt="Siemens" loading="lazy" /></li>
+          <li class="partners__item" style="--s: .75"><img src="assets/images/partners/partner-8.svg" alt="Tencent" loading="lazy" /></li>
+          <li class="partners__item" style="--s: .61"><img src="assets/images/partners/partner-9.svg" alt="Uber" loading="lazy" /></li>
+          <li class="partners__item" style="--s: .78"><img src="assets/images/partners/partner-10.svg" alt="Amazon Pay" loading="lazy" /></li>
+          <li class="partners__item" style="--s: .58"><img src="assets/images/partners/partner-12.svg" alt="Netflix" loading="lazy" /></li>
+        </ul>
+      </section>
 
-          <article class="institute-card">
-            <div class="institute-card__media">
-              <img src="assets/images/news-2.png" alt="Institute of Impact Strategy" loading="lazy" />
-            </div>
-            <div class="institute-card__body">
-              <p class="institute-card__eyebrow" data-cat="impact-strategy">Impact Strategy</p>
-              <h2 class="institute-card__title">Institute of Impact Strategy</h2>
-              <p class="institute-card__lede">Turning capital, evidence and networks into strategies the sector can carry on without us.</p>
-              <p class="institute-card__text">Emergency support when a shock hits, and the slower work of fellowship, shared learning and measurement that lets a small organisation plan past the current funding cycle.</p>
-              <ul class="story-card__tags institute-card__tags">
-                <li class="story-card__tag">Impact Strategy</li>
-                <li class="story-card__tag">Catalyst for Collaboration</li>
-              </ul>
-              <a href="Institute.html" class="btn-pill institute-card__cta">
-                Discover
-                <span class="btn-pill__arrow" aria-hidden="true"></span>
-              </a>
-            </div>
-          </article>
-
-          <article class="institute-card">
-            <div class="institute-card__media">
-              <img src="assets/images/news-6.png" alt="Institute of Mindful Living" loading="lazy" />
-            </div>
-            <div class="institute-card__body">
-              <p class="institute-card__eyebrow" data-cat="mindful-living">Mindful Living</p>
-              <h2 class="institute-card__title">Institute of Mindful Living</h2>
-              <p class="institute-card__lede">Cultivating awareness and compassionate communication in schools, families and workplaces.</p>
-              <p class="institute-card__text">Practices that begin with the individual and end up changing how a classroom, a household or a team speaks to itself.</p>
-              <ul class="story-card__tags institute-card__tags">
-                <li class="story-card__tag">Mindful Living</li>
-                <li class="story-card__tag">Issues-focused</li>
-              </ul>
-              <a href="Institute.html" class="btn-pill institute-card__cta">
-                Discover
-                <span class="btn-pill__arrow" aria-hidden="true"></span>
-              </a>
-            </div>
-          </article>
-
-          <article class="institute-card">
-            <div class="institute-card__media">
-              <img src="assets/images/news-7.png" alt="Institute of Wellbeing" loading="lazy" />
-            </div>
-            <div class="institute-card__body">
-              <p class="institute-card__eyebrow" data-cat="wellbeing">Wellbeing</p>
-              <h2 class="institute-card__title">Institute of Wellbeing</h2>
-              <p class="institute-card__lede">Supporting the physical and mental health of carers, patients and the communities around them.</p>
-              <p class="institute-card__text">Work aimed at the people who hold others up — carers, frontline staff, families — and at the services that too often reach them last.</p>
-              <ul class="story-card__tags institute-card__tags">
-                <li class="story-card__tag">Wellbeing</li>
-                <li class="story-card__tag">Issues-focused</li>
-              </ul>
-              <a href="Institute.html" class="btn-pill institute-card__cta">
-                Discover
-                <span class="btn-pill__arrow" aria-hidden="true"></span>
-              </a>
-            </div>
-          </article>
-
-          <article class="institute-card">
-            <div class="institute-card__media">
-              <img src="assets/images/news-4.png" alt="Above and Beyond Institute" loading="lazy" />
-            </div>
-            <div class="institute-card__body">
-              <p class="institute-card__eyebrow" data-cat="above-beyond">Above and Beyond</p>
-              <h2 class="institute-card__title">Above and Beyond Institute</h2>
-              <p class="institute-card__lede">Backing the work that falls between the usual categories, and the people prepared to try it.</p>
-              <p class="institute-card__text">Where an idea does not fit an existing pillar but plainly needs doing, this is the institute that takes it on.</p>
-              <ul class="story-card__tags institute-card__tags">
-                <li class="story-card__tag">Capacity Building</li>
-                <li class="story-card__tag">Issues-focused</li>
-              </ul>
-              <a href="Institute.html" class="btn-pill institute-card__cta">
-                Discover
-                <span class="btn-pill__arrow" aria-hidden="true"></span>
-              </a>
-            </div>
-          </article>
-      </div>
-
-      <div class="institutes__foot">
-        <p class="institutes__foot-text">
-          The five institutes are where the work lives; how we go about it is set out under
-          Approach. Everything they publish sits together under Impact.
+      <div class="partnership__foot">
+        <p class="partnership__foot-text">
+          If you are working on something we should know about, the fastest route is an email.
         </p>
-        <div class="institutes__cta">
-          <a href="Approach.html" class="btn-pill">
-            Our approach
-            <span class="btn-pill__arrow" aria-hidden="true"></span>
-          </a>
-          <a href="Listing.html" class="btn-pill">
-            Our stories
-            <span class="btn-pill__arrow" aria-hidden="true"></span>
-          </a>
+        <div class="longform__cta partnership__cta">
           <a href="Connect.html" class="btn-pill">
             Connect
+            <span class="btn-pill__arrow" aria-hidden="true"></span>
+          </a>
+          <a href="Approach.html" class="btn-pill">
+            Our approach
             <span class="btn-pill__arrow" aria-hidden="true"></span>
           </a>
         </div>
       </div>
 
-    </section>
-
-
-
-
+    </article>
 
   </main>
 

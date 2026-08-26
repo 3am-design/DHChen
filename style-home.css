@@ -3610,6 +3610,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .article__related-desc { color: var(--c-grey); }
 
 /* ── connect ───────────────────────────────────────────────────── */
+:where(.inner-v3) .partnership__foot-text,
 :where(.inner-v3) .legal__heading,
 :where(.inner-v3) .legal__meta,
 :where(.inner-v3) .sitemap__group-title,
@@ -4509,4 +4510,109 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 @media (max-width: 599px) {
   .sitemap__body { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ================================================================
+   17 — PARTNERSHIP  (the partner wall, standing still)
+
+   The home page runs the same thirteen marks as a marquee (§06). That
+   is right there: the row is one band inside a long page, and the
+   movement is what makes a strip of unrelated logos read as a set.
+
+   On this page the marks ARE the content, so they stop moving — a
+   reader who came to see who the Foundation works with should be able
+   to read the list, and a moving list cannot be read. Four columns,
+   four rows, no animation and no duplicate strips.
+   ================================================================ */
+
+.partnership { --sec-gap: clamp(56px, 5.7vw, 110px); }
+
+.partners {
+  max-width: 1820px;
+  margin: var(--sec-gap) auto 0;
+  padding-top: 44px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.partners__label {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+  color: var(--c-orange);
+  text-align: center;
+}
+
+/* Four columns, and every mark sits on one of them — including the
+   thirteenth, which starts the fourth row rather than floating in the
+   middle of it. Four columns of four, four, four and one.
+
+   Grid, not the flex wall this was briefly built as: flex could centre
+   a short last row but that is exactly what breaks the column reading,
+   because the one mark left over no longer lines up with anything
+   above it. On the grid the short row is plainly the end of a list.
+
+   No cell borders, deliberately: a ruled grid with three empty cells
+   in the last row looks broken, and the ruling would have to be faked
+   back in with a pseudo-element for no gain. */
+.partners__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(36px, 3.8vw, 72px);
+  align-items: center;
+  max-width: 1180px;
+  margin: 48px auto 0;
+}
+
+/* The cell is a quarter of the row; the mark inside it is fitted to the
+   same box the home page uses, a size up for a page where the marks are
+   the subject. `--s` is the per-logo optical correction and is set in
+   the markup exactly as it is on the home page — it belongs to the
+   logo, not to the layout, and custom properties inherit, so the box
+   below reads it off the item. */
+.partners__item {
+  --pw: 180px;
+  --ph: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.partners__item img {
+  display: block;
+  max-width: calc(var(--pw) * var(--s, 1));
+  max-height: calc(var(--ph) * var(--s, 1));
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  /* flattened to the page's grey the same way §06 does it: brightness(0)
+     takes every mark — PNG or SVG, black or coloured — to solid black
+     with its alpha intact, and invert(50.2%) lifts that to #808080 */
+  filter: brightness(0) invert(50.2%);
+}
+
+/* ── closing line + pills ────────────────────────────────────────── */
+.partnership__foot {
+  max-width: 890px;
+  margin: var(--sec-gap) auto 0;
+  text-align: center;
+}
+.partnership__foot-text {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--c-grey);
+}
+.partnership__cta { justify-content: center; margin-top: 32px; }
+
+@media (max-width: 1023px) {
+  .partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 800px; }
+}
+@media (max-width: 599px) {
+  .partners__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 32px; }
+  .partners__item { --pw: 130px; --ph: 46px; }
+  .partnership__foot { text-align: left; }
+  .partnership__cta { justify-content: flex-start; }
 }
