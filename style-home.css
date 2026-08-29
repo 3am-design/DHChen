@@ -4616,3 +4616,266 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .partnership__foot { text-align: left; }
   .partnership__cta { justify-content: flex-start; }
 }
+
+
+/* ================================================================
+   DESKTOP READABILITY FLOOR
+
+   The desktop page is intentionally zoomed as a whole on narrower or
+   short windows. That keeps the 1920 x 1000 composition intact, but it
+   also used to shrink 16px running copy to as little as 10.8px on a
+   1600 x 660 viewport (`.9 width x .75 height`). Keep the composition
+   zoom and compensate the type instead of making the whole layout larger.
+
+   These values live in the zoomed coordinate space: after `body` zoom is
+   applied they land at a real 15px type size with at least 22px leading.
+   The floor applies to the whole visible desktop interface, including its
+   labels, dates, breadcrumbs, categories, chips and legal copy. Hierarchy is
+   kept with colour, weight and spacing instead of type that becomes hard to
+   read. Mobile has its own type system and stays untouched.
+   ================================================================ */
+@media (min-width: 768px) {
+  :root {
+    --copy-readable-min: calc(15px / var(--zoom));
+    --copy-leading-min: calc(22px / var(--zoom));
+  }
+
+  /* Standard running copy: 16px (15px on listing cards). */
+  .hero__description,
+  .challenge__body,
+  .approach-card__body,
+  .article__text,
+  .panel__copy,
+  .panel__note,
+  .card-v3__desc,
+  .ventures__text,
+  .funding__text,
+  .connect__value,
+  .ethos__value-desc,
+  .strategy__desc,
+  .institute__text,
+  .institutes__text,
+  .institute-card__text,
+  .institutes__foot-text,
+  .search__count,
+  .s-result__desc,
+  .search__empty,
+  .story__fact-value,
+  .legal__toc-list a,
+  .legal__list li,
+  .sitemap__links a,
+  .sitemap__links span,
+  .partnership__foot-text {
+    font-size: max(16px, var(--copy-readable-min));
+    line-height: max(25px, var(--copy-leading-min));
+  }
+
+  /* Copy that starts one step smaller keeps that distinction at 1:1. */
+  .story-card__desc {
+    font-size: max(15px, var(--copy-readable-min));
+    line-height: max(22px, var(--copy-leading-min));
+  }
+
+  .strategy__note {
+    font-size: max(15px, var(--copy-readable-min));
+    line-height: max(24px, var(--copy-leading-min));
+  }
+
+  .sitemap__links .is-sub {
+    font-size: max(15px, var(--copy-readable-min));
+    line-height: max(25px, var(--copy-leading-min));
+  }
+
+  .article__caption {
+    font-size: max(16px, var(--copy-readable-min));
+  }
+
+  .article__related-name {
+    font-size: max(16px, var(--copy-readable-min));
+    line-height: max(24px, var(--copy-leading-min));
+  }
+
+  .card-v3__desc {
+    line-height: max(26px, var(--copy-leading-min));
+  }
+
+  /* This legacy carousel uses a larger copy step on full desktop. */
+  .news-card__description {
+    font-size: max(22px, var(--copy-readable-min));
+  }
+
+  /* The primary copy step remains larger whenever the screen allows it. */
+  .hero-v3__body,
+  .panel__label,
+  .panel__question,
+  .article__subtitle,
+  .connect__funding-text,
+  .institute-card__lede {
+    font-size: max(18px, var(--copy-readable-min));
+  }
+
+  .hero-v3__body {
+    line-height: max(30px, var(--copy-leading-min));
+  }
+
+  .connect__funding-text,
+  .institute-card__lede {
+    line-height: max(28px, var(--copy-leading-min));
+  }
+
+  /* Callout and testimonial prose uses a larger 20/30 step at 1:1. */
+  .article__highlight p,
+  .article__testimonial-quote,
+  .article__testimonial-name {
+    font-size: max(20px, var(--copy-readable-min));
+  }
+
+  .article__highlight p,
+  .article__testimonial-quote {
+    line-height: max(30px, var(--copy-leading-min));
+  }
+
+  /* Compact descriptive copy is still prose, rather than a UI label. */
+  .article__related-desc {
+    font-size: max(14px, var(--copy-readable-min));
+    line-height: max(20px, var(--copy-leading-min));
+  }
+
+  /* Display and navigation text that can still cross below 15px after the
+     short-window zoom. Keep each component's original desktop step whenever
+     it is already larger than the readability floor. */
+  .panel__crumbs {
+    font-size: max(calc(var(--t-lede) * 0.7), var(--copy-readable-min));
+  }
+
+  .panel__bullets li,
+  .card-v3__title,
+  .bullet-list__item,
+  .pillar-card__body,
+  .news-card__description {
+    font-size: max(22px, var(--copy-readable-min));
+  }
+
+  .bullet-list--sm .bullet-list__item,
+  .article__testimonial-name {
+    font-size: max(20px, var(--copy-readable-min));
+  }
+
+  .pager__num {
+    font-size: max(19px, var(--copy-readable-min));
+  }
+
+  .news-v3__filter {
+    font-size: max(clamp(16px, 1.15vw, 22px), var(--copy-readable-min));
+  }
+
+  .opening__cite-name {
+    font-size: max(clamp(16px, 1.25vw, 24px), var(--copy-readable-min));
+  }
+
+  .opening__cite-years {
+    font-size: max(clamp(12px, 0.83vw, 16px), var(--copy-readable-min));
+  }
+
+  .opening__skip {
+    font-size: max(clamp(13px, 0.94vw, 16px), var(--copy-readable-min));
+  }
+
+  .challenge__circle-title {
+    font-size: max(clamp(16px, 8cqw, 32px), var(--copy-readable-min));
+  }
+
+  /* Primary and secondary interface text. */
+  .footer-v3__nav a,
+  .footer__nav-link,
+  .news__filter {
+    font-size: max(18px, var(--copy-readable-min));
+  }
+
+  .search-overlay__hot a {
+    font-size: max(17px, var(--copy-readable-min));
+  }
+
+  .nav--v3 .nav__mega-links a,
+  .btn-pill,
+  .pager__total,
+  .article__testimonial-role,
+  .longform__eyebrow,
+  .partners__label,
+  .news-card__category,
+  .label,
+  .hero__description,
+  .challenge__body,
+  .approach-card__body,
+  .footer__tagline {
+    font-size: max(16px, var(--copy-readable-min));
+  }
+
+  .nav__lang,
+  .listing__crumb,
+  .listing__crumb-toggle,
+  .article__pill,
+  .article__download,
+  .challenge__circle-tag {
+    font-size: max(15px, var(--copy-readable-min));
+  }
+
+  .btn-circle,
+  .search-overlay__label,
+  .listing__filter-menu a,
+  .listing__crumb-menu a,
+  .listing__clear,
+  .article__tag,
+  .article__carousel-count,
+  .article__related-title,
+  .connect__label,
+  .connect__funding-eyebrow,
+  .ethos__value-num,
+  .s-tab,
+  .legal__meta,
+  .legal__also-links a,
+  .nav--v3 .nav__mega-label {
+    font-size: max(14px, var(--copy-readable-min));
+  }
+
+  .footer-v3__legal a,
+  .footer__legal-link,
+  .news-card__tag,
+  .s-result__path,
+  .story__fact-label,
+  .legal__toc-label,
+  .legal__also-label {
+    font-size: max(13px, var(--copy-readable-min));
+  }
+
+  .card-v3__cat,
+  .story-card__category,
+  .institute-card__eyebrow,
+  .s-tab__count,
+  .s-result__kind,
+  .article__send--copied::after,
+  .cursor__label {
+    font-size: max(12px, var(--copy-readable-min));
+  }
+
+  .card-v3__tags li,
+  .story-card__tag {
+    font-size: max(11px, var(--copy-readable-min));
+  }
+
+  .listing__filter-toggle {
+    font-size: max(16px, var(--copy-readable-min));
+  }
+
+  .footer-v3__copyright,
+  .footer-v3__copyright *,
+  .footer__copyright p {
+    font-size: max(12px, var(--copy-readable-min));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+  .news-card__description {
+    font-size: max(17px, var(--copy-readable-min));
+  }
+}
