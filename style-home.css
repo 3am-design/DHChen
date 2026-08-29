@@ -1595,8 +1595,23 @@ body.home-v3[data-intro='open'] .nav__logo {
 }
 .lines.is-on .lines__line { opacity: 1; scale: 1 1; }
 
+/* Once a panel graphic has completed, script fades the whole motif away,
+   resets its child transitions while it is invisible, then fades the next
+   pass in. The copy stays still: only 點 · 線 · 面 loops. */
+.panel [data-motion] {
+  opacity: 1;
+  transition: opacity 700ms ease;
+}
+.panel [data-motion].is-loop-fading { opacity: 0; }
+.panel [data-motion].is-loop-reset .dots__dot,
+.panel [data-motion].is-loop-reset .dotrow__dot,
+.panel [data-motion].is-loop-reset .lines__line {
+  transition: none !important;
+}
+
 /* Reduced motion — hold the finished frame, no drift, no travel */
 @media (prefers-reduced-motion: reduce) {
+  .panel [data-motion] { opacity: 1; transition: none; }
   .dots__dot, .dotrow__dot, .lines__line, .colourbar { transition: none; animation: none; }
 }
 /* Bettering — the photo takes half the panel, dead on the grid's middle.

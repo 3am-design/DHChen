@@ -1599,6 +1599,73 @@ window.__pageZoom = function () {
      separate lit state at all, so they play the moment they're cued. */
   const PANEL_HOLD = { dots: 1400, dotrow: 0, lines: 0 };
 
+  /* The three motifs loop independently after their first pass. Each cycle
+     holds on the completed artwork, fades the whole graphic out, resets its
+     child transitions while invisible, then fades the new pass in. Keeping
+     the reset behind container opacity avoids the reverse-animation flash
+     that removing `is-on` on its own would cause. */
+  const LOOP_FADE = 700;
+  const LOOP_REST = 1300;
+  const LOOP_RUN  = { dots: 3800, dotrow: 3500, lines: 3200 };
+
+  function startMotionLoop(graphic) {
+    if (!graphic || graphic.dataset.looping) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const kind = graphic.dataset.motion;
+    if (!LOOP_RUN[kind]) return;
+    graphic.dataset.looping = '1';
+
+    function later(fn, delay) {
+      return window.setTimeout(fn, delay);
+    }
+
+    function fadeOut() {
+      graphic.classList.add('is-loop-fading');
+      later(resetAndReplay, LOOP_FADE);
+    }
+
+    function scheduleNext(runDelay) {
+      later(fadeOut, runDelay + LOOP_RUN[kind] + LOOP_REST);
+    }
+
+    function resetAndReplay() {
+      /* Freeze the children for one layout frame while their start positions
+         are restored. They remain hidden behind `is-loop-fading`. */
+      graphic.classList.add('is-loop-reset');
+      graphic.classList.remove('is-lit', 'is-on');
+      void graphic.offsetWidth;
+      graphic.classList.remove('is-loop-reset');
+
+      graphic.classList.add('is-lit');
+      if (kind === 'dots') {
+        /* Let the scattered constellation finish fading in and drift for a
+           beat before it gathers again. */
+        const gatherAt = LOOP_FADE + PANEL_HOLD.dots;
+        later(function () { graphic.classList.add('is-on'); }, gatherAt);
+        scheduleNext(gatherAt);
+      } else {
+        /* 線 and 面 have no separate opening frame: their drawing motion is
+           the thing that fades back in. */
+        graphic.classList.add('is-on');
+        scheduleNext(0);
+      }
+
+      /* Removing this last starts the shared 700ms fade-in. */
+      graphic.classList.remove('is-loop-fading');
+    }
+
+    /* First pass keeps the existing panel timing exactly. */
+    graphic.classList.add('is-lit');
+    const firstAt = PANEL_HOLD[kind] || 0;
+    if (firstAt) {
+      later(function () { graphic.classList.add('is-on'); }, firstAt);
+    } else {
+      graphic.classList.add('is-on');
+    }
+    scheduleNext(firstAt);
+  }
+
   /* --- the Bettering photo, as four frames ------------------------
      Each frame pushes in for SLIDE ms and is then cross-faded out under
      the next one (the fade itself is 1.4s, in the stylesheet). The zoom
@@ -1686,10 +1753,7 @@ window.__pageZoom = function () {
         }, ZOOM_IN);
       }
       window.setTimeout(function () {
-        graphic.classList.add('is-lit');
-        const hold = PANEL_HOLD[graphic.dataset.motion] || 0;
-        if (!hold) return void graphic.classList.add('is-on');
-        window.setTimeout(function () { graphic.classList.add('is-on'); }, hold);
+        startMotionLoop(graphic);
       }, at);
     }
   });
