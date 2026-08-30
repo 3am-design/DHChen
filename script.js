@@ -10,8 +10,8 @@ window.scrollTo(0, 0);
 
 /* ----------------------------------------------------------------
    0a. Page zoom — measured, not read.
-   Above 768px `body` carries `zoom: var(--zoom)` — 0.9 for the 1920 design
-   below 1800px, times a further step down on a short window — and anything
+   Above 768px `body` carries `zoom: var(--zoom)` — a width ladder from 0.9
+   to 1 near the 1920 design, times a further step down on a short window — and anything
    that converts a measured rect back into a value to be *written* on a
    zoomed element (a translate, a width) has to divide that zoom out again.
 
@@ -37,6 +37,94 @@ window.__pageZoom = function () {
   const z = b.getBoundingClientRect().width / b.offsetWidth;
   return (isFinite(z) && z > 0) ? z : 1;
 };
+
+/* ----------------------------------------------------------------
+   0b. Placeholder links — route only destinations that actually exist.
+
+   The static prototype contains planned pages, social profiles and files as
+   href="#". Leaving those live makes a click jump to the top and look broken.
+   Known routes are repaired here; genuinely unpublished destinations remain
+   visible but are announced and styled as unavailable. Listing filter options
+   are controls rather than destinations and are deliberately excluded.
+   ---------------------------------------------------------------- */
+(function () {
+  const tc = document.documentElement.lang === 'zh-Hant';
+  const unavailable = tc ? '此頁尚未提供。' : 'This page is not available yet.';
+  const englishFallback = tc ? '（英文頁面）' : '';
+
+  function key(text) {
+    return String(text || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  const routes = {
+    '中文': 'index_tc.html',
+    '我們的工作': 'Approach.html',
+    '工作方式': 'Approach.html',
+    '夥伴同行': 'Partnership.html',
+    '學習與洞察': 'Learning.html',
+    '我們的故事': 'Listing_tc.html',
+    '最新消息': 'News.html',
+    '關於我們': 'Ethos.html',
+    '基金會源起': 'Story.html',
+    '我們的使命': 'Ethos.html',
+    '核心價值': 'Ethos.html',
+    '旗下機構': 'Institutes.html',
+    '聯繫我們': 'Connect.html',
+    '私隱政策': 'Privacy.html',
+    '免責聲明': 'Disclaimer.html',
+    '網站地圖': 'Sitemap.html',
+    '無障礙瀏覽': 'Accessibility.html'
+  };
+
+  function route(a, href, external) {
+    a.setAttribute('href', href);
+    if (external) {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    } else if (tc && !/(_tc\.html|index_tc\.html)(?:[?#]|$)/.test(href)) {
+      a.setAttribute('hreflang', 'en');
+      a.dataset.languageFallback = 'en';
+      if (!a.getAttribute('title')) a.setAttribute('title', englishFallback.replace(/[（）]/g, ''));
+    }
+  }
+
+  function disable(a) {
+    a.removeAttribute('href');
+    a.classList.add('link-unavailable');
+    a.setAttribute('aria-disabled', 'true');
+    a.setAttribute('tabindex', '-1');
+    if (!a.getAttribute('title')) a.setAttribute('title', unavailable);
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+  }
+
+  /* The Scholarship destination is already named in the adjacent copy. */
+  document.querySelectorAll('.ventures__col').forEach(function (col) {
+    const heading = key((col.querySelector('.ventures__title') || {}).textContent);
+    const cta = col.querySelector('a.btn-pill[href="#"]');
+    if (cta && (heading === 'scholarship' || heading === '獎學金')) {
+      route(cta, 'http://www.dhcfscholarship.com/', true);
+    }
+  });
+
+  const searches = {
+    '獎學金': 'Search.html?q=Scholarship',
+    '創新項目資助': 'Search.html?q=Funding+for+innovative',
+    '加入我們': 'Search.html?q=Join+us',
+    '活動': 'Search.html?q=Events'
+  };
+
+  document.querySelectorAll('a[href="#"]').forEach(function (a) {
+    if (a.closest('.listing__filter-menu')) return;
+    const label = key(a.textContent);
+    let href = routes[label];
+    if (!href && a.closest('.search-overlay__hot')) href = searches[label];
+    if (href) route(a, href, false);
+    else disable(a);
+  });
+})();
 
 /* ----------------------------------------------------------------
    0. Lenis smooth scrolling — inertia-smoothed wheel/touch scroll.
@@ -190,7 +278,8 @@ window.__pageZoom = function () {
   function revealFrom(el) {
     if (!el) return;
     const r = el.getBoundingClientRect();
-    /* the overlay lives inside the zoomed body (`zoom: .9` under 1800px),
+    /* the overlay lives inside the zoomed body (using the responsive width
+       and short-window zoom ladders),
        so its own coordinate space is 1/zoom of what the rect reports */
     const z = window.__pageZoom();
     const x = ((r.left + r.width / 2) / z).toFixed(1) + 'px';
@@ -629,6 +718,68 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
+   4b. Home V3 news tabs — filter the one-row card rail.
+   ---------------------------------------------------------------- */
+(function () {
+  const tabs = Array.prototype.slice.call(document.querySelectorAll('.news-v3__filter'));
+  const grid = document.querySelector('.news-v3__grid');
+  if (!tabs.length || !grid) return;
+  const cards = Array.prototype.slice.call(grid.querySelectorAll('.card-v3'));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = null;
+
+  const live = document.createElement('span');
+  live.className = 'visually-hidden';
+  live.setAttribute('aria-live', 'polite');
+  grid.insertAdjacentElement('afterend', live);
+
+  function select(tab) {
+    const filter = tab.dataset.filter || 'all';
+    tabs.forEach(function (t) {
+      const on = t === tab;
+      t.classList.toggle('news-v3__filter--active', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+
+    if (timer) window.clearTimeout(timer);
+    grid.classList.add('is-filtering');
+    grid.setAttribute('aria-busy', 'true');
+    timer = window.setTimeout(function () {
+      let shown = 0;
+      cards.forEach(function (card) {
+        const on = filter === 'all' || card.dataset.category === filter;
+        card.hidden = !on;
+        if (on) shown++;
+      });
+      grid.scrollLeft = 0;
+      grid.classList.remove('is-filtering');
+      grid.setAttribute('aria-busy', 'false');
+      live.textContent = document.documentElement.lang === 'zh-Hant'
+        ? '顯示 ' + shown + ' 項內容'
+        : shown + (shown === 1 ? ' item shown' : ' items shown');
+    }, reduce ? 0 : 180);
+  }
+
+  tabs.forEach(function (tab, index) {
+    tab.tabIndex = tab.getAttribute('aria-selected') === 'true' ? 0 : -1;
+    tab.addEventListener('click', function () { select(tab); });
+    tab.addEventListener('keydown', function (e) {
+      let next = null;
+      if (e.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      if (e.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = tabs.length - 1;
+      if (next === null) return;
+      e.preventDefault();
+      tabs[next].focus();
+      select(tabs[next]);
+    });
+  });
+})();
+
+
+/* ----------------------------------------------------------------
    4.5 Hero 3D photo field — the landing photos fly from deep space
    toward the viewer (ported from the 3am portfolio scene). Planes
    recycle once they pass the camera; opacity eases in at the far
@@ -872,7 +1023,7 @@ window.__pageZoom = function () {
 
   document.body.classList.add('has-custom-cursor');
 
-  /* the page is zoomed to 90% below 1800px — pointer coordinates are in
+  /* the page is zoomed by the responsive width/height ladders — pointer coordinates are in
      real viewport px while the fixed cursor lives in the zoomed canvas,
      so divide everything by the effective zoom */
   let zoom = 1;
@@ -1010,7 +1161,10 @@ window.__pageZoom = function () {
            unrelated shape rather than as the button's own outline */
         el.closest('.article__carousel-nav') ||
         el.closest('.search-overlay')) return;
-    el.addEventListener('mouseenter', function () { engage(el); });
+    el.addEventListener('mouseenter', function () {
+      if (el.disabled || el.getAttribute('aria-disabled') === 'true') return;
+      engage(el);
+    });
     el.addEventListener('mouseleave', release);
   });
 
@@ -1876,9 +2030,10 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   8.5 Layout grid overlay — press "G" to toggle the design grid
-   (6 cols / 50px margins / 40px gutter; light orange). A dev aid for
-   checking alignment. Ignored while typing in a field.
+   8.5 Layout grid overlay — press "G" to toggle the live design grid.
+   CSS decides whether the page is using 12, 6 or 4 columns; twelve nodes
+   are built once and the unused columns are hidden at each breakpoint.
+   Ignored while typing in a field.
    ---------------------------------------------------------------- */
 (function () {
   let grid = null;
@@ -1888,7 +2043,7 @@ window.__pageZoom = function () {
     grid.setAttribute('aria-hidden', 'true');
     const inner = document.createElement('div');
     inner.className = 'layout-grid__inner';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 12; i++) {
       const col = document.createElement('div');
       col.className = 'layout-grid__col';
       inner.appendChild(col);
@@ -1993,6 +2148,7 @@ window.__pageZoom = function () {
     /* the toggle's editable label (filters wrap it in a <span>; the breadcrumb
        has a bare text node before the chevron) */
     const labelSpan = toggle.querySelector('span');
+    if (labelSpan && !d.dataset.dropdownLabel) d.dataset.dropdownLabel = labelSpan.textContent.trim();
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
       const open = d.classList.toggle('is-open');
@@ -2009,12 +2165,198 @@ window.__pageZoom = function () {
         else if (toggle.firstChild) toggle.firstChild.nodeValue = text + ' ';
         d.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+        d.dispatchEvent(new CustomEvent('dropdownchange', {
+          bubbles: true,
+          detail: { item: item, value: text }
+        }));
       });
     });
   });
 
   document.addEventListener('click', function () { closeAll(null); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(null); });
+})();
+
+
+/* ----------------------------------------------------------------
+   10b. Story grids — real filters, clear state and four-card pagination.
+
+   Category and tag data are read from the card DOM. No year is inferred:
+   when cards carry no data-year, that control is visibly disabled instead of
+   returning a made-up result. The same pager also covers Institute pages that
+   have a story grid but no filter bar.
+   ---------------------------------------------------------------- */
+(function () {
+  const grids = Array.prototype.slice.call(document.querySelectorAll('.listing__grid'));
+  if (!grids.length) return;
+  const isTC = document.documentElement.lang === 'zh-Hant';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PAGE_SIZE = 4;
+
+  function value(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/&/g, ' and ')
+      .replace(/[’']/g, '')
+      .replace(/[-–—]/g, ' ')
+      .replace(/\binstitute\b/g, ' ')
+      .replace(/[^a-z0-9\u3400-\u9fff]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function scrollToGrid(grid) {
+    const top = Math.max(0, grid.getBoundingClientRect().top + window.scrollY - 110);
+    window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  grids.forEach(function (grid) {
+    const scope = grid.parentElement;
+    const pager = scope && scope.querySelector('.listing__pager:not(.search__pager)');
+    const cards = Array.prototype.slice.call(grid.querySelectorAll('.story-card'));
+    if (!pager || !cards.length) return;
+
+    const prev = pager.querySelector('.pager__arrow--prev');
+    const next = pager.querySelector('.pager__arrow--next');
+    const num = pager.querySelector('.pager__num');
+    const total = pager.querySelector('.pager__total');
+    const filters = scope.querySelector('.listing__filters');
+    const clear = filters && filters.querySelector('.listing__clear');
+    const drops = filters
+      ? Array.prototype.slice.call(filters.querySelectorAll('[data-dropdown]'))
+      : [];
+    const kinds = ['focus', 'pillar', 'institute', 'year'];
+    const selected = {};
+    let page = 1;
+
+    const empty = document.createElement('p');
+    empty.className = 'listing__empty';
+    empty.hidden = true;
+    empty.textContent = isTC
+      ? '暫時沒有符合所選條件的內容，請調整篩選或清除全部。'
+      : 'No stories match those filters. Adjust a selection or clear all.';
+    grid.insertAdjacentElement('afterend', empty);
+
+    const live = document.createElement('span');
+    live.className = 'visually-hidden';
+    live.setAttribute('aria-live', 'polite');
+    pager.insertAdjacentElement('afterend', live);
+
+    function category(card) {
+      const el = card.querySelector('.story-card__category');
+      return value((el && el.textContent) + ' ' + (el && el.dataset.cat));
+    }
+
+    function tags(card) {
+      return Array.prototype.map.call(card.querySelectorAll('.story-card__tag'), function (tag) {
+        return value(tag.textContent);
+      });
+    }
+
+    function matches(card) {
+      const cat = category(card);
+      const cardTags = tags(card);
+      if (selected.focus && cat.indexOf(value(selected.focus)) === -1) return false;
+      if (selected.institute && cat.indexOf(value(selected.institute)) === -1) return false;
+      if (selected.pillar && cardTags.indexOf(value(selected.pillar)) === -1) return false;
+      if (selected.year && value(card.dataset.year) !== value(selected.year)) return false;
+      return true;
+    }
+
+    function render() {
+      const filtered = cards.filter(matches);
+      const pages = Math.ceil(filtered.length / PAGE_SIZE);
+      page = pages ? Math.min(page, pages) : 1;
+      const first = (page - 1) * PAGE_SIZE;
+      const pageCards = filtered.slice(first, first + PAGE_SIZE);
+
+      cards.forEach(function (card) {
+        const on = pageCards.indexOf(card) !== -1;
+        card.hidden = !on;
+        if (on) card.classList.add('is-in');
+      });
+
+      empty.hidden = filtered.length !== 0;
+      pager.hidden = pages <= 1;
+      if (num) num.textContent = String(page);
+      if (total) total.textContent = isTC ? '／ 共 ' + Math.max(pages, 1) + ' 頁' : 'of ' + Math.max(pages, 1);
+      if (prev) prev.disabled = page <= 1;
+      if (next) next.disabled = page >= pages;
+      if (clear) clear.disabled = Object.keys(selected).length === 0;
+
+      live.textContent = isTC
+        ? '共 ' + filtered.length + ' 項結果，第 ' + page + ' 頁，共 ' + Math.max(pages, 1) + ' 頁'
+        : filtered.length + (filtered.length === 1 ? ' result, page ' : ' results, page ') +
+          page + ' of ' + Math.max(pages, 1);
+    }
+
+    drops.forEach(function (drop, index) {
+      const kind = kinds[index] || 'filter-' + index;
+      const toggle = drop.querySelector('.listing__filter-toggle');
+      const label = toggle && toggle.querySelector('span');
+      const original = drop.dataset.dropdownLabel || (label && label.textContent.trim()) || '';
+      drop.dataset.filterKind = kind;
+
+      if (kind === 'year' && !cards.some(function (card) { return !!card.dataset.year; })) {
+        drop.classList.add('is-disabled');
+        drop.setAttribute('aria-disabled', 'true');
+        drop.setAttribute('title', isTC ? '尚未提供年份資料' : 'Year data is not available yet');
+        if (toggle) toggle.disabled = true;
+        drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
+          item.setAttribute('aria-disabled', 'true');
+          item.tabIndex = -1;
+        });
+        return;
+      }
+
+      drop.addEventListener('dropdownchange', function (e) {
+        const choice = e.detail.value;
+        const same = selected[kind] === choice;
+        drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
+          const on = !same && item === e.detail.item;
+          item.setAttribute('aria-current', String(on));
+        });
+        if (same) {
+          delete selected[kind];
+          if (label) label.textContent = original;
+        } else {
+          selected[kind] = choice;
+        }
+        page = 1;
+        render();
+      });
+    });
+
+    if (clear) {
+      clear.addEventListener('click', function () {
+        Object.keys(selected).forEach(function (kind) { delete selected[kind]; });
+        drops.forEach(function (drop) {
+          const toggle = drop.querySelector('.listing__filter-toggle');
+          const label = toggle && toggle.querySelector('span');
+          if (label && drop.dataset.dropdownLabel) label.textContent = drop.dataset.dropdownLabel;
+          drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
+            item.setAttribute('aria-current', 'false');
+          });
+        });
+        page = 1;
+        render();
+      });
+    }
+
+    if (prev) prev.addEventListener('click', function () {
+      if (page <= 1) return;
+      page--;
+      render();
+      scrollToGrid(grid);
+    });
+    if (next) next.addEventListener('click', function () {
+      page++;
+      render();
+      scrollToGrid(grid);
+    });
+
+    render();
+  });
 })();
 
 
@@ -2107,6 +2449,42 @@ window.__pageZoom = function () {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const drawables = {};   /* panel-key → svg (once inlined) */
 
+  /* Assets are authored in separate SVG files and several reuse ids such as
+     "Vector". Once inlined they share one document, so namespace every id and
+     its local references before insertion. */
+  function namespaceIds(svg, prefix) {
+    const ids = {};
+    Array.prototype.slice.call(svg.querySelectorAll('[id]')).forEach(function (el, i) {
+      const old = el.id;
+      const next = prefix + '-' + old + (ids[old] ? '-' + i : '');
+      if (!ids[old]) ids[old] = next;
+      el.id = next;
+    });
+    const attrs = [
+      'href', 'xlink:href', 'fill', 'stroke', 'filter', 'clip-path', 'mask',
+      'marker-start', 'marker-mid', 'marker-end', 'aria-labelledby', 'aria-describedby'
+    ];
+    Array.prototype.slice.call(svg.querySelectorAll('*')).concat([svg]).forEach(function (el) {
+      attrs.forEach(function (name) {
+        const raw = el.getAttribute(name);
+        if (!raw) return;
+        let next = raw.replace(/url\(\s*#([^)\s]+)\s*\)/g, function (all, id) {
+          return ids[id] ? 'url(#' + ids[id] + ')' : all;
+        });
+        if (next.charAt(0) === '#' && ids[next.slice(1)]) next = '#' + ids[next.slice(1)];
+        if (next !== raw) el.setAttribute(name, next);
+      });
+    });
+    Array.prototype.slice.call(svg.querySelectorAll('style')).forEach(function (style) {
+      let css = style.textContent;
+      Object.keys(ids).forEach(function (old) {
+        const escaped = old.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        css = css.replace(new RegExp('#' + escaped + '(?![\\w-])', 'g'), '#' + ids[old]);
+      });
+      style.textContent = css;
+    });
+  }
+
   function prime(p) {
     try { const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; }
     catch (e) {}
@@ -2164,6 +2542,7 @@ window.__pageZoom = function () {
         tmp.innerHTML = txt.trim();
         const svg = tmp.querySelector('svg');
         if (!svg) return;
+        namespaceIds(svg, 'mega-' + panel.dataset.megaPanel);
         svg.setAttribute('class', 'nav__mega-art');
         svg.setAttribute('aria-hidden', 'true');
 
@@ -2675,7 +3054,7 @@ window.__pageZoom = function () {
      Measured against the slot rather than the middle of the frame, so the
      seal is always exactly where the design draws it — under the second
      line of the quote, over the attribution — at every breakpoint.
-     Between 768 and 1800px the page carries `zoom: .9`, and a translate
+     Above 768px the page carries responsive zoom, and a translate
      written on a zoomed element is scaled with it — so divide it back out.
      The current offset is added back in because on a resize the logo is
      already translated, i.e. the two rects differ by what is *left* to
@@ -3073,6 +3452,19 @@ window.__pageZoom = function () {
   const empty = document.querySelector('[data-search-empty]');
   const field = document.querySelector('[data-search-input]');
   const line  = document.querySelector('[data-search-count]');
+  const pager = document.querySelector('.search__pager');
+  const prev  = pager && pager.querySelector('.pager__arrow--prev');
+  const next  = pager && pager.querySelector('.pager__arrow--next');
+  const pageNum = pager && pager.querySelector('.pager__num');
+  const pageTotal = pager && pager.querySelector('.pager__total');
+  const PAGE_SIZE = 4;
+  let activeGroup = 'all';
+  let activePage = 1;
+
+  const live = document.createElement('span');
+  live.className = 'visually-hidden';
+  live.setAttribute('aria-live', 'polite');
+  if (pager) pager.insertAdjacentElement('afterend', live);
 
   /* ── the term ───────────────────────────────────────────────────
      `URLSearchParams` gives back the decoded string, which is then put
@@ -3105,24 +3497,48 @@ window.__pageZoom = function () {
   });
 
   /* ── the tabs ──────────────────────────────────────────────────── */
-  function show(group) {
-    let shown = 0;
-    rows.forEach(function (r) {
-      const on = group === 'all' || r.getAttribute('data-group') === group;
-      r.hidden = !on;
-      if (on) shown++;
+  function show(group, requestedPage) {
+    activeGroup = group;
+    const eligible = rows.filter(function (r) {
+      return group === 'all' || r.getAttribute('data-group') === group;
     });
+    const pages = Math.ceil(eligible.length / PAGE_SIZE);
+    activePage = Math.max(1, Math.min(requestedPage || 1, Math.max(pages, 1)));
+    const first = (activePage - 1) * PAGE_SIZE;
+    const visible = eligible.slice(first, first + PAGE_SIZE);
+    rows.forEach(function (r) { r.hidden = visible.indexOf(r) === -1; });
     tabs.forEach(function (t) {
       const on = t.getAttribute('data-tab') === group;
       t.classList.toggle('is-on', on);
       t.setAttribute('aria-selected', String(on));
     });
-    if (empty) empty.hidden = shown !== 0;
+    if (empty) empty.hidden = eligible.length !== 0;
+    if (pager) pager.hidden = pages <= 1;
+    if (pageNum) pageNum.textContent = String(activePage);
+    if (pageTotal) pageTotal.textContent = 'of ' + Math.max(pages, 1);
+    if (prev) prev.disabled = activePage <= 1;
+    if (next) next.disabled = activePage >= pages;
+    live.textContent = eligible.length + (eligible.length === 1 ? ' result, page ' : ' results, page ') +
+      activePage + ' of ' + Math.max(pages, 1);
   }
 
   tabs.forEach(function (t) {
-    t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+    t.addEventListener('click', function () { show(t.getAttribute('data-tab'), 1); });
   });
   const reset = document.querySelector('[data-tab-reset]');
-  if (reset) reset.addEventListener('click', function () { show('all'); });
+  if (reset) reset.addEventListener('click', function () { show('all', 1); });
+  function scrollToResults() {
+    const top = Math.max(0, wrap.getBoundingClientRect().top + window.scrollY - 110);
+    window.scrollTo({ top: top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
+  if (prev) prev.addEventListener('click', function () {
+    if (activePage <= 1) return;
+    show(activeGroup, activePage - 1);
+    scrollToResults();
+  });
+  if (next) next.addEventListener('click', function () {
+    show(activeGroup, activePage + 1);
+    scrollToResults();
+  });
+  show('all', 1);
 })();
