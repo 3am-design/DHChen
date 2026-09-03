@@ -4722,16 +4722,18 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    zoom and compensate the type instead of making the whole layout larger.
 
    These values live in the zoomed coordinate space: after `body` zoom is
-   applied they land at a real 15px type size with at least 22px leading.
-   The floor applies to the whole visible desktop interface, including its
-   labels, dates, breadcrumbs, categories, chips and legal copy. Hierarchy is
-   kept with colour, weight and spacing instead of type that becomes hard to
-   read. Mobile has its own type system and stays untouched.
+   applied running copy lands at a real 15px type size with at least 22px
+   leading. Navigation and metadata labels use their own 14px rendered tier;
+   compact tags, copyright and the cursor's DISCOVER label keep a separate
+   12px rendered floor so their supporting hierarchy is not flattened. Mobile
+   has its own type system and stays untouched.
    ================================================================ */
 @media (min-width: 768px) {
   :root {
     --copy-readable-min: calc(15px / var(--zoom));
     --copy-leading-min: calc(22px / var(--zoom));
+    --label-readable-min: calc(14px / var(--zoom));
+    --microcopy-readable-min: calc(12px / var(--zoom));
   }
 
   /* Standard running copy: 16px (15px on listing cards). */
@@ -4906,8 +4908,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   }
 
   .nav__lang,
-  .listing__crumb,
-  .listing__crumb-toggle,
   .article__pill,
   .article__download,
   .challenge__circle-tag {
@@ -4919,9 +4919,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .listing__filter-menu a,
   .listing__crumb-menu a,
   .listing__clear,
-  .article__tag,
   .article__carousel-count,
-  .article__related-title,
   .connect__label,
   .connect__funding-eyebrow,
   .ethos__value-num,
@@ -4932,9 +4930,17 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
     font-size: max(14px, var(--copy-readable-min));
   }
 
+  /* Compact navigation and metadata are a 14px rendered tier, separate from
+     both running copy and the smaller card/legal microcopy below. */
+  .listing__crumb,
+  .listing__crumb-toggle,
+  .article__tag,
+  .article__related-title {
+    font-size: max(14px, var(--label-readable-min));
+  }
+
   .footer-v3__legal a,
   .footer__legal-link,
-  .news-card__tag,
   .s-result__path,
   .story__fact-label,
   .legal__toc-label,
@@ -4947,24 +4953,29 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .institute-card__eyebrow,
   .s-tab__count,
   .s-result__kind,
-  .article__send--copied::after,
-  .cursor__label {
+  .article__send--copied::after {
     font-size: max(12px, var(--copy-readable-min));
+  }
+
+  /* Compact card metadata stays visibly subordinate to titles and copy. */
+  .news-card__tag {
+    font-size: max(13px, var(--microcopy-readable-min));
   }
 
   .card-v3__tags li,
   .story-card__tag {
-    font-size: max(11px, var(--copy-readable-min));
+    font-size: max(12px, var(--microcopy-readable-min));
   }
 
   .listing__filter-toggle {
     font-size: max(16px, var(--copy-readable-min));
   }
 
+  .cursor__label,
   .footer-v3__copyright,
   .footer-v3__copyright *,
   .footer__copyright p {
-    font-size: max(12px, var(--copy-readable-min));
+    font-size: max(12px, var(--microcopy-readable-min));
   }
 }
 
