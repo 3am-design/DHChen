@@ -16,13 +16,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=12.7" />
+  <link rel="stylesheet" href="style.css?v=12.9" />
   <!-- R2 nav / footer / canvas — same sheet the EN pages load. Nothing in
        the nav, mega, colour bar or footer blocks is scoped to a language. -->
   <link rel="icon" href="assets/icons/logo-seal.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-home.css?v=12.7" />
+  <link rel="stylesheet" href="style-home.css?v=12.9" />
 </head>
 <body class="listing-page inner-v3">
+
+  <a class="skip-link" href="#main-content">跳至主要內容</a>
 
   <!-- ============================================================
        00 — NAVIGATION
@@ -34,7 +36,7 @@
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
       </a>
 
-      <nav class="nav__menu" aria-label="Main navigation">
+      <nav class="nav__menu" aria-label="主要導覽">
         <a href="#" class="nav__link" data-mega="work">我們的工作</a>
         <a href="Listing_tc.html" class="nav__link nav__link--active" data-mega="impact">影響與成果</a>
         <a href="#" class="nav__link" data-mega="about">關於我們</a>
@@ -48,7 +50,7 @@
            mercy of the landing translate, which makes it the containing
            block for as long as it runs. Only ever one of the two is on
            screen (see style-home.css). -->
-      <button class="nav__search-btn nav__search-btn--stacked" aria-label="Search">
+      <button class="nav__search-btn nav__search-btn--stacked" aria-label="搜尋">
         <img src="assets/icons/icon-search.svg" alt="" />
       </button>
 
@@ -58,18 +60,18 @@
         <a href="index_tc.html" class="nav__seal" aria-label="陳廷驊基金會">
           <img src="assets/icons/logo-seal.svg" alt="" />
         </a>
-        <button class="nav__search-btn" aria-label="Search">
+        <button class="nav__search-btn" aria-label="搜尋">
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="Listing.html" class="nav__lang">EN</a>
-        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
       </div>
     </div>
 
     <!-- Desktop mega-menu (opens on hover; closes when the cursor leaves the nav) -->
-    <div class="nav__mega" id="nav-mega" aria-hidden="true">
+    <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
       <div class="nav__mega-menu">
         <a href="#" class="nav__link" data-mega="work">我們的工作</a>
         <a href="Listing_tc.html" class="nav__link" data-mega="impact">影響與成果</a>
@@ -105,23 +107,23 @@
       </div>
     </div>
 
-    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
       <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
       <div class="nav__mobile-bar">
         <a href="Listing.html" class="nav__mobile-lang">EN</a>
         <div class="nav__mobile-bar-actions">
-          <button class="nav__mobile-search" aria-label="Search">
+          <button class="nav__mobile-search" aria-label="搜尋">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
-          <button class="nav__mobile-close" aria-label="Close menu">
+          <button class="nav__mobile-close" aria-label="關閉選單">
             <span></span><span></span>
           </button>
         </div>
       </div>
 
       <!-- Primary nav — big, left-aligned -->
-      <nav class="nav__mobile-links" aria-label="Mobile navigation">
+      <nav class="nav__mobile-links" aria-label="流動版導覽">
         <div class="nav__mobile-item">
           <button type="button" class="nav__mobile-link" aria-expanded="false">我們的工作</button>
           <div class="nav__mobile-sub">
@@ -186,7 +188,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
 
     <!-- ============================================================
          LISTING — Our Stories
@@ -287,7 +289,7 @@
       <div class="listing__grid">
 
         <article class="story-card">
-          <h3 class="story-card__title">社區創變者 Fellowship</h3>
+          <h2 class="story-card__title">社區創變者 Fellowship</h2>
           <p class="story-card__desc">培育創變者，推動更共融的社會</p>
           <p class="story-card__category" data-cat="above-beyond">超越同行</p>
           <ul class="story-card__tags">
@@ -299,7 +301,7 @@
         </article>
 
         <article class="story-card story-card--text">
-          <h3 class="story-card__title">慈悲創效社群</h3>
+          <h2 class="story-card__title">慈悲創效社群</h2>
           <p class="story-card__desc">透過共同學習、網絡連結與信任建立，讓社會創效社群走得更近。</p>
           <p class="story-card__category" data-cat="mindful-living">正念生活</p>
           <ul class="story-card__tags">
@@ -311,7 +313,7 @@
 
         <article class="story-card story-card--logo">
           <div class="story-card__logo"><img src="assets/images/logo-pfpw.png" alt="Parenting for a Peaceful World" /></div>
-          <h3 class="story-card__title">和平育兒計劃</h3>
+          <h2 class="story-card__title">和平育兒計劃</h2>
           <p class="story-card__desc">以可持續的方式，透過育兒實踐把和平帶進家庭與社群</p>
           <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
           <ul class="story-card__tags">
@@ -322,7 +324,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">PILnet — 法律健康檢查計劃</h3>
+          <h2 class="story-card__title">PILnet — 法律健康檢查計劃</h2>
           <p class="story-card__desc">提升香港本地及離散社群機構的韌性</p>
           <p class="story-card__category" data-cat="above-beyond">超越同行</p>
           <ul class="story-card__tags">
@@ -333,7 +335,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">陳廷驊基金會獎學金計劃</h3>
+          <h2 class="story-card__title">陳廷驊基金會獎學金計劃</h2>
           <p class="story-card__desc">投資今天，成就明天的影響</p>
           <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
           <ul class="story-card__tags">
@@ -344,7 +346,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">慈悲兒童計劃</h3>
+          <h2 class="story-card__title">慈悲兒童計劃</h2>
           <p class="story-card__desc">將慈悲價值帶入校本課程</p>
           <p class="story-card__category" data-cat="mindful-living">正念生活</p>
           <ul class="story-card__tags">
@@ -355,7 +357,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">未來教育實踐 2.0</h3>
+          <h2 class="story-card__title">未來教育實踐 2.0</h2>
           <p class="story-card__desc">透過跨界協作，推動以價值為本的生命探索教育</p>
           <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
           <ul class="story-card__tags">
@@ -367,7 +369,7 @@
 
         <article class="story-card story-card--logo">
           <div class="story-card__logo"><img src="assets/images/logo-barts.png" alt="Barts Charity" /></div>
-          <h3 class="story-card__title">和平育兒計劃</h3>
+          <h2 class="story-card__title">和平育兒計劃</h2>
           <p class="story-card__desc">以可持續的方式，透過育兒實踐把和平帶進家庭與社群</p>
           <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
           <ul class="story-card__tags">
@@ -378,7 +380,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">金齡同行之路</h3>
+          <h2 class="story-card__title">金齡同行之路</h2>
           <p class="story-card__desc">透過運動與自我重尋，支持照顧者的身心安康</p>
           <p class="story-card__category" data-cat="wellbeing">身心安康</p>
           <ul class="story-card__tags">
@@ -389,7 +391,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">青年 ImpACT 獎</h3>
+          <h2 class="story-card__title">青年 ImpACT 獎</h2>
           <p class="story-card__desc">一個鼓勵青年推動社會創新、培養慈悲精神的重要獎項</p>
           <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
           <ul class="story-card__tags">
@@ -400,7 +402,7 @@
         </article>
 
         <article class="story-card">
-          <h3 class="story-card__title">腦健社區計劃</h3>
+          <h2 class="story-card__title">腦健社區計劃</h2>
           <p class="story-card__desc">透過便利的篩查與社區支援，改善認知障礙照護</p>
           <p class="story-card__category" data-cat="above-beyond">超越同行</p>
           <ul class="story-card__tags">
@@ -411,7 +413,7 @@
         </article>
 
         <article class="story-card story-card--text">
-          <h3 class="story-card__title">PILnet — 法律健康檢查計劃</h3>
+          <h2 class="story-card__title">PILnet — 法律健康檢查計劃</h2>
           <p class="story-card__desc">透過公益法律支援，提升香港本地及離散社群機構的韌性。</p>
           <p class="story-card__category" data-cat="above-beyond">超越同行</p>
           <ul class="story-card__tags">
@@ -498,22 +500,22 @@
   </footer>
 
   <!-- Full-screen search overlay (opened from the nav search icon) -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="搜尋" aria-hidden="true" inert>
     <div class="search-overlay__bar">
       <a href="index_tc.html" class="search-overlay__logo" aria-label="D. H. Chen Foundation home">
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
       </a>
-      <button class="search-overlay__close" type="button" aria-label="Close search">
+      <button class="search-overlay__close" type="button" aria-label="關閉搜尋">
         <span></span><span></span>
       </button>
     </div>
     <div class="search-overlay__inner">
       <form class="search-overlay__field" role="search" action="Search.html" method="get">
         <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
-        <input class="search-overlay__input" type="search" name="q" placeholder="搜尋..." aria-label="Search" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="搜尋..." aria-label="搜尋" />
       </form>
       <p class="search-overlay__label">焦點資訊</p>
-      <nav class="search-overlay__hot" aria-label="Popular searches">
+      <nav class="search-overlay__hot" aria-label="熱門搜尋">
         <a href="#">獎學金</a>
         <a href="#">創新項目資助</a>
         <a href="#">加入我們</a>
@@ -529,6 +531,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=12.7"></script>
+  <script src="script.js?v=12.9"></script>
 </body>
 </html>

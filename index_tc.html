@@ -19,10 +19,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=12.7" />
+  <link rel="stylesheet" href="style.css?v=12.9" />
   <!-- Home V3 — Figma "R2 / OPT2_01_Home_01_Desktop" -->
   <link rel="icon" href="assets/icons/logo-seal.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-home.css?v=12.7" />
+  <link rel="stylesheet" href="style-home.css?v=12.9" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
     html.lp-boot .nav__logo, html.lp-boot .nav__menu, html.lp-boot .nav__actions,
@@ -32,6 +32,8 @@
   </style></noscript>
 </head>
 <body class="home-v3">
+
+  <a class="skip-link" href="#main-content">跳至主要內容</a>
 
   <!-- ============================================================
        00 — NAVIGATION   (V3: search left · logo centred · stacked menu right)
@@ -43,7 +45,7 @@
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
       </a>
 
-      <nav class="nav__menu" aria-label="Main navigation">
+      <nav class="nav__menu" aria-label="主要導覽">
         <a href="#" class="nav__link" data-mega="work">我們的工作</a>
         <a href="Listing_tc.html" class="nav__link" data-mega="impact">影響與成果</a>
         <a href="#" class="nav__link" data-mega="about">關於我們</a>
@@ -57,7 +59,7 @@
            mercy of the landing translate, which makes it the containing
            block for as long as it runs. Only ever one of the two is on
            screen (see style-home.css). -->
-      <button class="nav__search-btn nav__search-btn--stacked" aria-label="Search">
+      <button class="nav__search-btn nav__search-btn--stacked" aria-label="搜尋">
         <img src="assets/icons/icon-search.svg" alt="" />
       </button>
 
@@ -67,11 +69,11 @@
         <a href="index_tc.html" class="nav__seal" aria-label="陳廷驊基金會">
           <img src="assets/icons/logo-seal.svg" alt="" />
         </a>
-        <button class="nav__search-btn" aria-label="Search">
+        <button class="nav__search-btn" aria-label="搜尋">
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="index.html" class="nav__lang">EN</a>
-        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
       </div>
@@ -86,7 +88,7 @@
          Stuck (nodes 12058-8 / 12058-319) the bar is only the pill, so the
          panel drops below it and carries its own copy of the four sections —
          `.nav__mega-menu`, hidden until then. -->
-    <div class="nav__mega" id="nav-mega" aria-hidden="true">
+    <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
       <div class="nav__mega-menu">
         <a href="#" class="nav__link" data-mega="work">我們的工作</a>
         <a href="Listing_tc.html" class="nav__link" data-mega="impact">影響與成果</a>
@@ -122,23 +124,23 @@
       </div>
     </div>
 
-    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
       <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
       <div class="nav__mobile-bar">
         <a href="index.html" class="nav__mobile-lang">EN</a>
         <div class="nav__mobile-bar-actions">
-          <button class="nav__mobile-search" aria-label="Search">
+          <button class="nav__mobile-search" aria-label="搜尋">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
-          <button class="nav__mobile-close" aria-label="Close menu">
+          <button class="nav__mobile-close" aria-label="關閉選單">
             <span></span><span></span>
           </button>
         </div>
       </div>
 
       <!-- Primary nav — big, left-aligned -->
-      <nav class="nav__mobile-links" aria-label="Mobile navigation">
+      <nav class="nav__mobile-links" aria-label="流動版導覽">
         <div class="nav__mobile-item">
           <button type="button" class="nav__mobile-link" aria-expanded="false">我們的工作</button>
           <div class="nav__mobile-sub">
@@ -203,7 +205,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
 
     <!-- ============================================================
          01 — LANDING  (hero + the four B panels sit on the flat peach canvas)
@@ -488,9 +490,9 @@
               獎學金
             </h2>
             <p class="ventures__text">
-              基金會深信教育足以帶來改變，因此於 2015 年成立並推出全新的<a href="http://www.dhcfscholarship.com/" target="_blank" rel="noopener">陳廷驊基金會獎學金計劃</a>（「獎學金計劃」）。這項里程碑式的計劃投資於才德兼備的學生，讓他們以學識與服務社會的人文精神，共同締造更美好的明天。
+              基金會深信教育足以帶來改變，因此於 2015 年成立並推出全新的<a href="https://www.dhcfscholarship.com/" target="_blank" rel="noopener">陳廷驊基金會獎學金計劃</a>（「獎學金計劃」）。這項里程碑式的計劃投資於才德兼備的學生，讓他們以學識與服務社會的人文精神，共同締造更美好的明天。
             </p>
-            <a href="http://www.dhcfscholarship.com/" class="btn-pill" target="_blank" rel="noopener">
+            <a href="https://www.dhcfscholarship.com/" class="btn-pill" target="_blank" rel="noopener">
               探索
               <span class="btn-pill__arrow" aria-hidden="true"></span>
             </a>
@@ -654,22 +656,22 @@
   </footer>
 
   <!-- Full-screen search overlay (opened from the nav search icon) -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="搜尋" aria-hidden="true" inert>
     <div class="search-overlay__bar">
       <a href="index_tc.html" class="search-overlay__logo" aria-label="陳廷驊基金會">
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
       </a>
-      <button class="search-overlay__close" type="button" aria-label="Close search">
+      <button class="search-overlay__close" type="button" aria-label="關閉搜尋">
         <span></span><span></span>
       </button>
     </div>
     <div class="search-overlay__inner">
       <form class="search-overlay__field" role="search" action="Search.html" method="get">
         <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
-        <input class="search-overlay__input" type="search" name="q" placeholder="想找些什麼..." aria-label="Search" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="想找些什麼..." aria-label="搜尋" />
       </form>
       <p class="search-overlay__label">焦點資訊</p>
-      <nav class="search-overlay__hot" aria-label="Popular searches">
+      <nav class="search-overlay__hot" aria-label="熱門搜尋">
         <a href="#">獎學金</a>
         <a href="#">創新項目資助</a>
         <a href="#">加入我們</a>
@@ -685,6 +687,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=12.7"></script>
+  <script src="script.js?v=12.9"></script>
 </body>
 </html>

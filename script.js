@@ -43,9 +43,9 @@ window.__pageZoom = function () {
 
    The static prototype contains planned pages, social profiles and files as
    href="#". Leaving those live makes a click jump to the top and look broken.
-   Known routes are repaired here; genuinely unpublished destinations remain
-   visible but are announced and styled as unavailable. Listing filter options
-   are controls rather than destinations and are deliberately excluded.
+   Known routes are repaired here; genuinely unpublished destinations stay out
+   of the rendered navigation until the CMS supplies a real URL. Listing filter
+   options are controls rather than destinations and are deliberately excluded.
    ---------------------------------------------------------------- */
 (function () {
   const tc = document.documentElement.lang === 'zh-Hant';
@@ -92,7 +92,14 @@ window.__pageZoom = function () {
     a.removeAttribute('href');
     a.classList.add('link-unavailable');
     a.setAttribute('aria-disabled', 'true');
+    a.setAttribute('aria-hidden', 'true');
     a.setAttribute('tabindex', '-1');
+    a.hidden = true;
+    /* Avoid empty list items being counted by assistive technology. */
+    if (a.parentElement && a.parentElement.tagName === 'LI' &&
+        a.parentElement.children.length === 1) {
+      a.parentElement.hidden = true;
+    }
     if (!a.getAttribute('title')) a.setAttribute('title', unavailable);
     a.addEventListener('click', function (e) {
       e.preventDefault();
@@ -105,7 +112,7 @@ window.__pageZoom = function () {
     const heading = key((col.querySelector('.ventures__title') || {}).textContent);
     const cta = col.querySelector('a.btn-pill[href="#"]');
     if (cta && (heading === 'scholarship' || heading === '獎學金')) {
-      route(cta, 'http://www.dhcfscholarship.com/', true);
+      route(cta, 'https://www.dhcfscholarship.com/', true);
     }
   });
 
@@ -193,15 +200,54 @@ window.__pageZoom = function () {
   if (!btn || !menu) return;
   const close = menu.querySelector('.nav__mobile-close');
 
+  function focusableElements(root) {
+    return Array.prototype.slice.call(root.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
+      'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) {
+      return !el.hidden && !el.closest('[hidden]') &&
+             window.getComputedStyle(el).visibility !== 'hidden' &&
+             el.getClientRects().length;
+    });
+  }
+
+  function trapTab(e) {
+    if (e.key !== 'Tab') return;
+    const focusable = focusableElements(menu);
+    if (!focusable.length) { e.preventDefault(); return; }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!menu.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   /* full-screen overlay: lock the page scroll while it's open */
-  function setOpen(open) {
+  function setOpen(open, restoreFocus) {
+    const wasOpen = menu.classList.contains('nav__mobile-menu--open');
+    if (restoreFocus === undefined) restoreFocus = true;
+    if (open) menu.inert = false;
+    if (!open && restoreFocus && wasOpen) btn.focus({ preventScroll: true });
     menu.classList.toggle('nav__mobile-menu--open', open);
     btn.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-hidden', String(!open));
+    if (!open) menu.inert = true;
     document.documentElement.classList.toggle('lock-scroll', open);
     document.body.classList.toggle('menu-open', open);   /* white menu keeps the base orange cursor */
     if (window.__lenis) { open ? window.__lenis.stop() : window.__lenis.start(); }
+    if (open && close) {
+      requestAnimationFrame(function () { close.focus({ preventScroll: true }); });
+    }
   }
+  menu.inert = true;
+  window.__setMobileMenuOpen = setOpen;
 
   /* set the circular-reveal origin to the centre of whatever opened the overlay */
   function setRevealOrigin(target, originEl) {
@@ -224,21 +270,27 @@ window.__pageZoom = function () {
      (pushing the rest down); opening one collapses any other — only one open
      at a time. Sections without a panel (Connect) are left as plain links. */
   const items = Array.prototype.slice.call(menu.querySelectorAll('.nav__mobile-item'));
-  items.forEach(function (item) {
+  items.forEach(function (item, index) {
     const link = item.querySelector('.nav__mobile-link');
     const sub  = item.querySelector('.nav__mobile-sub');
     if (!link || !sub) return;
+    if (!sub.id) sub.id = 'mobile-sub-' + index;
+    link.setAttribute('aria-controls', sub.id);
+    sub.inert = !item.classList.contains('is-open');
     link.addEventListener('click', function (e) {
       e.preventDefault();
       const wasOpen = item.classList.contains('is-open');
       items.forEach(function (it) {
         it.classList.remove('is-open');
         const l = it.querySelector('.nav__mobile-link');
+        const s = it.querySelector('.nav__mobile-sub');
         if (l) l.setAttribute('aria-expanded', 'false');
+        if (s) s.inert = true;
       });
       if (!wasOpen) {
         item.classList.add('is-open');
         link.setAttribute('aria-expanded', 'true');
+        sub.inert = false;
       }
     });
   });
@@ -246,7 +298,22 @@ window.__pageZoom = function () {
   /* any real navigation choice (2nd-level link, Connect, footer links, 中文)
      closes the overlay; the section toggle buttons above do not */
   menu.querySelectorAll('.nav__mobile-sub a, a.nav__mobile-link, .nav__mobile-sublink, .nav__mobile-lang')
-    .forEach(function (l) { l.addEventListener('click', function () { setOpen(false); }); });
+    .forEach(function (l) { l.addEventListener('click', function () { setOpen(false, false); }); });
+
+  document.addEventListener('keydown', function (e) {
+    if (!menu.classList.contains('nav__mobile-menu--open')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpen(false);
+      return;
+    }
+    trapTab(e);
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.matchMedia('(min-width: 1024px)').matches &&
+        menu.classList.contains('nav__mobile-menu--open')) setOpen(false, false);
+  });
 })();
 
 
@@ -263,6 +330,19 @@ window.__pageZoom = function () {
   const input    = overlay.querySelector('.search-overlay__input');
   const mobile   = document.getElementById('mobile-menu');
   const burger   = document.querySelector('.nav__hamburger');
+  let returnTarget = null;
+  let focusTimer = null;
+
+  function focusableElements() {
+    return Array.prototype.slice.call(overlay.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
+      'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) {
+      return !el.hidden && !el.closest('[hidden]') &&
+             window.getComputedStyle(el).visibility !== 'hidden' &&
+             el.getClientRects().length;
+    });
+  }
 
   /* Open the circular wipe from a given control.
 
@@ -323,7 +403,14 @@ window.__pageZoom = function () {
   window.addEventListener('scroll', park, { passive: true });
   openers.forEach(function (b) { b.addEventListener('mouseenter', function () { revealFrom(b); }); });
 
-  function setOpen(open) {
+  function setOpen(open, opener) {
+    if (open) {
+      returnTarget = opener || document.activeElement;
+      overlay.inert = false;
+    } else {
+      window.clearTimeout(focusTimer);
+      if (returnTarget && returnTarget.isConnected) returnTarget.focus({ preventScroll: true });
+    }
     overlay.classList.toggle('search-overlay--open', open);
     overlay.setAttribute('aria-hidden', String(!open));
     document.documentElement.classList.toggle('lock-scroll', open);
@@ -332,31 +419,51 @@ window.__pageZoom = function () {
     if (open) {
       /* now that it is visible, grow to the pinned origin */
       overlay.style.clipPath = overlay.__revealTo || '';
-      window.setTimeout(function () { if (input) input.focus(); }, 80);
+      focusTimer = window.setTimeout(function () { if (input) input.focus(); }, 80);
     } else {
       /* back to the stylesheet's closed circle, which still reads the
          vars — so it shrinks into the same spot it came from */
       overlay.style.clipPath = '';
+      overlay.inert = true;
     }
   }
+  overlay.inert = true;
 
   openers.forEach(function (b) {
     b.addEventListener('click', function () {
       /* if the search lives inside the open mobile menu, close that first */
+      const opener = mobile && mobile.contains(b) ? burger : b;
       if (mobile && mobile.classList.contains('nav__mobile-menu--open')) {
-        mobile.classList.remove('nav__mobile-menu--open');
-        mobile.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('menu-open');       /* drop the white-menu cursor state */
-        if (burger) burger.setAttribute('aria-expanded', 'false');
+        if (window.__setMobileMenuOpen) window.__setMobileMenuOpen(false, false);
       }
       /* circular wipe radiating from whichever search control was clicked */
       revealFrom(b);
-      setOpen(true);
+      setOpen(true, opener);
     });
   });
   if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && overlay.classList.contains('search-overlay--open')) setOpen(false);
+    if (!overlay.classList.contains('search-overlay--open')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpen(false);
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    const focusable = focusableElements();
+    if (!focusable.length) { e.preventDefault(); return; }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!overlay.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 })();
 
@@ -1769,9 +1876,22 @@ window.__pageZoom = function () {
     const kind = graphic.dataset.motion;
     if (!LOOP_RUN[kind]) return;
     graphic.dataset.looping = '1';
+    const timers = new Set();
+    let inRange = true;
+    let paused = false;
 
     function later(fn, delay) {
-      return window.setTimeout(fn, delay);
+      const id = window.setTimeout(function () {
+        timers.delete(id);
+        if (!paused) fn();
+      }, delay);
+      timers.add(id);
+      return id;
+    }
+
+    function clearScheduled() {
+      timers.forEach(window.clearTimeout);
+      timers.clear();
     }
 
     function fadeOut() {
@@ -1809,6 +1929,29 @@ window.__pageZoom = function () {
       graphic.classList.remove('is-loop-fading');
     }
 
+    /* Freeze on the legible completed frame while the motif is offscreen or
+       the page is hidden. Re-entry deliberately begins with a fade, so the
+       reset can never flash or resume halfway through a transition. */
+    function pause() {
+      if (paused) return;
+      paused = true;
+      clearScheduled();
+      graphic.classList.remove('is-loop-fading', 'is-loop-reset');
+      graphic.classList.add('is-lit', 'is-on');
+    }
+
+    function resume() {
+      if (!paused) return;
+      paused = false;
+      graphic.classList.add('is-loop-fading');
+      later(resetAndReplay, LOOP_FADE);
+    }
+
+    function syncLifecycle() {
+      if (document.hidden || !inRange) pause();
+      else resume();
+    }
+
     /* First pass keeps the existing panel timing exactly. */
     graphic.classList.add('is-lit');
     const firstAt = PANEL_HOLD[kind] || 0;
@@ -1818,6 +1961,19 @@ window.__pageZoom = function () {
       graphic.classList.add('is-on');
     }
     scheduleNext(firstAt);
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.target !== graphic) return;
+          inRange = entry.isIntersecting;
+          syncLifecycle();
+        });
+      }, { threshold: 0, rootMargin: '300px 0px 300px 0px' });
+      visibilityObserver.observe(graphic);
+    }
+    document.addEventListener('visibilitychange', syncLifecycle);
+    syncLifecycle();
   }
 
   /* --- the Bettering photo, as four frames ------------------------
@@ -1846,12 +2002,41 @@ window.__pageZoom = function () {
        was parsed. */
     photo.classList.add('is-live');
     let i = 0;
+    let timer = 0;
+    let inRange = true;
     frames[0].classList.add('is-on');
-    window.setInterval(function () {
+
+    function advance() {
       frames[i].classList.remove('is-on');
       i = (i + 1) % frames.length;
       frames[i].classList.add('is-on');
-    }, SLIDE);
+    }
+    function startTimer() {
+      if (timer || document.hidden || !inRange) return;
+      timer = window.setInterval(advance, SLIDE);
+    }
+    function stopTimer() {
+      if (!timer) return;
+      window.clearInterval(timer);
+      timer = 0;
+    }
+    function syncLifecycle() {
+      if (document.hidden || !inRange) stopTimer();
+      else startTimer();
+    }
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.target !== photo) return;
+          inRange = entry.isIntersecting;
+          syncLifecycle();
+        });
+      }, { threshold: 0, rootMargin: '300px 0px 300px 0px' });
+      visibilityObserver.observe(photo);
+    }
+    document.addEventListener('visibilitychange', syncLifecycle);
+    startTimer();
   }
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2412,15 +2597,15 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   13. Desktop mega-menu — hovering Work / Impact / About opens its
-   panel; hovering Connect / logo / actions (or leaving the nav)
-   closes it. Hover devices only; no-op on pages without the markup.
+   13. Desktop mega-menu — pointer hover and keyboard focus both open
+   Work / Impact / About. Arrow Down enters the active panel, Escape
+   closes it and restores focus to the control that opened it.
    ---------------------------------------------------------------- */
 (function () {
   const nav  = document.getElementById('nav');
   const mega = document.getElementById('nav-mega');
   if (!nav || !mega) return;
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* Two sets of section links drive the same panels: the bar's own stacked
      menu, and the copy inside the card that only shows once the bar has
@@ -2429,16 +2614,38 @@ window.__pageZoom = function () {
     nav.querySelectorAll('.nav__menu .nav__link, .nav__mega-menu .nav__link'));
   const panels  = Array.prototype.slice.call(mega.querySelectorAll('.nav__mega-panel'));
   let closeTimer = null;
+  let lastTrigger = null;
+
+  mega.inert = true;
+  panels.forEach(function (panel) {
+    const key = panel.dataset.megaPanel;
+    if (!panel.id && key) panel.id = 'nav-mega-panel-' + key;
+  });
+  links.forEach(function (link) {
+    const key = link.dataset.mega;
+    const panel = key && mega.querySelector('[data-mega-panel="' + key + '"]');
+    if (!panel) return;
+    link.setAttribute('aria-haspopup', 'true');
+    link.setAttribute('aria-expanded', 'false');
+    link.setAttribute('aria-controls', panel.id);
+  });
 
   /* Home V3 corner panel (R2 "02_Menu"): once the bar has collapsed to the
      white pill there is nothing left to hover, so the pill's hamburger
      becomes the opener — and §2 has to keep its hands off it. Only where
-     the panel is actually laid out (style.css hides it under 900px). */
+     the panel is actually laid out (style.css hides it under 1024px). */
   const v3     = nav.classList.contains('nav--v3');
   const burger = nav.querySelector('.nav__hamburger');
   function burgerOpens() {
-    return v3 && !!burger && window.matchMedia('(min-width: 900px)').matches;
+    return v3 && !!burger && window.matchMedia('(min-width: 1024px)').matches;
   }
+  function syncBurgerSemantics() {
+    if (!burger) return;
+    burger.setAttribute('aria-controls', burgerOpens() ? 'nav-mega' : 'mobile-menu');
+    if (burgerOpens()) burger.setAttribute('aria-haspopup', 'true');
+    else burger.removeAttribute('aria-haspopup');
+  }
+  syncBurgerSemantics();
   window.__megaOwnsBurger = burgerOpens;
 
   /* ---- draw-in illustrations -------------------------------------------
@@ -2587,23 +2794,38 @@ window.__pageZoom = function () {
       .catch(function () { /* file:// or fetch blocked → static image stays */ });
   });
 
-  function open(key) {
+  function open(key, trigger) {
     clearTimeout(closeTimer);
+    if (trigger) lastTrigger = trigger;
     const wasActive = nav.classList.contains('nav--mega-open') &&
                       mega.querySelector('.nav__mega-panel.is-active[data-mega-panel="' + key + '"]');
+    mega.inert = false;
     nav.classList.add('nav--mega-open');
     mega.setAttribute('aria-hidden', 'false');
     /* no section → the card is just the four links, and CSS shrinks it */
     nav.classList.toggle('nav--mega-bare', !key);
     panels.forEach(function (p) { p.classList.toggle('is-active', p.dataset.megaPanel === key); });
-    links.forEach(function (l) { l.classList.toggle('nav__link--mega-active', l.dataset.mega === key); });
+    links.forEach(function (l) {
+      const active = l.dataset.mega === key;
+      l.classList.toggle('nav__link--mega-active', active);
+      if (l.hasAttribute('aria-expanded')) l.setAttribute('aria-expanded', String(active));
+    });
     if (key && !wasActive && !reduce && drawables[key]) startDraw(drawables[key]);
   }
-  function close() {
+  function close(restoreFocus) {
+    clearTimeout(closeTimer);
+    if (restoreFocus && lastTrigger && lastTrigger.isConnected) {
+      const target = mega.contains(lastTrigger) && burger ? burger : lastTrigger;
+      target.focus({ preventScroll: true });
+    }
     nav.classList.remove('nav--mega-open', 'nav--mega-bare');
     mega.setAttribute('aria-hidden', 'true');
+    mega.inert = true;
     panels.forEach(function (p) { p.classList.remove('is-active'); });
-    links.forEach(function (l) { l.classList.remove('nav__link--mega-active'); });
+    links.forEach(function (l) {
+      l.classList.remove('nav__link--mega-active');
+      if (l.hasAttribute('aria-expanded')) l.setAttribute('aria-expanded', 'false');
+    });
     if (burger) burger.setAttribute('aria-expanded', 'false');
   }
   function isOpen() { return nav.classList.contains('nav--mega-open'); }
@@ -2612,21 +2834,43 @@ window.__pageZoom = function () {
      menu-only card. Unstuck there is nothing to keep open, so it closes. */
   function leaveSection() {
     if (nav.classList.contains('nav--scrolled') && isOpen()) open('');
-    else close();
+    else close(false);
   }
 
-  /* a section link opens its panel; any other nav link closes the menu */
+  function firstPanelLink(key) {
+    const panel = mega.querySelector('[data-mega-panel="' + key + '"]');
+    if (!panel) return null;
+    return Array.prototype.find.call(panel.querySelectorAll('a[href]'), function (el) {
+      return !el.hidden && !el.closest('[hidden]') && el.getClientRects().length;
+    }) || null;
+  }
+
+  /* A section link opens its panel. Pointer hover remains unchanged; focus
+     adds an equivalent keyboard route and Arrow Down enters the submenu. */
   links.forEach(function (l) {
-    l.addEventListener('mouseenter', function () {
-      if (l.dataset.mega) open(l.dataset.mega); else leaveSection();
+    if (hoverCapable) l.addEventListener('mouseenter', function () {
+      if (l.dataset.mega) open(l.dataset.mega, l); else leaveSection();
+    });
+    l.addEventListener('focus', function () {
+      if (l.dataset.mega) open(l.dataset.mega, l); else leaveSection();
+    });
+    l.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' || !l.dataset.mega) return;
+      e.preventDefault();
+      open(l.dataset.mega, l);
+      requestAnimationFrame(function () {
+        const first = firstPanelLink(l.dataset.mega);
+        if (first) first.focus({ preventScroll: true });
+      });
     });
   });
   /* hovering the logo or the right-side actions closes it too — except in
      the sticky state, where the actions hold the hamburger that opened it */
   nav.querySelectorAll('.nav__logo, .nav__actions').forEach(function (el) {
+    if (!hoverCapable) return;
     el.addEventListener('mouseenter', function () {
       if (nav.classList.contains('nav--scrolled')) return;
-      close();
+      close(false);
     });
   });
 
@@ -2636,13 +2880,25 @@ window.__pageZoom = function () {
   if (burger) {
     burger.addEventListener('click', function () {
       if (!burgerOpens()) return;              /* narrow viewport → §2's overlay */
-      if (isOpen()) { close(); return; }
-      open('work');
+      if (isOpen()) { close(false); return; }
+      open('work', burger);
       burger.setAttribute('aria-expanded', 'true');
     });
   }
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && isOpen()) close();
+    if (e.key === 'Escape' && isOpen()) {
+      e.preventDefault();
+      close(true);
+    }
+  });
+
+  nav.addEventListener('focusout', function (e) {
+    if (!nav.contains(e.relatedTarget)) close(false);
+  });
+
+  window.addEventListener('resize', function () {
+    syncBurgerSemantics();
+    if (!window.matchMedia('(min-width: 1024px)').matches && isOpen()) close(false);
   });
 
   /* Leaving the whole nav (bar + open card) closes, after a grace period so
@@ -2650,11 +2906,15 @@ window.__pageZoom = function () {
      layout has a real one — the card hangs 17px below the pill — and that is
      bridged in CSS by stretching `.nav__inner` down to meet it; this window
      just covers a fast diagonal across the corner. */
-  nav.addEventListener('mouseenter', function () { clearTimeout(closeTimer); });
-  nav.addEventListener('mouseleave', function () {
-    clearTimeout(closeTimer);
-    closeTimer = window.setTimeout(close, 220);
-  });
+  if (hoverCapable) {
+    nav.addEventListener('mouseenter', function () { clearTimeout(closeTimer); });
+    nav.addEventListener('mouseleave', function () {
+      clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(function () {
+        if (!nav.contains(document.activeElement)) close(false);
+      }, 220);
+    });
+  }
 })();
 
 

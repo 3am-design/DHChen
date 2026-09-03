@@ -2632,12 +2632,10 @@ body.home-v3[data-intro='open'] .nav__logo {
 }
 
 /* ── compact tablet chrome ────────────────────────────────────────
-   At 768–899 the four-column content layout had already arrived, but the
-   desktop mega card was hidden while its hamburger was still hidden too.
-   Use the same honest search / centred logo / menu pattern as the phone,
-   without changing any of the tablet page layouts. At 900 the desktop
-   mega menu and six-column grid take over together. */
-@media (min-width: 768px) and (max-width: 899px) {
+   Keep the honest search / centred logo / menu pattern through 1023px. The
+   content grid may move from four to six columns at 900px, but the stacked
+   desktop menu needs more room and was a much harsher one-pixel transition. */
+@media (min-width: 768px) and (max-width: 1023px) {
   .nav--v3 .nav__inner {
     grid-template-columns: 1fr auto 1fr;
     align-items: center;

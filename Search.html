@@ -10,13 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=12.7" />
+  <link rel="stylesheet" href="style.css?v=12.9" />
   <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
        page's own module (§11). Same pair of files as Listing / Articles. -->
   <link rel="icon" href="assets/icons/logo-seal.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-home.css?v=12.7" />
+  <link rel="stylesheet" href="style-home.css?v=12.9" />
 </head>
 <body class="search-page inner-v3">
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
 
   <!-- ============================================================
@@ -68,7 +70,7 @@
          the stacked menu so the section links read off the white. Stuck,
          it drops below the pill and carries its own copy of the four
          sections (`.nav__mega-menu`). Same markup as the home page. -->
-    <div class="nav__mega" id="nav-mega" aria-hidden="true">
+    <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
       <div class="nav__mega-menu">
         <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
         <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
@@ -102,7 +104,7 @@
       </div>
     </div>
 
-    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
       <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
       <div class="nav__mobile-bar">
@@ -180,7 +182,7 @@
       </div>
     </div>
   </header>
-  <main>
+  <main id="main-content" tabindex="-1">
 
     <!-- ============================================================
          SEARCH RESULTS
@@ -248,7 +250,7 @@
         <a class="s-result" href="Articles.html" data-group="stories">
           <div class="s-result__text">
             <p class="s-result__kind">Our Stories</p>
-            <h3 class="s-result__title">Project Fuel</h3>
+            <h2 class="s-result__title">Project Fuel</h2>
             <p class="s-result__desc">Sustaining nonprofits through challenging times — emergency financial support and a fellowship for small, non-subvented Hong Kong nonprofits.</p>
             <p class="s-result__path">Impact / Our Stories</p>
           </div>
@@ -258,7 +260,7 @@
         <a class="s-result" href="Approach.html" data-group="pages">
           <div class="s-result__text">
             <p class="s-result__kind">Page</p>
-            <h3 class="s-result__title">Approach</h3>
+            <h2 class="s-result__title">Approach</h2>
             <p class="s-result__desc">How we work: engaged philanthropy, and the five moves it is made of — Initiate, Capacity Building, Innovate, Catalyst for Collaboration, Impact Driven.</p>
             <p class="s-result__path">Work / Approach</p>
           </div>
@@ -267,7 +269,7 @@
         <a class="s-result" href="Articles.html" data-group="stories">
           <div class="s-result__text">
             <p class="s-result__kind">Our Stories</p>
-            <h3 class="s-result__title">Compassionate Social Good Community</h3>
+            <h2 class="s-result__title">Compassionate Social Good Community</h2>
             <p class="s-result__desc">Bringing the social good community closer through shared learning, networks and trust.</p>
             <p class="s-result__path">Impact / Our Stories</p>
           </div>
@@ -276,7 +278,7 @@
         <a class="s-result" href="Institute.html" data-group="institutes">
           <div class="s-result__text">
             <p class="s-result__kind">Institutes</p>
-            <h3 class="s-result__title">Institute of Education Excellence</h3>
+            <h2 class="s-result__title">Institute of Education Excellence</h2>
             <p class="s-result__desc">Investing in teachers, schools and students so that education reaches further than the classroom.</p>
             <p class="s-result__path">About / Our Institutes</p>
           </div>
@@ -286,7 +288,7 @@
         <a class="s-result" href="Articles.html" data-group="news">
           <div class="s-result__text">
             <p class="s-result__kind">News</p>
-            <h3 class="s-result__title">Future Education in Action 2.0 opens applications</h3>
+            <h2 class="s-result__title">Future Education in Action 2.0 opens applications</h2>
             <p class="s-result__desc">Fostering values-driven life exploration education through cross-sector collaboration. Applications close at the end of the term.</p>
             <p class="s-result__path">Impact / News</p>
           </div>
@@ -296,7 +298,7 @@
         <a class="s-result" href="Ethos.html" data-group="pages">
           <div class="s-result__text">
             <p class="s-result__kind">Page</p>
-            <h3 class="s-result__title">Our Ethos</h3>
+            <h2 class="s-result__title">Our Ethos</h2>
             <p class="s-result__desc">Our origin, our purpose, and the five principles we test our own conduct against before we apply them to anything else.</p>
             <p class="s-result__path">About / Our Ethos</p>
           </div>
@@ -305,7 +307,7 @@
         <a class="s-result" href="Articles.html" data-group="learning">
           <div class="s-result__text">
             <p class="s-result__kind">Learning</p>
-            <h3 class="s-result__title">What a fellowship is actually for</h3>
+            <h2 class="s-result__title">What a fellowship is actually for</h2>
             <p class="s-result__desc">Notes from three years of running one: what small organisations asked for, what they used, and what we would design differently.</p>
             <p class="s-result__path">Impact / Learning</p>
           </div>
@@ -314,7 +316,7 @@
         <a class="s-result" href="Articles.html" data-group="stories">
           <div class="s-result__text">
             <p class="s-result__kind">Our Stories</p>
-            <h3 class="s-result__title">Shadowing the Golden Path</h3>
+            <h2 class="s-result__title">Shadowing the Golden Path</h2>
             <p class="s-result__desc">Supporting carers' wellbeing through exercise and self-rediscovery.</p>
             <p class="s-result__path">Impact / Our Stories</p>
           </div>
@@ -324,7 +326,7 @@
         <a class="s-result" href="Institute.html" data-group="institutes">
           <div class="s-result__text">
             <p class="s-result__kind">Institutes</p>
-            <h3 class="s-result__title">Institute of Mindful Living</h3>
+            <h2 class="s-result__title">Institute of Mindful Living</h2>
             <p class="s-result__desc">Cultivating awareness and compassionate communication in schools, families and workplaces.</p>
             <p class="s-result__path">About / Our Institutes</p>
           </div>
@@ -333,7 +335,7 @@
         <a class="s-result" href="Articles.html" data-group="news">
           <div class="s-result__text">
             <p class="s-result__kind">News</p>
-            <h3 class="s-result__title">Youth ImpACT Award names this year's cohort</h3>
+            <h2 class="s-result__title">Youth ImpACT Award names this year's cohort</h2>
             <p class="s-result__desc">A landmark social innovation award for youth to promote and cultivate compassion.</p>
             <p class="s-result__path">Impact / News</p>
           </div>
@@ -342,7 +344,7 @@
         <a class="s-result" href="Articles.html" data-group="learning">
           <div class="s-result__text">
             <p class="s-result__kind">Learning</p>
-            <h3 class="s-result__title">Measuring something that takes a decade</h3>
+            <h2 class="s-result__title">Measuring something that takes a decade</h2>
             <p class="s-result__desc">Why we report on leading indicators as well as outcomes, and how partners are asked to record them.</p>
             <p class="s-result__path">Impact / Learning</p>
           </div>
@@ -352,7 +354,7 @@
         <a class="s-result" href="Connect.html" data-group="pages">
           <div class="s-result__text">
             <p class="s-result__kind">Page</p>
-            <h3 class="s-result__title">Connect</h3>
+            <h2 class="s-result__title">Connect</h2>
             <p class="s-result__desc">Office, telephone and email — and the separate desk that handles donation applications.</p>
             <p class="s-result__path">Connect</p>
           </div>
@@ -443,7 +445,7 @@
   </footer>
 
   <!-- Full-screen search overlay (opened from the nav search icon) -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true" inert>
     <div class="search-overlay__bar">
       <a href="index.html" class="search-overlay__logo" aria-label="D. H. Chen Foundation home">
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
@@ -474,6 +476,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=12.7"></script>
+  <script src="script.js?v=12.9"></script>
 </body>
 </html>
