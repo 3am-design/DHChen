@@ -3732,8 +3732,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .longform__heading,
 :where(.inner-v3) .ethos__value-name,
 :where(.inner-v3) .strategy__name { color: var(--c-grey); }
-/* the value plate still flips to white on orange under the pointer —
-   `.ethos__value:hover .…` is (0,2,0) and outranks these */
 
 
 /* ================================================================
