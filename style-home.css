@@ -3484,7 +3484,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   padding: 32px 30px 36px;
   display: flex;
   flex-direction: column;
-  transition: background var(--ease), color var(--ease);
 }
 .ethos__value-num {
   font-family: var(--f-sans);
@@ -3492,7 +3491,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   font-weight: 500;
   line-height: 1;
   color: var(--c-orange);
-  transition: color var(--ease);
 }
 .ethos__value-name {
   font-family: var(--f-serif);
@@ -3508,13 +3506,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   line-height: 25px;
   color: var(--c-grey);
   margin-top: 12px;
-  transition: color var(--ease);
 }
-/* the same flip the pills and the tags do, so hovering anything on this
-   site means the same thing */
-.ethos__value:hover { background: var(--c-orange); color: var(--c-white); }
-.ethos__value:hover .ethos__value-num,
-.ethos__value:hover .ethos__value-desc { color: var(--c-white); }
 
 /* ── the five strategies ─────────────────────────────────────────
    A ladder rather than a grid: these are five steps of one approach and
@@ -4986,28 +4978,13 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 
 /* ================================================================
-   HONEST PLACEHOLDERS + INTERACTION STATES
+   PROTOTYPE PLACEHOLDERS + INTERACTION STATES
+
+   Links waiting for CMS destinations stay visually complete. JavaScript
+   marks them with `data-placeholder-link` and prevents navigation without
+   muting or hiding the designed controls.
    ================================================================ */
 :where(.inner-v3) .listing__empty { color: var(--c-grey); }
-
-a.link-unavailable {
-  opacity: 0.42;
-  cursor: not-allowed;
-  background-size: 0 1px !important;
-}
-a.link-unavailable:hover { color: inherit !important; }
-.btn-pill.link-unavailable,
-.btn-pill.link-unavailable:hover {
-  background: var(--c-orange);
-  color: var(--c-white) !important;
-  box-shadow: none;
-}
-.btn-pill--invert.link-unavailable,
-.btn-pill--invert.link-unavailable:hover {
-  background: var(--c-white);
-  color: var(--c-orange) !important;
-}
-.btn-pill.link-unavailable:hover .btn-pill__arrow { translate: 0 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .news-v3__grid { transition: none; }

@@ -43,9 +43,10 @@ window.__pageZoom = function () {
 
    The static prototype contains planned pages, social profiles and files as
    href="#". Leaving those live makes a click jump to the top and look broken.
-   Known routes are repaired here; genuinely unpublished destinations stay out
-   of the rendered navigation until the CMS supplies a real URL. Listing filter
-   options are controls rather than destinations and are deliberately excluded.
+   Known routes are repaired here; genuinely unpublished destinations remain
+   visible as part of the prototype but do not navigate until the CMS supplies
+   a real URL. Listing filter options are controls rather than destinations and
+   are deliberately excluded.
    ---------------------------------------------------------------- */
 (function () {
   const tc = document.documentElement.lang === 'zh-Hant';
@@ -88,23 +89,23 @@ window.__pageZoom = function () {
     }
   }
 
-  function disable(a) {
+  function holdForCms(a) {
     a.removeAttribute('href');
-    a.classList.add('link-unavailable');
+    a.dataset.placeholderLink = 'true';
     a.setAttribute('aria-disabled', 'true');
-    a.setAttribute('aria-hidden', 'true');
     a.setAttribute('tabindex', '-1');
-    a.hidden = true;
-    /* Avoid empty list items being counted by assistive technology. */
+    a.removeAttribute('aria-hidden');
+    a.removeAttribute('hidden');
+    /* Restore list wrappers hidden by the earlier prototype policy if this
+       initializer is re-run during a live preview. */
     if (a.parentElement && a.parentElement.tagName === 'LI' &&
         a.parentElement.children.length === 1) {
-      a.parentElement.hidden = true;
+      a.parentElement.removeAttribute('hidden');
     }
     if (!a.getAttribute('title')) a.setAttribute('title', unavailable);
     a.addEventListener('click', function (e) {
       e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
+    });
   }
 
   /* The Scholarship destination is already named in the adjacent copy. */
@@ -129,7 +130,7 @@ window.__pageZoom = function () {
     let href = routes[label];
     if (!href && a.closest('.search-overlay__hot')) href = searches[label];
     if (href) route(a, href, false);
-    else disable(a);
+    else holdForCms(a);
   });
 })();
 
