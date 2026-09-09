@@ -203,7 +203,16 @@ body.home-v3 {
 @media (min-width: 768px) {
   /* Until it sticks the bar is part of the page, so it scrolls up and out
      of frame like any other content instead of vanishing in place. */
-  .nav--v3 { position: absolute; }
+  .nav--v3 {
+    position: absolute;
+    /* The transparent header spans the full opening area, but only its
+       visible controls should intercept the page beneath it. */
+    pointer-events: none;
+  }
+  .nav--v3 .nav__logo,
+  .nav--v3 .nav__actions,
+  .nav--v3 .nav__link,
+  .nav--v3 .nav__mega { pointer-events: auto; }
 
   /* …and that is exactly why the opening needs a nudge here and nowhere
      else. The intro locks the page, and `html.lock-scroll` hands the
@@ -3440,7 +3449,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   line-height: 25px;
   color: var(--c-orange);
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid #FFCCA9;
   margin-bottom: 32px;
 }
 .longform__heading {
@@ -3519,9 +3528,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   grid-template-columns: 90px minmax(0, 1fr);
   gap: 0 clamp(20px, 2vw, 40px);
   padding: 30px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
-.strategy:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+.strategy + .strategy { border-top: 1px solid rgba(0, 0, 0, 0.12); }
 .strategy__num {
   font-family: var(--f-serif);
   font-size: 34px;
@@ -4907,7 +4915,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .btn-circle,
   .search-overlay__label,
   .listing__filter-menu a,
-  .listing__crumb-menu a,
   .listing__clear,
   .article__carousel-count,
   .connect__label,

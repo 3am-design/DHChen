@@ -2311,9 +2311,74 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   10. Dropdowns — generic toggle for [data-dropdown] (listing filters
-   + breadcrumb). Click toggles; clicking another closes the rest;
-   click-outside / Escape closes all. (No-op on pages without any.)
+   10. Breadcrumb menus — sibling pages at each level.
+
+   Hover remains available on pointer devices; this controller adds a real
+   tap and keyboard path. The crumb label opens the menu, while the menu item
+   itself performs navigation.
+   ---------------------------------------------------------------- */
+(function () {
+  const drops = Array.prototype.slice.call(document.querySelectorAll('.listing__crumb-drop'));
+  if (!drops.length) return;
+
+  function setOpen(drop, open) {
+    drop.classList.toggle('is-open', open);
+    const toggle = drop.querySelector('.listing__crumb-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', String(open));
+  }
+
+  function closeAll(except) {
+    drops.forEach(function (drop) {
+      if (drop !== except) setOpen(drop, false);
+    });
+  }
+
+  drops.forEach(function (drop) {
+    const toggle = drop.querySelector('.listing__crumb-toggle');
+    const menu = drop.querySelector('.listing__crumb-menu');
+    if (!toggle || !menu) return;
+
+    toggle.setAttribute('role', 'button');
+    toggle.setAttribute('aria-haspopup', 'menu');
+    toggle.setAttribute('aria-expanded', 'false');
+    if (toggle.tagName !== 'A' && toggle.tagName !== 'BUTTON') toggle.tabIndex = 0;
+
+    function toggleMenu(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = !drop.classList.contains('is-open');
+      closeAll(open ? drop : null);
+      setOpen(drop, open);
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+    toggle.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') toggleMenu(e);
+      if (e.key === 'Escape') {
+        setOpen(drop, false);
+        toggle.focus();
+      }
+    });
+
+    menu.addEventListener('click', function () { setOpen(drop, false); });
+  });
+
+  document.addEventListener('click', function () { closeAll(null); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    const open = drops.find(function (drop) { return drop.classList.contains('is-open'); });
+    if (!open) return;
+    const toggle = open.querySelector('.listing__crumb-toggle');
+    setOpen(open, false);
+    if (toggle) toggle.focus();
+  });
+})();
+
+
+/* ----------------------------------------------------------------
+   10a. Listing filter dropdowns — generic toggle for [data-dropdown].
+   Click toggles; clicking another closes the rest; click-outside / Escape
+   closes all. (No-op on pages without any.)
    ---------------------------------------------------------------- */
 (function () {
   const drops = Array.prototype.slice.call(document.querySelectorAll('[data-dropdown]'));
@@ -2365,7 +2430,7 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   10b. Story grids — real filters, clear state and four-card pagination.
+   10b. Story grids — real filters, clear state and twelve-card pagination.
 
    Category and tag data are read from the card DOM. No year is inferred:
    when cards carry no data-year, that control is visibly disabled instead of
@@ -2377,7 +2442,7 @@ window.__pageZoom = function () {
   if (!grids.length) return;
   const isTC = document.documentElement.lang === 'zh-Hant';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 12;
 
   function value(text) {
     return String(text || '')
