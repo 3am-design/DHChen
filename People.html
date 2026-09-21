@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Force the iOS Safari status bar / bottom toolbar to a fixed white instead
+       of sampling page content (which flips between peach hero and white nav as
+       you scroll). Keeps top + bottom chrome consistently white. -->
+<meta content="#ffffff" name="theme-color"/>
+<title>People — The D. H. Chen Foundation</title>
+<!-- The serif is self-hosted and the opening measures itself against text
+       set in it, so it must not arrive late: preloaded, it is in before the
+       first paint and nothing reflows under the intro. -->
+<link as="font" crossorigin="" href="assets/fonts/baskervville-regular.woff2" rel="preload" type="font/woff2"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Site styles -->
+<link href="style.css" rel="stylesheet"/>
+
+<link href="assets/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+</head>
+<body class="people-page inner-v3">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- ============================================================
+       00 — NAVIGATION   (V3: search left · logo centred · stacked menu right)
+       ============================================================ -->
+<header class="nav nav--v3" id="nav">
+<div class="nav__inner">
+<a aria-label="D. H. Chen Foundation home" class="nav__logo" href="index.html">
+<img alt="D. H. Chen Foundation" class="nav__logo-img" src="assets/icons/logo-nav.png"/>
+</a>
+<nav aria-label="Main navigation" class="nav__menu"><a class="nav__link" data-mega="work" href="Approach.html">Approach</a>
+<a class="nav__link" data-mega="impact" href="Listing.html">Impact</a>
+<a class="nav__link" data-mega="partnership" href="Partnership.html">Partnership</a>
+<a class="nav__link" data-mega="about" href="Ethos.html">About</a></nav>
+<!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
+           with it. It is its own button rather than the one in
+           `.nav__actions` moved across: that group is what the sticky pill
+           is built out of, and an absolutely-placed child of it is at the
+           mercy of the landing translate, which makes it the containing
+           block for as long as it runs. Only ever one of the two is on
+           screen (see style.css). -->
+<button aria-label="Search" class="nav__search-btn nav__search-btn--stacked">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<div class="nav__actions">
+<!-- sticky bar only: the seal joins search + hamburger inside the
+             white pill (Figma R2 "stick" / node 12014-44) -->
+<a aria-label="D. H. Chen Foundation home" class="nav__seal" href="index.html">
+<img alt="" src="assets/icons/logo-seal.svg"/>
+</a>
+<button aria-label="Search" class="nav__search-btn">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<a aria-disabled="true" class="nav__lang" data-placeholder-link="true" tabindex="-1">中文</a>
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="nav__hamburger">
+<img alt="" src="assets/icons/icon-hamburger.svg"/>
+</button>
+</div>
+</div>
+<!-- Desktop mega-menu — R2 "02_Menu": a 530 × 724 white card in the
+         top-right corner, growing down from the top edge, sitting *behind*
+         the stacked menu so the section links read off the white. Stuck,
+         it drops below the pill and carries its own copy of the four
+         sections (`.nav__mega-menu`). Same markup as the home page. -->
+<div aria-hidden="true" class="nav__mega" id="nav-mega" inert="">
+<div class="nav__mega-menu"><a class="nav__link" data-mega="work" href="Approach.html">Approach</a>
+<a class="nav__link" data-mega="impact" href="Listing.html">Impact</a>
+<a class="nav__link" data-mega="partnership" href="Partnership.html">Partnership</a>
+<a class="nav__link" data-mega="about" href="Ethos.html">About</a></div>
+<div class="nav__mega-panel" data-mega-panel="work"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-approach-illustration.svg"/><ul class="nav__mega-links">
+<li><a href="Approach.html#practices">Practices</a></li>
+<li><a href="Approach.html#priorities">Priorities</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="impact"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-impact-ripples.svg"/><ul class="nav__mega-links">
+<li><a href="Listing.html">Initiatives</a></li>
+<li><a href="Stories.html">Stories</a></li>
+<li><a href="Learning.html">Learning</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="partnership"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-partnership-hands.svg"/><ul class="nav__mega-links">
+<li><a aria-disabled="true" data-placeholder-link="true" tabindex="-1">Funding</a></li>
+<li><a href="Partnership.html">Collaboration</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="about"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-about-illustration.svg"/><ul class="nav__mega-links">
+<li><a href="Ethos.html">Values</a></li>
+<li><a href="People.html">People</a></li>
+<li><a href="News.html">News &amp; Press</a></li>
+<li><a href="Connect.html">Contact Us</a></li>
+</ul></div>
+</div>
+<div aria-hidden="true" class="nav__mobile-menu" id="mobile-menu" inert="">
+<!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
+<div class="nav__mobile-bar">
+<a class="nav__mobile-lang" href="People.html">中文</a>
+<div class="nav__mobile-bar-actions">
+<button aria-label="Search" class="nav__mobile-search">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<button aria-label="Close menu" class="nav__mobile-close">
+<span></span><span></span>
+</button>
+</div>
+</div>
+<!-- Primary nav — big, left-aligned -->
+<nav aria-label="Mobile navigation" class="nav__mobile-links">
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">Approach</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Approach.html#practices">Practices</a><a href="Approach.html#priorities">Priorities</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">Impact</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">Partnership</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a aria-disabled="true" data-placeholder-link="true" tabindex="-1">Funding</a><a href="Partnership.html">Collaboration</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">About</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+</nav>
+<!-- Secondary links from the footer, two columns -->
+<div class="nav__mobile-secondary">
+<nav aria-label="Get involved" class="nav__mobile-col">
+<a class="nav__mobile-sublink" href="Partnership.html">Partner with us</a>
+<a class="nav__mobile-sublink" href="#">Stay connected</a>
+<a class="nav__mobile-sublink" href="People.html#careers">Join our team</a>
+</nav>
+<nav aria-label="Legal" class="nav__mobile-col">
+<a class="nav__mobile-sublink" href="Privacy.html">Privacy Policy</a>
+<a class="nav__mobile-sublink" href="Disclaimer.html">Disclaimer</a>
+<a class="nav__mobile-sublink" href="Sitemap.html">Sitemap</a>
+<a class="nav__mobile-sublink" href="Accessibility.html">Accessibility</a>
+</nav>
+</div>
+<div class="nav__mobile-social">
+<a aria-label="LinkedIn" class="nav__mobile-social-link" href="#">
+<img alt="LinkedIn" src="assets/icons/icon-linkedin.svg"/>
+</a>
+<a aria-label="Instagram" class="nav__mobile-social-link" href="#">
+<img alt="Instagram" src="assets/icons/icon-instagram.svg"/>
+</a>
+</div>
+</div>
+</header>
+<main id="main-content" tabindex="-1"><article class="people listing" id="people">
+<nav aria-label="Breadcrumb" class="listing__crumb"><a href="index.html">Home</a><span>/</span><a href="Ethos.html">About</a><span>/</span><span aria-current="page">People</span></nav>
+<h1 class="listing__title listing__title--initiatives">People</h1><p class="listing__subtitle">Compassion begins with people</p><p class="people-intro">Different perspectives. A shared commitment to compassion. Meet the people who guide our work and bring it to life.</p>
+<nav aria-label="People sections" class="people-jump"><a href="#trustees">Board of Trustees</a><a href="#institute-boards">Institute Boards</a><a href="#foundation-office">Foundation Office</a><a data-careers-link="" href="#careers">Careers</a></nav>
+<section class="people-section" id="trustees"><h2>Board of Trustees</h2><p class="people-section__intro">Our seven trustees bring experience across professional and community life. They guide the Foundation’s direction and review its goals and strategies.</p>
+<div class="people-feature"><div><button aria-haspopup="dialog" class="person-trigger" data-person-name="Ms. CHEN Wai Wai, Vivien" data-person-role="Chairman" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEN Wai Wai, Vivien</span><span class="person-trigger__role">Chairman</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div><div class="people-feature__quote"><p>Care for others as well as you would care for yourself.</p><img alt="" aria-hidden="true" src="assets/icons/quote-mark.svg"/></div></div>
+<div class="people-grid"><button aria-haspopup="dialog" class="person-trigger" data-person-name="Ms. CHEUNG Tih Loh, Karen" data-person-role="Trustee and Chief Strategist" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEUNG Tih Loh, Karen</span><span class="person-trigger__role">Trustee and Chief Strategist</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Mr. CHEUNG Wai Hing" data-person-role="Trustee" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. CHEUNG Wai Hing</span><span class="person-trigger__role">Trustee</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Mr. FUNG Hau Chung, Andrew, SBS, JP" data-person-role="Trustee" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. FUNG Hau Chung, Andrew, SBS, JP</span><span class="person-trigger__role">Trustee</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Mr. KUOK Hoi Sang, Stephen" data-person-role="Trustee" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. KUOK Hoi Sang, Stephen</span><span class="person-trigger__role">Trustee</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Mr. LAM Kwok Kwong, Paul" data-person-role="Trustee" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. LAM Kwok Kwong, Paul</span><span class="person-trigger__role">Trustee</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Dr. LEUNG Pak Yin, SBS, JP" data-person-role="Trustee" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Dr. LEUNG Pak Yin, SBS, JP</span><span class="person-trigger__role">Trustee</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div>
+<div class="people-honorary"><button aria-haspopup="dialog" class="person-trigger" data-person-name="Mr. SETO Kai Shui, Frank" data-person-role="Honorary Secretary" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. SETO Kai Shui, Frank</span><span class="person-trigger__role">Honorary Secretary</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Ms. SHUEN Wing Chi, Gigi" data-person-role="Honorary Legal Advisor" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. SHUEN Wing Chi, Gigi</span><span class="person-trigger__role">Honorary Legal Advisor</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div></section>
+<section class="people-section" id="institute-boards"><h2>Institutes’ Board of Directors</h2><div class="people-groups"><section class="people-group"><h3>DHCF Institute of Education Excellence Limited</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEUNG Tih Loh, Karen" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEUNG Tih Loh, Karen</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Dr. LEUNG Pak Yin" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Dr. LEUNG Pak Yin</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. SHUEN Wing Chi, Gigi" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. SHUEN Wing Chi, Gigi</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Dr. Tong Choi Wai" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Dr. Tong Choi Wai</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>DHCF Institute of Impact Strategy Limited</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEN Wai Wai, Vivien" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEN Wai Wai, Vivien</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Mr. CHENG Ki Sum, Cheney" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. CHENG Ki Sum, Cheney</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEUNG Tih Loh, Karen" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEUNG Tih Loh, Karen</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Mr. CHEUNG Wai Hing" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. CHEUNG Wai Hing</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>DHCF Institute of Mindful Living Limited</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEUNG Tih Loh, Karen" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEUNG Tih Loh, Karen</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Mr. FUNG Hau Chung, Andrew, BBS, JP" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mr. FUNG Hau Chung, Andrew, BBS, JP</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. SHUEN Wing Chi, Gigi" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. SHUEN Wing Chi, Gigi</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>DHCF Institute of Wellbeing Limited</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEN Wai Wai, Vivien" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEN Wai Wai, Vivien</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. CHEUNG Tih Loh, Karen" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. CHEUNG Tih Loh, Karen</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Dr. LEUNG Pak Yin" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Dr. LEUNG Pak Yin</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ms. SHUEN Wing Chi, Gigi" data-person-role="Board Director" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ms. SHUEN Wing Chi, Gigi</span><span class="person-trigger__role">Board Director</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section></div></section>
+<section class="people-section" id="foundation-office"><h2>Foundation Office</h2><p class="people-section__intro">Colleagues across programmes and operations turn our values into everyday practice, working with partners to create lasting community impact.</p>
+<div class="people-feature"><div><button aria-haspopup="dialog" class="person-trigger" data-person-name="Karen Cheung" data-person-role="Chief Strategist" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Karen Cheung</span><span class="person-trigger__role">Chief Strategist</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div><div class="people-feature__quote"><p>Compassion is not only a value. It is a way of being.</p><img alt="" aria-hidden="true" src="assets/icons/quote-mark.svg"/></div></div>
+<div class="people-feature"><div><button aria-haspopup="dialog" class="person-trigger" data-person-name="Lawrence Tsang" data-person-role="Chief Executive Officer" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Lawrence Tsang</span><span class="person-trigger__role">Chief Executive Officer</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div><div class="people-feature__quote"><p>Creating a Compassionate Society</p><img alt="" aria-hidden="true" src="assets/icons/quote-mark.svg"/></div></div>
+<h2 class="people-section__subhead">Programme</h2><div class="people-groups"><section class="people-group"><h3>Programme leadership</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Ruby Yong" data-person-role="Chief Programme Officer" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Ruby Yong</span><span class="person-trigger__role">Chief Programme Officer</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Above and Beyond Institute</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Jasmine Wong" data-person-role="Senior Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Jasmine Wong</span><span class="person-trigger__role">Senior Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Joy Wong" data-person-role="Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Joy Wong</span><span class="person-trigger__role">Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Institute of Education Excellence</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Duncan Ma" data-person-role="Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Duncan Ma</span><span class="person-trigger__role">Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Jane Lau" data-person-role="Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Jane Lau</span><span class="person-trigger__role">Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Zanna Lo" data-person-role="Associate Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Zanna Lo</span><span class="person-trigger__role">Associate Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Institute of Impact Strategy</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Alex Lau" data-person-role="Consultant" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Alex Lau</span><span class="person-trigger__role">Consultant</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Alvin Wong" data-person-role="Senior Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Alvin Wong</span><span class="person-trigger__role">Senior Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Institute of Mindful Living</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Elie Lam" data-person-role="Associate Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Elie Lam</span><span class="person-trigger__role">Associate Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Terri Kong" data-person-role="Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Terri Kong</span><span class="person-trigger__role">Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Institute of Wellbeing</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Nancy Chan" data-person-role="Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Nancy Chan</span><span class="person-trigger__role">Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Vivian Sung" data-person-role="Senior Programme Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Vivian Sung</span><span class="person-trigger__role">Senior Programme Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section></div>
+<h2 class="people-section__subhead">Operations</h2><div class="people-groups"><section class="people-group"><h3>Operations leadership</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Jennifer Lam" data-person-role="Chief Operating Officer" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Jennifer Lam</span><span class="person-trigger__role">Chief Operating Officer</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Accounting and Finance</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="David Leung" data-person-role="Associate Finance Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">David Leung</span><span class="person-trigger__role">Associate Finance Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Jennis Ngan" data-person-role="Head of Finance and Systems" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Jennis Ngan</span><span class="person-trigger__role">Head of Finance and Systems</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Administration</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Mandy Chow" data-person-role="Team Lead, Administration and Executive Assistant to Chief Strategist" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Mandy Chow</span><span class="person-trigger__role">Team Lead, Administration and Executive Assistant to Chief Strategist</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Miki Yuen" data-person-role="Administration Officer" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Miki Yuen</span><span class="person-trigger__role">Administration Officer</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Communications</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Amanda Shiu" data-person-role="Senior Communications Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Amanda Shiu</span><span class="person-trigger__role">Senior Communications Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Rhonda Yung" data-person-role="Senior Communications Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Rhonda Yung</span><span class="person-trigger__role">Senior Communications Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>HR and Talent Development</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Crystal Chan" data-person-role="HR Advisory Consultant" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Crystal Chan</span><span class="person-trigger__role">HR Advisory Consultant</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section><section class="people-group"><h3>Knowledge</h3><button aria-haspopup="dialog" class="person-trigger person-trigger--compact" data-person-name="Angela Wu" data-person-role="Senior Knowledge Manager" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Angela Wu</span><span class="person-trigger__role">Senior Knowledge Manager</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></section></div>
+<h2 class="people-section__subhead">D’Hub and D’Ventures</h2><div class="people-grid"><button aria-haspopup="dialog" class="person-trigger" data-person-name="Devon Cheng" data-person-role="Senior Officer, Community and Operations" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Devon Cheng</span><span class="person-trigger__role">Senior Officer, Community and Operations</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Josephine Ho" data-person-role="Team Lead, Shared Services (MarCom)" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Josephine Ho</span><span class="person-trigger__role">Team Lead, Shared Services (MarCom)</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button><button aria-haspopup="dialog" class="person-trigger" data-person-name="Silas Ho" data-person-role="Head of Operations, D’Hub and D’Ventures" type="button"><span class="person-trigger__copy"><span class="person-trigger__name">Silas Ho</span><span class="person-trigger__role">Head of Operations, D’Hub and D’Ventures</span></span><span aria-hidden="true" class="person-trigger__expand"></span></button></div></section>
+<section class="people-section careers" hidden="" id="careers"><div class="careers__head"><div><h2>Careers</h2><p class="people-section__intro">Bring your perspective. Help turn compassion into action.</p></div></div><div class="careers__jobs"></div></section>
+</article></main>
+<dialog aria-describedby="person-bio-role" aria-labelledby="person-bio-name" class="people-dialog" id="person-bio"><div class="people-dialog__panel"><button aria-label="Close biography" autofocus="" class="people-dialog__close" type="button">×</button><div class="people-dialog__scroll" data-lenis-prevent=""><p class="people-dialog__label">Biography <span>— Demo profile</span></p><h2 id="person-bio-name"></h2><p id="person-bio-role"></p><div class="people-dialog__body"><p>Meaningful change begins with the time we give to understanding one another. A commitment to listening, learning and working alongside others shapes this approach to philanthropy. Behind every programme are people with their own hopes, concerns and experiences, and those perspectives deserve a place in the decisions that affect their lives.</p><p>Collaboration starts by recognising the knowledge already present in a community. The most useful contribution may be a thoughtful question, a practical introduction or the patience to explore an idea together. Working with partners means being open about what is known, honest about what remains uncertain and willing to adjust as new understanding emerges.</p><p>This outlook carries into everyday teamwork. Different professional backgrounds make it possible to see a challenge from several directions. Sharing experiences, making space for quieter voices and reflecting on setbacks help build the trust needed to try something new. Progress often comes through small, consistent acts of care, supported by relationships that continue beyond the life of a single project.</p><p>The ambition is to help create conditions in which individuals and organisations can grow with confidence. That includes making room for learning, supporting people through change and connecting ideas across boundaries. Compassion becomes practical when it influences how a meeting is held, how a decision is made and how a colleague or community partner is supported. It is an ongoing practice, renewed through the choices made each day.</p><p>Shared demo biography. Individual biographies will be added after content approval.</p></div></div></div></dialog>
+<template id="career-job-template"><details class="career-job"><summary><div><h3 class="career-job__title"></h3><p class="career-job__meta"></p><p class="career-job__summary"></p></div><span aria-hidden="true" class="career-job__toggle"></span></summary><div class="career-job__detail"><div class="career-job__copy"></div><p class="career-job__apply-note"></p><a class="btn-pill career-job__apply">Apply<span class="btn-pill__arrow" aria-hidden="true"></span></a></div></details></template>
+<script id="people-jobs" type="application/json">[{"id": "system-analyst", "status": "open", "title": "System Analyst", "type": "Full-time", "location": "Hong Kong", "summary": "Build useful data systems and help our teams work more effectively.", "applyNote": "Please include your CV, cover letter, and current and expected salary.", "email": "hr@dhchenfoundation.com", "source": "https://dhchenfoundation.com/news-listing/", "paragraphs": ["Develop data architecture and improve access to information for analysis and impact measurement. Assess workflows, support system improvements and coordinate testing with colleagues and technology partners. Help maintain reliable IT services, guide users and keep documentation up to date.", "A university degree and at least eight years of relevant experience in systems analysis, application development or technology delivery. Strong collaboration, problem-solving and English and Chinese communication skills are important."]}, {"id": "programme-officer", "status": "open", "title": "Programme Officer", "type": "Full-time", "location": "Hong Kong", "demo": true, "summary": "Support community programmes and build thoughtful partnerships that turn compassion into action.", "paragraphs": ["Work alongside the programme team and community partners to plan activities, coordinate delivery and keep initiatives moving. You will help organise workshops and meetings, maintain clear project records and make sure partners have the information they need.", "The role also supports learning across our programmes. Gather feedback from participants, prepare accessible updates and help the team reflect on what is working and where an approach could improve.", "We are looking for someone who enjoys working with people, pays attention to detail and brings curiosity to community issues. Experience in programme coordination or the social sector, together with clear written and spoken English and Chinese, would be helpful."], "applyNote": "Please send your CV and a short cover letter outlining your interest in the role.", "email": "hr@dhchenfoundation.com"}]</script>
+<!-- ============================================================
+       05 — FOOTER
+       ============================================================ -->
+<!-- ============================================================
+       07 — COLOUR BAR
+       ============================================================ -->
+<div class="wrap">
+<!-- draws itself left → right as it comes into view -->
+<div aria-hidden="true" class="colourbar" data-motion="bar">
+<span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+</div>
+<!-- ============================================================
+       08 — FOOTER (V3)
+       ============================================================ -->
+<footer class="footer-v3" id="footer">
+<div class="wrap">
+<div class="footer-v3__inner">
+<a aria-label="D. H. Chen Foundation home" href="index.html">
+<img alt="The D. H. Chen Foundation" class="footer-v3__logo" src="assets/icons/logo-nav.png"/>
+</a>
+<div class="footer-v3__col">
+<nav aria-label="Footer navigation" class="footer-v3__nav">
+<a href="Partnership.html">Partner with us</a>
+<a href="#">Stay connected</a>
+<a href="People.html#careers">Join our team</a>
+</nav>
+<div class="footer-v3__social">
+<a aria-label="LinkedIn" href="#">
+<span aria-hidden="true" class="footer-v3__social-icon footer-v3__social-icon--linkedin"></span>
+</a>
+<a aria-label="Instagram" href="#">
+<span aria-hidden="true" class="footer-v3__social-icon footer-v3__social-icon--instagram"></span>
+</a>
+</div>
+</div>
+<nav aria-label="Legal navigation" class="footer-v3__legal">
+<a href="Privacy.html">Privacy Policy</a>
+<a href="Disclaimer.html">Disclaimer</a>
+<a href="Sitemap.html">Sitemap</a>
+<a href="Accessibility.html">Accessibility</a>
+</nav>
+</div>
+<p class="footer-v3__copyright">
+        © 2026 The D. H. Chen Foundation. All rights reserved<span class="footer-v3__copy-sep">  |  </span><a href="https://www.assembly.com.hk" rel="noopener" target="_blank">Website designed by Assembly</a>
+</p>
+</div>
+</footer>
+<!-- Full-screen search overlay (opened from the nav search icon) -->
+<div aria-hidden="true" aria-label="Search" aria-modal="true" class="search-overlay" id="search-overlay" inert="" role="dialog">
+<div class="search-overlay__bar">
+<a aria-label="D. H. Chen Foundation home" class="search-overlay__logo" href="index.html">
+<img alt="D. H. Chen Foundation" src="assets/icons/logo-nav.png"/>
+</a>
+<button aria-label="Close search" class="search-overlay__close" type="button">
+<span></span><span></span>
+</button>
+</div>
+<div class="search-overlay__inner">
+<form action="Search.html" class="search-overlay__field" method="get" role="search">
+<img alt="" aria-hidden="true" class="search-overlay__icon" src="assets/icons/icon-search.svg"/>
+<input aria-label="Search" class="search-overlay__input" name="q" placeholder="Looking for..." type="search"/>
+</form>
+<p class="search-overlay__label">Whats hot</p>
+<nav aria-label="Popular searches" class="search-overlay__hot">
+<a href="Search.html?q=Scholarship">Scholarship</a>
+<a href="Search.html?q=Funding+for+innovative">Funding for innovative</a>
+<a href="Search.html?q=Join+us">Join us</a>
+<a href="Search.html?q=Events">Events</a>
+</nav>
+</div>
+</div>
+<!-- Custom cursor (desktop pointers only; script enables it) -->
+<div aria-hidden="true" class="cursor" id="cursor">
+<span class="cursor__label">DISCOVER</span>
+<img alt="" class="cursor__arrow" src="assets/icons/icon-arrow.svg"/>
+</div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

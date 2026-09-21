@@ -18,11 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=12.18" />
-  <!-- Home V3 — Figma "R2 / OPT2_01_Home_01_Desktop" -->
-  <link rel="icon" href="assets/icons/logo-seal.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-home.css?v=12.18" />
+  <!-- Site styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
     html.lp-boot .nav__logo, html.lp-boot .nav__menu, html.lp-boot .nav__actions,
@@ -45,12 +43,10 @@
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
       </a>
 
-      <nav class="nav__menu" aria-label="Main navigation">
-        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
-        <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
-        <a href="Connect.html" class="nav__link">Connect</a>
-      </nav>
+      <nav class="nav__menu" aria-label="Main navigation"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+<a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">About</a></nav>
 
       <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
            with it. It is its own button rather than the one in
@@ -58,7 +54,7 @@
            is built out of, and an absolutely-placed child of it is at the
            mercy of the landing translate, which makes it the containing
            block for as long as it runs. Only ever one of the two is on
-           screen (see style-home.css). -->
+           screen (see style.css). -->
       <button class="nav__search-btn nav__search-btn--stacked" aria-label="Search">
         <img src="assets/icons/icon-search.svg" alt="" />
       </button>
@@ -85,38 +81,30 @@
          it drops below the pill and carries its own copy of the four
          sections (`.nav__mega-menu`). Same markup as the home page. -->
     <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
-      <div class="nav__mega-menu">
-        <a href="Approach.html" class="nav__link" data-mega="work">Work</a>
-        <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
-        <a href="Ethos.html" class="nav__link" data-mega="about">About</a>
-        <a href="Connect.html" class="nav__link">Connect</a>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="work">
-        <img class="nav__mega-art" src="assets/images/menu-work-v3.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
-          <li><a href="Approach.html">Approach</a></li>
-          <li><a href="#">Our Priorities</a></li>
-          <li><a href="#">Our Initiatives</a></li>
-          <li><a href="Partnership.html">Partnership</a></li>
-        </ul>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="impact">
-        <img class="nav__mega-art" src="assets/images/menu-impact.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
+<div class="nav__mega-menu"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+<a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
+<div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Approach.html#practices">Practices</a></li>
+          <li><a href="Approach.html#priorities">Priorities</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Listing.html">Initiatives</a></li>
+          <li><a href="Stories.html">Stories</a></li>
           <li><a href="Learning.html">Learning</a></li>
-          <li><a href="Listing.html">Our Stories</a></li>
-          <li><a href="News.html">News</a></li>
-        </ul>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="about">
-        <img class="nav__mega-art" src="assets/images/menu-about-v3.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
-          <li><a href="Ethos.html">Our Ethos</a></li>
-          <li><a href="#">Peoples</a></li>
-          <li><a href="Institutes.html">Our Institutes</a></li>
-        </ul>
-      </div>
-    </div>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="partnership"><img class="nav__mega-art" src="assets/images/menu-partnership-hands.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Funding</a></li>
+          <li><a href="Partnership.html">Collaboration</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Ethos.html">Values</a></li>
+          <li><a href="People.html">People</a></li>
+          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="Connect.html">Contact Us</a></li>
+        </ul></div>
+</div>
 
     <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
@@ -135,48 +123,26 @@
 
       <!-- Primary nav — big, left-aligned -->
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">Work</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="Approach.html">Approach</a>
-              <a href="#">Our Priorities</a>
-              <a href="#">Our Initiatives</a>
-              <a href="Partnership.html">Partnership</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="Learning.html">Learning</a>
-              <a href="Listing.html">Our Stories</a>
-              <a href="News.html">News</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="Ethos.html">Our Ethos</a>
-              <a href="#">Peoples</a>
-              <a href="Institutes.html">Our Institutes</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <a href="Connect.html" class="nav__mobile-link">Connect</a>
-        </div>
-      </nav>
+      <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Approach.html#practices">Practices</a><a href="Approach.html#priorities">Priorities</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Partnership</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Funding</a><a href="Partnership.html">Collaboration</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+</nav>
 
       <!-- Secondary links from the footer, two columns -->
       <div class="nav__mobile-secondary">
         <nav class="nav__mobile-col" aria-label="Get involved">
-          <a href="#" class="nav__mobile-sublink">Partner with us</a>
+          <a href="Partnership.html" class="nav__mobile-sublink">Partner with us</a>
           <a href="#" class="nav__mobile-sublink">Stay connected</a>
-          <a href="#" class="nav__mobile-sublink">Join our team</a>
+          <a class="nav__mobile-sublink" href="People.html#careers">Join our team</a>
         </nav>
         <nav class="nav__mobile-col" aria-label="Legal">
           <a href="Privacy.html" class="nav__mobile-sublink">Privacy Policy</a>
@@ -233,16 +199,14 @@
 
       <!-- ── Intro line ────────────────────────────────────────── -->
       <div class="wrap">
-        <p class="intro-v3">
-          We are a Hong Kong family philanthropic trust, putting compassion into action with partners to address evolving social needs.
-        </p>
+        <p class="intro-v3">We are a Hong Kong family philanthropic trust, guided by the principle that &quot;Compassion in Action&quot; begins with individuals. Meaningful change starts from within and extends outward to the communities we shape together. This journey unfolds through Being, Becoming, and Belonging.</p>
       </div>
 
       <!-- ── Being → Becoming → Belonging → Bettering ───────────── -->
       <div class="journey wrap" id="journey">
 
         <!-- 1 — Being -->
-        <section class="panel panel--being">
+        <section class="panel panel--being journey__step">
           <!-- 點 — scattered dots drifting, then collapsing into the core dot.
                Positions/sizes/opacities come straight from being-dots.svg. -->
           <div class="panel__dots dots" data-motion="dots" aria-hidden="true">
@@ -263,91 +227,36 @@
           <div class="panel__head">
             <h2 class="panel__title">Being</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              This is where awareness begins.
-            </p>
-            <p class="panel__copy">
-              We connect with our authentic selves to become more aware of the possibilities and opportunities that can inspire meaningful change.
-            </p>
-            <p class="panel__note">
-              About knowing who we are, what we care about deeply, and how we make our most important decisions.
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">This is where awareness begins and compassion takes root.</p></div>
         </section>
 
         <!-- 2 — Becoming -->
-        <section class="panel panel--becoming">
+        <section class="panel panel--becoming journey__step">
           <!-- 線 — one dot spreads left/right into a line (script fills the dots) -->
           <div class="panel__dotrow dotrow" data-motion="dotrow" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Becoming</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              This is where possibilities take shape and grow into meaningful contributions.
-            </p>
-            <p class="panel__copy">
-              We connect the self to possibility through exploring potential and purposes, transforming insight into action and nurturing ideas that can create positive social impact.
-            </p>
-            <p class="panel__note">
-              About what we can be, and what we want to become as individuals and as members of society.
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">This is where potential meets purpose, and possibilities become positive impact.</p></div>
         </section>
 
         <!-- 3 — Belonging -->
-        <section class="panel panel--belonging">
+        <section class="panel panel--belonging journey__step">
           <!-- 面 — the line spreads up/down into a plane (script fills the rules) -->
           <div class="panel__lines lines" data-motion="lines" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Belonging</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              This is where individual contributions come together, and where impact becomes collective.
-            </p>
-            <p class="panel__copy">
-              We connect the self to community through stronger social connections, cultivating relationships built on trust, care, and shared purpose.
-            </p>
-            <p class="panel__note">
-              About who we are, and who we aspire to be, within the broader communities in which we live.
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">This is where connection and community create collective impact.</p></div>
         </section>
 
         <!-- 4 — Bettering -->
-        <section class="panel panel--bettering">
-          <!-- Four frames on the same spot: each one pushes in slowly, and as
-               it reaches the end of its travel the next is cross-faded over
-               it. Plain <img>s stacked by CSS rather than a slider library —
-               the whole behaviour is one class (`is-on`) moved along by
-               script §8.7, and with no script (or reduced motion) the first
-               frame simply stays put. -->
-          <div class="panel__photo" data-slideshow aria-hidden="true">
-            <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
-            <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
-            <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
-            <img class="panel__photo-img" src="assets/images/bettering-4.png" alt="" loading="lazy" />
-          </div>
-          <div class="panel__head">
-            <p class="panel__crumbs">
-              <span>Being</span><span>Becoming</span><span>Belonging</span>
-            </p>
-            <h2 class="panel__title">Bettering</h2>
-          </div>
-          <div class="panel__body">
-            <p class="panel__lede">Creating a compassionate society together through approaches that are:</p>
-            <ul class="panel__bullets">
-              <li>impact-driven</li>
-              <li>sustainable</li>
-              <li>innovative</li>
-            </ul>
-            <p class="panel__note">
-              This feels particularly aligned with the Foundation&rsquo;s philosophy because it focuses on societal improvement rather than commercial success.
-            </p>
-          </div>
-        </section>
+        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">Creating a Compassionate Society</h2><p>A future where individuals thrive, communities flourish, and compassion inspires positive change.</p><ul class="compassion-outcome__values" role="list"><li><span>Impact-<wbr>driven</span></li><li><span>Innovative</span></li><li><span>Sustainable</span></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
+  <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
+  <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
+  <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
+  <img class="panel__photo-img" src="assets/images/bettering-4.png" alt="" loading="lazy" />
+</div></section>
 
       </div>
     </div>
@@ -378,70 +287,19 @@
           </div>
         </div>
 
-        <div class="news-v3__grid">
+        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="news" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">Mindfulness and self-care, made part of everyday life.</p><ul class="card-v3__tags">
+          <li>Wellbeing</li>
+        </ul></div></a><a class="card-v3" data-category="learning" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">Connecting educators and communities to support life and career exploration.</p><ul class="card-v3__tags">
+          <li>Education</li>
+        </ul></div></a><a class="card-v3" data-category="stories" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">Growing mutual care and connection through time banking.</p><ul class="card-v3__tags">
+          <li>Ageing and Dying</li>
+          <li>Wellbeing</li>
+        </ul></div></a><a class="card-v3" data-category="stories" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">Supporting community leaders to advance social inclusion.</p><ul class="card-v3__tags">
+          <li>Ecosystem Building</li>
+        </ul></div></a><a class="card-v3" data-category="news" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">A community where social purpose organisations learn and grow together.</p><ul class="card-v3__tags">
+          <li>Ecosystem Building</li>
+        </ul></div></a></div>
 
-          <article class="card-v3" data-category="stories">
-            <div class="card-v3__image">
-              <img src="assets/images/card-1.png" alt="Community Changemaker Fellowship" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">Community Changemaker Fellowship</h3>
-              <p class="card-v3__desc">Cultivating Changemakers to Advance Social Inclusion</p>
-              <p class="card-v3__cat">Above &amp; Beyond Institute</p>
-              <ul class="card-v3__tags">
-                <li>Capacity Building</li>
-                <li>Issues-focused</li>
-                <li>Wellbeing</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="learning">
-            <div class="card-v3__image">
-              <img src="assets/images/card-2.jpg" alt="Pursuit of X" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">Pursuit of X</h3>
-              <p class="card-v3__desc">Cross-Sector Collaboration for Real-World Readiness</p>
-              <p class="card-v3__cat">Education Excellence</p>
-              <ul class="card-v3__tags">
-                <li>Capacity Building</li>
-                <li>Issues-focused</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="news">
-            <div class="card-v3__image">
-              <img src="assets/images/card-3.jpg" alt="Co&rsquo;asis" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">Co&rsquo;asis</h3>
-              <p class="card-v3__desc">Building a Peer-powered Social Good Connection Accelerator</p>
-              <p class="card-v3__cat">Impact Strategy</p>
-              <ul class="card-v3__tags">
-                <li>Issues-focused</li>
-                <li>Wellbeing</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="stories">
-            <div class="card-v3__image">
-              <img src="assets/images/card-4.jpg" alt="Supportive Net Weaver 2.0" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">Supportive Net Weaver 2.0</h3>
-              <p class="card-v3__desc">Enhancing Youth&rsquo;s Mental Wellbeing through Learning Psychological First Aid</p>
-              <p class="card-v3__cat">Well-Being</p>
-              <ul class="card-v3__tags">
-                <li>Capacity Building</li>
-                <li>Wellbeing</li>
-              </ul>
-            </div>
-          </article>
-
-        </div>
 
         <div class="news-v3__cta">
           <a href="Listing.html" class="btn-pill">
@@ -460,12 +318,13 @@
     <section class="ventures" id="ventures">
       <div class="wrap">
 
-        <div class="ventures__grid">
+        <div class="ventures__intro"><h2>Visionary Initiatives</h2><p>We have launched initiatives that advance our mission through talent development, ecosystem building, and community impact.</p></div>
+<div class="ventures__grid">
 
           <div class="ventures__col">
             <div class="ventures__logos">
-              <img src="assets/images/dventures-word.svg" alt="D&rsquo;Ventures" />
-              <img src="assets/images/dhub.svg" alt="D&rsquo;Hub" class="is-dhub" />
+              <img src="assets/images/dventures-word.svg?v=260916.8" alt="D&rsquo;Ventures" />
+              <img src="assets/images/dhub.svg?v=260916.8" alt="D&rsquo;Hub" class="is-dhub" />
             </div>
             <p class="ventures__text">
               As Visionary Founder, the Foundation launched D&rsquo;Ventures, a social venture that builds a purpose-driven ecosystem for the local social good community to grow and thrive. By offering Shared Services, a Co-learning Community, and an Integrated Workspace within its D&rsquo;Hub in the heart of Kowloon, the Foundation brings together the services and space needed to drive sustainable impact and turn compassion into action.
@@ -500,9 +359,7 @@
              logo + copy + photo arrangement. -->
         <div class="funding">
           <h2 class="funding__title">Partner with us</h2>
-          <p class="funding__text">
-            We accept donation applications throughout the year. Applicants interested in applying for our donation should complete the corresponding Donation Application Form, upload the required documents and allow ample time for the review and vetting process.
-          </p>
+          <p class="funding__text">Building a compassionate society requires collaboration. We work alongside social purpose organisations including educators, social innovators, community leaders, and changemakers to turn compassion into meaningful action and lasting impact.</p>
           <div class="funding__marquee">
             <!-- Four strips, animated by exactly -50%: as the first half walks
                  off the left the second half is already standing where it
@@ -583,10 +440,7 @@
               </ul>
             </div>
           </div>
-          <a href="#" class="btn-pill funding__cta">
-            Funding
-            <span class="btn-pill__arrow" aria-hidden="true"></span>
-          </a>
+          <a href="Partnership.html" class="btn-pill funding__cta">Join us<span class="btn-pill__arrow" aria-hidden="true"></span></a>
         </div>
 
       </div>
@@ -615,14 +469,14 @@
       <div class="footer-v3__inner">
 
         <a href="index.html" aria-label="D. H. Chen Foundation home">
-          <img src="assets/images/logo-footer-compassion.svg" alt="#Compassion in Action 慈之以行" class="footer-v3__logo" />
+          <img src="assets/icons/logo-nav.png" alt="The D. H. Chen Foundation" class="footer-v3__logo" />
         </a>
 
         <div class="footer-v3__col">
           <nav class="footer-v3__nav" aria-label="Footer navigation">
-            <a href="#">Partner with us</a>
+            <a href="Partnership.html">Partner with us</a>
             <a href="#">Stay connected</a>
-            <a href="#">Join our team</a>
+            <a href="People.html#careers">Join our team</a>
           </nav>
           <div class="footer-v3__social">
             <a href="#" aria-label="LinkedIn">
@@ -682,6 +536,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=12.18"></script>
+  <script src="script.js"></script>
 </body>
 </html>

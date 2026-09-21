@@ -299,7 +299,10 @@ window.__pageZoom = function () {
   /* any real navigation choice (2nd-level link, Connect, footer links, 中文)
      closes the overlay; the section toggle buttons above do not */
   menu.querySelectorAll('.nav__mobile-sub a, a.nav__mobile-link, .nav__mobile-sublink, .nav__mobile-lang')
-    .forEach(function (l) { l.addEventListener('click', function () { setOpen(false, false); }); });
+    .forEach(function (l) { l.addEventListener('click', function (e) {
+      if (e.defaultPrevented || l.dataset.placeholderLink || l.getAttribute('aria-disabled') === 'true') return;
+      setOpen(false, false);
+    }); });
 
   document.addEventListener('keydown', function (e) {
     if (!menu.classList.contains('nav__mobile-menu--open')) return;
@@ -404,13 +407,19 @@ window.__pageZoom = function () {
   window.addEventListener('scroll', park, { passive: true });
   openers.forEach(function (b) { b.addEventListener('mouseenter', function () { revealFrom(b); }); });
 
-  function setOpen(open, opener) {
+  function setOpen(open, opener, restoreFocus) {
+    /* Search owns the overlay state; never leave a menu behind it. */
+    if (window.__closeMegaMenu) window.__closeMegaMenu();
     if (open) {
       returnTarget = opener || document.activeElement;
       overlay.inert = false;
     } else {
       window.clearTimeout(focusTimer);
-      if (returnTarget && returnTarget.isConnected) returnTarget.focus({ preventScroll: true });
+      if (restoreFocus && returnTarget && returnTarget.isConnected) {
+        returnTarget.focus({ preventScroll: true });
+      } else if (overlay.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
     }
     overlay.classList.toggle('search-overlay--open', open);
     overlay.setAttribute('aria-hidden', String(!open));
@@ -420,7 +429,9 @@ window.__pageZoom = function () {
     if (open) {
       /* now that it is visible, grow to the pinned origin */
       overlay.style.clipPath = overlay.__revealTo || '';
-      focusTimer = window.setTimeout(function () { if (input) input.focus(); }, 80);
+      focusTimer = window.setTimeout(function () {
+        if (input && overlay.classList.contains('search-overlay--open')) input.focus({ preventScroll: true });
+      }, 80);
     } else {
       /* back to the stylesheet's closed circle, which still reads the
          vars — so it shrinks into the same spot it came from */
@@ -442,12 +453,14 @@ window.__pageZoom = function () {
       setOpen(true, opener);
     });
   });
-  if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
+  if (closeBtn) closeBtn.addEventListener('click', function (e) {
+    setOpen(false, null, e.detail === 0);
+  });
   document.addEventListener('keydown', function (e) {
     if (!overlay.classList.contains('search-overlay--open')) return;
     if (e.key === 'Escape') {
       e.preventDefault();
-      setOpen(false);
+      setOpen(false, null, true);
       return;
     }
     if (e.key !== 'Tab') return;
@@ -1118,8 +1131,8 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   6. Custom cursor — orange dot with a lerped follow.
-   Morphs over links/buttons, and over the news slider it becomes a
+   6. Custom cursor — a solid dot that follows the pointer.
+   Links and buttons keep the dot; over news cards it becomes a
    big "DISCOVER" circle; near the slider's edges it turns into an
    arrow circle and a click there navigates prev/next.
    Only enabled for fine pointers (mouse/trackpad), never touch.
@@ -1142,139 +1155,19 @@ window.__pageZoom = function () {
   window.addEventListener('resize', readZoom);
 
   let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-  let cx = tx, cy = ty;
-  let magnet = null;           /* element the cursor is snapped onto */
-
-  /* hidden until the pointer first moves — otherwise on (re)load it would
-     appear at screen-centre and visibly fly to the mouse */
-  let primed = false;
   cursor.classList.add('cursor--hidden');
-
   document.addEventListener('mousemove', function (e) {
     tx = e.clientX; ty = e.clientY;
-    if (!primed) {
-      /* snap straight to the pointer the first time, so it never flies in */
-      primed = true;
-      cx = tx / zoom; cy = ty / zoom;
-    }
     cursor.classList.remove('cursor--hidden');
   });
   document.documentElement.addEventListener('mouseleave', function () {
     cursor.classList.add('cursor--hidden');
   });
-
   (function follow() {
-    let gx = tx / zoom, gy = ty / zoom;
-    if (magnet) {
-      /* stick to the centre of the hovered control */
-      const r = magnet.getBoundingClientRect();
-      gx = (r.left + r.width / 2) / zoom;
-      gy = (r.top + r.height / 2) / zoom;
-    }
-    /* The free dot rides the pointer exactly — a lerp here is a lag, and at
-       0.2 per frame it read as the dot sliding to catch up rather than as
-       the pointer itself. The easing is kept only for the magnet, where it
-       is doing real work: the glide onto (and off) the centre of a control
-       is the snap, and without it the ring would teleport. */
-    if (magnet) {
-      cx += (gx - cx) * 0.3;
-      cy += (gy - cy) * 0.3;
-    } else {
-      cx = gx;
-      cy = gy;
-    }
     cursor.style.transform =
-      'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+      'translate3d(' + (tx / zoom).toFixed(1) + 'px,' + (ty / zoom).toFixed(1) + 'px,0) translate(-50%,-50%)';
     window.requestAnimationFrame(follow);
   })();
-
-  /* magnetic wrap on buttons + menu links */
-  function engage(el) {
-    magnet = el;
-    const r = el.getBoundingClientRect();
-    const w = r.width / zoom, h = r.height / zoom;
-    cursor.classList.add('cursor--magnet');
-    /* hug the target tightly — ~2px gap (the ring is border-box with a 2.5px
-       border, so +9 on each dimension leaves about 2px of clearance).
-       Plain-text links/tabs have no padded box of their own, so give them a
-       roomier wrap instead of hugging the glyphs — the sticky nav links and
-       the legacy `.news__filter` tabs. (The R2 home tabs, `.news-v3__filter`,
-       are excluded from the magnet entirely and keep the plain dot.) */
-    const roomy = el.matches && el.matches('.nav__link, .nav__lang, .news__filter');
-    /* the nav search button gets a 20% bigger ring on hover — but not in the
-       shrunk sticky state */
-    const navEl = document.getElementById('nav');
-    const boost = (el.matches && el.matches('.nav__search-btn') &&
-                   !(navEl && navEl.classList.contains('nav--scrolled'))) ? 1.2 : 1;
-    if (!roomy && Math.abs(w - h) < 12) {
-      /* near-square targets (e.g. the search icon) get a perfect circle */
-      const s = Math.round((Math.max(w, h) + 9) * boost);
-      cursor.style.width  = s + 'px';
-      cursor.style.height = s + 'px';
-    } else {
-      cursor.style.width  = Math.round((w + (roomy ? 24 : 9)) * boost) + 'px';
-      cursor.style.height = Math.round((h + (roomy ? 16 : 9)) * boost) + 'px';
-    }
-  }
-  function release() {
-    magnet = null;
-    cursor.classList.remove('cursor--magnet', 'cursor--absorb');
-    cursor.style.width  = '';
-    cursor.style.height = '';
-  }
-
-  /* Search is the only control that swallows the cursor: the dot collapses
-     into it and the button's own orange disc is left doing the work — one
-     clean circle, no ring around it. Except in the V3 sticky pill, where the
-     glyph just goes orange and no disc opens: absorbing the dot there would
-     leave nothing at all under the pointer, so it keeps the plain dot. */
-  const navV3 = document.getElementById('nav');
-  function pillSearch(b) {
-    return b.matches('.nav__search-btn') && navV3 &&
-           navV3.classList.contains('nav--v3') &&
-           navV3.classList.contains('nav--scrolled');
-  }
-  document.querySelectorAll('.nav__search-btn, .search-overlay__close').forEach(function (b) {
-    b.addEventListener('mouseenter', function () {
-      if (pillSearch(b)) return;
-      cursor.classList.add('cursor--absorb');
-    });
-    b.addEventListener('mouseleave', release);
-  });
-  /* Menu links and 中文 are not wrapped by the cursor — the ring would have
-     to hug the glyphs, which is what the roomy wrap was fighting. They get
-     the ring state instead: the solid dot opens into an outline with a small
-     dot at its centre, on the spot, and travels with the pointer as usual. */
-  document.querySelectorAll('.nav__link, .nav__lang').forEach(function (el) {
-    el.addEventListener('mouseenter', function () { cursor.classList.add('cursor--ring'); });
-    el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--ring'); });
-  });
-
-  /* The orange pills do get the wrap:
-     the ring *is* the outline the button gains on hover. */
-  document.querySelectorAll('.btn-circle, button').forEach(function (el) {
-    /* The hamburger and the search button keep the plain dot: the
-       hamburger's own rules go orange, and the search button draws its own
-       orange disc — a cursor ring on top of that would just be a second
-       circle around the first. */
-    if (el.matches('.nav__hamburger, .nav__search-btn')) return;
-    /* listing filters / breadcrumb and the R2 news tabs use a plain colour
-       hover — no magnet wrap, just the travelling dot; the mobile menu +
-       search overlay use an underline-draw hover instead of the cursor frame */
-    if (el.closest('.listing__filters') || el.closest('.listing__crumb') ||
-        el.closest('.news-v3__filters') ||
-        el.closest('.nav__mobile-menu') ||
-        /* the article carousel's two arrows: their hover is the glyph going
-           orange, and a ring drawn around a bare arrow read as a second,
-           unrelated shape rather than as the button's own outline */
-        el.closest('.article__carousel-nav') ||
-        el.closest('.search-overlay')) return;
-    el.addEventListener('mouseenter', function () {
-      if (el.disabled || el.getAttribute('aria-disabled') === 'true') return;
-      engage(el);
-    });
-    el.addEventListener('mouseleave', release);
-  });
 
   /* Anything with an orange ground — the Bettering panel, the search
      button's hover disc, the legacy article highlight and approach cards.
@@ -1286,19 +1179,13 @@ window.__pageZoom = function () {
     el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--on-dark'); });
   });
 
-  /* the sub-links get the ring too: they are menu links, and the ring is
-     what this cursor does over a menu link */
-  document.querySelectorAll('.nav__mega-links a').forEach(function (el) {
-    el.addEventListener('mouseenter', function () { cursor.classList.add('cursor--ring'); });
-    el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--ring'); });
-  });
-
   /* listing story cards: big "DISCOVER" circle over the card body, but a
      plain (clickable) cursor over the individual tags */
-  document.querySelectorAll('.story-card').forEach(function (card) {
+  document.querySelectorAll('.story-card, .card-v3').forEach(function (card) {
+    if (card.closest('[data-rail]')) return; // The rail owns edge arrows and Discover.
     card.addEventListener('mouseenter', function () { cursor.classList.add('cursor--discover'); });
     card.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--discover'); });
-    card.querySelectorAll('.story-card__tag').forEach(function (tag) {
+    card.querySelectorAll('.story-card__tag, .card-v3__tags li').forEach(function (tag) {
       tag.addEventListener('mouseenter', function () { cursor.classList.remove('cursor--discover'); });
       tag.addEventListener('mouseleave', function () { cursor.classList.add('cursor--discover'); });
     });
@@ -1993,7 +1880,7 @@ window.__pageZoom = function () {
   function startSlideshow(photo) {
     if (!photo.hasAttribute('data-slideshow')) return;
     if (photo.dataset.playing) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const frames = photo.querySelectorAll('.panel__photo-img');
     if (frames.length < 2) return;
     photo.dataset.playing = '1';
@@ -2013,7 +1900,7 @@ window.__pageZoom = function () {
       frames[i].classList.add('is-on');
     }
     function startTimer() {
-      if (timer || document.hidden || !inRange) return;
+      if (timer || document.hidden || !inRange || motion.matches) return;
       timer = window.setInterval(advance, SLIDE);
     }
     function stopTimer() {
@@ -2022,8 +1909,12 @@ window.__pageZoom = function () {
       timer = 0;
     }
     function syncLifecycle() {
-      if (document.hidden || !inRange) stopTimer();
+      if (document.hidden || !inRange || motion.matches) stopTimer();
       else startTimer();
+      if (motion.matches) {
+        frames.forEach(function (frame, index) { frame.classList.toggle('is-on', index === 0); });
+        i = 0;
+      }
     }
 
     if ('IntersectionObserver' in window) {
@@ -2037,8 +1928,13 @@ window.__pageZoom = function () {
       visibilityObserver.observe(photo);
     }
     document.addEventListener('visibilitychange', syncLifecycle);
-    startTimer();
+    motion.addEventListener('change', syncLifecycle);
+    syncLifecycle();
   }
+
+  /* The revised outcome keeps the original four photographs and pacing. */
+  const outcomePhoto = document.querySelector('.compassion-outcome__image[data-slideshow]');
+  if (outcomePhoto) startSlideshow(outcomePhoto);
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2376,9 +2272,8 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   10a. Listing filter dropdowns — generic toggle for [data-dropdown].
-   Click toggles; clicking another closes the rest; click-outside / Escape
-   closes all. (No-op on pages without any.)
+   10a. Checkbox filters. Keep the current group open while selecting;
+   each group can clear its own choices without resetting the others.
    ---------------------------------------------------------------- */
 (function () {
   const drops = Array.prototype.slice.call(document.querySelectorAll('[data-dropdown]'));
@@ -2393,39 +2288,68 @@ window.__pageZoom = function () {
     });
   }
 
-  drops.forEach(function (d) {
+  drops.forEach(function (d, index) {
     const toggle = d.querySelector('button');
     if (!toggle) return;
-    /* the toggle's editable label (filters wrap it in a <span>; the breadcrumb
-       has a bare text node before the chevron) */
+    const menu = d.querySelector('.listing__filter-menu');
+    const clear = d.querySelector('.listing__filter-clear');
+    const inputs = Array.from(d.querySelectorAll('input[type="checkbox"]'));
     const labelSpan = toggle.querySelector('span');
     if (labelSpan && !d.dataset.dropdownLabel) d.dataset.dropdownLabel = labelSpan.textContent.trim();
+    if (menu) {
+      menu.id = 'filter-options-' + index;
+      menu.setAttribute('aria-label', d.dataset.dropdownLabel);
+      menu.setAttribute('data-lenis-prevent', '');
+      toggle.setAttribute('aria-controls', menu.id);
+    }
+    function update(notify) {
+      const choices = inputs.filter(function (input) { return input.checked; }).map(function (input) { return input.value; });
+      if (labelSpan) labelSpan.textContent = d.dataset.dropdownLabel + (choices.length ? ' (' + choices.length + ')' : '');
+      if (clear) clear.disabled = !choices.length;
+      if (notify) d.dispatchEvent(new CustomEvent('dropdownchange', { bubbles: true, detail: { values: choices } }));
+    }
+    inputs.forEach(function (input) { input.addEventListener('change', function () { update(true); }); });
+    if (clear) clear.addEventListener('click', function () {
+      inputs.forEach(function (input) { input.checked = false; });
+      update(true);
+    });
+    d.addEventListener('filterreset', function () {
+      inputs.forEach(function (input) { input.checked = false; });
+      update(false);
+    });
+    d.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !d.contains(e.relatedTarget)) closeAll(null);
+    });
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
       const open = d.classList.toggle('is-open');
       toggle.setAttribute('aria-expanded', String(open));
       closeAll(open ? d : null);
+      if (open) {
+        if (menu) {
+          const rect = toggle.getBoundingClientRect();
+          const below = window.innerHeight - rect.bottom - 16;
+          const above = rect.top - 90;
+          const zoom = window.__pageZoom();
+          const options = menu.querySelector('.listing__filter-options');
+          const contentHeight = options.scrollHeight + (clear ? clear.offsetHeight + 6 : 0) + 12;
+          const needed = Math.min(contentHeight * zoom, 330 * zoom);
+          const upward = below < needed && above > below;
+          d.classList.toggle('opens-up', upward);
+          menu.style.maxHeight = Math.max(100, Math.min(330, (upward ? above : below) / zoom)) + 'px';
+        }
+      }
     });
-    /* picking an option writes it back onto the toggle, then closes */
-    d.querySelectorAll('[role="menuitem"]').forEach(function (item) {
-      item.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const text = item.textContent.trim();
-        if (labelSpan) labelSpan.textContent = text;
-        else if (toggle.firstChild) toggle.firstChild.nodeValue = text + ' ';
-        d.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        d.dispatchEvent(new CustomEvent('dropdownchange', {
-          bubbles: true,
-          detail: { item: item, value: text }
-        }));
-      });
-    });
+    update(false);
   });
 
-  document.addEventListener('click', function () { closeAll(null); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(null); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('[data-dropdown]')) closeAll(null); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    const open = drops.find(function (d) { return d.classList.contains('is-open'); });
+    closeAll(null);
+    if (open) open.querySelector('.listing__filter-toggle').focus();
+  });
 })();
 
 
@@ -2485,7 +2409,7 @@ window.__pageZoom = function () {
     empty.hidden = true;
     empty.textContent = isTC
       ? '暫時沒有符合所選條件的內容，請調整篩選或清除全部。'
-      : 'No stories match those filters. Adjust a selection or clear all.';
+      : 'No items match those filters. Adjust a selection or clear all.';
     grid.insertAdjacentElement('afterend', empty);
 
     const live = document.createElement('span');
@@ -2505,12 +2429,21 @@ window.__pageZoom = function () {
     }
 
     function matches(card) {
+      // Multiple choices are OR within a group, AND between groups.
+      function accepts(kind, predicate) {
+        return !selected[kind] || selected[kind].some(function (choice) { return predicate(value(choice)); });
+      }
+      const taxonomyKinds = ['priority', 'topics', 'approach', 'users'];
+      if (taxonomyKinds.some(function (kind) {
+        const choices = (card.dataset[kind] || '').split('|').map(value);
+        return !accepts(kind, function (choice) { return choices.indexOf(choice) !== -1; });
+      })) return false;
       const cat = category(card);
       const cardTags = tags(card);
-      if (selected.focus && cat.indexOf(value(selected.focus)) === -1) return false;
-      if (selected.institute && cat.indexOf(value(selected.institute)) === -1) return false;
-      if (selected.pillar && cardTags.indexOf(value(selected.pillar)) === -1) return false;
-      if (selected.year && value(card.dataset.year) !== value(selected.year)) return false;
+      if (!accepts('focus', function (choice) { return cat.indexOf(choice) !== -1; })) return false;
+      if (!accepts('institute', function (choice) { return cat.indexOf(choice) !== -1; })) return false;
+      if (!accepts('pillar', function (choice) { return cardTags.indexOf(choice) !== -1; })) return false;
+      if (!accepts('year', function (choice) { return value(card.dataset.year) === choice; })) return false;
       return true;
     }
 
@@ -2542,10 +2475,8 @@ window.__pageZoom = function () {
     }
 
     drops.forEach(function (drop, index) {
-      const kind = kinds[index] || 'filter-' + index;
+      const kind = drop.dataset.filterKind || kinds[index] || 'filter-' + index;
       const toggle = drop.querySelector('.listing__filter-toggle');
-      const label = toggle && toggle.querySelector('span');
-      const original = drop.dataset.dropdownLabel || (label && label.textContent.trim()) || '';
       drop.dataset.filterKind = kind;
 
       if (kind === 'year' && !cards.some(function (card) { return !!card.dataset.year; })) {
@@ -2553,26 +2484,14 @@ window.__pageZoom = function () {
         drop.setAttribute('aria-disabled', 'true');
         drop.setAttribute('title', isTC ? '尚未提供年份資料' : 'Year data is not available yet');
         if (toggle) toggle.disabled = true;
-        drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
-          item.setAttribute('aria-disabled', 'true');
-          item.tabIndex = -1;
-        });
+        drop.querySelectorAll('input').forEach(function (input) { input.disabled = true; });
         return;
       }
 
       drop.addEventListener('dropdownchange', function (e) {
-        const choice = e.detail.value;
-        const same = selected[kind] === choice;
-        drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
-          const on = !same && item === e.detail.item;
-          item.setAttribute('aria-current', String(on));
-        });
-        if (same) {
-          delete selected[kind];
-          if (label) label.textContent = original;
-        } else {
-          selected[kind] = choice;
-        }
+        const choices = e.detail.values;
+        if (choices.length) selected[kind] = choices;
+        else delete selected[kind];
         page = 1;
         render();
       });
@@ -2582,12 +2501,7 @@ window.__pageZoom = function () {
       clear.addEventListener('click', function () {
         Object.keys(selected).forEach(function (kind) { delete selected[kind]; });
         drops.forEach(function (drop) {
-          const toggle = drop.querySelector('.listing__filter-toggle');
-          const label = toggle && toggle.querySelector('span');
-          if (label && drop.dataset.dropdownLabel) label.textContent = drop.dataset.dropdownLabel;
-          drop.querySelectorAll('[role="menuitem"]').forEach(function (item) {
-            item.setAttribute('aria-current', 'false');
-          });
+          drop.dispatchEvent(new CustomEvent('filterreset'));
         });
         page = 1;
         render();
@@ -2606,6 +2520,15 @@ window.__pageZoom = function () {
       scrollToGrid(grid);
     });
 
+    const initialPriorities = new URLSearchParams(window.location.search).getAll('priority').map(value);
+    if (initialPriorities.length) {
+      const drop = drops.find(function (d) { return d.dataset.filterKind === 'priority'; });
+      const inputs = drop && Array.from(drop.querySelectorAll('input'));
+      if (inputs) inputs.forEach(function (input) {
+        input.checked = initialPriorities.indexOf(value(input.value)) !== -1;
+      });
+      if (inputs && inputs.length) inputs[0].dispatchEvent(new Event('change'));
+    }
     render();
   });
 })();
@@ -2646,17 +2569,15 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   12. Listing story cards — clicking a card opens the article
-   (tags are inert). No carousel here, so e.target is reliable.
-   No-op on pages without any story cards.
+   12. Article cards use their native local mockup links; tags stay inert.
+   Native navigation also preserves keyboard and open-in-new-tab behaviour.
    ---------------------------------------------------------------- */
 (function () {
-  const cards = Array.prototype.slice.call(document.querySelectorAll('.story-card'));
+  const cards = Array.prototype.slice.call(document.querySelectorAll('.story-card, .card-v3'));
   if (!cards.length) return;
   cards.forEach(function (card) {
     card.addEventListener('click', function (e) {
-      if (e.target.closest('.story-card__tag')) return;   /* tags inert */
-      window.location.href = document.documentElement.lang === 'zh-Hant' ? 'Articles_tc.html' : 'Articles.html';
+      if (e.target.closest('.story-card__tag, .card-v3__tags li')) e.preventDefault();
     });
   });
 })();
@@ -2681,6 +2602,7 @@ window.__pageZoom = function () {
   const panels  = Array.prototype.slice.call(mega.querySelectorAll('.nav__mega-panel'));
   let closeTimer = null;
   let lastTrigger = null;
+  let suppressPointerOpen = false;
 
   mega.inert = true;
   panels.forEach(function (panel) {
@@ -2861,6 +2783,7 @@ window.__pageZoom = function () {
   });
 
   function open(key, trigger) {
+    if (document.body.classList.contains('search-open')) return;
     clearTimeout(closeTimer);
     if (trigger) lastTrigger = trigger;
     const wasActive = nav.classList.contains('nav--mega-open') &&
@@ -2895,6 +2818,12 @@ window.__pageZoom = function () {
     if (burger) burger.setAttribute('aria-expanded', 'false');
   }
   function isOpen() { return nav.classList.contains('nav--mega-open'); }
+  window.__closeMegaMenu = function () {
+    close(false);
+    /* Hiding search can expose a link under a stationary pointer. Wait
+       for a real pointer move before treating that as a menu hover. */
+    suppressPointerOpen = true;
+  };
   /* Stuck, the card is also carrying the four section links, so a sectionless
      hover (Connect) must leave it standing — it just collapses to the small
      menu-only card. Unstuck there is nothing to keep open, so it closes. */
@@ -2915,6 +2844,7 @@ window.__pageZoom = function () {
      adds an equivalent keyboard route and Arrow Down enters the submenu. */
   links.forEach(function (l) {
     if (hoverCapable) l.addEventListener('mouseenter', function () {
+      if (suppressPointerOpen) return;
       if (l.dataset.mega) open(l.dataset.mega, l); else leaveSection();
     });
     l.addEventListener('focus', function () {
@@ -2973,6 +2903,12 @@ window.__pageZoom = function () {
      bridged in CSS by stretching `.nav__inner` down to meet it; this window
      just covers a fast diagonal across the corner. */
   if (hoverCapable) {
+    nav.addEventListener('mousemove', function (e) {
+      if (!suppressPointerOpen || document.body.classList.contains('search-open')) return;
+      suppressPointerOpen = false;
+      const link = e.target.closest('.nav__menu .nav__link, .nav__mega-menu .nav__link');
+      if (link && link.dataset.mega) open(link.dataset.mega, link);
+    });
     nav.addEventListener('mouseenter', function () { clearTimeout(closeTimer); });
     nav.addEventListener('mouseleave', function () {
       clearTimeout(closeTimer);
@@ -3867,4 +3803,245 @@ window.__pageZoom = function () {
     scrollToResults();
   });
   show('all', 1);
+})();
+
+/* Horizontal rails and journey interactions: native horizontal browsing and the three-card journey. */
+(function () {
+  'use strict';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll('[data-rail]').forEach(function (rail) {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const cursor = document.getElementById('cursor');
+    let pointer = null;
+    let touchStart = null;
+    let dragged = false;
+    let suppressClickUntil = 0;
+    let cursorMode = '';
+    rail.setAttribute('role', 'region');
+    rail.setAttribute('aria-roledescription', 'carousel');
+    rail.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight');
+    function direction(x) {
+      const rect = rail.getBoundingClientRect();
+      const edge = Math.min(110, rect.width * .12);
+      if (x < rect.left + edge && rail.scrollLeft > 2) return -1;
+      if (x > rect.right - edge && rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2) return 1;
+      return 0;
+    }
+    function clearCursor() {
+      if (cursor) cursor.classList.remove('cursor--rail', 'cursor--prev', 'cursor--next', 'cursor--discover');
+      cursorMode = '';
+    }
+    function sync() {
+      if (!pointer || !fine.matches || !cursor) return;
+      const target = document.elementFromPoint(pointer.x, pointer.y);
+      if (!target || !rail.contains(target)) { pointer = null; clearCursor(); return; }
+      const step = direction(pointer.x);
+      const nextMode = step ? (step < 0 ? 'prev' : 'next') : (target.closest('a') && !target.closest('.card-v3__tags, .story-card__tags, .spotlight__tags') ? 'discover' : '');
+      if (nextMode === cursorMode) return;
+      clearCursor();
+      cursorMode = nextMode;
+      if (step) cursor.classList.add('cursor--rail', 'cursor--' + nextMode);
+      else if (nextMode) cursor.classList.add('cursor--discover');
+    }
+    function move(direction) {
+      const first = Array.from(rail.children).find(function (card) { return !card.hidden; });
+      const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      const distance = first ? first.offsetWidth + gap : rail.clientWidth;
+      rail.scrollBy({ left: direction * distance, behavior: reduce.matches ? 'auto' : 'smooth' });
+    }
+    rail.addEventListener('pointermove', function (event) {
+      if (event.pointerType === 'mouse' && fine.matches) {
+        pointer = { x: event.clientX, y: event.clientY };
+        sync();
+      } else if (touchStart && Math.hypot(event.clientX - touchStart.x, event.clientY - touchStart.y) > 8) {
+        dragged = true;
+      }
+    });
+    rail.addEventListener('pointerleave', function () { pointer = null; clearCursor(); });
+    rail.addEventListener('pointerdown', function (event) {
+      if (event.pointerType === 'mouse') return;
+      touchStart = { x: event.clientX, y: event.clientY };
+      dragged = false;
+    });
+    function finishTouch(event) {
+      if (event.pointerType === 'mouse') return;
+      if (dragged || event.type === 'pointercancel') suppressClickUntil = performance.now() + 700;
+      touchStart = null;
+    }
+    rail.addEventListener('pointerup', finishTouch);
+    rail.addEventListener('pointercancel', finishTouch);
+    rail.addEventListener('click', function (event) {
+      if (event.detail && performance.now() < suppressClickUntil) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      if (!fine.matches || !event.detail || event.pointerType === 'touch' || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const step = direction(event.clientX);
+      if (step) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        move(step);
+      }
+    }, true);
+    rail.addEventListener('dragstart', function (event) { event.preventDefault(); });
+    rail.addEventListener('scroll', sync, { passive: true });
+    rail.addEventListener('keydown', function (event) {
+      if (event.target !== rail) return;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        move(event.key === 'ArrowRight' ? 1 : -1);
+      }
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(sync).observe(rail);
+    else window.addEventListener('resize', sync);
+    new MutationObserver(sync).observe(rail, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+    window.addEventListener('scroll', sync, { passive: true });
+    sync();
+  });
+
+  const journey = document.querySelector('.journey');
+  if (!journey) return;
+  const steps = Array.from(journey.querySelectorAll('.journey__step'));
+  const media = window.matchMedia('(min-width: 1024px) and (min-height: 700px)');
+  let pending = false;
+  let inRange = true;
+  steps.forEach(function (step, i) {
+    step.style.setProperty('--journey-index', i);
+    step.style.setProperty('--journey-layer', i + 1);
+  });
+  function render() {
+    pending = false;
+    const active = media.matches && !reduce.matches;
+    journey.classList.toggle('journey--stack', active);
+    const zoom = window.__pageZoom ? window.__pageZoom() : 1;
+    let nextTop = 96;
+    const tops = steps.map(function (step) {
+      const top = nextTop;
+      const heading = step.querySelector('.panel__head');
+      const padding = parseFloat(getComputedStyle(step).paddingTop) || 0;
+      nextTop += (padding + heading.offsetHeight) * zoom + 16;
+      step.style.setProperty('--journey-top', top.toFixed(2) + 'px');
+      return top;
+    });
+    steps.forEach(function (step, i) {
+      const next = steps[i + 1] || journey.querySelector('.compassion-outcome');
+      if (!active || !next) {
+        step.style.removeProperty('--journey-scale');
+        step.style.removeProperty('--journey-copy-opacity');
+        return;
+      }
+      const nextEdge = next.getBoundingClientRect().top;
+      const distance = nextEdge - tops[i];
+      const progress = Math.max(0, Math.min(1, 1 - distance / window.innerHeight));
+      step.style.setProperty('--journey-scale', (1 - progress * .035).toFixed(4));
+      const copyBottom = step.querySelector('.panel__body').getBoundingClientRect().bottom;
+      const copyOpacity = Math.max(0, Math.min(1, (nextEdge - copyBottom) / 70));
+      step.style.setProperty('--journey-copy-opacity', copyOpacity.toFixed(3));
+    });
+  }
+  function schedule() {
+    if (!pending && !document.hidden && inRange) {
+      pending = true;
+      window.requestAnimationFrame(render);
+    }
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  reduce.addEventListener('change', render);
+  media.addEventListener('change', render);
+  document.addEventListener('visibilitychange', schedule);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      inRange = entries[0].isIntersecting;
+      if (inRange) schedule();
+    }, { rootMargin: '100px' }).observe(journey);
+  }
+  render();
+})();
+
+/* People: shared demo biography and open-vacancy cards. */
+(function () {
+  'use strict';
+  const dialog = document.getElementById('person-bio');
+  if (!dialog) return;
+  const cursor = document.getElementById('cursor');
+  const cursorHome = cursor && cursor.parentElement;
+  let opener = null;
+  let previouslyLocked = false;
+
+  document.querySelectorAll('[data-person-name]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      opener = button;
+      dialog.querySelector('#person-bio-name').textContent = button.dataset.personName;
+      dialog.querySelector('#person-bio-role').textContent = button.dataset.personRole;
+      previouslyLocked = document.documentElement.classList.contains('lock-scroll');
+      document.documentElement.classList.add('lock-scroll');
+      if (window.__lenis) window.__lenis.stop();
+      if (cursor) {
+        cursor.classList.remove('cursor--discover', 'cursor--rail', 'cursor--prev', 'cursor--next');
+        dialog.appendChild(cursor);
+      }
+      dialog.showModal();
+      dialog.querySelector('.people-dialog__scroll').scrollTop = 0;
+    });
+  });
+  dialog.querySelector('.people-dialog__close').addEventListener('click', function () { dialog.close(); });
+  let backdropPress = false;
+  function outsidePanel(event) {
+    const rect = dialog.querySelector('.people-dialog__panel').getBoundingClientRect();
+    return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+  }
+  dialog.addEventListener('pointerdown', function (event) { backdropPress = outsidePanel(event); });
+  dialog.addEventListener('click', function (event) {
+    if (backdropPress && outsidePanel(event)) dialog.close();
+    backdropPress = false;
+  });
+  dialog.addEventListener('close', function () {
+    if (cursor && cursorHome) cursorHome.appendChild(cursor);
+    if (!previouslyLocked) {
+      document.documentElement.classList.remove('lock-scroll');
+      if (window.__lenis) window.__lenis.start();
+    }
+    if (opener) opener.focus({ preventScroll: true });
+  });
+
+  const jobs = JSON.parse(document.getElementById('people-jobs').textContent).filter(function (job) { return job.status === 'open'; });
+  const section = document.getElementById('careers');
+  section.hidden = !jobs.length;
+  document.querySelectorAll('[data-careers-link]').forEach(function (link) { link.hidden = !jobs.length; });
+  const template = document.getElementById('career-job-template');
+  jobs.forEach(function (job) {
+    const fragment = template.content.cloneNode(true);
+    const card = fragment.querySelector('details');
+    card.id = 'job-' + job.id;
+    card.querySelector('.career-job__title').textContent = job.title;
+    card.querySelector('.career-job__meta').textContent = job.type + ' · ' + job.location + (job.demo ? ' · Demo role' : '');
+    card.querySelector('.career-job__summary').textContent = job.summary;
+    card.querySelector('.career-job__apply-note').textContent = job.applyNote;
+    job.paragraphs.forEach(function (paragraph) {
+      const item = document.createElement('p');
+      item.textContent = paragraph;
+      card.querySelector('.career-job__copy').appendChild(item);
+    });
+    const apply = card.querySelector('.career-job__apply');
+    apply.href = 'mailto:' + job.email + '?subject=' + encodeURIComponent('Application — ' + job.title);
+    apply.setAttribute('aria-label', 'Apply for ' + job.title + ' by email');
+    section.querySelector('.careers__jobs').appendChild(fragment);
+  });
+
+  // The shared page initializer resets scrolling to the top. Restore an
+  // incoming People/Careers anchor after the directory and vacancies exist.
+  if (window.location.hash) {
+    let anchor;
+    try { anchor = document.getElementById(decodeURIComponent(window.location.hash.slice(1))); } catch (_) { anchor = null; }
+    if (anchor && document.getElementById('people').contains(anchor) && !anchor.hidden) {
+      if (anchor.matches('.career-job')) anchor.open = true;
+      const ready = document.fonts ? document.fonts.ready : Promise.resolve();
+      ready.then(function () {
+        window.requestAnimationFrame(function () { anchor.scrollIntoView({ block: 'start', behavior: 'instant' }); });
+      });
+    }
+  }
 })();

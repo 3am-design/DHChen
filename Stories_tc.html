@@ -1,157 +1,145 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Force the iOS Safari status bar / bottom toolbar to a fixed white instead
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Force the iOS Safari status bar / bottom toolbar to a fixed white instead
        of sampling page content (which flips between peach hero and white nav as
        you scroll). Keeps top + bottom chrome consistently white. -->
-  <meta name="theme-color" content="#ffffff" />
-  <title>項目 — 陳廷驊基金會</title>
-  <!-- The serif is self-hosted and the opening measures itself against text
+<meta content="#ffffff" name="theme-color"/>
+<title>故事 — The D. H. Chen Foundation</title>
+<!-- The serif is self-hosted and the opening measures itself against text
        set in it, so it must not arrive late: preloaded, it is in before the
        first paint and nothing reflows under the intro. -->
-  <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <!-- R2 nav / footer / canvas — same sheet the EN pages load. Nothing in
+<link as="font" crossorigin="" href="assets/fonts/baskervville-regular.woff2" rel="preload" type="font/woff2"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&amp;family=Noto+Serif+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Site styles -->
+<link href="style.css" rel="stylesheet"/>
+<!-- R2 nav / footer / canvas — same sheet the EN pages load. Nothing in
        the nav, mega, colour bar or footer blocks is scoped to a language. -->
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+<link href="assets/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
 </head>
-<body class="listing-page inner-v3">
-
-  <a class="skip-link" href="#main-content">跳至主要內容</a>
-
-  <!-- ============================================================
+<body class="stories-page listing-page inner-v3">
+<a class="skip-link" href="#main-content">跳至主要內容</a>
+<!-- ============================================================
        00 — NAVIGATION
        ============================================================ -->
-  <header class="nav nav--v3" id="nav">
-    <div class="nav__inner">
-
-      <a href="index_tc.html" class="nav__logo" aria-label="D. H. Chen Foundation home">
-        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
-      </a>
-
-      <nav class="nav__menu" aria-label="Main navigation"><a href="Approach.html" class="nav__link" data-mega="work">理念實踐</a>
-<a href="Listing_tc.html" class="nav__link" data-mega="impact">社會影響</a>
-<a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
-<a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></nav>
-
-      <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
+<header class="nav nav--v3" id="nav">
+<div class="nav__inner">
+<a aria-label="D. H. Chen Foundation home" class="nav__logo" href="index_tc.html">
+<img alt="D. H. Chen Foundation" class="nav__logo-img" src="assets/icons/logo-nav.png"/>
+</a>
+<nav aria-label="Main navigation" class="nav__menu"><a class="nav__link" data-mega="work" href="Approach.html">理念實踐</a>
+<a class="nav__link" data-mega="impact" href="Listing_tc.html">社會影響</a>
+<a class="nav__link" data-mega="partnership" href="Partnership.html">夥伴合作</a>
+<a class="nav__link" data-mega="about" href="Ethos.html">關於我們</a></nav>
+<!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
            with it. It is its own button rather than the one in
            `.nav__actions` moved across: that group is what the sticky pill
            is built out of, and an absolutely-placed child of it is at the
            mercy of the landing translate, which makes it the containing
            block for as long as it runs. Only ever one of the two is on
            screen (see style.css). -->
-      <button class="nav__search-btn nav__search-btn--stacked" aria-label="搜尋">
-        <img src="assets/icons/icon-search.svg" alt="" />
-      </button>
-
-      <div class="nav__actions">
-        <!-- sticky bar only: the seal joins search + hamburger inside the
+<button aria-label="搜尋" class="nav__search-btn nav__search-btn--stacked">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<div class="nav__actions">
+<!-- sticky bar only: the seal joins search + hamburger inside the
              white pill (Figma R2 "stick" / node 12014-44) -->
-        <a href="index_tc.html" class="nav__seal" aria-label="陳廷驊基金會">
-          <img src="assets/icons/logo-seal.svg" alt="" />
-        </a>
-        <button class="nav__search-btn" aria-label="搜尋">
-          <img src="assets/icons/icon-search.svg" alt="" />
-        </button>
-        <a href="Listing.html" class="nav__lang">EN</a>
-        <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-menu">
-          <img src="assets/icons/icon-hamburger.svg" alt="" />
-        </button>
-      </div>
-    </div>
-
-    <!-- Desktop mega-menu (opens on hover; closes when the cursor leaves the nav) -->
-    <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
-<div class="nav__mega-menu"><a href="Approach.html" class="nav__link" data-mega="work">理念實踐</a>
-<a href="Listing_tc.html" class="nav__link" data-mega="impact">社會影響</a>
-<a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
-<a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></div>
-<div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html#practices">實踐方法</a></li>
-          <li><a href="Approach.html#priorities">關注範疇</a></li>
-        </ul></div>
-<div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Listing_tc.html">項目</a></li>
-          <li><a href="Stories_tc.html">故事</a></li>
-          <li><a href="Learning.html">學習</a></li>
-        </ul></div>
-<div class="nav__mega-panel" data-mega-panel="partnership"><img class="nav__mega-art" src="assets/images/menu-partnership-hands.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a></li>
-          <li><a href="Partnership.html">協作</a></li>
-        </ul></div>
-<div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Ethos.html">價值觀</a></li>
-          <li><a href="People.html">團隊</a></li>
-          <li><a href="News.html">消息及新聞</a></li>
-          <li><a href="Connect.html">聯絡我們</a></li>
-        </ul></div>
+<a aria-label="陳廷驊基金會" class="nav__seal" href="index_tc.html">
+<img alt="" src="assets/icons/logo-seal.svg"/>
+</a>
+<button aria-label="搜尋" class="nav__search-btn">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<a class="nav__lang" href="Stories_tc.html">EN</a>
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="開啟選單" class="nav__hamburger">
+<img alt="" src="assets/icons/icon-hamburger.svg"/>
+</button>
 </div>
-
-    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
-
-      <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
-      <div class="nav__mobile-bar">
-        <a href="Listing.html" class="nav__mobile-lang">EN</a>
-        <div class="nav__mobile-bar-actions">
-          <button class="nav__mobile-search" aria-label="搜尋">
-            <img src="assets/icons/icon-search.svg" alt="" />
-          </button>
-          <button class="nav__mobile-close" aria-label="關閉選單">
-            <span></span><span></span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Primary nav — big, left-aligned -->
-      <nav class="nav__mobile-links" aria-label="Mobile navigation">
-      <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">理念實踐</button>
-      <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html#practices">實踐方法</a><a href="Approach.html#priorities">關注範疇</a></div></div></div>
-<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">社會影響</button>
-      <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Listing_tc.html">項目</a><a href="Stories_tc.html">故事</a><a href="Learning.html">學習</a></div></div></div>
-<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">夥伴合作</button>
-      <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a><a href="Partnership.html">協作</a></div></div></div>
-<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
-      <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">消息及新聞</a><a href="Connect.html">聯絡我們</a></div></div></div>
+</div>
+<!-- Desktop mega-menu (opens on hover; closes when the cursor leaves the nav) -->
+<div aria-hidden="true" class="nav__mega" id="nav-mega" inert="">
+<div class="nav__mega-menu"><a class="nav__link" data-mega="work" href="Approach.html">理念實踐</a>
+<a class="nav__link" data-mega="impact" href="Listing_tc.html">社會影響</a>
+<a class="nav__link" data-mega="partnership" href="Partnership.html">夥伴合作</a>
+<a class="nav__link" data-mega="about" href="Ethos.html">關於我們</a></div>
+<div class="nav__mega-panel" data-mega-panel="work"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-approach-illustration.svg"/><ul class="nav__mega-links">
+<li><a href="Approach.html#practices">實踐方法</a></li>
+<li><a href="Approach.html#priorities">關注範疇</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="impact"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-impact-ripples.svg"/><ul class="nav__mega-links">
+<li><a href="Listing_tc.html">項目</a></li>
+<li><a href="Stories_tc.html">故事</a></li>
+<li><a href="Learning.html">學習</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="partnership"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-partnership-hands.svg"/><ul class="nav__mega-links">
+<li><a aria-disabled="true" data-placeholder-link="true" tabindex="-1">資助</a></li>
+<li><a href="Partnership.html">協作</a></li>
+</ul></div>
+<div class="nav__mega-panel" data-mega-panel="about"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-about-illustration.svg"/><ul class="nav__mega-links">
+<li><a href="Ethos.html">價值觀</a></li>
+<li><a href="People.html">團隊</a></li>
+<li><a href="News.html">消息及新聞</a></li>
+<li><a href="Connect.html">聯絡我們</a></li>
+</ul></div>
+</div>
+<div aria-hidden="true" class="nav__mobile-menu" id="mobile-menu" inert="">
+<!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
+<div class="nav__mobile-bar">
+<a class="nav__mobile-lang" href="Listing.html">EN</a>
+<div class="nav__mobile-bar-actions">
+<button aria-label="搜尋" class="nav__mobile-search">
+<img alt="" src="assets/icons/icon-search.svg"/>
+</button>
+<button aria-label="關閉選單" class="nav__mobile-close">
+<span></span><span></span>
+</button>
+</div>
+</div>
+<!-- Primary nav — big, left-aligned -->
+<nav aria-label="Mobile navigation" class="nav__mobile-links">
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">理念實踐</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Approach.html#practices">實踐方法</a><a href="Approach.html#priorities">關注範疇</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">社會影響</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Listing_tc.html">項目</a><a href="Stories_tc.html">故事</a><a href="Learning.html">學習</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">夥伴合作</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a aria-disabled="true" data-placeholder-link="true" tabindex="-1">資助</a><a href="Partnership.html">協作</a></div></div></div>
+<div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">關於我們</button>
+<div class="nav__mobile-sub">
+<div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">消息及新聞</a><a href="Connect.html">聯絡我們</a></div></div></div>
 </nav>
-
-      <!-- Secondary links from the footer, two columns -->
-      <div class="nav__mobile-secondary">
-        <nav class="nav__mobile-col" aria-label="Get involved">
-          <a href="#" class="nav__mobile-sublink">成為我們的夥伴</a>
-          <a href="#" class="nav__mobile-sublink">保持聯繫</a>
-          <a class="nav__mobile-sublink" href="People.html#careers">加入我們</a>
-        </nav>
-        <nav class="nav__mobile-col" aria-label="Legal">
-          <a href="#" class="nav__mobile-sublink">私隱政策</a>
-          <a href="#" class="nav__mobile-sublink">免責聲明</a>
-          <a href="#" class="nav__mobile-sublink">網站地圖</a>
-          <a href="#" class="nav__mobile-sublink">無障礙瀏覽</a>
-        </nav>
-      </div>
-
-      <div class="nav__mobile-social">
-        <a href="#" class="nav__mobile-social-link" aria-label="LinkedIn">
-          <img src="assets/icons/icon-linkedin.svg" alt="LinkedIn" />
-        </a>
-        <a href="#" class="nav__mobile-social-link" aria-label="Instagram">
-          <img src="assets/icons/icon-instagram.svg" alt="Instagram" />
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main-content" tabindex="-1">
+<!-- Secondary links from the footer, two columns -->
+<div class="nav__mobile-secondary">
+<nav aria-label="Get involved" class="nav__mobile-col">
+<a class="nav__mobile-sublink" href="#">成為我們的夥伴</a>
+<a class="nav__mobile-sublink" href="#">保持聯繫</a>
+<a class="nav__mobile-sublink" href="People.html#careers">加入我們</a>
+</nav>
+<nav aria-label="Legal" class="nav__mobile-col">
+<a class="nav__mobile-sublink" href="#">私隱政策</a>
+<a class="nav__mobile-sublink" href="#">免責聲明</a>
+<a class="nav__mobile-sublink" href="#">網站地圖</a>
+<a class="nav__mobile-sublink" href="#">無障礙瀏覽</a>
+</nav>
+</div>
+<div class="nav__mobile-social">
+<a aria-label="LinkedIn" class="nav__mobile-social-link" href="#">
+<img alt="LinkedIn" src="assets/icons/icon-linkedin.svg"/>
+</a>
+<a aria-label="Instagram" class="nav__mobile-social-link" href="#">
+<img alt="Instagram" src="assets/icons/icon-instagram.svg"/>
+</a>
+</div>
+</div>
+</header>
+<main id="main-content" tabindex="-1">
 <!-- ============================================================
          LISTING — Initiatives
          ============================================================ -->
@@ -177,22 +165,20 @@
 </div>
 <span class="listing__crumb-sep">/</span>
 <div class="listing__crumb-drop">
-<span aria-current="page" class="listing__crumb-toggle">
-            項目
-            <svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+<span aria-current="page" class="listing__crumb-toggle">故事 <svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
 </span>
 <div class="listing__crumb-menu" role="menu">
 <a href="#" role="menuitem">學習與洞察</a>
-<a aria-current="page" href="Listing_tc.html" role="menuitem">項目</a>
+<a href="Listing_tc.html" role="menuitem">項目</a><a aria-current="page" href="Stories_tc.html" role="menuitem">故事</a>
 <a href="#" role="menuitem">最新消息</a>
 </div>
 </div>
 <span class="listing__crumb-sep">/</span>
 </nav>
-<h1 class="listing__title listing__title--initiatives">項目</h1>
-<p class="listing__subtitle">從願景到行動</p>
-<section aria-labelledby="spotlight-title" class="spotlight"><div class="spotlight__head"><h2 id="spotlight-title">In the Spotlight</h2></div><div aria-label="In the Spotlight" class="spotlight__rail" data-rail="" id="spotlight-rail" tabindex="0"><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="D’ Well" loading="lazy" src="assets/images/initiatives/d-well.webp"/></div><h3>D’ Well</h3><p>Mindfulness and self-care, made part of everyday life.</p><ul class="spotlight__tags"><li data-tag-group="priority">Wellbeing</li><li data-tag-group="topics">Mental Wellness</li><li data-tag-group="approach">Community Building</li><li data-tag-group="users">Older Adults</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Future Education in Action 2.0" loading="lazy" src="assets/images/initiatives/future-education-in-action-2.webp"/></div><h3>Future Education in Action 2.0</h3><p>Connecting educators and communities to support life and career exploration.</p><ul class="spotlight__tags"><li data-tag-group="priority">Education</li><li data-tag-group="topics">Life and Career Exploration</li><li data-tag-group="approach">Cross-sector Collaboration</li><li data-tag-group="users">Youth</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Lion Rock 2.0" loading="lazy" src="assets/images/initiatives/lion-rock-2-0.webp"/></div><h3>Lion Rock 2.0</h3><p>Growing mutual care and connection through time banking.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ageing and Dying</li><li data-tag-group="topics">Ageing</li><li data-tag-group="approach">Community Building</li><li data-tag-group="users">Older Adults</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Community Changemaker Fellowship" loading="lazy" src="assets/images/initiatives/community-changemaker-fellowship.webp"/></div><h3>Community Changemaker Fellowship</h3><p>Supporting community leaders to advance social inclusion.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ecosystem Building</li><li data-tag-group="topics">Talent Development</li><li data-tag-group="approach">Capacity Building</li><li data-tag-group="users">Organisations</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Co’asis" loading="lazy" src="assets/images/initiatives/coasis-2.webp"/></div><h3>Co’asis</h3><p>A community where social purpose organisations learn and grow together.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ecosystem Building</li><li data-tag-group="topics">Organisation Development</li><li data-tag-group="approach">Community Building</li><li data-tag-group="users">Organisations</li></ul></a></div></section>
-<h2 class="listing__all-title">所有項目</h2>
+<h1 class="listing__title listing__title--initiatives">故事</h1>
+<p class="listing__subtitle">慈悲實踐的故事</p>
+<section aria-labelledby="spotlight-title" class="spotlight"><div class="spotlight__head"><h2 id="spotlight-title">故事焦點</h2></div><div aria-label="In the Spotlight" class="spotlight__rail" data-rail="" id="spotlight-rail" tabindex="0"><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Project Fuel" loading="lazy" src="assets/images/art-fuel-main.png"/></div><h3>Project Fuel</h3><p>在挑戰中支持非牟利機構前行</p><ul class="spotlight__tags"><li data-tag-group="priority">Ecosystem Building</li><li data-tag-group="topics">Organisation Development</li><li data-tag-group="approach">Capacity Building</li><li data-tag-group="users">Organisations</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Future Education in Action 2.0" loading="lazy" src="assets/images/initiatives/future-education-in-action-2.webp"/></div><h3>Future Education in Action 2.0</h3><p>Connecting educators and communities to support life and career exploration.</p><ul class="spotlight__tags"><li data-tag-group="priority">Education</li><li data-tag-group="topics">Life and Career Exploration</li><li data-tag-group="approach">Cross-sector Collaboration</li><li data-tag-group="users">Youth</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Lion Rock 2.0" loading="lazy" src="assets/images/initiatives/lion-rock-2-0.webp"/></div><h3>Lion Rock 2.0</h3><p>Growing mutual care and connection through time banking.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ageing and Dying</li><li data-tag-group="topics">Ageing</li><li data-tag-group="approach">Community Building</li><li data-tag-group="users">Older Adults</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Community Changemaker Fellowship" loading="lazy" src="assets/images/initiatives/community-changemaker-fellowship.webp"/></div><h3>Community Changemaker Fellowship</h3><p>Supporting community leaders to advance social inclusion.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ecosystem Building</li><li data-tag-group="topics">Talent Development</li><li data-tag-group="approach">Capacity Building</li><li data-tag-group="users">Organisations</li></ul></a><a class="spotlight__card" href="Articles_tc.html"><div class="spotlight__image"><img alt="Co’asis" loading="lazy" src="assets/images/initiatives/coasis-2.webp"/></div><h3>Co’asis</h3><p>A community where social purpose organisations learn and grow together.</p><ul class="spotlight__tags"><li data-tag-group="priority">Ecosystem Building</li><li data-tag-group="topics">Organisation Development</li><li data-tag-group="approach">Community Building</li><li data-tag-group="users">Organisations</li></ul></a></div></section>
+<h2 class="listing__all-title">探索所有故事</h2>
 <!-- filter bar -->
 <div class="listing__filters">
 <div class="listing__filter" data-dropdown="" data-filter-kind="priority"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Priorities</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
@@ -205,7 +191,7 @@
 <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Children"/><span>Children</span></label><label class="listing__filter-option"><input type="checkbox" value="Youth"/><span>Youth</span></label><label class="listing__filter-option"><input type="checkbox" value="Parents"/><span>Parents</span></label><label class="listing__filter-option"><input type="checkbox" value="Older Adults"/><span>Older Adults</span></label><label class="listing__filter-option"><input type="checkbox" value="Teachers"/><span>Teachers</span></label><label class="listing__filter-option"><input type="checkbox" value="Social Workers"/><span>Social Workers</span></label><label class="listing__filter-option"><input type="checkbox" value="Carers"/><span>Carers</span></label><label class="listing__filter-option"><input type="checkbox" value="Organisations"/><span>Organisations</span></label></div><button class="listing__filter-clear" disabled="" type="button">清除全部</button></div></div><button class="listing__clear" type="button">清除全部</button></div>
 <!-- card grid -->
 <div class="listing__grid">
-<a class="story-card" data-approach="Community Building" data-priority="Wellbeing" data-topics="Mental Wellness" data-users="Older Adults" href="Articles_tc.html"><h2 class="story-card__title">D’ Well</h2><p class="story-card__desc">Mindfulness and self-care, made part of everyday life.</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Wellbeing</li><li class="story-card__tag" data-tag-group="topics">Mental Wellness</li><li class="story-card__tag" data-tag-group="approach">Community Building</li><li class="story-card__tag" data-tag-group="users">Older Adults</li></ul><div class="story-card__thumb"><img alt="D’ Well" loading="lazy" src="assets/images/initiatives/d-well.webp"/></div></a>
+<a class="story-card" data-approach="Capacity Building" data-priority="Ecosystem Building" data-topics="Organisation Development" data-users="Organisations" href="Articles_tc.html"><h2 class="story-card__title">Project Fuel</h2><p class="story-card__desc">在挑戰中支持非牟利機構前行</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Ecosystem Building</li><li class="story-card__tag" data-tag-group="topics">Organisation Development</li><li class="story-card__tag" data-tag-group="approach">Capacity Building</li><li class="story-card__tag" data-tag-group="users">Organisations</li></ul><div class="story-card__thumb"><img alt="Project Fuel" loading="lazy" src="assets/images/art-fuel-main.png"/></div></a><a class="story-card" data-approach="Community Building" data-priority="Wellbeing" data-topics="Mental Wellness" data-users="Older Adults" href="Articles_tc.html"><h2 class="story-card__title">D’ Well</h2><p class="story-card__desc">Mindfulness and self-care, made part of everyday life.</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Wellbeing</li><li class="story-card__tag" data-tag-group="topics">Mental Wellness</li><li class="story-card__tag" data-tag-group="approach">Community Building</li><li class="story-card__tag" data-tag-group="users">Older Adults</li></ul><div class="story-card__thumb"><img alt="D’ Well" loading="lazy" src="assets/images/initiatives/d-well.webp"/></div></a>
 <a class="story-card" data-approach="Cross-sector Collaboration" data-priority="Education" data-topics="Life and Career Exploration" data-users="Youth" href="Articles_tc.html"><h2 class="story-card__title">Future Education in Action 2.0</h2><p class="story-card__desc">Connecting educators and communities to support life and career exploration.</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Education</li><li class="story-card__tag" data-tag-group="topics">Life and Career Exploration</li><li class="story-card__tag" data-tag-group="approach">Cross-sector Collaboration</li><li class="story-card__tag" data-tag-group="users">Youth</li></ul><div class="story-card__thumb"><img alt="Future Education in Action 2.0" loading="lazy" src="assets/images/initiatives/future-education-in-action-2.webp"/></div></a>
 <a class="story-card" data-approach="Community Building" data-priority="Ageing and Dying" data-topics="Ageing" data-users="Older Adults" href="Articles_tc.html"><h2 class="story-card__title">Lion Rock 2.0</h2><p class="story-card__desc">Growing mutual care and connection through time banking.</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Ageing and Dying</li><li class="story-card__tag" data-tag-group="topics">Ageing</li><li class="story-card__tag" data-tag-group="approach">Community Building</li><li class="story-card__tag" data-tag-group="users">Older Adults</li></ul><div class="story-card__thumb"><img alt="Lion Rock 2.0" loading="lazy" src="assets/images/initiatives/lion-rock-2-0.webp"/></div></a>
 <a class="story-card" data-approach="Capacity Building" data-priority="Ecosystem Building" data-topics="Talent Development" data-users="Organisations" href="Articles_tc.html"><h2 class="story-card__title">Community Changemaker Fellowship</h2><p class="story-card__desc">Supporting community leaders to advance social inclusion.</p><ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Ecosystem Building</li><li class="story-card__tag" data-tag-group="topics">Talent Development</li><li class="story-card__tag" data-tag-group="approach">Capacity Building</li><li class="story-card__tag" data-tag-group="users">Organisations</li></ul><div class="story-card__thumb"><img alt="Community Changemaker Fellowship" loading="lazy" src="assets/images/initiatives/community-changemaker-fellowship.webp"/></div></a>
@@ -305,12 +291,6 @@
 <p class="story-card__desc">以可持續的方式，透過育兒實踐把和平帶進家庭與社群</p>
 <p class="story-card__category" data-cat="education-excellence">卓越教育</p>
 <ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Education</li><li class="story-card__tag" data-tag-group="topics">Family Support</li><li class="story-card__tag" data-tag-group="approach">Capacity Building</li><li class="story-card__tag" data-tag-group="users">Parents</li></ul>
-</a><a class="story-card" data-approach="Community Building" data-demo="true" data-priority="Ageing and Dying" data-topics="Spiritual Wellbeing" data-users="Older Adults" href="Articles_tc.html">
-<h2 class="story-card__title">金齡同行之路</h2>
-<p class="story-card__desc">透過運動與自我重尋，支持照顧者的身心安康</p>
-<p class="story-card__category" data-cat="wellbeing">身心安康</p>
-<ul class="story-card__tags"><li class="story-card__tag" data-tag-group="priority">Ageing and Dying</li><li class="story-card__tag" data-tag-group="topics">Spiritual Wellbeing</li><li class="story-card__tag" data-tag-group="approach">Community Building</li><li class="story-card__tag" data-tag-group="users">Older Adults</li></ul>
-<div class="story-card__thumb"><img alt="金齡同行之路" src="assets/images/news-7.png"/></div>
 </a></div>
 <!-- pagination -->
 <div class="listing__pager">
@@ -325,98 +305,84 @@
 </div>
 </section>
 </main>
-
-
-  <!-- ============================================================
+<!-- ============================================================
        05 — FOOTER
        ============================================================ -->
-  <!-- ============================================================
+<!-- ============================================================
        07 — COLOUR BAR
        ============================================================ -->
-  <div class="wrap">
-    <!-- draws itself left → right as it comes into view -->
-    <div class="colourbar" data-motion="bar" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-
-
-  <!-- ============================================================
+<div class="wrap">
+<!-- draws itself left → right as it comes into view -->
+<div aria-hidden="true" class="colourbar" data-motion="bar">
+<span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+</div>
+<!-- ============================================================
        08 — FOOTER (V3)
        ============================================================ -->
-  <footer class="footer-v3" id="footer">
-    <div class="wrap">
-
-      <div class="footer-v3__inner">
-
-        <a href="index_tc.html" aria-label="陳廷驊基金會">
-          <img src="assets/icons/logo-nav.png" alt="The D. H. Chen Foundation" class="footer-v3__logo" />
-        </a>
-
-        <div class="footer-v3__col">
-          <nav class="footer-v3__nav" aria-label="Footer navigation">
-            <a href="#">成為我們的夥伴</a>
-            <a href="#">保持聯繫</a>
-            <a href="People.html#careers">加入我們</a>
-          </nav>
-          <div class="footer-v3__social">
-            <a href="#" aria-label="LinkedIn">
-              <span class="footer-v3__social-icon footer-v3__social-icon--linkedin" aria-hidden="true"></span>
-            </a>
-            <a href="#" aria-label="Instagram">
-              <span class="footer-v3__social-icon footer-v3__social-icon--instagram" aria-hidden="true"></span>
-            </a>
-          </div>
-        </div>
-
-        <nav class="footer-v3__legal" aria-label="Legal navigation">
-          <a href="#">私隱政策</a>
-          <a href="#">免責聲明</a>
-          <a href="#">網站地圖</a>
-          <a href="#">無障礙瀏覽</a>
-        </nav>
-
-      </div>
-
-      <p class="footer-v3__copyright">
-        © 2026 陳廷驊基金會。版權所有<span class="footer-v3__copy-sep">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="https://www.assembly.com.hk" target="_blank" rel="noopener">網站由 Assembly 設計</a>
-      </p>
-
-    </div>
-  </footer>
-
-  <!-- Full-screen search overlay (opened from the nav search icon) -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="搜尋" aria-hidden="true" inert>
-    <div class="search-overlay__bar">
-      <a href="index_tc.html" class="search-overlay__logo" aria-label="D. H. Chen Foundation home">
-        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
-      </a>
-      <button class="search-overlay__close" type="button" aria-label="關閉搜尋">
-        <span></span><span></span>
-      </button>
-    </div>
-    <div class="search-overlay__inner">
-      <form class="search-overlay__field" role="search" action="Search.html" method="get">
-        <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
-        <input class="search-overlay__input" type="search" name="q" placeholder="搜尋..." aria-label="搜尋" />
-      </form>
-      <p class="search-overlay__label">焦點資訊</p>
-      <nav class="search-overlay__hot" aria-label="熱門搜尋">
-        <a href="#">獎學金</a>
-        <a href="#">創新項目資助</a>
-        <a href="People.html#careers">加入我們</a>
-        <a href="#">活動</a>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Custom cursor (desktop pointers only; script enables it) -->
-  <div class="cursor" id="cursor" aria-hidden="true">
-    <span class="cursor__label">探索</span>
-    <img class="cursor__arrow" src="assets/icons/icon-arrow.svg" alt="" />
-  </div>
-
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+<footer class="footer-v3" id="footer">
+<div class="wrap">
+<div class="footer-v3__inner">
+<a aria-label="陳廷驊基金會" href="index_tc.html">
+<img alt="The D. H. Chen Foundation" class="footer-v3__logo" src="assets/icons/logo-nav.png"/>
+</a>
+<div class="footer-v3__col">
+<nav aria-label="Footer navigation" class="footer-v3__nav">
+<a href="#">成為我們的夥伴</a>
+<a href="#">保持聯繫</a>
+<a href="People.html#careers">加入我們</a>
+</nav>
+<div class="footer-v3__social">
+<a aria-label="LinkedIn" href="#">
+<span aria-hidden="true" class="footer-v3__social-icon footer-v3__social-icon--linkedin"></span>
+</a>
+<a aria-label="Instagram" href="#">
+<span aria-hidden="true" class="footer-v3__social-icon footer-v3__social-icon--instagram"></span>
+</a>
+</div>
+</div>
+<nav aria-label="Legal navigation" class="footer-v3__legal">
+<a href="#">私隱政策</a>
+<a href="#">免責聲明</a>
+<a href="#">網站地圖</a>
+<a href="#">無障礙瀏覽</a>
+</nav>
+</div>
+<p class="footer-v3__copyright">
+        © 2026 陳廷驊基金會。版權所有<span class="footer-v3__copy-sep">  |  </span><a href="https://www.assembly.com.hk" rel="noopener" target="_blank">網站由 Assembly 設計</a>
+</p>
+</div>
+</footer>
+<!-- Full-screen search overlay (opened from the nav search icon) -->
+<div aria-hidden="true" aria-label="搜尋" aria-modal="true" class="search-overlay" id="search-overlay" inert="" role="dialog">
+<div class="search-overlay__bar">
+<a aria-label="D. H. Chen Foundation home" class="search-overlay__logo" href="index_tc.html">
+<img alt="D. H. Chen Foundation" src="assets/icons/logo-nav.png"/>
+</a>
+<button aria-label="關閉搜尋" class="search-overlay__close" type="button">
+<span></span><span></span>
+</button>
+</div>
+<div class="search-overlay__inner">
+<form action="Search.html" class="search-overlay__field" method="get" role="search">
+<img alt="" aria-hidden="true" class="search-overlay__icon" src="assets/icons/icon-search.svg"/>
+<input aria-label="搜尋" class="search-overlay__input" name="q" placeholder="搜尋..." type="search"/>
+</form>
+<p class="search-overlay__label">焦點資訊</p>
+<nav aria-label="熱門搜尋" class="search-overlay__hot">
+<a href="#">獎學金</a>
+<a href="#">創新項目資助</a>
+<a href="People.html#careers">加入我們</a>
+<a href="#">活動</a>
+</nav>
+</div>
+</div>
+<!-- Custom cursor (desktop pointers only; script enables it) -->
+<div aria-hidden="true" class="cursor" id="cursor">
+<span class="cursor__label">探索</span>
+<img alt="" class="cursor__arrow" src="assets/icons/icon-arrow.svg"/>
+</div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

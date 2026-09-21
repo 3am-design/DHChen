@@ -18,11 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <!-- Shared base (reset, tokens, nav shell, mobile menu, search, cursor) -->
-  <link rel="stylesheet" href="style.css?v=12.18" />
-  <!-- Home V3 — Figma "R2 / OPT2_01_Home_01_Desktop" -->
-  <link rel="icon" href="assets/icons/logo-seal.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-home.css?v=12.18" />
+  <!-- Site styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
     html.lp-boot .nav__logo, html.lp-boot .nav__menu, html.lp-boot .nav__actions,
@@ -45,12 +43,10 @@
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
       </a>
 
-      <nav class="nav__menu" aria-label="主要導覽">
-        <a href="#" class="nav__link" data-mega="work">我們的工作</a>
-        <a href="Listing_tc.html" class="nav__link" data-mega="impact">影響與成果</a>
-        <a href="#" class="nav__link" data-mega="about">關於我們</a>
-        <a href="#" class="nav__link">聯繫我們</a>
-      </nav>
+      <nav class="nav__menu" aria-label="Main navigation"><a href="Approach.html" class="nav__link" data-mega="work">理念實踐</a>
+<a href="Listing_tc.html" class="nav__link" data-mega="impact">社會影響</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></nav>
 
       <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
            with it. It is its own button rather than the one in
@@ -58,7 +54,7 @@
            is built out of, and an absolutely-placed child of it is at the
            mercy of the landing translate, which makes it the containing
            block for as long as it runs. Only ever one of the two is on
-           screen (see style-home.css). -->
+           screen (see style.css). -->
       <button class="nav__search-btn nav__search-btn--stacked" aria-label="搜尋">
         <img src="assets/icons/icon-search.svg" alt="" />
       </button>
@@ -89,40 +85,30 @@
          panel drops below it and carries its own copy of the four sections —
          `.nav__mega-menu`, hidden until then. -->
     <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
-      <div class="nav__mega-menu">
-        <a href="#" class="nav__link" data-mega="work">我們的工作</a>
-        <a href="Listing_tc.html" class="nav__link" data-mega="impact">影響與成果</a>
-        <a href="#" class="nav__link" data-mega="about">關於我們</a>
-        <a href="#" class="nav__link">聯繫我們</a>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="work">
-        <img class="nav__mega-art" src="assets/images/menu-work-v3.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
-          <li><a href="#">工作方式</a></li>
-          <li><a href="#">關注範疇</a></li>
-          <li><a href="#">項目與計劃</a></li>
-          <li><a href="#">夥伴同行</a></li>
-        </ul>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="impact">
-        <img class="nav__mega-art" src="assets/images/menu-impact.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
-          <li><a href="#">學習與洞察</a></li>
-          <li><a href="Listing_tc.html">我們的故事</a></li>
-          <li><a href="#">最新消息</a></li>
-        </ul>
-      </div>
-      <div class="nav__mega-panel" data-mega-panel="about">
-        <img class="nav__mega-art" src="assets/images/menu-about-v3.svg" alt="" aria-hidden="true" />
-        <ul class="nav__mega-links">
-          <li><a href="#">基金會源起</a></li>
-          <li><a href="#">我們的使命</a></li>
-          <li><a href="#">核心價值</a></li>
-          <li><a href="#">團隊與同行者</a></li>
-          <li><a href="#">旗下機構</a></li>
-        </ul>
-      </div>
-    </div>
+<div class="nav__mega-menu"><a href="Approach.html" class="nav__link" data-mega="work">理念實踐</a>
+<a href="Listing_tc.html" class="nav__link" data-mega="impact">社會影響</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></div>
+<div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Approach.html#practices">實踐方法</a></li>
+          <li><a href="Approach.html#priorities">關注範疇</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Listing_tc.html">項目</a></li>
+          <li><a href="Stories_tc.html">故事</a></li>
+          <li><a href="Learning.html">學習</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="partnership"><img class="nav__mega-art" src="assets/images/menu-partnership-hands.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a></li>
+          <li><a href="Partnership.html">協作</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Ethos.html">價值觀</a></li>
+          <li><a href="People.html">團隊</a></li>
+          <li><a href="News.html">消息及新聞</a></li>
+          <li><a href="Connect.html">聯絡我們</a></li>
+        </ul></div>
+</div>
 
     <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
@@ -140,51 +126,27 @@
       </div>
 
       <!-- Primary nav — big, left-aligned -->
-      <nav class="nav__mobile-links" aria-label="流動版導覽">
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">我們的工作</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="#">工作方式</a>
-              <a href="#">關注範疇</a>
-              <a href="#">項目與計劃</a>
-              <a href="#">夥伴同行</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">影響與成果</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="#">學習與洞察</a>
-              <a href="Listing_tc.html">我們的故事</a>
-              <a href="#">最新消息</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
-          <div class="nav__mobile-sub">
-            <div class="nav__mobile-sub-inner">
-              <a href="#">基金會源起</a>
-              <a href="#">我們的使命</a>
-              <a href="#">核心價值</a>
-              <a href="#">團隊與同行者</a>
-              <a href="#">旗下機構</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav__mobile-item">
-          <a href="#" class="nav__mobile-link">聯繫我們</a>
-        </div>
-      </nav>
+      <nav class="nav__mobile-links" aria-label="Mobile navigation">
+      <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">理念實踐</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Approach.html#practices">實踐方法</a><a href="Approach.html#priorities">關注範疇</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">社會影響</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Listing_tc.html">項目</a><a href="Stories_tc.html">故事</a><a href="Learning.html">學習</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">夥伴合作</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a><a href="Partnership.html">協作</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">消息及新聞</a><a href="Connect.html">聯絡我們</a></div></div></div>
+</nav>
 
       <!-- Secondary links from the footer, two columns -->
       <div class="nav__mobile-secondary">
         <nav class="nav__mobile-col" aria-label="Get involved">
           <a href="#" class="nav__mobile-sublink">成為我們的夥伴</a>
           <a href="#" class="nav__mobile-sublink">保持聯繫</a>
-          <a href="#" class="nav__mobile-sublink">加入我們</a>
+          <a class="nav__mobile-sublink" href="People.html#careers">加入我們</a>
         </nav>
         <nav class="nav__mobile-col" aria-label="Legal">
           <a href="#" class="nav__mobile-sublink">私隱政策</a>
@@ -241,16 +203,14 @@
 
       <!-- ── Intro line ────────────────────────────────────────── -->
       <div class="wrap">
-        <p class="intro-v3">
-          我們是一個植根香港的家族慈善信託，秉持慈悲精神，與不同夥伴並肩同行，回應社會持續變化的需要。
-        </p>
+        <p class="intro-v3">我們是一個扎根香港的家族慈善信託，深信「慈之以行」始於每個人。真正的改變由內而外，延伸至我們共同建立的社群。這段旅程，從自我覺察、發展潛能，到建立歸屬，逐步展開。</p>
       </div>
 
       <!-- ── Being → Becoming → Belonging → Bettering ───────────── -->
       <div class="journey wrap" id="journey">
 
         <!-- 1 — Being -->
-        <section class="panel panel--being">
+        <section class="panel panel--being journey__step">
           <!-- 點 — scattered dots drifting, then collapsing into the core dot.
                Positions/sizes/opacities come straight from being-dots.svg. -->
           <div class="panel__dots dots" data-motion="dots" aria-hidden="true">
@@ -271,91 +231,36 @@
           <div class="panel__head">
             <h2 class="panel__title">Being</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              覺察，由此開始。
-            </p>
-            <p class="panel__copy">
-              我們連結真實的自己，從而更清晰地看見足以啟發改變的可能與機遇。
-            </p>
-            <p class="panel__note">
-              這關乎認識自己是誰、真正在乎甚麼，以及如何作出最重要的抉擇。
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">從這裡開始覺察，讓慈悲扎根。</p></div>
         </section>
 
         <!-- 2 — Becoming -->
-        <section class="panel panel--becoming">
+        <section class="panel panel--becoming journey__step">
           <!-- 線 — one dot spreads left/right into a line (script fills the dots) -->
           <div class="panel__dotrow dotrow" data-motion="dotrow" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Becoming</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              可能性在這裡成形，長成具意義的貢獻。
-            </p>
-            <p class="panel__copy">
-              我們透過探索潛能與使命，把自己連結到各種可能，將洞見化為行動，孕育能帶來正面社會影響的想法。
-            </p>
-            <p class="panel__note">
-              這關乎我們能成為甚麼，以及作為個人與社會的一員，我們想成為甚麼。
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">在這裡，潛能遇上使命，可能性化成正面影響。</p></div>
         </section>
 
         <!-- 3 — Belonging -->
-        <section class="panel panel--belonging">
+        <section class="panel panel--belonging journey__step">
           <!-- 面 — the line spreads up/down into a plane (script fills the rules) -->
           <div class="panel__lines lines" data-motion="lines" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Belonging</h2>
           </div>
-          <div class="panel__body">
-            <p class="panel__lede">
-              個人的貢獻在這裡匯聚，影響力由此成為集體的力量。
-            </p>
-            <p class="panel__copy">
-              我們透過更緊密的社會連結，把自己連結到社群，培養建立於信任、關懷與共同使命之上的關係。
-            </p>
-            <p class="panel__note">
-              這關乎在我們身處的更大社群之中，我們是誰，以及我們期望成為誰。
-            </p>
-          </div>
+          <div class="panel__body"><p class="panel__lede">在這裡，連繫與社群匯聚成共同的力量。</p></div>
         </section>
 
         <!-- 4 — Bettering -->
-        <section class="panel panel--bettering">
-          <!-- Four frames on the same spot: each one pushes in slowly, and as
-               it reaches the end of its travel the next is cross-faded over
-               it. Plain <img>s stacked by CSS rather than a slider library —
-               the whole behaviour is one class (`is-on`) moved along by
-               script §8.7, and with no script (or reduced motion) the first
-               frame simply stays put. -->
-          <div class="panel__photo" data-slideshow aria-hidden="true">
-            <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
-            <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
-            <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
-            <img class="panel__photo-img" src="assets/images/bettering-4.png" alt="" loading="lazy" />
-          </div>
-          <div class="panel__head">
-            <p class="panel__crumbs">
-              <span>Being</span><span>Becoming</span><span>Belonging</span>
-            </p>
-            <h2 class="panel__title">Bettering</h2>
-          </div>
-          <div class="panel__body">
-            <p class="panel__lede">攜手共建一個慈悲的社會，我們的方式是：</p>
-            <ul class="panel__bullets">
-              <li>以影響力為本</li>
-              <li>可持續</li>
-              <li>具創新性</li>
-            </ul>
-            <p class="panel__note">
-              這與基金會的理念格外契合，因為它著眼於社會的改善，而非商業上的成功。
-            </p>
-          </div>
-        </section>
+        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">共建慈悲社會</h2><p>讓每個人茁壯成長、社群蓬勃發展，以慈悲啟發正面改變的未來。</p><ul class="compassion-outcome__values" role="list"><li><span>影響為本</span></li><li><span>創新</span></li><li><span>可持續</span></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
+  <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
+  <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
+  <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
+  <img class="panel__photo-img" src="assets/images/bettering-4.png" alt="" loading="lazy" />
+</div></section>
 
       </div>
     </div>
@@ -386,70 +291,19 @@
           </div>
         </div>
 
-        <div class="news-v3__grid">
+        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="news" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">讓靜觀與自我關懷融入日常生活。</p><ul class="card-v3__tags">
+          <li>Wellbeing</li>
+        </ul></div></a><a class="card-v3" data-category="learning" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">連繫教育工作者與社群，支持年輕人探索生命與生涯。</p><ul class="card-v3__tags">
+          <li>Education</li>
+        </ul></div></a><a class="card-v3" data-category="stories" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">透過時間銀行，建立互助關係與社區連繫。</p><ul class="card-v3__tags">
+          <li>Ageing and Dying</li>
+          <li>Wellbeing</li>
+        </ul></div></a><a class="card-v3" data-category="stories" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">支持社區領袖推動共融，讓每個人都能參與改變。</p><ul class="card-v3__tags">
+          <li>Ecosystem Building</li>
+        </ul></div></a><a class="card-v3" data-category="news" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">讓社會目的機構互相學習、分享資源，一起成長。</p><ul class="card-v3__tags">
+          <li>Ecosystem Building</li>
+        </ul></div></a></div>
 
-          <article class="card-v3" data-category="stories">
-            <div class="card-v3__image">
-              <img src="assets/images/card-1.png" alt="社區創變者 Fellowship" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">社區創變者 Fellowship</h3>
-              <p class="card-v3__desc">培育創變者，推動更共融的社會</p>
-              <p class="card-v3__cat">超越同行學院</p>
-              <ul class="card-v3__tags">
-                <li>能力建設</li>
-                <li>聚焦社會議題</li>
-                <li>身心安康</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="learning">
-            <div class="card-v3__image">
-              <img src="assets/images/card-2.jpg" alt="未來教育實踐" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">未來教育實踐</h3>
-              <p class="card-v3__desc">跨界協作，裝備面對真實世界的能力</p>
-              <p class="card-v3__cat">卓越教育</p>
-              <ul class="card-v3__tags">
-                <li>能力建設</li>
-                <li>聚焦社會議題</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="news">
-            <div class="card-v3__image">
-              <img src="assets/images/card-3.jpg" alt="Co&rsquo;asis" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">Co&rsquo;asis</h3>
-              <p class="card-v3__desc">建立由同儕推動的社會創效連結加速器</p>
-              <p class="card-v3__cat">創效策略</p>
-              <ul class="card-v3__tags">
-                <li>聚焦社會議題</li>
-                <li>身心安康</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="card-v3" data-category="stories">
-            <div class="card-v3__image">
-              <img src="assets/images/card-4.jpg" alt="Supportive Net Weaver 2.0" />
-            </div>
-            <div class="card-v3__body">
-              <h3 class="card-v3__title">織網者 2.0</h3>
-              <p class="card-v3__desc">透過學習心理急救，提升青年的精神健康</p>
-              <p class="card-v3__cat">身心安康</p>
-              <ul class="card-v3__tags">
-                <li>能力建設</li>
-                <li>身心安康</li>
-              </ul>
-            </div>
-          </article>
-
-        </div>
 
         <div class="news-v3__cta">
           <a href="Listing_tc.html" class="btn-pill">
@@ -468,12 +322,13 @@
     <section class="ventures" id="ventures">
       <div class="wrap">
 
-        <div class="ventures__grid">
+        <div class="ventures__intro"><h2>前瞻項目</h2><p>我們發起不同項目，透過人才發展、生態圈建設及社區影響，推動使命實踐。</p></div>
+<div class="ventures__grid">
 
           <div class="ventures__col">
             <div class="ventures__logos">
-              <img src="assets/images/dventures-word.svg" alt="D&rsquo;Ventures" />
-              <img src="assets/images/dhub.svg" alt="D&rsquo;Hub" class="is-dhub" />
+              <img src="assets/images/dventures-word.svg?v=260916.8" alt="D&rsquo;Ventures" />
+              <img src="assets/images/dhub.svg?v=260916.8" alt="D&rsquo;Hub" class="is-dhub" />
             </div>
             <p class="ventures__text">
               基金會以先行者的角色創立 D&rsquo;Ventures，構建一個以使命為本的生態圈，讓本地社會創效社群得以成長茁壯。基金會在九龍核心地帶的 D&rsquo;Hub 提供共享服務、共學社群與綜合工作空間，匯聚推動可持續影響所需的服務與場地，將慈悲化作行動。
@@ -505,9 +360,7 @@
         <!-- R2 12145-654 — see index.html -->
         <div class="funding">
           <h2 class="funding__title">與我們同行</h2>
-          <p class="funding__text">
-            我們全年接受捐款申請。有意申請者請填妥相關的捐款申請表格、上載所需文件，並預留充足時間以供審核。
-          </p>
+          <p class="funding__text">建設慈悲社會需要攜手合作。我們與社會目的機構，包括教育工作者、社會創新者、社區領袖及推動改變的人同行，將慈悲化成有意義的行動及持久影響。</p>
           <div class="funding__marquee">
             <!-- Four strips, animated by exactly -50%: as the first half walks
                  off the left the second half is already standing where it
@@ -588,10 +441,7 @@
               </ul>
             </div>
           </div>
-          <a href="#" class="btn-pill funding__cta">
-            資助申請
-            <span class="btn-pill__arrow" aria-hidden="true"></span>
-          </a>
+          <a class="btn-pill funding__cta" href="People.html#careers">加入我們<span aria-hidden="true" class="btn-pill__arrow"></span></a>
         </div>
 
       </div>
@@ -620,14 +470,14 @@
       <div class="footer-v3__inner">
 
         <a href="index_tc.html" aria-label="陳廷驊基金會">
-          <img src="assets/images/logo-footer-compassion.svg" alt="#Compassion in Action 慈之以行" class="footer-v3__logo" />
+          <img src="assets/icons/logo-nav.png" alt="The D. H. Chen Foundation" class="footer-v3__logo" />
         </a>
 
         <div class="footer-v3__col">
           <nav class="footer-v3__nav" aria-label="Footer navigation">
             <a href="#">成為我們的夥伴</a>
             <a href="#">保持聯繫</a>
-            <a href="#">加入我們</a>
+            <a href="People.html#careers">加入我們</a>
           </nav>
           <div class="footer-v3__social">
             <a href="#" aria-label="LinkedIn">
@@ -674,7 +524,7 @@
       <nav class="search-overlay__hot" aria-label="熱門搜尋">
         <a href="#">獎學金</a>
         <a href="#">創新項目資助</a>
-        <a href="#">加入我們</a>
+        <a href="People.html#careers">加入我們</a>
         <a href="#">活動</a>
       </nav>
     </div>
@@ -687,6 +537,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=12.18"></script>
+  <script src="script.js"></script>
 </body>
 </html>
