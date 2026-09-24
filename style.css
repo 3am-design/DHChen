@@ -572,11 +572,11 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   z-index: 100;
   transition: background var(--ease), box-shadow var(--ease);
 }
-/* Sticky state (Figma "Sticky"): white bar, 60px tall, thin grey rule
+/* Sticky state (Figma "Sticky"): white bar, 60px tall, thin orange rule
    underneath; logo and type scale down slightly. */
 .nav--scrolled {
   background: var(--c-white);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 var(--rule-width) 0 var(--c-rule-solid);
 }
 .nav--scrolled .nav__inner    { height: 60px; }
 .nav--scrolled .nav__logo-img { height: 44px; }
@@ -2584,7 +2584,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    Centred content: breadcrumb · title · filter bar · card grid · pager
    ================================================================ */
 /* solid white nav for inner pages (no hero behind it) */
-.nav--solid { background: var(--c-white); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+.nav--solid { background: var(--c-white); box-shadow: 0 var(--rule-width) 0 var(--c-rule-solid); }
 
 .listing {
   position: relative;
@@ -2728,7 +2728,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   position: relative;
   flex: 1 1 0;
   max-width: 270px;
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
   transition: border-color var(--ease);
 }
 .listing__filter-toggle {
@@ -2751,7 +2751,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .listing__filter.is-open { border-color: var(--c-orange); }
 .listing__filter.is-disabled {
   opacity: 0.42;
-  border-color: rgba(0,0,0,0.16);
+  border-color: var(--c-rule-solid);
 }
 .listing__filter.is-disabled .listing__filter-toggle { color: var(--c-black); cursor: not-allowed; }
 .listing__filter.is-disabled .listing__filter-menu { display: none !important; }
@@ -2774,7 +2774,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   left: 0;
   min-width: 100%;
   background: var(--c-white);
-  border: 1px solid rgba(0,0,0,0.08);
+  border: var(--rule-width) solid var(--c-rule-solid);
   border-radius: 10px;
   box-shadow: 0 12px 34px rgba(0,0,0,0.1);
   padding: 6px;
@@ -2809,7 +2809,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .listing__clear {
   flex-shrink: 0;
   align-self: center;
-  border: 1px solid rgba(0,0,0,0.25);
+  border: var(--rule-width) solid var(--c-rule-solid);
   border-radius: 100px;
   padding: 7px 18px;
   font-family: var(--f-sans);
@@ -2822,7 +2822,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   opacity: 0.38;
   cursor: default;
   background: transparent;
-  border-color: rgba(0,0,0,0.2);
+  border-color: var(--c-rule-solid);
   color: var(--c-black);
 }
 
@@ -2833,9 +2833,8 @@ body.home-v3 .search-overlay__close span { width: 22px; }
      min-content, which for a card with an image becomes the image's intrinsic
      width, so the tracks refuse to shrink and the grid overflows on resize.    */
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 56px 40px;
-  max-width: 1565px;
-  margin: 0 auto;
+  /* Four cards each span three of the page's twelve columns. */
+  gap: 56px var(--grid-gap);
 }
 
 .story-card {
@@ -3028,7 +3027,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    number of columns does (4 → 3 → 2 → 1). The grid is fluid between
    breakpoints, so resizing the window never breaks the card area.      */
 @media (max-width: 1279px) { .listing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 899px)  { .listing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 32px; } }
+@media (max-width: 899px)  { .listing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; } }
 @media (max-width: 767px) {
   .listing { padding: 104px var(--gm-mob) 130px; }
   /* Grow into the tablet title instead of jumping from 38px to a rendered
@@ -3048,8 +3047,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   /* clear-all drops onto its own row (the grown filters fill each row),
      centred via auto side margins */
   .listing__clear { margin: 6px auto 0; }
-  /* column gap never wider than the page side margin */
-  .listing__grid { gap: 22px var(--gm-mob); }
+  .listing__grid { row-gap: 22px; }
   .listing__pager { margin-top: 56px; }
   /* keep the desktop circle:arrow:number proportions (62/20/19) at 46px */
   .pager__arrow, .pager__num { width: 46px; height: 46px; }
@@ -3537,7 +3535,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-black);
+  color: var(--c-orange);
   transition: color var(--ease);
 }
 .article__related-desc {
@@ -7096,7 +7094,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   grid-template-columns: 150px minmax(0, 1fr);
   gap: 8px 20px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 .connect__list .connect__item:last-child { border-bottom: none; padding-bottom: 0; }
 .connect__label {
@@ -7119,7 +7117,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgba(0, 0, 0, 0.25);
+  text-decoration-color: var(--c-rule-solid);
   transition: color var(--ease), text-decoration-color var(--ease);
 }
 .connect__value a:hover { color: var(--c-orange); text-decoration-color: currentColor; }
@@ -7334,7 +7332,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   gap: 0 clamp(20px, 2vw, 40px);
   padding: 30px 0;
 }
-.strategy + .strategy { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+.strategy + .strategy { border-top: var(--rule-width) solid var(--c-rule-solid); }
 .strategy__num {
   font-family: var(--f-serif);
   font-size: 34px;
@@ -7358,6 +7356,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   margin-top: 8px;
   max-width: 52em;
 }
+.approach-page .strategy__desc { color: var(--c-orange); }
 /* The second line under a strategy: what the move actually looks like
    in practice. Set a step down from `__desc` so the row still reads as
    one item with a summary and a gloss, not as two equal paragraphs. */
@@ -7505,7 +7504,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .article__testimonial-quote,
 :where(.inner-v3) .article__testimonial-name,
 :where(.inner-v3) .article__related-title,
-:where(.inner-v3) .article__related-name,
 :where(.inner-v3) .article__related-desc { color: var(--c-grey); }
 
 /* ── connect ───────────────────────────────────────────────────── */
@@ -7523,10 +7521,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .search__empty,
 :where(.inner-v3) .connect__heading,
 :where(.inner-v3) .connect__value { color: var(--c-grey); }
-/* the underline under a linked value was a black tint of the old black
-   type; on grey it has to come off the new colour or it reads as a
-   second, darker rule under the words */
-:where(.inner-v3) .connect__value a { text-decoration-color: rgba(0, 0, 0, 0.45); }
+/* Linked values use the same pale-orange rule as other dividers. */
+:where(.inner-v3) .connect__value a { text-decoration-color: var(--c-rule-solid); }
 
 /* ── approach ──────────────────────────────────────────────────── */
 /* ── institutes / institute ────────────────────────────────────── */
@@ -7604,7 +7600,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   line-height: 25px;
   color: var(--c-orange);
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
   margin-bottom: 32px;
 }
 .institutes__heading {
@@ -7774,7 +7770,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   display: flex;
   align-items: center;
   gap: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
   padding-bottom: 14px;
   transition: border-color var(--ease);
 }
@@ -7856,7 +7852,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   gap: 12px;
   margin-top: 40px;
   padding-bottom: 40px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 .s-tab {
   display: inline-flex;
@@ -7901,7 +7897,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   gap: clamp(20px, 3vw, 56px);
   align-items: start;
   padding: 36px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 /* One colour for every kind of result, and that colour is the page's
    grey. The per-category palette the story cards carry is doing a job
@@ -8112,7 +8108,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .story__fact-value a {
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(0, 0, 0, 0.45);
+  text-decoration-color: var(--c-rule-solid);
   transition: color var(--ease), text-decoration-color var(--ease);
 }
 .story__fact-value a:hover { color: var(--c-orange); text-decoration-color: currentColor; }
@@ -8260,7 +8256,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   line-height: 22px;
   color: var(--c-grey);
   padding-bottom: 22px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 
 /* ── contents ────────────────────────────────────────────────────
@@ -8337,7 +8333,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .legal__also {
   margin-top: var(--sec-gap);
   padding-top: 36px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: var(--rule-width) solid var(--c-rule-solid);
 }
 .legal__also-label {
   font-family: var(--f-sans);
@@ -8380,7 +8376,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   line-height: 1.3;
   color: var(--c-grey);
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 .sitemap__links { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
 .sitemap__links a,
@@ -8429,7 +8425,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   max-width: 1820px;
   margin: var(--sec-gap) auto 0;
   padding-top: 44px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: var(--rule-width) solid var(--c-rule-solid);
 }
 .partners__label {
   font-family: var(--f-sans);
@@ -8895,12 +8891,19 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 [data-rail] { overscroll-behavior-x: contain; }
 [data-rail] {
   --rail-viewport: calc((100vw - var(--sbw, 0px)) / var(--zoom));
+  --rail-margin: var(--gm);
+  --rail-content: min(calc(var(--rail-viewport) - 2 * var(--rail-margin)), calc(var(--canvas) - 2 * var(--rail-margin)));
+  --rail-inset: calc((var(--rail-viewport) - var(--rail-content)) / 2);
+  --rail-column: calc((var(--rail-content) - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
   width: var(--rail-viewport);
   max-width: none;
   margin-inline: calc((100% - var(--rail-viewport)) / 2);
 }
+@media (max-width: 767px) {
+  [data-rail] { --rail-margin: var(--gm-mob); }
+}
 [data-rail] img { -webkit-user-drag: none; }
-.home-v3 .news-v3__grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3 * var(--grid-gap)) / 4.2); grid-template-columns: none; gap: var(--grid-gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 18px; }
+.home-v3 .news-v3__grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc(3 * var(--rail-column) + 2 * var(--grid-gap)); grid-template-columns: none; gap: var(--grid-gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 var(--rail-inset) 18px; scroll-padding-inline: var(--rail-inset); }
 .home-v3 .news-v3__grid::-webkit-scrollbar { display: none; width: 0; height: 0; }
 .home-v3 .card-v3__tags { margin-top: auto; padding-top: 18px; }
 .home-v3 .card-v3__tags li { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
@@ -8923,16 +8926,16 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .spotlight { margin: 48px 0 70px; padding-bottom: 40px; border-bottom: var(--rule-width) solid var(--c-rule); }
 .spotlight__head { display: flex; justify-content: center; align-items: center; gap: 24px; margin-bottom: 25px; text-align: center; }
 .spotlight__head h2, .listing__all-title { font: 400 32px/1.2 var(--f-serif); }
-.spotlight__rail { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 3.2); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 18px; scrollbar-width: none; }
+.spotlight__rail { display: grid; grid-auto-flow: column; grid-auto-columns: calc(6 * var(--rail-column) + 5 * var(--grid-gap)); gap: var(--grid-gap); overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--rail-inset) 18px; scroll-padding-inline: var(--rail-inset); scrollbar-width: none; }
 .spotlight__rail::-webkit-scrollbar { display: none; width: 0; height: 0; }
-.spotlight__card { display: flex; flex-direction: column; min-width: 0; color: inherit; text-decoration: none; scroll-snap-align: start; }
-.spotlight__tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin-top: auto; padding-top: 18px; }
-.spotlight__tags li { padding: 4px 12px; border-radius: 20px; background: var(--c-panel); font: 300 14px/1.4 var(--f-sans); }
-.spotlight__image { position: relative; aspect-ratio: 1.5; overflow: hidden; background: var(--c-panel); }
+.spotlight__card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr auto; min-width: 0; min-height: 320px; background: var(--c-white); color: inherit; text-decoration: none; scroll-snap-align: start; }
+.spotlight__tags { grid-column: 2; display: flex; flex-wrap: wrap; align-content: end; gap: 8px; list-style: none; margin: 0; padding: 18px 27px 27px; }
+.spotlight__tags li { padding: 4px 13px; border-radius: 100px; background: #fff4ec; color: var(--c-grey); font: 300 12px/1.35 var(--f-sans); }
+.spotlight__image { position: relative; grid-column: 1; grid-row: 1 / 4; overflow: hidden; background: var(--c-panel); }
 .spotlight__image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .spotlight__card:hover img { transform: scale(1.035); }
-.spotlight__card h3 { font: 400 23px/1.25 var(--f-serif); color: var(--c-orange); margin: 18px 0 10px; }
-.spotlight__card p { font: 16px/1.5 var(--f-sans); }
+.spotlight__card h3 { grid-column: 2; min-width: 0; font: 400 26px/32px var(--f-serif); color: var(--c-orange); margin: 0; padding: 27px 27px 10px; }
+.spotlight__card p { grid-column: 2; min-width: 0; font: 300 15px/22px var(--f-sans); padding: 0 27px; }
 .listing__all-title { margin-bottom: 28px; text-align: center; }
 .listing__filters { position: relative; z-index: 6; margin-top: 0; }
 .listing__filter-menu { min-width: max(100%, 240px); max-height: 330px; overflow: hidden; flex-direction: column; }
@@ -8970,6 +8973,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 @media (min-width: 768px) {
   .article__related-category { font-size: max(13px, calc(12px / var(--zoom))); }
   .home-v3 .ventures__intro p { font-size: max(21px, calc(15.02px / var(--zoom))); }
+  .spotlight__card p { line-height: max(22px, var(--copy-leading-min)); }
+  .spotlight__tags li { font-size: max(12px, var(--microcopy-readable-min)); }
   .spotlight__card p,
   .home-v3 .card-v3__desc, .article__text, .home-v3 .ventures__text,
   .home-v3 .funding__text, .story-card__desc {
@@ -8979,13 +8984,17 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 @media (max-width: 1023px) {
   .home-v3 .journey__step { min-height: 430px; }
   .home-v3 .journey__step .panel__lede { font-size: 21px; }
-  .home-v3 .news-v3__grid { grid-auto-columns: calc((100% - 24px) / 2.2); gap: 24px; }
   .compassion-outcome { min-height: 430px; }
   .compassion-outcome__copy { padding: 34px; }
   .compassion-outcome h2 { font-size: 40px; margin-top: 30px; }
   .compassion-outcome p { font-size: 19px; }
   .compassion-outcome__values li { font-size: max(15px, calc(14px / var(--zoom))); padding: 6px 2px; }
-  .spotlight__rail { grid-auto-columns: calc((100% - 24px) / 2.2); }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .home-v3 .news-v3__grid { grid-auto-columns: calc(2 * var(--rail-column) + var(--grid-gap)); }
+}
+@media (max-width: 1279px) {
+  .spotlight__rail { grid-auto-columns: var(--rail-content); }
 }
 /* Stacked artwork follows the copy instead of inheriting desktop offsets. */
 @media (max-width: 899px) {
@@ -9011,12 +9020,16 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .compassion-outcome__values li { font-size: clamp(12px, 3.3vw, 16px); padding: 6px 2px; }
   .compassion-outcome__image.panel__photo { min-height: 0; aspect-ratio: 1.25; }
   .home-v3 .news-v3__head { align-items: flex-start; gap: 20px; }
-  .home-v3 .news-v3__grid { grid-auto-columns: 82%; gap: 16px; }
   .home-v3 .ventures__intro { margin-bottom: 34px; padding-bottom: 28px; }
   .home-v3 .ventures__intro p { font-size: 18px; }
   .spotlight { margin: 32px 0 38px; padding-bottom: 24px; }
   .spotlight__head h2, .listing__all-title { font-size: 28px; }
-  .spotlight__rail { grid-auto-columns: 84%; gap: 16px; }
+  .spotlight__rail { grid-auto-columns: calc(3 * var(--rail-column) + 2 * var(--grid-gap)); }
+  .spotlight__card { display: flex; flex-direction: column; min-height: 0; }
+  .spotlight__image { aspect-ratio: 1.5; }
+  .spotlight__card h3 { padding: 20px 20px 8px; }
+  .spotlight__card p { padding: 0 20px; }
+  .spotlight__tags { margin-top: auto; padding: 20px; }
   .spotlight__card h3 { font-size: 24px; }
   .listing__title--initiatives { margin-bottom: 0; }
   .listing__subtitle { font-size: 18px; margin-top: 12px; }
@@ -9038,7 +9051,7 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 /* Light running copy and supporting UI, with display headings intact. */
 body { font-weight: 300; }
 body :is(p, li, small, label, input, textarea, select, button, figcaption, dt, dd, td, th, blockquote),
-body :is(.article__tag, .article__related-category, .story-card__category, .card-v3__category,
+body :is(.article__tag, .story-card__category, .card-v3__category,
   .listing__crumb, .listing__crumb a, .pager__total, .pager__num, .cursor__label,
   .nav__lang, .footer__copyright, .footer-v3__copyright, .footer-v3__legal,
   .footer-v3__nav a, .btn, .btn-pill, .skip-link, .card-v3__title,
@@ -9264,4 +9277,56 @@ body :is(.article__tag, .article__related-category, .story-card__category, .card
 
 @media (prefers-reduced-motion: reduce) {
   .person-trigger, .person-trigger__copy, .person-trigger__expand { transition: none; }
+}
+
+/* Running copy uses the regular Fira Sans cut. Keep supporting labels and
+   compact metadata on the lighter tier. */
+body p,
+body :is(.hero-v3__body, .intro-v3, .legal__list li, .article__text li,
+  .article__testimonial-quote,
+  .people-intro, .career-job__summary, .strategy__desc, .strategy__note,
+  .ethos__value-desc, .institute-card__text, .s-result__desc) {
+  font-weight: 400 !important;
+}
+body :is(.footer-v3__copyright, .footer-v3__copyright *, .footer__copyright p,
+  .article__caption, .article__testimonial-role,
+  .story-card__category, .card-v3__cat, .listing__subtitle,
+  .people-dialog__label, .career-job__meta, .search-overlay__label,
+  .institute-card__eyebrow, .connect__funding-eyebrow,
+  .s-result__kind, .s-result__path, .legal__meta, .legal__toc-label,
+  .legal__also-label) {
+  font-weight: 300 !important;
+}
+
+/* Related labels use the regular text cut; related titles share the orange
+   used by content cards even inside the inner-page colour reset above. */
+.article__related-category { font-weight: 400 !important; }
+
+/* Orange content titles gain one small step without enlarging orange labels,
+   navigation states, or the white title on the Bettering panel. */
+.panel:not(.panel--bettering) .panel__title { font-size: calc(var(--t-title) + 2px); }
+.compassion-outcome h2 { font-size: calc(clamp(36px, 3.8vw, 66px) + 2px); }
+.home-v3 .card-v3__title { font-size: 24px; }
+.listing .story-card__title, .spotlight__card h3 { font-size: 28px; }
+.article__section-heading { font-size: 26px; }
+.priorities-grid a { font-size: 28px; }
+.people-group h3 { font-size: 29px; }
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .listing .story-card__title, .spotlight__card h3 {
+    font-size: calc(max(22px, calc(20px / var(--zoom))) + 2px);
+  }
+  .people-group h3 { font-size: 27px; }
+}
+@media (max-width: 1023px) {
+  .compassion-outcome h2 { font-size: 42px; }
+}
+@media (max-width: 767px) {
+  .home-v3 .journey__step.panel:not(.panel--bettering) .panel__title { font-size: 40px; }
+  .compassion-outcome h2 { font-size: 41px; }
+  .listing .story-card__title, .spotlight__card h3, .home-v3 .card-v3__title {
+    font-size: calc(var(--mobile-card-size) + 2px);
+  }
+  .article__section-heading { font-size: 24px; }
+  .people-group h3 { font-size: calc(var(--mobile-feature-size) + 2px); }
 }

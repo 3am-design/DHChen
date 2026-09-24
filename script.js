@@ -3821,11 +3821,21 @@ window.__pageZoom = function () {
     rail.setAttribute('role', 'region');
     rail.setAttribute('aria-roledescription', 'carousel');
     rail.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight');
-    function direction(x) {
+    function direction(x, target) {
       const rect = rail.getBoundingClientRect();
       const edge = Math.min(110, rect.width * .12);
-      if (x < rect.left + edge && rail.scrollLeft > 2) return -1;
-      if (x > rect.right - edge && rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2) return 1;
+      const canGoBack = rail.scrollLeft > 2;
+      const canGoForward = rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2;
+      const card = target && target.closest('.card-v3, .spotlight__card');
+      if (card && rail.contains(card)) {
+        const cardRect = card.getBoundingClientRect();
+        /* A clipped preview card is a paging target throughout its visible
+           area, even when it starts before the narrow edge zone. */
+        if (canGoForward && cardRect.right > rect.right + 2) return 1;
+        if (canGoBack && cardRect.left < rect.left - 2) return -1;
+      }
+      if (x < rect.left + edge && canGoBack) return -1;
+      if (x > rect.right - edge && canGoForward) return 1;
       return 0;
     }
     function clearCursor() {
@@ -3836,7 +3846,7 @@ window.__pageZoom = function () {
       if (!pointer || !fine.matches || !cursor) return;
       const target = document.elementFromPoint(pointer.x, pointer.y);
       if (!target || !rail.contains(target)) { pointer = null; clearCursor(); return; }
-      const step = direction(pointer.x);
+      const step = direction(pointer.x, target);
       const nextMode = step ? (step < 0 ? 'prev' : 'next') : (target.closest('a') && !target.closest('.card-v3__tags, .story-card__tags, .spotlight__tags') ? 'discover' : '');
       if (nextMode === cursorMode) return;
       clearCursor();
@@ -3878,7 +3888,7 @@ window.__pageZoom = function () {
         return;
       }
       if (!fine.matches || !event.detail || event.pointerType === 'touch' || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const step = direction(event.clientX);
+      const step = direction(event.clientX, event.target);
       if (step) {
         event.preventDefault();
         event.stopImmediatePropagation();
