@@ -162,25 +162,43 @@ window.__pageZoom = function () {
 })();
 
 /* ----------------------------------------------------------------
-   1. Nav — add scrolled class for background
+   1. Nav — reveal the compact header when the reader scrolls back
    ---------------------------------------------------------------- */
 (function () {
   const nav = document.getElementById('nav');
   if (!nav) return;
-  /* Home V3 lets the whole bar scroll away with the page first (it's
-     `position: absolute` until it sticks), so the swap to the sticky pill
-     only fires once the bar has cleared — otherwise the menu would blink
-     out while it was still on screen. Other pages keep the old 20px. */
   const isV3 = nav.classList.contains('nav--v3');
   let trigger = 20;
+  let previousY = Math.max(0, window.scrollY);
+  let directionAnchor = previousY;
+  let direction = 0;
   function measure() {
-    /* the bar's own height (measured while it's unstuck, so before the
-       first tick) + a small beat, so the pill only appears once the bar
-       has actually left the frame */
     if (isV3) trigger = Math.round(nav.getBoundingClientRect().height) + 12;
   }
   function tick() {
-    nav.classList.toggle('nav--scrolled', window.scrollY > trigger);
+    const y = Math.max(0, window.scrollY);
+    if (isV3) {
+      const nextDirection = y > previousY ? 1 : y < previousY ? -1 : direction;
+      if (nextDirection !== direction) {
+        direction = nextDirection;
+        directionAnchor = previousY;
+      }
+      const pastOpening = y > trigger;
+      /* A short upward correction should not make the bar flash. Once
+         visible, a real downward gesture dismisses it immediately. */
+      const reveal = pastOpening && direction < 0 && directionAnchor - y > 12;
+      if (!pastOpening) directionAnchor = y;
+      nav.classList.toggle('nav--scrolled', pastOpening && (reveal ||
+        (nav.classList.contains('nav--scrolled') && direction <= 0)));
+      nav.classList.toggle('nav--scroll-hidden', pastOpening && !nav.classList.contains('nav--scrolled'));
+      if (nav.classList.contains('nav--scroll-hidden') &&
+          nav.classList.contains('nav--mega-open')) {
+        window.__closeMegaMenu?.();
+      }
+    } else {
+      nav.classList.toggle('nav--scrolled', y > trigger);
+    }
+    previousY = y;
   }
   window.addEventListener('scroll', tick, { passive: true });
   window.addEventListener('resize', function () {
@@ -1173,7 +1191,7 @@ window.__pageZoom = function () {
      button's hover disc, the legacy article highlight and approach cards.
      An orange dot on orange is invisible, so it knocks out white. */
   document.querySelectorAll(
-    '.article__highlight, .approach-card--orange, .panel--bettering'
+    '.nav__search-btn, .nav__mobile-search, .article__highlight, .approach-card--orange, .panel--bettering'
   ).forEach(function (el) {
     el.addEventListener('mouseenter', function () { cursor.classList.add('cursor--on-dark'); });
     el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--on-dark'); });
@@ -1355,9 +1373,8 @@ window.__pageZoom = function () {
        rather than by each block scrolling into view on its own. */
 
     ['.news-v3__heading', 0], ['.news-v3__filters', 130],
-    /* left to right, one card after the other */
-    ['.card-v3:nth-child(1)', 0], ['.card-v3:nth-child(2)', 170],
-    ['.card-v3:nth-child(3)', 340], ['.card-v3:nth-child(4)', 510],
+    /* Include every rail card, including those initially beyond the grid. */
+    ['.news-v3__grid .card-v3', 0],
     ['.news-v3__cta', 0],
 
     ['.ventures__col', 0], ['.funding', 120],
@@ -1372,6 +1389,13 @@ window.__pageZoom = function () {
        column when they land, see `columnOf`. */
     ['.listing__crumb', 0], ['.listing__title', 100],
     ['.listing__filters', 200], ['.story-card', 0], ['.listing__pager', 0],
+
+    /* People.html — carry the opening sequence into the introduction,
+       then reveal each directory heading and row as it reaches view. */
+    ['.people .listing__subtitle', 200], ['.people-intro', 280],
+    ['.people-jump', 360], ['.people-section__heading', 0],
+    ['.people-team-group__title', 0], ['.people-directory__item', 0],
+    ['.careers__head', 0], ['.careers__jobs', 100],
 
     /* no `.article__crumb` — the article's breadcrumb *is* a `.listing__crumb`
        (it carries both classes) and is already covered above */
@@ -1513,6 +1537,12 @@ window.__pageZoom = function () {
   function land(el) {
     /* set before the class, so the transition starts with the delay already
        on it — both land in the same style recalculation */
+    if (el.classList.contains('card-v3') && el.parentElement.classList.contains('news-v3__grid')) {
+      const rail = el.parentElement;
+      const index = Array.prototype.indexOf.call(rail.children, el);
+      /* The first overflow card still belongs to the opening cascade. */
+      el.style.transitionDelay = (index * 170) + 'ms';
+    }
     if (el.classList.contains('story-card')) {
       const row = +(el.dataset.openRow || 0);
       el.style.transitionDelay = (row * ROW_STEP + columnOf(el) * COL_STEP) + 'ms';
@@ -1524,13 +1554,24 @@ window.__pageZoom = function () {
        column card on the inner pages: 3 × 170ms of stagger on top of a
        1.5s rise, which overran the old 2000 and had its delay pulled out
        from under it mid-transition. */
-    window.setTimeout(function () { el.style.transitionDelay = ''; }, 2600);
+    const revealDelay = parseFloat(el.style.transitionDelay) || 0;
+    window.setTimeout(function () { el.style.transitionDelay = ''; }, Math.max(2600, revealDelay + 1700));
   }
 
   const obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
       const el = entry.target;
+      if (el.classList.contains('card-v3') && el.parentElement.classList.contains('news-v3__grid')) {
+        /* A clipped overflow card cannot reach the observer threshold until
+           the rail is dragged. Start the whole rail when its first visible
+           card enters, so the next card is already peeking in at rest. */
+        Array.prototype.forEach.call(el.parentElement.children, function (card) {
+          if (!card.classList.contains('is-in')) land(card);
+        });
+        return;
+      }
+      if (el.classList.contains('is-in')) return;
       land(el);
       /* reveal the "Read more" CTA together with the news cards — it sits below
          the tall carousel, so on its own it would only trigger after scrolling
@@ -2896,12 +2937,9 @@ window.__pageZoom = function () {
     syncBurgerSemantics();
     if (!window.matchMedia('(min-width: 1024px)').matches && isOpen()) close(false);
   });
-
-  /* Leaving the whole nav (bar + open card) closes, after a grace period so
-     that crossing a gap on the way to the card doesn't drop it. The stuck
-     layout has a real one — the card hangs 17px below the pill — and that is
-     bridged in CSS by stretching `.nav__inner` down to meet it; this window
-     just covers a fast diagonal across the corner. */
+  /* Give the pointer time to travel from the centred section links to the
+     centred card, including the gap below the header. Re-entering the
+     card cancels the close timer. */
   if (hoverCapable) {
     nav.addEventListener('mousemove', function (e) {
       if (!suppressPointerOpen || document.body.classList.contains('search-open')) return;
@@ -2914,7 +2952,7 @@ window.__pageZoom = function () {
       clearTimeout(closeTimer);
       closeTimer = window.setTimeout(function () {
         if (!nav.contains(document.activeElement)) close(false);
-      }, 220);
+      }, 550);
     });
   }
 })();
@@ -3139,22 +3177,14 @@ window.__pageZoom = function () {
         then the attribution. It is not typed: the graphic has already
         carried the opening, and a typewriter after it read as two
         openings stacked on each other
-     3. the whole plate holds, then the words fade off it — the seal is
-        part of the motto now (R2 12014:361), so it is already standing
-        in the right place and simply stays as the quote leaves
-     4. it rises into the header — still just the seal, so nothing
-        changes shape on the way up
-     5. once home the seal slides left as the wordmark is uncovered,
-        and the menu, banner copy and colour bar arrive with it
+     3. the whole plate holds, then the words and seal fade together
+     4. the header logo appears in place while the menu, banner copy and
+        colour bar arrive
 
-   The one thing this does NOT do is fly a *copy* of the lockup and
-   swap it for the real one at the end: two rasters of the same artwork
-   never line up perfectly, and the swap always reads as a flash. The
-   real `.nav__logo` is lifted above the peach panel and does the whole
-   performance itself, so at the end there is nothing to hand over —
-   the CSS overrides just resolve to its natural state.
+   The real `.nav__logo` supplies the seal in the quote. It fades before
+   snapping unseen to the header, where the complete lockup fades in.
 
-   Click, tap or any key skips straight to the end.
+   The Skip button ends the sequence from any beat.
    ---------------------------------------------------------------- */
 (function () {
   const body = document.body;
@@ -3213,11 +3243,7 @@ window.__pageZoom = function () {
                       attribution together. The longest pause in the
                       sequence by far: it is the one thing the visitor
                       is meant to actually read                        */
-    fade:   680,   /* the words fade out — the seal stays lit          */
-    hold2:  420,   /* the seal alone, before it leaves                 */
-    rise:   940,   /* the seal travels to the header                   */
-    hold3:  260,
-    open:   780,   /* wordmark uncovers, seal slides left              */
+    fade:   680,   /* words and seal fade together                     */
     h1:     160,   /* banner headline, just behind the wordmark        */
     h2:     460,   /* then the description + #Compassion lockup        */
     barIn:  320    /* then the colour bar wipes                        */
@@ -3255,17 +3281,19 @@ window.__pageZoom = function () {
   }
 
   /* everything the intro was holding back, in one cascade */
-  function playLanding() {
+  function playLanding(instant) {
     releaseScroll();
     body.classList.remove('lp-nav');
+    if (instant) {
+      body.classList.remove('lp-h1', 'lp-h2');
+      if (bar) bar.classList.add('is-lit', 'is-on');
+      return;
+    }
     window.setTimeout(function () { body.classList.remove('lp-h1'); }, T.h1);
     window.setTimeout(function () { body.classList.remove('lp-h2'); }, T.h1 + T.h2);
     window.setTimeout(function () {
       if (bar) bar.classList.add('is-lit', 'is-on');
     }, T.h1 + T.h2 + T.barIn);
-    /* the 'open' act is still running — the override may only be dropped
-       once it has finished, or the logo would snap to its end state */
-    window.setTimeout(function () { body.removeAttribute('data-intro'); }, T.open + 60);
   }
 
   if (reduce) return playLanding();
@@ -3292,7 +3320,7 @@ window.__pageZoom = function () {
       '</p>' +
       /* the seal's place in the plate. It is deliberately empty: the mark
          that lands here is the real `.nav__logo`, parked over the slot —
-         see markY() below. The slot only has to hold the space open so
+         see parkMark() below. The slot only has to hold the space open so
          the attribution sits where the design puts it. */
       '<span class="opening__markslot"></span>' +
       '<p class="opening__cite">' +
@@ -3312,7 +3340,7 @@ window.__pageZoom = function () {
   intro.querySelector('.opening__cite-name').textContent  = CITE;
   intro.querySelector('.opening__cite-years').textContent = YEARS;
 
-  /* How far down the logo has to sit to land on its slot in the motto.
+  /* Where the seal has to sit to land on its slot in the motto.
      Measured against the slot rather than the middle of the frame, so the
      seal is always exactly where the design draws it — under the second
      line of the quote, over the attribution — at every breakpoint.
@@ -3321,19 +3349,24 @@ window.__pageZoom = function () {
      The current offset is added back in because on a resize the logo is
      already translated, i.e. the two rects differ by what is *left* to
      move, not by the whole distance. */
-  function markY() {
-    if (!navLogo || !slot) return 0;
+  function parkMark() {
+    if (!navLogo || !slot) return;
     const zoom = window.__pageZoom();
-    const now  = parseFloat(body.style.getPropertyValue('--mark-y')) || 0;
+    const nowX = parseFloat(body.style.getPropertyValue('--mark-x')) || 0;
+    const nowY = parseFloat(body.style.getPropertyValue('--mark-y')) || 0;
     const r = navLogo.getBoundingClientRect();
     const s = slot.getBoundingClientRect();
-    return now + ((s.top + s.height / 2) - (r.top + r.height / 2)) / zoom;
+    /* Only the left 22.6% of the lockup is visible. Aim the centre of
+       that seal, not the centre of the complete logo, at the slot. */
+    const sealX = r.left + r.width * 0.113;
+    body.style.setProperty('--mark-x', (nowX + (s.left + s.width / 2 - sealX) / zoom).toFixed(2) + 'px');
+    body.style.setProperty('--mark-y', (nowY + (s.top + s.height / 2 - r.top - r.height / 2) / zoom).toFixed(2) + 'px');
   }
 
   /* Where the block of ink has to go, and how hard it has to be squeezed
      to become the seal. The stage box is 720 × 0, so its own rect *is* the
      point every graphic is centred on: the travel is slot centre minus
-     that (÷ zoom, as in markY, because a translate on a zoomed element is
+     that (÷ zoom, as in parkMark, because a translate on a zoomed element is
      scaled with it). The two scale factors are ratios of rects measured
      the same way, so the zoom cancels itself out of those.
      The block's height is the rules' own geometry — RULES × pitch, which
@@ -3351,15 +3384,16 @@ window.__pageZoom = function () {
        there) that is still zero — which would divide out to an infinite
        scale and blow the block up instead of pressing it down */
     const box  = lines.getBoundingClientRect();
-    if (!s || !box.width) return { y: 0, x: 0.04, sy: 0.11 };
+    if (!s || !box.width) return { dx: 0, y: 0, x: 0.04, sy: 0.11 };
     return {
+      dx: ((s.left + s.width / 2) - (st.left + st.width / 2)) / zoom,
       y:  ((s.top + s.height / 2) - st.top) / zoom,
       x:  s.width / box.width,
       sy: s.height / (RULES * RULE_PITCH * zoom)
     };
   }
 
-  /* Order matters: `--mark-y` has to be in place *before* the stage rules
+  /* Order matters: the mark coordinates have to be in place *before* the stage rules
      start applying. Changing a custom property that a transitioned
      property reads through var() does not reliably re-run the transition
      in Chrome — the computed value updates while the rendered one stays
@@ -3367,7 +3401,7 @@ window.__pageZoom = function () {
      it first means var() is only ever read at its final value.
      Nothing has been painted yet — this is still the same task that swapped
      `lp-boot` out — so the logo is never seen sitting in the header. */
-  body.style.setProperty('--mark-y', markY().toFixed(2) + 'px');
+  parkMark();
   body.setAttribute('data-intro', 'hidden');
 
   /* the quote lines lift one behind the other */
@@ -3490,8 +3524,7 @@ window.__pageZoom = function () {
   const tMark   = tCarve + T.carve;
   const tSaid   = tMark + T.markIn;
   const tFade   = tSaid + T.hold1;
-  const tRise   = tFade + T.fade + T.hold2;
-  const tOpen   = tRise + T.rise + T.hold3;
+  const tOpen   = tFade + T.fade + 100;
 
   at(tLit,    function () { dots.classList.add('is-lit'); });
   at(tGather, function () { dots.classList.add('is-on'); });
@@ -3511,12 +3544,13 @@ window.__pageZoom = function () {
        (the serif landing, a restored scroll position, an image finishing)
        left them pointing at two different places, and the block came down
        beside the seal instead of onto it. One read, one answer. */
-    body.style.setProperty('--mark-y', markY().toFixed(2) + 'px');
+    parkMark();
     const to = carveTo();
     /* a bad number here would make the whole `translate` invalid, and an
        invalid `translate` computes to `none` — which drops the -50% centring
        with it and lands the block a half-seal down and to the right */
-    if (!isFinite(to.y) || !isFinite(to.x) || !isFinite(to.sy)) return;
+    if (!isFinite(to.dx) || !isFinite(to.y) || !isFinite(to.x) || !isFinite(to.sy)) return;
+    stage.style.setProperty('--gather-x', to.dx.toFixed(2) + 'px');
     stage.style.setProperty('--gather-y', to.y.toFixed(2) + 'px');
     stage.style.setProperty('--carve-x',  to.x.toFixed(4));
     stage.style.setProperty('--carve-y',  to.sy.toFixed(4));
@@ -3543,29 +3577,28 @@ window.__pageZoom = function () {
   });
   /* and the words come up around it */
   at(tSaid,   function () { intro.classList.add('opening--said'); });
-  /* only the words go — the seal is not in the overlay, so it is left
-     standing on the empty peach panel, already where it needs to be */
-  at(tFade, function () { motto.classList.add('opening__motto--out'); });
-  at(tRise, function () {
-    body.setAttribute('data-intro', 'up');
-    /* the peach panel clears behind the rising mark, so the banner is
-       already in place by the time it arrives */
-    window.setTimeout(function () { intro.classList.add('opening--out'); }, T.rise * 0.3);
+  /* The seal belongs to the quote here. Fade both as one plate, then
+     reveal the header's complete logo in its final position. */
+  at(tFade, function () {
+    motto.classList.add('opening__motto--out');
+    body.setAttribute('data-intro', 'fade');
+    window.setTimeout(function () { intro.classList.add('opening--out'); }, T.fade * 0.4);
   });
   at(tOpen, function () {
-    body.setAttribute('data-intro', 'open');
-    intro.remove();          /* already fully transparent */
+    body.classList.add('lp-logo-return');
+    body.removeAttribute('data-intro');
+    body.style.removeProperty('--mark-x');
+    body.style.removeProperty('--mark-y');
+    intro.remove();
     playLanding();
+    window.setTimeout(function () { body.classList.remove('lp-logo-return'); }, 80);
   });
 
   /* --- skip ---------------------------------------------------------
      Only the button skips — not a stray click or key, which is how the
      sequence used to be cut short by accident.
 
-     What it does NOT do is run the rest of the beats at speed: the mark
-     would fly out of the plate and across the frame to the header, which
-     is the one thing a visitor who has just asked to get on with it does
-     not want to sit through. Instead the frame as it stands dims out, the
+     It does not run the rest of the beats at speed. The frame dims out, the
      mark goes with it, and the header is assembled underneath while the
      peach clears — a cross-fade from wherever the sequence had got to
      into the finished home page.
@@ -3579,16 +3612,19 @@ window.__pageZoom = function () {
   function skip() {
     if (skipped) return;
     skipped = true;
-    timers.forEach(window.clearTimeout);
+    timers.forEach(function (timer) { window.clearTimeout(timer); });
     intro.classList.add('opening--skip');
     body.classList.add('lp-skip');
     window.setTimeout(function () {
       body.removeAttribute('data-intro');
+      body.style.removeProperty('--mark-x');
       body.style.removeProperty('--mark-y');
       intro.classList.add('opening--out');
-      playLanding();
-      window.setTimeout(function () { body.classList.remove('lp-skip'); }, 120);
-      window.setTimeout(function () { intro.remove(); }, 520);
+      playLanding(true);
+      window.setTimeout(function () {
+        intro.remove();
+        body.classList.remove('lp-skip');
+      }, 220);
     }, 300);
   }
   intro.querySelector('.opening__skip').addEventListener('click', skip);
@@ -3597,11 +3633,11 @@ window.__pageZoom = function () {
   window.addEventListener('resize', function () {
     if (body.getAttribute('data-intro') === 'centre' ||
         body.getAttribute('data-intro') === 'hidden') {
-      body.style.setProperty('--mark-y', markY().toFixed(2) + 'px');
+      parkMark();
     }
   });
 
-  /* …and again when the serif lands. `--mark-y` is measured off the motto,
+  /* …and again when the serif lands. The coordinates are measured off the motto,
      which is set in the serif: the quote is two lines of it, so the slot the
      mark parks on sits lower once the real face replaces the fallback. The
      measurement above happens in the same task as the first paint, i.e.
@@ -3614,7 +3650,7 @@ window.__pageZoom = function () {
     document.fonts.ready.then(function () {
       const state = body.getAttribute('data-intro');
       if (state === 'centre' || state === 'hidden') {
-        body.style.setProperty('--mark-y', markY().toFixed(2) + 'px');
+        parkMark();
       }
     });
   }
@@ -3811,6 +3847,34 @@ window.__pageZoom = function () {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   document.querySelectorAll('[data-rail]').forEach(function (rail) {
+    if (rail.classList.contains('news-v3__grid')) {
+      const head = rail.parentElement.querySelector('.news-v3__head');
+      let gridFrame = 0;
+      function alignNewsGrid() {
+        gridFrame = 0;
+        if (!head || !rail.offsetWidth) return;
+        const railRect = rail.getBoundingClientRect();
+        const headRect = head.getBoundingClientRect();
+        const scale = railRect.width / rail.offsetWidth;
+        if (!isFinite(scale) || scale <= 0) return;
+        /* The heading fills the wrapper's content grid. Measure its rendered
+           edges and convert once to the rail's layout units; CSS viewport
+           and container units disagree with zoom in some browsers. */
+        rail.style.setProperty('--rail-content', (headRect.width / scale).toFixed(3) + 'px');
+        rail.style.setProperty('--rail-inset-start', ((headRect.left - railRect.left) / scale).toFixed(3) + 'px');
+        rail.style.setProperty('--rail-inset-end', ((railRect.right - headRect.right) / scale).toFixed(3) + 'px');
+      }
+      function scheduleGridAlignment() {
+        if (!gridFrame) gridFrame = requestAnimationFrame(alignNewsGrid);
+      }
+      alignNewsGrid();
+      window.addEventListener('resize', scheduleGridAlignment);
+      if ('ResizeObserver' in window) {
+        const gridObserver = new ResizeObserver(scheduleGridAlignment);
+        gridObserver.observe(head);
+        gridObserver.observe(rail);
+      }
+    }
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
     const cursor = document.getElementById('cursor');
     let pointer = null;
@@ -3979,11 +4043,13 @@ window.__pageZoom = function () {
   const cursor = document.getElementById('cursor');
   const cursorHome = cursor && cursor.parentElement;
   let opener = null;
+  let openedByKeyboard = false;
   let previouslyLocked = false;
 
   document.querySelectorAll('[data-person-name]').forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
       opener = button;
+      openedByKeyboard = event.detail === 0;
       dialog.querySelector('#person-bio-name').textContent = button.dataset.personName;
       dialog.querySelector('#person-bio-role').textContent = button.dataset.personRole;
       previouslyLocked = document.documentElement.classList.contains('lock-scroll');
@@ -4014,7 +4080,10 @@ window.__pageZoom = function () {
       document.documentElement.classList.remove('lock-scroll');
       if (window.__lenis) window.__lenis.start();
     }
-    if (opener) opener.focus({ preventScroll: true });
+    if (opener) {
+      if (openedByKeyboard) opener.focus({ preventScroll: true });
+      else opener.blur();
+    }
   });
 
   const jobs = JSON.parse(document.getElementById('people-jobs').textContent).filter(function (job) { return job.status === 'open'; });

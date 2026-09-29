@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <title>Our Ethos — The D. H. Chen Foundation</title>
+  <title>Our Values — The D. H. Chen Foundation</title>
   <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="typography.css" />
   <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
        page's own module (§11). Same pair of files as Listing / Articles. -->
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
@@ -73,8 +74,8 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html#practices">Practices</a></li>
-          <li><a href="Approach.html#priorities">Priorities</a></li>
+          <li><a href="Approach.html">Practices</a></li>
+          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
           <li><a href="Listing.html">Initiatives</a></li>
@@ -112,7 +113,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html#practices">Practices</a><a href="Approach.html#priorities">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -153,9 +154,8 @@
   <main id="main-content" tabindex="-1">
 
     <!-- ============================================================
-         APPROACH — About the Foundation and Our Philosophy on one page.
-         Built on the article shell (§09 canvas + top inset); the value
-         plates, the strategy ladder and the section rhythm are §11.
+         VALUES — Founder story and values from the 28 September content.
+         Retains the shared article shell and longform reading grid.
          ============================================================ -->
     <article class="article longform" id="ethos">
 
@@ -165,136 +165,95 @@
           <a href="index.html">Home</a>
           <span class="listing__crumb-sep">/</span>
           <div class="listing__crumb-drop">
-            <a href="#" class="listing__crumb-toggle">
+            <a href="Ethos.html" class="listing__crumb-toggle">
               About
               <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <div class="listing__crumb-menu" role="menu">
               <a href="Approach.html" role="menuitem">Approach</a>
               <a href="Listing.html" role="menuitem">Impact</a>
-              <a href="Ethos.html" role="menuitem">About</a>
               <a href="Partnership.html" role="menuitem">Partnership</a>
+              <a href="Ethos.html" role="menuitem">About</a>
             </div>
           </div>
           <span class="listing__crumb-sep">/</span>
           <div class="listing__crumb-drop">
             <a href="Ethos.html" class="listing__crumb-toggle">
-              Our Ethos
+              Values
               <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <div class="listing__crumb-menu" role="menu">
-              <a href="Ethos.html" role="menuitem">Our Ethos</a>
+              <a href="Ethos.html" role="menuitem">Values</a>
               <a href="People.html" role="menuitem">People</a>
-              <a href="Institutes.html" role="menuitem">Our Institutes</a>
+              <a href="News.html" role="menuitem">News &amp; Press</a>
+              <a href="Connect.html" role="menuitem">Contact Us</a>
             </div>
           </div>
           <span class="listing__crumb-sep">/</span>
         </nav>
 
-        <h1 class="article__title">Values</h1>
-        <p class="article__subtitle">Our origin, our purpose, and the values we hold</p>
+        <h1 class="article__title">Our Values</h1>
+        <p class="article__subtitle">A Legacy of Compassion</p>
       </header>
 
       <div class="longform__body">
         <div class="longform__col">
+          <section class="longform__section values-legacy" aria-labelledby="legacy-heading">
+            <h2 id="legacy-heading" class="visually-hidden">A Legacy of Compassion</h2>
+            <p class="longform__lede">The D. H. Chen Foundation was established upon the values and philanthropic spirit of our Founder, Dr. Din Hwa Chen (1923-2012).</p>
+            <p class="article__text">A respected entrepreneur and philanthropist, Dr. Chen built a successful business while remaining deeply committed to the wellbeing of others. Throughout his life, he demonstrated a simple yet profound belief: to care for others as well as you would care for yourself.</p>
+            <p class="article__text">Often approached to support worthy causes, Dr. Chen responded with characteristic humility and generosity: &quot;We will help if we can.&quot; He chose not to question others&#x27; intentions, offering both resources and trust whenever possible. His willingness to help, coupled with his respect for people and belief in their potential, became a hallmark of his philanthropic approach.</p>
+            <p class="article__text">Today, Dr. Chen&#x27;s legacy continues to guide the Foundation through the stewardship of the Chen family and our leadership team.</p>
+            <a class="values-people-link" href="People.html">Meet the People Behind Our Mission<span class="btn-pill__arrow" aria-hidden="true"></span></a>
+            <p class="article__text">At the Foundation, compassion is more than an aspiration. It is a way of seeing, relating, and acting. It shapes how we engage with partners, support communities, make decisions, and pursue meaningful change.</p>
+          </section>
 
-          <p class="longform__lede">
-            We are a Hong Kong family philanthropic trust, putting compassion into action with
-            partners to address evolving social needs.
-          </p>
-
-          <!-- ── 1 · Our Origin ───────────────────────────────── -->
-          <section class="longform__section">
-            <p class="longform__eyebrow">Our Origin</p>
-            <h2 class="longform__heading">A family trust, and what it was set up to do</h2>
-            <p class="article__text">
-              The D. H. Chen Foundation advances compassion-based philanthropy through initiatives,
-              partnerships and sector knowledge that respond to evolving social needs. Rather than
-              funding alone, we work alongside the organisations and individuals we support &mdash;
-              contributing time, expertise and networks as readily as capital.
-            </p>
-            <p class="article__text">
-              That work runs through five institutes &mdash; Education Excellence, Impact Strategy,
-              Mindful Living, Wellbeing, and the Above and Beyond Institute &mdash; each carrying the
-              same philosophy into a different corner of the sector.
-            </p>
-
-            <div class="longform__media">
-              <img src="assets/images/bettering-1.png" alt="" />
+          <section class="longform__section values-origin" aria-labelledby="origin-heading">
+            <div class="values-origin__body">
+              <h2 id="origin-heading" class="longform__heading values-section-heading">Where Our Values Begin</h2>
+              <figure class="values-founder">
+                <img src="assets/images/dr-din-hwa-chen-cutout.png" alt="Dr. Din Hwa Chen, Founder of The D. H. Chen Foundation" width="1034" height="1521" loading="lazy" />
+                <figcaption><span>Dr. Din Hwa Chen</span><span>Founder · 1923–2012</span></figcaption>
+              </figure>
+              <div class="values-origin__copy">
+                <p class="article__text">Born in Ningbo, Zhejiang, in 1923, Dr. Chen moved to Hong Kong in his twenties and founded Nan Fung Textiles Limited in 1954. What began as a textile business grew into a diversified enterprise, eventually expanding into property development under his leadership. Today, Nan Fung Group encompasses more than 400 companies worldwide.</p>
+                <p class="article__text">Beyond his business achievements, Dr. Chen was deeply committed to public service. A strong advocate for commerce and industry, he also dedicated himself to supporting social welfare, education, and cultural development in Hong Kong. Through service on numerous public and charitable bodies, he contributed his experience and insight to the advancement of the wider community.</p>
+                <p class="article__text">As one of the pioneers of family philanthropy in Hong Kong, Dr. Chen believed that success carried a responsibility to contribute to society. His philanthropy was grounded not in recognition or prestige, but in compassion, humility, and a genuine desire to improve the lives of others. These principles continue to inspire and inform the Foundation&#x27;s work today.</p>
+              </div>
             </div>
           </section>
 
-          <!-- ── 2 · Our Purpose ──────────────────────────────── -->
-          <section class="longform__section">
-            <p class="longform__eyebrow">Our Purpose</p>
-
-            <blockquote class="article__quote longform__quote">
-              <img class="article__quote-mark" src="assets/icons/icon-quote.svg" alt="" aria-hidden="true" />
-              <p>True compassion springs from selfless wisdom.</p>
-            </blockquote>
-
-            <p class="article__text">
-              Through education and co-creating philanthropic initiatives with like-minded partners,
-              we strive to cultivate individual&rsquo;s virtues and mindfulness, enhance the wellbeing
-              of individual &amp; community, and sustain admirable efforts.
-            </p>
-
-            <p class="article__text">
-              How that purpose is pursued &mdash; the five moves we make, and the order we make
-              them in &mdash; is set out under Approach.
-            </p>
-
-            <a href="Approach.html" class="btn-pill longform__inline-cta">
-              Our approach
-              <span class="btn-pill__arrow" aria-hidden="true"></span>
-            </a>
+          <section class="longform__section" aria-labelledby="compassion-heading">
+            <h2 id="compassion-heading" class="longform__heading values-section-heading">Compassion in Action</h2>
+            <p class="article__text">Inspired by Dr. Chen&#x27;s philanthropic spirit, our values guide how we steward resources, cultivate partnerships, and support positive change. Together, they help us translate compassion into action and contribute to a more caring, connected, and compassionate society.</p>
+            <ol class="ethos__values ethos__values--full">
+              <li class="ethos__value">
+                <div class="ethos__value-heading"><span class="ethos__value-num" aria-hidden="true">01</span><h3 class="ethos__value-name">Gratitude</h3></div>
+                <div class="ethos__value-copy"><p class="ethos__value-lede">We recognise that lasting change is made possible through the contributions of many.</p><p class="ethos__value-desc">We approach our work with appreciation for the experiences, wisdom, and commitment of our partners, communities, and supporters. Gratitude reminds us to celebrate progress, acknowledge shared achievements, and remain humble in our role as one contributor within a broader ecosystem of change.</p></div>
+              </li>
+              <li class="ethos__value">
+                <div class="ethos__value-heading"><span class="ethos__value-num" aria-hidden="true">02</span><h3 class="ethos__value-name">Openness</h3></div>
+                <div class="ethos__value-copy"><p class="ethos__value-lede">We remain curious, reflective, and willing to learn.</p><p class="ethos__value-desc">Openness invites us to explore new possibilities, embrace diverse perspectives, and stay responsive to emerging needs. It encourages honest dialogue, transparency, and a willingness to adapt as we deepen our understanding of the complex challenges facing society.</p></div>
+              </li>
+              <li class="ethos__value">
+                <div class="ethos__value-heading"><span class="ethos__value-num" aria-hidden="true">03</span><h3 class="ethos__value-name">Respect</h3></div>
+                <div class="ethos__value-copy"><p class="ethos__value-lede">We believe every person possesses inherent worth and potential.</p><p class="ethos__value-desc">Respect shapes how we listen, engage, and collaborate. We seek to create spaces where diverse experiences and viewpoints are valued, where differences are approached with understanding, and where relationships are built on dignity and mutual regard.</p></div>
+              </li>
+              <li class="ethos__value">
+                <div class="ethos__value-heading"><span class="ethos__value-num" aria-hidden="true">04</span><h3 class="ethos__value-name">Selflessness</h3></div>
+                <div class="ethos__value-copy"><p class="ethos__value-lede">We place collective impact above individual recognition.</p><p class="ethos__value-desc">Selflessness reminds us to focus on what best serves communities and the common good. It encourages collaboration over competition, shared learning over ownership, and long-term social progress over short-term gains.</p></div>
+              </li>
+              <li class="ethos__value">
+                <div class="ethos__value-heading"><span class="ethos__value-num" aria-hidden="true">05</span><h3 class="ethos__value-name">Trust</h3></div>
+                <div class="ethos__value-copy"><p class="ethos__value-lede">Meaningful partnerships are built on trust.</p><p class="ethos__value-desc">We cultivate trust through integrity, consistency, and transparency. By fostering authentic relationships and creating environments where ideas can be shared openly, we strengthen our capacity to learn together and create lasting impact.</p></div>
+              </li>
+            </ol>
           </section>
 
-          <!-- ── 3 · Values ───────────────────────────────────── -->
-          <section class="longform__section">
-            <p class="longform__eyebrow">Values</p>
-            <h2 class="longform__heading">Five principles we test ourselves against first</h2>
-            <p class="article__text">
-              A compassionate society is built on five principles. They are the test we apply to our
-              own conduct before we apply it to anything else.
-            </p>
-
-            <ul class="ethos__values">
-              <li class="ethos__value">
-                <span class="ethos__value-num">01</span>
-                <h3 class="ethos__value-name">Gratitude</h3>
-                <p class="ethos__value-desc">Recognising what we have been given, and giving it onward.</p>
-              </li>
-              <li class="ethos__value">
-                <span class="ethos__value-num">02</span>
-                <h3 class="ethos__value-name">Trust</h3>
-                <p class="ethos__value-desc">Backing our partners&rsquo; judgement, and holding to our own word.</p>
-              </li>
-              <li class="ethos__value">
-                <span class="ethos__value-num">03</span>
-                <h3 class="ethos__value-name">Openness</h3>
-                <p class="ethos__value-desc">Listening first, and staying willing to be changed by what we hear.</p>
-              </li>
-              <li class="ethos__value">
-                <span class="ethos__value-num">04</span>
-                <h3 class="ethos__value-name">Respect</h3>
-                <p class="ethos__value-desc">Meeting every person and organisation as an equal.</p>
-              </li>
-              <li class="ethos__value">
-                <span class="ethos__value-num">05</span>
-                <h3 class="ethos__value-name">Selflessness</h3>
-                <p class="ethos__value-desc">Putting the work, and the people it serves, ahead of the credit.</p>
-              </li>
-            </ul>
-
-            <div class="article__highlight longform__highlight">
-              <img class="article__highlight-icon" src="assets/icons/icon-goal.svg" alt="" aria-hidden="true" />
-              <p>
-                Creating a compassionate society together through approaches that are impact-driven,
-                sustainable and innovative &mdash; societal improvement, not commercial success, is
-                the measure we hold ourselves to.
-              </p>
-            </div>
+          <section class="longform__section" aria-labelledby="living-heading">
+            <h2 id="living-heading" class="longform__heading values-section-heading">Living Our Values</h2>
+            <p class="article__text">These values are not simply principles we uphold. They are expressed through how we partner, learn, invest, and act.</p>
+            <p class="article__text">By living these values, we seek to nurture human potential, strengthen communities, and create the conditions for individuals, organisations, and society to thrive. Together, we contribute to the Foundation&#x27;s enduring vision of a more caring, connected, and compassionate world.</p>
           </section>
 
           <div class="longform__cta">

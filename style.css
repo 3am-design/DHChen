@@ -147,7 +147,6 @@
   --logo-h: clamp(42px, 4.8vw, 74px);
 }
 
-
 /* ----------------------------------------------------------------
    Reset
    ---------------------------------------------------------------- */
@@ -174,17 +173,15 @@ body {
               var(--c-bg) calc(100% - 220px),
               transparent calc(100% - 220px));
   color: var(--c-black);
-  font-family: var(--f-sans);
   overflow-x: clip;
   position: relative;
   width: 100%;
 }
 img  { display: block; max-width: 100%; height: auto; }
 a    { color: inherit; text-decoration: none; }
-button { cursor: pointer; border: none; background: none; font: inherit; padding: 0; }
+button { cursor: pointer; border: none; background: none; padding: 0; }
 ul   { list-style: none; }
 [hidden] { display: none !important; }
-
 
 /* ----------------------------------------------------------------
    Layout grid overlay — toggled with the "G" key (script.js).
@@ -246,7 +243,6 @@ body:is(.home-v3, .inner-v3) .layout-grid__col { display: block; }
   border: 0 !important;
 }
 
-
 /* ----------------------------------------------------------------
    Shared utilities
    ---------------------------------------------------------------- */
@@ -268,7 +264,7 @@ body:is(.home-v3, .inner-v3) .layout-grid__col { display: block; }
   position: relative;
   padding-left: 20px;
   font-family: var(--f-sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 22px;
   line-height: 30px;
   color: var(--c-black);
@@ -329,7 +325,6 @@ body:is(.home-v3, .inner-v3) .layout-grid__col { display: block; }
 .btn-circle__arrow { width: 15px; pointer-events: none; flex-shrink: 0; }
 .btn-circle__label { position: relative; }
 
-
 /* ----------------------------------------------------------------
    Custom cursor — orange dot that morphs:
    · links/buttons   → slightly larger ring
@@ -337,13 +332,7 @@ body:is(.home-v3, .inner-v3) .layout-grid__col { display: block; }
    · slider edges    → circle with an arrow (click = prev/next)
    Enabled by script.js only on fine pointers (body.has-custom-cursor).
    ---------------------------------------------------------------- */
-body.has-custom-cursor,
-body.has-custom-cursor a,
-body.has-custom-cursor button,
-body.has-custom-cursor .news__carousel-wrap,
-body.has-custom-cursor .news-card,
-body.has-custom-cursor .news-card__tag,
-body.has-custom-cursor .story-card,
+body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button, body.has-custom-cursor .news__carousel-wrap, body.has-custom-cursor .news-card, body.has-custom-cursor .news-card__tag, body.has-custom-cursor .story-card { cursor: none; }
 body.has-custom-cursor .story-card__tag { cursor: none; }
 /* The list above only covers the elements that were known to carry their
    own cursor, so anything else with a UA cursor (and Safari in
@@ -389,10 +378,6 @@ body.search-open .cursor:not(.cursor--magnet):not(.cursor--ring),
   position: absolute;
   opacity: 0;
   color: var(--c-white);
-  font-family: var(--f-sans);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
   white-space: nowrap;
   transition: opacity 0.2s ease;
 }
@@ -491,7 +476,6 @@ body.search-open .cursor::after,
 .cursor--next .cursor__arrow { opacity: 1; }
 .cursor--hidden   { opacity: 0; }
 
-
 /* ----------------------------------------------------------------
    Landing sequence (script-driven; no-JS users never see any of it)
    logo splash → headline + dots → photos + bottom text → menu drop
@@ -562,7 +546,6 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   translate: 0 0;
 }
 
-
 /* ================================================================
    00 — NAVIGATION
    ================================================================ */
@@ -580,8 +563,6 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
 }
 .nav--scrolled .nav__inner    { height: 60px; }
 .nav--scrolled .nav__logo-img { height: 44px; }
-.nav--scrolled .nav__link     { font-size: 16px; }
-.nav--scrolled .nav__lang     { font-size: 13px; }
 .nav--scrolled .nav__search-btn img { width: 21px; height: 21px; }
 
 .nav__inner {
@@ -607,9 +588,6 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   gap: 71px;  /* matches Figma spacing between links */
 }
 .nav__link {
-  font-family: var(--f-sans);
-  font-size: 18px;
-  font-weight: 400;
   white-space: nowrap;
   transition: color var(--ease);
 }
@@ -651,7 +629,7 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   gap: 40px;   /* Figma: 中文 → search spacing */
   justify-content: flex-end;
 }
-.nav__lang { font-family: var(--f-sans); font-size: 15px; transition: color var(--ease); }
+.nav__lang { transition: color var(--ease); }
 .nav__lang:hover { color: var(--c-orange); }
 /* 中文 takes the dot underneath instead, like the active-section marker */
 .nav__lang { position: relative; }
@@ -761,9 +739,6 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   flex-shrink: 0;
 }
 .nav__mobile-lang {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
   color: var(--c-grey, #000000);   /* Shared black text. */
 }
 .nav__mobile-bar-actions { display: flex; align-items: center; gap: 14px; }
@@ -805,10 +780,6 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   align-items: flex-start;
 }
 .nav__mobile-link {
-  font-family: var(--f-serif);
-  font-size: 44px;
-  font-weight: 400;
-  line-height: 1.25;
   color: var(--c-orange);
   /* underline draws in left→right on hover (replaces the cursor-frame affordance) */
   padding-bottom: 2px;
@@ -837,8 +808,6 @@ button.nav__mobile-link {
   padding: 8px 0 18px 4px;
 }
 .nav__mobile-sub a {
-  font-family: var(--f-sans);
-  font-size: 18px;
   color: var(--c-grey, #000000);   /* Shared black text. */
   /* underline draws in on hover (no cursor frame, no colour fade) */
   padding-bottom: 2px;
@@ -886,12 +855,7 @@ button.nav__mobile-link {
 }
 /* the legal column is the footer's small type too — 13 against the 16 on
    the left, in the same 22px line box so the two columns still align */
-.nav__mobile-col + .nav__mobile-col .nav__mobile-sublink { font-size: 13px; }
 .nav__mobile-sublink {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 22px;
-  font-weight: 400;
   color: var(--c-grey, #000000);   /* Shared black text. */
 }
 
@@ -904,7 +868,6 @@ button.nav__mobile-link {
   width: 26px; height: 26px; object-fit: contain;
   filter: invert(0%);               /* icon → #000000 */
 }
-
 
 /* ================================================================
    SEARCH OVERLAY — full-screen orange search (Figma "Desktop_Search")
@@ -931,15 +894,8 @@ button.nav__mobile-link {
   clip-path: circle(150% at var(--reveal-x, 90%) var(--reveal-y, 6%));
   transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);   /* slow-start, smooth */
 }
-/* top bar mirrors .nav__inner exactly, so the logo lines up with the nav logo
-   and the close sits on the same right-hand grid margin */
+/* Keep the search logo at the left margin and close at the right margin. */
 .search-overlay__bar {
-  /* Mirrors the nav exactly: three tracks with the logo dead centre, and the
-     close on the right margin, where 8465-2 draws it (63px at x1807 / y24 —
-     the same 50px margin everything else in the bar keeps). It used to sit
-     on the left, to swap in place with the search button; the button has
-     since moved under the stacked menu, so the two no longer trade places
-     and the close simply takes the corner the design gives it. */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -948,7 +904,7 @@ button.nav__mobile-link {
   margin: 0 auto;
   padding: 0 var(--gm);
 }
-.search-overlay__logo  { grid-column: 2; }
+.search-overlay__logo  { grid-column: 1; grid-row: 1; justify-self: start; }
 .search-overlay__close { grid-column: 3; grid-row: 1; justify-self: end; }
 
 /* On the V3 home the nav is not a 104px centred bar — it is top-padded with
@@ -1018,9 +974,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   border: none;
   background: none;
   outline: none;
-  font-family: var(--f-serif);
-  font-size: 40px;
-  font-weight: 400;
   color: var(--c-white);
 }
 .search-overlay__input::placeholder { color: var(--c-white); opacity: 1; }
@@ -1029,9 +982,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .search-overlay__input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
 .search-overlay__label {
   margin-top: 26px;
-  font-family: var(--f-sans);
-  font-size: 14px;
-  letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--c-white);
   opacity: 0.4;
@@ -1043,8 +993,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   margin-top: 12px;
 }
 .search-overlay__hot a {
-  font-family: var(--f-sans);
-  font-size: 20px;
   color: var(--c-white);
   /* underline that draws in from left to right on hover (no fade) */
   padding-bottom: 4px;
@@ -1062,9 +1010,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
      read as an unfinished button next to the ringed one everywhere else. */
   .search-overlay__field { gap: 12px; }
   .search-overlay__icon { width: 24px; height: 24px; }
-  .search-overlay__input { font-size: 28px; }
   .search-overlay__hot { gap: 12px 24px; }
-  .search-overlay__hot a { font-size: 17px; }
 
   /* V3 home: the phone nav is a plain 72px bar with the lockup centred in
      it — not the desktop's top-padded one — so the overlay bar follows it
@@ -1092,7 +1038,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   }
   body.home-v3 .search-overlay__close span { width: 16px; }
 }
-
 
 /* ================================================================
    01 — HERO
@@ -1247,7 +1192,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .hero__description {
   font-family: var(--f-sans);
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 25px;
   color: var(--c-black);
 }
@@ -1290,7 +1235,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   50%      { opacity: 1; }
 }
 
-
 /* ----------------------------------------------------------------
    Ambient background glows (Figma page-level blurs)
    Zero-height anchor at the hero/intro boundary (Figma y=998);
@@ -1308,7 +1252,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .bg-blur--2 { width: 1375px; left: calc(50% - 702px); top: 1436px; }  /* orange */
 .bg-blur--3 { width: 1396px; left: calc(50% - 612px); top: 2238px; }  /* faint white */
 .bg-blur--4 { width: 1000px; left: calc(50% - 335px); top: 3214px; }  /* white */
-
 
 /* ================================================================
    02 — INTRO  (Our Foundation + The Challenge)
@@ -1394,7 +1337,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .intro__play-btn:hover::before,
 .intro__video:hover .intro__play-btn::before { border-left-color: var(--c-white); }
 
-
 /* ── The Challenge ────────────────────────────────────────────────
    Figma: text col x=50 w=487; circles start x=670; label y=940 /
    headline y=1048 / body y=1160 / button y=1282 (circles top y=870). */
@@ -1426,7 +1368,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   max-width: 487px;
   font-family: var(--f-sans);
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 40px;
   color: var(--c-black);
 }
@@ -1434,7 +1376,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   margin-top: 31px;
   font-family: var(--f-sans);
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 25px;
   color: var(--c-black);
   max-width: 465px;
@@ -1513,7 +1455,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   left: 0; right: 0;
   text-align: center;
 }
-
 
 /* ================================================================
    03 — PILLARS
@@ -1602,7 +1543,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .pillar-card__body {
   font-family: var(--f-sans);
   font-size: 22px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 30px;
   /* stay full width (≈430) down through the second-largest breakpoint, only
      narrowing once the card gets genuinely tight; the illustration bleeds from
@@ -1656,7 +1597,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   right: -5.4%;        /* bleeds off the card's right edge */
   top: 26.6%;
 }
-
 
 /* ── Our Approach ───────────────────────────────────────────────── */
 .approach {
@@ -1806,7 +1746,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   z-index: 1;
 }
 
-
 /* ================================================================
    04 — NEWS
    ================================================================ */
@@ -1934,7 +1873,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .news-card__description {
   font-family: var(--f-sans);
   font-size: 22px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 30px;
   color: var(--c-black);
   flex: 1;
@@ -1974,7 +1913,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 
 /* Keep news content above the footer wave line that sweeps behind it */
 .news > * { position: relative; z-index: 1; }
-
 
 /* ================================================================
    05 — FOOTER
@@ -2109,7 +2047,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .footer__copyright p { grid-column: 5 / 7; margin-left: 0; }
 }
 
-
 /* ================================================================
    RESPONSIVE — page zoom. Two ladders, one `zoom`.
 
@@ -2181,7 +2118,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   }
 }
 
-
 /* ================================================================
    RESPONSIVE — 1440px
    ================================================================ */
@@ -2202,13 +2138,11 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .news-card__image { width: 380px; }
 }
 
-
 /* Short browser windows — keep the hero composition from cramping */
 @media (min-width: 768px) and (max-height: 800px) {
   .hero__headline-wrap { top: 32%; }
   .hero__headline { font-size: 52px; line-height: 60px; }
 }
-
 
 /* ================================================================
    RESPONSIVE — Challenge 3:3 (768–1230px)
@@ -2245,7 +2179,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .challenge__circle-tag     { font-size: 11px; bottom: 20%; }
 }
 
-
 /* ================================================================
    RESPONSIVE — 1024px
    ================================================================ */
@@ -2281,7 +2214,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .footer__inner { grid-template-columns: 1fr 280px 220px; }
   .footer__copyright p { margin-left: calc(100% - 500px); }
 }
-
 
 /* ================================================================
    RESPONSIVE — Mobile (≤ 767px)
@@ -2557,7 +2489,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .footer__copy-line   { display: block; line-height: 18px; }
 }
 
-
 /* ================================================================
    RESPONSIVE — 430px / 390px (smallest)
    ================================================================ */
@@ -2577,7 +2508,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .approach-card  { width: 260px !important; }
   .news__carousel { --news-card-w: 285px; }
 }
-
 
 /* ================================================================
    INNER PAGE — LISTING (Our Stories)
@@ -2654,9 +2584,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   justify-content: center;
   align-items: center;
   gap: 8px;
-  font-family: var(--f-sans);
-  font-size: 15px;
-  font-weight: 400;
   color: var(--c-black);
 }
 .listing__crumb a { transition: color var(--ease); }
@@ -2668,8 +2595,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--f-sans);
-  font-size: inherit;
   color: var(--c-black);
   transition: color var(--ease);
 }
@@ -2704,11 +2629,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 
 /* title */
 .listing__title {
-  font-family: var(--f-serif);
   /* 56 at 1024 → 70 at 1280, with no 1024/1025 one-pixel jump. */
-  font-size: clamp(56px, 5.46875vw, 70px);
-  font-weight: 400;
-  line-height: normal;
   text-align: center;
   margin: 30px 0 36px;
 }
@@ -2738,9 +2659,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 9px;
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
   color: var(--c-black);
   transition: color var(--ease);
 }
@@ -2782,8 +2700,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   z-index: 30;
 }
 .listing__filter.is-open .listing__filter-menu { display: block; }
-.listing__filter-menu a,
-.listing__crumb-menu a {
+.listing__filter-menu a {
   display: block;
   padding: 9px 12px;
   font-family: var(--f-sans);
@@ -2793,12 +2710,18 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   white-space: nowrap;
   transition: background var(--ease), color var(--ease);
 }
+.listing__crumb-menu a {
+  display: block;
+  padding: 9px 12px;
+  color: var(--c-black);
+  border-radius: 7px;
+  white-space: nowrap;
+  transition: background var(--ease), color var(--ease);
+}
 .listing__filter-menu a:hover,
 .listing__crumb-menu a:hover { color: var(--c-orange); }
 .listing__crumb-menu a {
   padding: 5px 0;
-  font-size: inherit;
-  line-height: 1.25;
   border-radius: 0;
 }
 .listing__filter-menu a[aria-current="true"] {
@@ -2812,8 +2735,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   border: var(--rule-width) solid var(--c-rule-solid);
   border-radius: 100px;
   padding: 7px 18px;
-  font-family: var(--f-sans);
-  font-size: 14px;
   color: var(--c-black);
   transition: background var(--ease), color var(--ease), border-color var(--ease);
 }
@@ -2847,17 +2768,9 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   z-index: 1;            /* sit above the background line (.listing__line, z-index:0) */
 }
 .story-card__title {
-  font-family: var(--f-serif);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 32px;
   color: var(--c-black);
 }
 .story-card__desc {
-  font-family: var(--f-sans);
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 22px;
   color: var(--c-black);
   margin-top: 14px;
 }
@@ -2882,9 +2795,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   --cat-dventures:            #816da2;   /* stands in for the bar's yellow */
 }
 .story-card__category {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 12px;
   color: var(--cat, var(--c-orange));
   margin-top: 22px;
 }
@@ -2904,9 +2814,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   background: #fff4ec;
   border-radius: 100px;
   padding: 4px 13px;
-  font-family: var(--f-sans);
-  font-size: 11px;
-  font-weight: 400;
   color: var(--c-black);
   white-space: nowrap;
   cursor: pointer;
@@ -2965,9 +2872,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   border: var(--rule-width) solid var(--c-rule);
   border-radius: 12px;
   color: var(--c-black);
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 25px;
   text-align: center;
 }
 
@@ -3010,17 +2914,12 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--f-sans);
-  font-size: 19px;
   margin-left: 6px;
 }
 .pager__total {
-  font-family: var(--f-sans);
-  font-size: 16px;
   color: var(--c-black);
   margin-right: 12px;
 }
-
 
 /* ── Listing responsive ───────────────────────────────────────────
    The card design itself never changes across breakpoints — only the
@@ -3033,32 +2932,28 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   /* Grow into the tablet title instead of jumping from 38px to a rendered
      50.4px between 767 and 768. */
   .listing__title {
-    font-size: clamp(38px, calc(25.2px + 3.28vw), 50.4px);
     margin: 16px 0 32px;
   }
-  .listing__crumb { font-size: 13px; }
   .listing__filters {
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 18px 24px;
     margin-bottom: 36px;
   }
-  .listing__filter { flex: 1 1 40%; max-width: none; font-size: 15px; }
+  .listing__filter { flex: 1 1 40%; max-width: none; }
   /* clear-all drops onto its own row (the grown filters fill each row),
      centred via auto side margins */
   .listing__clear { margin: 6px auto 0; }
   .listing__grid { row-gap: 22px; }
   .listing__pager { margin-top: 56px; }
   /* keep the desktop circle:arrow:number proportions (62/20/19) at 46px */
-  .pager__arrow, .pager__num { width: 46px; height: 46px; }
+  .pager__arrow { width: 46px; height: 46px; }
+  .pager__num { width: 46px; height: 46px; }
   .pager__arrow img { width: 15px; }
-  .pager__num { font-size: 14px; }
-  .story-card__tag { font-size: 12px; }
 }
 @media (max-width: 599px) {
   .listing__grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
 }
-
 
 /* ================================================================
    INNER PAGE — ARTICLE (story detail, e.g. "Project Fuel")
@@ -3096,16 +2991,9 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .article__crumb { margin-bottom: 36px; }
 
 .article__title {
-  font-family: var(--f-serif);
-  font-size: 70px;
-  font-weight: 400;
-  line-height: 1.08;
   color: var(--c-black);
 }
 .article__subtitle {
-  font-family: var(--f-sans);
-  font-weight: 500;
-  font-size: 18px;
   color: var(--c-orange);
   margin-top: 16px;
 }
@@ -3121,9 +3009,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   background: var(--c-white);
   border-radius: 100px;
   padding: 7px 20px;
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 400;
   color: var(--c-black);
   white-space: nowrap;
   cursor: default;
@@ -3157,10 +3042,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   position: relative;
 }
 .article__section-title {
-  font-family: var(--f-serif);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 40px;
   color: var(--c-black);
   padding-right: 64px;          /* leave room for the share button */
 }
@@ -3192,8 +3073,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   right: calc(100% + 10px);
   transform: translateY(-50%);
   white-space: nowrap;
-  font-family: var(--f-sans);
-  font-size: 12px;
   color: var(--c-white);
   background: var(--c-black);
   padding: 5px 10px;
@@ -3202,10 +3081,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 }
 
 .article__text {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 25px;
   color: var(--c-black);
   margin-top: 24px;
 }
@@ -3248,9 +3123,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   margin-top: 16px;
 }
 .article__caption {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 16px;
   color: var(--c-grey, #000000);
 }
 .article__carousel-nav { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
@@ -3258,8 +3130,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    (`--c-grey` is declared in style.css, so the literal is carried as a
    fallback for any page that loads style.css on its own.) */
 .article__carousel-count {
-  font-family: var(--f-sans);
-  font-size: 14px;
   color: var(--c-grey, #000000);
   min-width: 34px;
   text-align: center;
@@ -3288,14 +3158,10 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   padding-right: 100px;
 }
 .article__quote p {
-  font-family: var(--f-serif);
-  font-size: 50px;
-  font-weight: 400;
   /* A RATIO, not the design's 60px. 50 × 1.2 is exactly that 60, so the
      desktop is unchanged — but the breakpoints below only ever restated
      the font size, so a fixed 60px stayed put while the type shrank and
      the quote ended up on a 2.2 line. Now the leading follows the size. */
-  line-height: 1.2;
   color: var(--c-orange);
 }
 .article__quote-mark {
@@ -3377,8 +3243,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--f-sans);
-  font-size: 15px;
   color: var(--c-black);
   transition: color var(--ease);
 }
@@ -3411,10 +3275,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   height: 41px;
 }
 .article__highlight p {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
   margin-top: 26px;
 }
 
@@ -3424,8 +3284,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   align-items: center;
   gap: 12px;
   margin-top: 16px;
-  font-family: var(--f-sans);
-  font-size: 15px;
   color: var(--c-black);
   transition: color var(--ease);
 }
@@ -3470,26 +3328,16 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   pointer-events: none;
 }
 .article__testimonial-quote {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
   color: var(--c-black);
   margin-top: 36px;
 }
 .article__testimonial-author { display: block; margin-top: 28px; }
 .article__testimonial-name {
   display: block;
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 20px;
   color: var(--c-black);
 }
 .article__testimonial-role {
   display: block;
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 16px;
   color: rgba(0, 0, 0, 0.6);
   margin-top: 4px;
 }
@@ -3500,7 +3348,7 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    centres while it fits; on stacked layouts the sticky is removed.   */
 .article__related {
   grid-column: 9 / 13;           /* right columns */
-  max-width: 495px;              /* design rail width — keeps the right gutter */
+  min-width: 0;
   position: relative;            /* column stretches to the full body-grid height */
 }
 /* The rail starts aligned to the top of the content tile (in normal flow),
@@ -3511,13 +3359,10 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 .article__related-inner {
   position: sticky;
   top: 110px;
-  padding-left: 40px;
+  padding-left: var(--grid-gap);
   border-left: var(--rule-width) solid var(--c-rule-solid);   /* light-orange divider */
 }
 .article__related-title {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 14px;
   color: var(--c-black);
   margin-bottom: 20px;
 }
@@ -3531,18 +3376,10 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 }
 .article__related-item:first-of-type { border-top: 0; padding-top: 4px; }
 .article__related-name {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
   color: var(--c-orange);
   transition: color var(--ease);
 }
 .article__related-desc {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
   color: var(--c-black);
   margin-top: 8px;
 }
@@ -3564,7 +3401,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .article__related { grid-column: 9 / 13; }
 }
 @media (max-width: 1024px) {
-  .article__title { font-size: 56px; }
   /* sidebar drops below the article and spans full width — drop the grid + sticky */
   .article__body { grid-template-columns: minmax(0, 1fr); gap: 64px; max-width: 900px; }
   .article__main { grid-column: auto; }
@@ -3580,41 +3416,28 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .article { padding: 104px var(--gm-mob) 120px; }
   .article__head { margin-bottom: 48px; }
   .article__crumb { margin-bottom: 24px; }
-  .article__title { font-size: 38px; }
-  .article__section-title { font-size: 30px; }
   /* The mark is 105px wide at full size and sits at `right: 0`, so the
      padding has to clear it or it prints over the end of the lines — the
      old 50px cleared less than half of it. Scaled down to 54 here, with
      64 of padding to keep the glyph and the words apart the way the design
      draws them. `font-size` was being set on an <img>, which did nothing. */
   .article__quote { padding-right: 64px; margin: 44px 0; }
-  .article__quote p { font-size: 32px; }
   .article__quote-mark { width: 54px; height: auto; top: 6px; }
   .article__duo { grid-template-columns: 1fr; gap: 16px; }
   .article__highlight { padding: 34px 28px 38px; }
   /* On a phone the orange panel reads as body copy, so it is set as body
-     copy — the same 16/25 and the same 300 as `.article__text` right below
+     copy — the same 16/25 and the same 400 as `.article__text` right below
      it. It was only being given the size: the desktop `line-height: 30px`
      stayed behind on the smaller type and opened it out to a 1.9 leading
      against the running text's 1.56, which is what made the panel look
      like a different, looser typeface. */
-  .article__highlight p {
-    font-size: 16px;
-    line-height: 25px;
-    font-weight: 300;
-  }
   .article__testimonial { padding: 34px 28px 38px; }
   /* Same as the orange panel above: on a phone the testimonial is running
-     text, so it is set as running text — 16/25 weight 300, exactly
+     text, so it is set as running text — 16/25 weight 400, exactly
      `.article__text`. (Its 20/30 was at least a consistent 1.5; it was
      simply too large next to the body copy on a narrow column.) */
-  .article__testimonial-quote {
-    font-size: 16px;
-    line-height: 25px;
-  }
   /* The name comes down to the body size too but keeps its weight, so it
      still reads as the attribution rather than more copy. */
-  .article__testimonial-name { font-size: 16px; }
   .article__btn-row { gap: 16px 28px; }
   .article__play { width: 62px; height: 62px; left: 18px; bottom: 18px; }
   .article__play::before {
@@ -3630,7 +3453,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
   .article__related-item { grid-template-columns: minmax(0, 1fr); }
   .article__related-thumb { display: none; }
 }
-
 
 /* ================================================================
    NAV — desktop mega menu (hover-opened)
@@ -3693,10 +3515,6 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 }
 .nav__mega-links a {
   display: inline-block;
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 40px;
   color: var(--c-black);
   transition: color var(--ease);
 }
@@ -3765,8 +3583,6 @@ html[lang="zh-Hant"] .intro__foundation-headline { font-size: 36px; }
 html[lang="zh-Hant"] .news__heading              { font-size: 36px; }
 html[lang="zh-Hant"] .approach-card__title       { font-size: 29px; }
 html[lang="zh-Hant"] .challenge__circle-title    { font-size: clamp(15px, 7.4cqw, 29px); }
-html[lang="zh-Hant"] .nav__mobile-link           { font-size: 40px; }
-html[lang="zh-Hant"] .search-overlay__input      { font-size: 36px; }
 
 /* Hero description — keep glyphs/spacing normal but narrow the text column
    ~20% so the line wraps earlier. max-width is relative to .hero__bottom,
@@ -3813,7 +3629,6 @@ html[lang="zh-Hant"] .challenge__headline { font-size: 28px; }
   html[lang="zh-Hant"] .hero__headline          { font-size: 32px; }
 }
 
-
 /* ============================================================
    KEYBOARD ACCESS — visible focus + skip navigation
    ------------------------------------------------------------
@@ -3842,10 +3657,6 @@ html[lang="zh-Hant"] .challenge__headline { font-size: 28px; }
   border-radius: 2px;
   background: var(--c-white);
   color: var(--c-orange);
-  font-family: var(--f-sans);
-  font-size: max(16px, calc(15px / var(--zoom, 1)));
-  font-weight: 500;
-  line-height: 1.25;
   text-decoration: none;
   transform: translateY(calc(-100% - 28px));
   transition: transform 180ms ease;
@@ -3877,9 +3688,7 @@ main[tabindex="-1"]:focus { outline: none; }
   --t-lede:     clamp(24px, 1.98vw, 38px);   /* Figma 38 / 55 */
   /* Figma 100, taken down 10% and then a further 20% — Being / Becoming /
      Belonging / Bettering all read off this one token, so the whole set
-     steps down together and keeps its proportion to the copy under it. */
-  --t-title:    clamp(33.12px, 3.744vw, 72px);
-  --t-heading:  clamp(34px, 4.17vw, 80px);   /* Figma 80 / 90 */
+     steps down together and keeps its proportion to the copy under it. */   /* Figma 80 / 90 */
   --panel-pad-x: clamp(24px, 5.5vw, 105px);  /* text inset inside a panel */
   /* The page's own "white" — the B panels and the news cards. A hair warm
      rather than pure, so that the things that ARE pure white and sit *over*
@@ -3939,7 +3748,6 @@ body.home-v3 {
   padding: 0 var(--gm);
 }
 
-
 /* ================================================================
    00 — NAVIGATION (V3 layout: search · logo · stacked menu)
    ================================================================ */
@@ -3964,10 +3772,6 @@ body.home-v3 {
   gap: 0;
 }
 .nav--v3 .nav__link {
-  font-family: var(--f-serif);
-  font-size: 24px;
-  line-height: 39px;
-  letter-spacing: normal;
   text-transform: none;
   color: var(--c-grey);
 }
@@ -4061,10 +3865,8 @@ body.home-v3 {
        visible controls should intercept the page beneath it. */
     pointer-events: none;
   }
-  .nav--v3 .nav__logo,
-  .nav--v3 .nav__actions,
-  .nav--v3 .nav__link,
-  .nav--v3 .nav__mega { pointer-events: auto; }
+  .nav--v3 .nav__logo, .nav--v3 .nav__actions, .nav--v3 .nav__mega { pointer-events: auto; }
+  .nav--v3 .nav__link { pointer-events: auto; }
 
   /* …and that is exactly why the opening needs a nudge here and nowhere
      else. The intro locks the page, and `html.lock-scroll` hands the
@@ -4089,8 +3891,7 @@ body.home-v3 {
     align-items: start;
   }
   /* centred lockup and the stacked menu both drop out */
-  .nav--v3.nav--scrolled .nav__logo,
-  .nav--v3.nav--scrolled .nav__menu,
+  .nav--v3.nav--scrolled .nav__logo, .nav--v3.nav--scrolled .nav__menu { display: none; }
   .nav--v3.nav--scrolled .nav__lang { display: none; }
 
   .nav--v3.nav--scrolled .nav__actions {
@@ -4147,7 +3948,6 @@ body.home-v3 {
   .nav--v3.nav--scrolled .nav__hamburger { display: flex; }
   .nav--v3.nav--scrolled .nav__hamburger img { width: 40.7px; }
 }
-
 
 /* ================================================================
    00b — MEGA MENU (V3) — Figma R2 "02_Menu_A/B/C"
@@ -4266,9 +4066,8 @@ body.home-v3 {
    The hover is an underline drawing itself in from the left, the same
    gradient trick the search overlay's hot links use (background-size is
    animatable where a border is not) — and the rule has to sit 3px under the
-   word while the line keeps its 39px pitch, so the box is built the other
-   way round: the type takes its own leading, 3px of padding holds the rule
-   off it, and the rest goes above (19.2 + 16.8 + 3). */
+   word while the line keeps its 39px pitch, so the spare space sits above
+   the type and the rule hugs the text. */
 .nav--v3 .nav__mega-links {
   top: 32px;
   left: auto;
@@ -4277,10 +4076,7 @@ body.home-v3 {
 }
 .nav--v3 .nav__mega-links a {
   display: inline-block;
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 1.2;
-  padding: 16.8px 0 3px;
+  padding: 11.4px 0 0;
   color: var(--c-grey);
   white-space: nowrap;
   background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1px;
@@ -4302,8 +4098,7 @@ body.home-v3 {
 .nav--v3 .nav__inner { position: relative; z-index: 1; }
 .nav--v3 .nav__inner,
 .nav--v3 .nav__menu { pointer-events: none; }
-.nav--v3 .nav__logo,
-.nav--v3 .nav__actions,
+.nav--v3 .nav__logo, .nav--v3 .nav__actions { pointer-events: auto; }
 .nav--v3 .nav__link { pointer-events: auto; }
 
 /* line-art — Figma places each one bleeding off the panel's left edge.
@@ -4337,8 +4132,7 @@ body.home-v3 {
    above. 27.6 (24px at 1.15) + 8.4 + 3 = the same 39px pitch. */
 .nav--v3 .nav__link {
   display: inline-block;
-  line-height: 1.15;
-  padding: 8.4px 0 3px;
+  padding: 9.55px 0 3px;
   background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1px;
   transition: color var(--ease), opacity var(--ease), background-size 0.35s ease;
 }
@@ -4382,7 +4176,6 @@ body.home-v3 {
   }
 }
 
-
 /* ================================================================
    01 — LANDING (hero + the four B panels on the flat peach canvas)
    ================================================================ */
@@ -4393,7 +4186,6 @@ body.home-v3 {
      flat peach, with the white panels reading as cards on top of it. */
   background: transparent;
 }
-
 
 /* ── Hero ──────────────────────────────────────────────────────────
    Figma "landing" 1920 × 1000: headline top 157 / left 50, the
@@ -4495,10 +4287,6 @@ body.lp-h1 .hero-v3__title.is-split { opacity: 1; translate: none; }
   padding-bottom: clamp(48px, 4.32vw, 83px);
 }
 .hero-v3__body {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 30px;
   color: var(--c-grey);
   /* four columns, like the ventures and funding copy — Figma's 577 is the
      same track. Stated in `--col` so it narrows with the grid rather than
@@ -4522,14 +4310,9 @@ body.lp-h2 .hero-v3__foot  { opacity: 0; translate: 0 22px; }
 .hero-v3__title,
 .hero-v3__foot { transition: opacity 0.9s ease, translate 0.9s ease; }
 
-/* The intro flies its own copy of the lockup into this exact spot, so the
-   real nav logo must not slide in behind it — it just cross-fades on as
-   the flying one is removed. The menu and actions keep their drop-in. */
-/* On this page `lp-nav` only holds the menu and the actions back — the
-   logo is driven by [data-intro] below, because it performs the intro
-   itself rather than being handed a copy. */
+/* The menu and actions wait for the opening; the real nav logo supplies
+   the seal in the quote and later appears at its final header position. */
 body.home-v3.lp-nav .nav__logo { opacity: 1; translate: none; }
-
 
 /* Pre-paint hold — the inline script in <head> sets `lp-boot` before the
    body is parsed, so the nav and banner never flash up in the frames
@@ -4542,14 +4325,12 @@ html.lp-boot .hero-v3__title,
 html.lp-boot .hero-v3__foot { opacity: 0; }
 html.lp-boot .colourbar--hero { clip-path: inset(0 100% 0 0); }
 
-
 /* ================================================================
    01b — LANDING OPENING (script §13)
    NB: namespaced `.opening`, not `.intro` — style.css already owns a
    legacy `.intro` section whose gradient would paint straight onto it.
    點 · 線 · 面 plays through → the motto lifts in, seal and all →
-   the words fade off it, leaving the seal → the seal rises into the
-   header → it slides left as the wordmark opens.
+   words and seal fade together → the full header logo appears in place.
    Figma R2: OPT1_01_Home_00_01 / 10067:1131 / _00_05, all 1920 × 1000.
    ================================================================ */
 /* `body.has-custom-cursor` sets `cursor: none`, and the overlay sits above
@@ -4580,8 +4361,7 @@ body.home-v3 .cursor { z-index: 100001; }
   /* it swallows the pointer: nothing behind the peach panel can be
      hovered or clicked while the sequence plays */
   pointer-events: auto;
-  /* only the peach backdrop clears — the flying lockup stays solid all the
-     way up, so it can hand over to the real nav logo without a blink */
+  /* The peach backdrop clears as the quote and seal fade together. */
   transition: background-color 0.7s ease;
 }
 .opening--out { background-color: rgba(255, 242, 233, 0); }
@@ -4595,15 +4375,16 @@ body.home-v3 .cursor { z-index: 100001; }
   left: var(--x-mid, 50%);
   bottom: clamp(26px, 2.6vw, 50px);
   translate: -50% 0;
-  padding: 6px 4px;
+  display: grid;
+  place-items: center;
+  min-width: calc(56px / var(--zoom));
+  min-height: calc(56px / var(--zoom));
+  padding: 8px 14px;
   border: 0;
   background: none;
   cursor: pointer;
   /* serif, like the motto it sits under — the sans read as UI dropped onto
      a frame that has none */
-  font-family: var(--f-serif);
-  font-size: clamp(13px, 0.94vw, 16px);
-  line-height: 1;
   color: var(--c-orange);
   text-decoration: underline;
   text-underline-offset: 5px;
@@ -4622,14 +4403,23 @@ body.home-v3 .cursor { z-index: 100001; }
    is put together underneath. Deliberately not a fast-forward through the
    remaining beats: replaying the rise at speed is what would make the
    mark fly across the screen. */
-.opening--skip .opening__stage,
-.opening--skip .opening__motto,
+.opening--skip .opening__stage, .opening--skip .opening__motto {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 .opening--skip .opening__skip {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.opening--skip { transition: background-color 0.42s ease; }
-.opening--skip .opening__skip { pointer-events: none; }
+.opening--skip {
+  background-color: rgba(255, 242, 233, 0);
+  transition: background-color 0.5s ease;
+}
+.opening--skip .opening__skip {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+}
 /* the parked mark leaves with the plate it is standing in, so that when
    the attribute is dropped a frame later it can snap home unseen */
 body.home-v3.lp-skip[data-intro] .nav__logo {
@@ -4638,6 +4428,17 @@ body.home-v3.lp-skip[data-intro] .nav__logo {
 }
 /* …and nothing about the logo animates while the snap happens */
 body.home-v3.lp-skip .nav__logo { transition: none; }
+/* Skip also finishes the header, headline and colour bar immediately under
+   the fading overlay instead of playing the normal landing cascade. */
+body.home-v3.lp-skip .nav__menu,
+body.home-v3.lp-skip .nav__actions,
+body.home-v3.lp-skip .hero-v3__title,
+body.home-v3.lp-skip .hero-v3__foot,
+body.home-v3.lp-skip .hero-v3__ln-i,
+body.home-v3.lp-skip .colourbar--hero {
+  transition: none !important;
+  animation: none !important;
+}
 
 /* The one thing the overlay cannot cover is the nav, which is lifted
    above it so the logo can perform the rise (see below) — being on top,
@@ -4778,7 +4579,7 @@ body.home-v3.lp-nav .nav * { pointer-events: none; }
     flattening, so the seal's proportion arrived before the press finished
     — and that nuance is what the single property costs. */
 .opening__stage--carve {
-  transform: translate(-50%, calc(-50% + var(--gather-y, 0px)))
+  transform: translate(calc(-50% + var(--gather-x, 0px)), calc(-50% + var(--gather-y, 0px)))
              scale(var(--carve-x, 0.06), var(--carve-y, 0.11));
   transition: transform 1.15s cubic-bezier(0.42, 0, 0.16, 1);
 }
@@ -5013,14 +4814,9 @@ body.home-v3.lp-nav .nav * { pointer-events: none; }
 }
 .opening__cite-name {
   display: block;
-  font-size: clamp(16px, 1.25vw, 24px);
-  line-height: 1;
 }
 .opening__cite-years {
   display: block;
-  font-size: clamp(12px, 0.83vw, 16px);
-  font-weight: 600;
-  line-height: 1;
   margin-top: clamp(6px, 0.47vw, 9px);
 }
 /* It tucks in under the end of the last line and just past it — R2 draws
@@ -5060,19 +4856,15 @@ body.home-v3.lp-nav .nav * { pointer-events: none; }
 .opening--said .opening__cite { translate: 0 0; opacity: 1; }
 .opening--said .opening__qm   { opacity: 1; }
 
-/* ── acts two and three: the nav logo performs them itself ───────
-   There is no second copy of the lockup and therefore nothing to hand
-   over: the real `.nav__logo` is lifted above the peach panel, clipped
-   down to its mark, parked on the motto's own seal slot — so the mark in
-   the design's quote plate *is* the nav logo — and then walked back home. When the intro ends the attribute is simply dropped and
-   every override resolves to the logo's natural state — same rect, same
-   raster, nothing to flash.
+/* ── quote seal ───────────────────────────────────────────────────
+   The real `.nav__logo` is lifted above the peach panel, clipped to its
+   seal and parked on the motto slot. It fades with the quote, then snaps
+   unseen to its natural header position before fading in there.
 
    Geometry comes straight out of the artwork: the seal is the left
-   22.6% of the lockup, so clipping to `inset(0 77.4% 0 0)` leaves the
-   mark alone, and nudging the box right by half the remainder (38.7%)
-   puts that mark on the centre line. Both are percentages of the
-   element, so they hold at every breakpoint. */
+   22.6% of the lockup. Its centre is measured against the motto slot
+   in script §13, so the seal stays aligned when the normal menu moves
+   with the grid or changes size at a breakpoint. */
 /* The lift has to happen on `.nav`, not on the logo: `.nav` is
    `z-index: 100`, which makes it a stacking context, so any z-index on a
    child of it only ever competes *inside* that context — the logo would
@@ -5081,7 +4873,7 @@ body.home-v3.lp-nav .nav * { pointer-events: none; }
 body.home-v3[data-intro] .nav { z-index: 100001; }
 body.home-v3[data-intro] .nav__logo {
   clip-path: inset(0 77.4% 0 0);
-  translate: 38.7% var(--mark-y, 0px);
+  translate: var(--mark-x, 0px) var(--mark-y, 0px);
 }
 /* `transition: none` matters: .nav__logo carries a 0.7s translate
    transition from the shared stylesheet, so without this the park at the
@@ -5096,32 +4888,23 @@ body.home-v3[data-intro='centre'] .nav__logo {
   opacity: 1;
   transition: none;
 }
-/* the rise — still just the mark, so nothing changes width on the way up */
-body.home-v3[data-intro='up'] .nav__logo {
-  opacity: 1;
-  translate: 38.7% 0;
-  transition: translate 0.94s cubic-bezier(0.65, 0, 0.28, 1);
+body.home-v3[data-intro='fade'] .nav__logo {
+  opacity: 0;
+  transition: opacity 0.68s ease;
 }
-/* home: the mark slides left as the wordmark is uncovered */
-body.home-v3[data-intro='open'] .nav__logo {
-  opacity: 1;
-  clip-path: inset(0 0 0 0);
-  translate: 0 0;
-  transition: translate 0.78s cubic-bezier(0.65, 0, 0.35, 1),
-              clip-path 0.78s cubic-bezier(0.65, 0, 0.35, 1);
+body.home-v3.lp-logo-return .nav__logo {
+  opacity: 0;
+  clip-path: none;
+  translate: none;
+  transition: none;
 }
 
 /* ── Intro line — sits under the banner bar, above the panels ───── */
 .intro-v3 {
-  font-family: var(--f-serif);
-  font-size: var(--t-lede);
-  line-height: 1.45;
-  letter-spacing: -0.02em;
   color: var(--c-grey);
   max-width: 1052px;
   padding: clamp(36px, 3.28vw, 63px) 0 clamp(24px, 2.03vw, 39px);
 }
-
 
 /* ── The four B panels ─────────────────────────────────────────── */
 .journey {
@@ -5165,10 +4948,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   max-width: 827px;
 }
 .panel__title {
-  font-family: var(--f-serif);
-  font-weight: 400;
-  font-size: var(--t-title);
-  line-height: 1.25;
   color: var(--c-orange);
   margin-top: clamp(4px, 0.8vw, 14px);
 }
@@ -5183,10 +4962,6 @@ body.home-v3[data-intro='open'] .nav__logo {
    opening statement and reads as one, which the sans did not. The two
    paragraphs under it stay in the body style. */
 .panel__lede {
-  font-family: var(--f-serif);
-  font-size: var(--t-lede);
-  line-height: 1.45;
-  letter-spacing: -0.02em;
   color: var(--c-grey);
   max-width: 736px;
 }
@@ -5247,11 +5022,8 @@ body.home-v3[data-intro='open'] .nav__logo {
 .panel__question strong { font-weight: 500; display: block; }
 
 /* Bettering — white type on orange */
-.panel--bettering .panel__eyebrow,
-.panel--bettering .panel__title,
-.panel--bettering .panel__lede,
-.panel--bettering .panel__copy,
-.panel--bettering .panel__note { color: var(--c-white); }
+.panel--bettering .panel__eyebrow, .panel--bettering .panel__copy, .panel--bettering .panel__note { color: var(--c-white); }
+.panel--bettering .panel__title, .panel--bettering .panel__lede { color: var(--c-white); }
 .panel--bettering .panel__lede { max-width: 659px; }
 /* measure only — the leading is the shared body 25px, like every other
    paragraph in a panel */
@@ -5542,9 +5314,8 @@ body.home-v3[data-intro='open'] .nav__logo {
 .panel--bettering .panel__body,
 .panel--bettering .panel__head { max-width: min(640px, var(--p-half)); }
 
-
 /* ================================================================
-   04 — NEWS  (4-up grid, replaces the legacy carousel)
+   04 — NEWS  (one-row rail aligned to the page grid)
    ================================================================ */
 .news-v3 {
   position: relative;
@@ -5564,10 +5335,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   flex-wrap: wrap;
 }
 .news-v3__heading {
-  font-family: var(--f-serif);
-  font-weight: 400;
-  font-size: var(--t-heading);
-  line-height: 1.125;
   color: var(--c-grey);
 }
 .news-v3__accent { color: var(--c-orange); }
@@ -5595,8 +5362,6 @@ body.home-v3[data-intro='open'] .nav__logo {
 }
 .news-v3__filter {
   position: relative;
-  font-family: var(--f-sans);
-  font-size: clamp(16px, 1.15vw, 22px);
   color: var(--c-grey);
   transition: color var(--ease);
 }
@@ -5612,14 +5377,9 @@ body.home-v3[data-intro='open'] .nav__logo {
   background: var(--c-orange);
 }
 
-/* One row, always — a rail rather than a grid, at every width. With the
-   four cards R2 draws it is indistinguishable from the old 4-up grid
-   (each card is 3 columns, so four of them plus their gutters are exactly
-   the content width and there is nothing to scroll); add a fifth and it
-   simply scrolls instead of starting a second row.
-   The rail bleeds out to the page margins and pads them back, so a card
-   that runs past the edge is cut by the window rather than by the
-   content column — which is what makes it read as scrollable. */
+/* One scrolling row at every width. The viewport-wide rail is padded back
+   to the page grid; the visible card count is defined with --rail-visible
+   below, so extra cards start outside that grid. */
 .news-v3__grid {
   display: flex;
   gap: var(--grid-gap);
@@ -5637,9 +5397,7 @@ body.home-v3[data-intro='open'] .nav__logo {
 }
 .news-v3__grid::-webkit-scrollbar { display: none; }
 .news-v3__grid.is-filtering { opacity: 0; }
-/* three columns of the page grid, whatever the page grid currently is:
-   4 cards across on desktop (12 col), 2 + a peek on iPad (6 col), 1 + a
-   peek on a phone (4 col) */
+/* Card sizing is supplied by the rail's grid tracks further below. */
 .card-v3 {
   flex: 0 0 var(--col3);
   scroll-snap-align: start;
@@ -5687,18 +5445,10 @@ body.home-v3[data-intro='open'] .nav__logo {
   padding: 24px 28px 30px;
 }
 .card-v3__title {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 1.2;
   color: var(--c-grey);
   transition: color var(--ease);
 }
 .card-v3__desc {
-  font-family: var(--f-sans);
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 26px;
   color: var(--c-grey);
   /* the description belongs to the title, not to the meta block below it */
   margin-top: 10px;
@@ -5709,9 +5459,6 @@ body.home-v3[data-intro='open'] .nav__logo {
    stays on the category so the whole meta block hangs off the card's bottom
    however long the title and description run. */
 .card-v3__cat {
-  font-family: var(--f-sans);
-  font-size: 12px;
-  line-height: 25px;
   color: var(--c-orange);
   /* `auto` still hangs the meta block off the bottom of the card; the
      padding is the minimum air it keeps when the copy runs long. */
@@ -5727,10 +5474,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   margin-top: 5px;
 }
 .card-v3__tags li {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 22.5px;
   color: var(--c-black);
   background: #fff4ec;      /* a shade lighter than the page peach */
   border-radius: 100px;
@@ -5744,7 +5487,6 @@ body.home-v3[data-intro='open'] .nav__logo {
    spent as the rail's bottom padding (the room its reveal rises through),
    so only the remainder is added here. */
 .news-v3__cta { display: flex; justify-content: center; margin-top: 8px; }
-
 
 /* Pill button — Figma 150.7 × 49, radius 100 */
 .btn-pill {
@@ -5761,9 +5503,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   border-radius: 100px;
   background: var(--c-orange);
   color: var(--c-white);
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 1;
   white-space: nowrap;
   transition: background var(--ease);
 }
@@ -5800,7 +5539,6 @@ body.home-v3[data-intro='open'] .nav__logo {
 }
 .btn-pill:hover .btn-pill__arrow { translate: 4px 0; }
 
-
 /* ================================================================
    06 — VENTURES / SCHOLARSHIP / FUNDING
    ================================================================ */
@@ -5821,14 +5559,12 @@ body.home-v3[data-intro='open'] .nav__logo {
 .ventures__logos img { width: 183px; height: 35px; display: block; object-fit: contain; }
 .ventures__logos img.is-dhub { width: 110px; height: 28px; }
 .ventures__title {
-  font: 400 clamp(26px, 1.8vw, 34px)/1.25 var(--f-serif);
   color: var(--c-black); height: var(--logo-row);
   display: flex; align-items: center; justify-content: center; gap: 14px;
 }
 .ventures__seal { height: var(--logo-row); width: auto; display: block; }
 .ventures__text {
   flex: 1; width: 100%; max-width: 540px;
-  font-family: var(--f-sans); font-size: 16px; line-height: 1.65;
   color: var(--c-black); margin-top: 26px;
 }
 .ventures__text a { text-decoration: underline; }
@@ -5864,16 +5600,9 @@ body.home-v3[data-intro='open'] .nav__logo {
   padding-top: 78px;
 }
 .funding__title {
-  font-family: var(--f-serif);
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 50px;
   color: var(--c-grey);
 }
 .funding__text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 25px;
   color: var(--c-grey);
   /* the design's 744, said against the grid so it narrows with it */
   max-width: min(744px, 100%);
@@ -5952,7 +5681,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   .funding__partners { flex-wrap: wrap; justify-content: center; row-gap: 28px; }
 }
 
-
 /* ================================================================
    07 — COLOUR BAR
    ================================================================ */
@@ -5979,7 +5707,6 @@ body.home-v3[data-intro='open'] .nav__logo {
 .colourbar span:nth-child(5) { background: #e88793; }
 .colourbar span:nth-child(6) { background: #573c83; }
 
-
 /* ================================================================
    08 — FOOTER (V3)
    ================================================================ */
@@ -5993,9 +5720,6 @@ body.home-v3[data-intro='open'] .nav__logo {
 
 .footer-v3__nav { display: flex; flex-direction: column; gap: 22px; }
 .footer-v3__nav a {
-  font-family: var(--f-sans);
-  font-size: 18px;
-  line-height: 22px;
   color: var(--c-grey);
   transition: color var(--ease);
 }
@@ -6031,16 +5755,12 @@ body.home-v3[data-intro='open'] .nav__logo {
 
 .footer-v3__legal { display: flex; flex-direction: column; gap: 18px; }
 .footer-v3__legal a {
-  font-family: var(--f-sans);
-  font-size: 13px;
   color: var(--c-grey);
   transition: color var(--ease);
 }
 .footer-v3__legal a:hover { color: var(--c-orange); }
 
 .footer-v3__copyright {
-  font-family: var(--f-sans);
-  font-size: 12px;
   color: var(--c-grey);
   text-align: right;
   margin-top: 130px;
@@ -6051,11 +5771,9 @@ body.home-v3[data-intro='open'] .nav__logo {
    line. Drop the separator and give the credit its own line instead, the
    same treatment the legacy footer already had. */
 @media (max-width: 767px) {
-  .footer-v3__copyright { line-height: 20px; }
   .footer-v3__copy-sep { display: none; }
   .footer-v3__copyright a { display: block; }
 }
-
 
 /* ================================================================
    RESPONSIVE — one grid, three column counts
@@ -6137,7 +5855,6 @@ body.home-v3[data-intro='open'] .nav__logo {
     --x-inset: calc(var(--sbw, 0px) / var(--zoom));
   }
 }
-
 
 /* ── iPad, both orientations — six columns ─────────────────────── */
 @media (max-width: 1279px) {
@@ -6392,8 +6109,7 @@ body.home-v3[data-intro='open'] .nav__logo {
     aspect-ratio: 3 / 2;
   }
 
-  /* one card in the frame, the next peeking */
-  .card-v3 { flex-basis: var(--col3); }
+  /* The narrow rail shows one complete card inside the page grid. */
   .card-v3__body { padding: 22px 24px 28px; }
   .news-v3__head { flex-direction: column; align-items: flex-start; gap: 24px; }
   .news-v3__filters { flex-wrap: wrap; padding-bottom: 0; }
@@ -6454,9 +6170,8 @@ body.home-v3[data-intro='open'] .nav__logo {
     padding-top: 0;
     padding-bottom: 0;
   }
-  .nav--v3 .nav__menu,
-  .nav--v3 .nav__lang,
-  .nav--v3 .nav__search-btn--stacked { display: none; }
+  .nav--v3 .nav__menu, .nav--v3 .nav__search-btn--stacked { display: none; }
+  .nav--v3 .nav__lang { display: none; }
   .nav--v3 .nav__logo {
     grid-column: 2;
     grid-row: 1;
@@ -6551,7 +6266,7 @@ body.home-v3[data-intro='open'] .nav__logo {
     padding: 18px var(--gm-mob) 5.5px;
   }
   /* the full lockup gives way to the seal; 中文 lives in the menu panel */
-  .nav--v3.nav--scrolled .nav__logo,
+  .nav--v3.nav--scrolled .nav__logo { display: none; }
   .nav--v3.nav--scrolled .nav__lang { display: none; }
   .nav--v3.nav--scrolled .nav__actions {
     position: relative;
@@ -6590,10 +6305,7 @@ body.home-v3[data-intro='open'] .nav__logo {
   /* the full-screen height is already sitewide; only the insets change */
   .hero-v3 { padding: 112px var(--gm-mob) 0; }
   .hero-v3__foot { gap: 28px; padding-bottom: 36px; }
-  .hero-v3__body { font-size: 15px; line-height: 26px; }
   .colourbar--hero { height: 8px; }
-  .intro-v3 { font-size: 22px; line-height: 32px; }
-  .card-v3__tags li { font-size: 12px; }
 
   /* The opening's quote plate reads on the phone's own margins, not the
      desktop 50px — it was breaking "…as well as" onto a line of its own
@@ -6637,17 +6349,10 @@ body.home-v3[data-intro='open'] .nav__logo {
      So the lists carry the same compensation, at the same 1.27 the phone
      needs to bring 15px of Baskerville up to the apparent size of 15px of
      Fira Sans. Same step, different number, matching size on the page. */
-  .panel__copy,
-  .panel__note,
-  .panel--bettering .panel__note,
-  .panel__label,
-  .panel__question,
-  .ventures__text,
-  .funding__text { font-size: 15px; line-height: 24px; }
+  .panel__copy, .panel__note, .panel--bettering .panel__note, .panel__label, .panel__question { font-size: 15px; line-height: 24px; }
   .panel__copy { margin-top: 16px; }
   .panel__list li,
   .panel__bullets li { font-size: 19px; line-height: 27px; }
-  .panel__lede { font-size: 22px; }
   /* The line above the title — the eyebrow on three panels, the Being →
      Becoming → Belonging trail on Bettering — is one role, so it takes
      one size. 24 and 20 were both too heavy next to the title right under
@@ -6684,9 +6389,6 @@ body.home-v3[data-intro='open'] .nav__logo {
      panels: a heading step at 18 and body at 15/24. A card title at 22 ran
      three lines inside a card that is only ~290 wide, and the footer links
      were the largest sans type left on the page. */
-  .card-v3__title { font-size: 18px; }
-  .card-v3__desc { font-size: 15px; line-height: 24px; }
-  .footer-v3__nav a { font-size: 16px; }
   /* The two footer columns hold a different number of links (3 and 4) at
      different sizes, so their rows drifted apart down the block and the
      right one ran ~70px past the left. Same 22px line box as the nav links
@@ -6700,7 +6402,6 @@ body.home-v3[data-intro='open'] .nav__logo {
     align-self: start;
     gap: calc(22px / 3);
   }
-  .footer-v3__legal a { line-height: 22px; }
   /* …and the column starts on the grid's third line rather than being
      pushed onto the right margin by `space-between` — the same move the
      tablet makes with its fourth. Half the row less half a gutter, plus
@@ -6722,7 +6423,6 @@ body.home-v3[data-intro='open'] .nav__logo {
     height: 39px;
     padding: 0 18px;
     gap: 10px;
-    font-size: 13px;
   }
   .btn-pill__arrow { width: 12px; height: 5.81px; }
   /* And it hangs on the same 28px of air the copy hangs under the logo
@@ -6740,7 +6440,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   .funding__partners { --pw: 100px; --ph: 38px; }
   .funding__partners li { margin-right: 34px; }
   .funding__cta { margin-top: 36px; }
-  .funding__title { font-size: 28px; line-height: 36px; }
 
   /* The two marks are drawn at native size — 215 + 44 + 130 = 389, wider
      than the 320–400 a phone has between its margins, so the D'Hub logo
@@ -6769,7 +6468,6 @@ body.home-v3[data-intro='open'] .nav__logo {
   }
   .card-v3__body { padding: 20px 20px 24px; }
 }
-
 
 /* ================================================================
    09 — INNER PAGES ON THE R2 CANVAS  (Listing, Articles)
@@ -6892,7 +6590,6 @@ body.inner-v3 {
    these pages any more — the selector simply stops matching — and the V3
    footer is transparent, so the peach runs unbroken to the bottom. */
 
-
 /* ================================================================
    10 — CHINESE (zh-Hant) — the V3 display sizes
 
@@ -6933,8 +6630,7 @@ html[lang="zh-Hant"] {
      it turns at its comma — never mid-phrase, which is what the clause
      split below is for. */
   --hero-giant: clamp(32px, 5.2vw, 100px);
-  /* −20% on the two steps that hold Chinese sentences */
-  --t-heading:  clamp(27.2px, 3.336vw, 64px);   /* 34 / 4.17vw / 80 × .8 */
+  /* −20% on the two steps that hold Chinese sentences */   /* 34 / 4.17vw / 80 × .8 */
   --t-lede:     clamp(19.2px, 1.584vw, 30.4px); /* 24 / 1.98vw / 38 × .8 */
 }
 /* The 1661px measure on `.hero-v3__title` is the English banner's own line
@@ -6991,7 +6687,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   }
 }
 
-
 /* ================================================================
    11 — CONNECT + APPROACH  (the two new inner pages)
 
@@ -7034,7 +6729,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .connect,
 .longform { --sec-gap: clamp(56px, 5.7vw, 110px); }
 
-
 /* ================================================================
    11a — CONNECT
    ================================================================ */
@@ -7071,10 +6765,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .connect__col--aside { grid-column: 7 / 13; min-width: 0; }
 
 .connect__heading {
-  font-family: var(--f-serif);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 40px;
   color: var(--c-black);
 }
 
@@ -7098,17 +6788,9 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 .connect__list .connect__item:last-child { border-bottom: none; padding-bottom: 0; }
 .connect__label {
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 25px;
   color: var(--c-orange);
 }
 .connect__value {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-black);
 }
 /* Only the links inside a value are interactive, so only they take the
@@ -7170,24 +6852,12 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    flat white is the only way it reads, and a brightness/invert filter
    does that without needing a second file. */
 .connect__funding-eyebrow {
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 25px;
   color: rgba(255, 255, 255, 0.75);
 }
 .connect__funding-title {
-  font-family: var(--f-serif);
-  font-size: clamp(28px, 2.4vw, 46px);
-  font-weight: 400;
-  line-height: 1.16;
   margin-top: 10px;
 }
 .connect__funding-text {
-  font-family: var(--f-sans);
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 28px;
   margin-top: 22px;
   max-width: 44em;
 }
@@ -7228,7 +6898,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   box-shadow: inset 0 0 0 1px var(--c-white);
 }
 
-
 /* ================================================================
    11b — APPROACH
    ================================================================ */
@@ -7236,30 +6905,18 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 /* The opening line, set like the home page's `.intro-v3`: serif, large,
    and the only thing between the title and the first section. */
 .longform__lede {
-  font-family: var(--f-serif);
-  font-size: var(--t-lede);
-  font-weight: 400;
-  line-height: 1.45;
   color: var(--c-black);
 }
 
 .longform__section { margin-top: var(--sec-gap); }
 
 .longform__eyebrow {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 25px;
   color: var(--c-orange);
   padding-bottom: 18px;
   border-bottom: var(--rule-width) solid var(--c-rule-solid);
   margin-bottom: 32px;
 }
 .longform__heading {
-  font-family: var(--f-serif);
-  font-size: clamp(28px, 2.4vw, 46px);
-  font-weight: 400;
-  line-height: 1.16;
   color: var(--c-black);
 }
 /* A second heading inside a section that has already opened with one —
@@ -7298,24 +6955,12 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   flex-direction: column;
 }
 .ethos__value-num {
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1;
   color: var(--c-orange);
 }
 .ethos__value-name {
-  font-family: var(--f-serif);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.2;
   margin-top: 18px;
 }
 .ethos__value-desc {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   margin-top: 12px;
 }
@@ -7334,24 +6979,12 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 .strategy + .strategy { border-top: var(--rule-width) solid var(--c-rule-solid); }
 .strategy__num {
-  font-family: var(--f-serif);
-  font-size: 34px;
-  font-weight: 400;
-  line-height: 1.1;
   color: var(--c-orange);
 }
 .strategy__name {
-  font-family: var(--f-serif);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 40px;
   color: var(--c-black);
 }
 .strategy__desc {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   margin-top: 8px;
   max-width: 52em;
@@ -7361,10 +6994,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    in practice. Set a step down from `__desc` so the row still reads as
    one item with a summary and a gloss, not as two equal paragraphs. */
 .strategy__note {
-  font-family: var(--f-sans);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 24px;
   color: var(--c-grey);
   margin-top: 10px;
   max-width: 52em;
@@ -7384,7 +7013,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   gap: 16px;
   margin-top: var(--sec-gap);
 }
-
 
 /* ================================================================
    11c — the two pages on smaller screens
@@ -7423,8 +7051,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   /* the aside follows the details down the page, with the section gap
      between them rather than the gutter that was holding them apart */
   .connect__col--aside { margin-top: var(--sec-gap); }
-
-  .connect__heading { font-size: 26px; line-height: 34px; }
   .connect__col--info { padding: 28px 24px 32px; }
   .connect__item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .connect__media img { aspect-ratio: 4 / 3; }
@@ -7438,11 +7064,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
     grid-template-columns: minmax(0, 1fr);
     gap: 6px;
   }
-  .strategy__num { font-size: 22px; }
-  .strategy__name { font-size: 24px; line-height: 32px; }
   .longform__media img { aspect-ratio: 4 / 3; }
 }
-
 
 /* ================================================================
    12 — INNER PAGES: BLACK COPY → GREY
@@ -7478,15 +7101,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    ================================================================ */
 
 /* ── listing: breadcrumb, title, filter bar, pager ─────────────── */
-:where(.inner-v3) .listing__crumb,
-:where(.inner-v3) .listing__crumb-toggle,
-:where(.inner-v3) .listing__crumb-menu a,
-:where(.inner-v3) .listing__filter-menu a,
-:where(.inner-v3) .listing__title,
-:where(.inner-v3) .listing__filter-toggle,
-:where(.inner-v3) .listing__clear,
-:where(.inner-v3) .pager__num,
-:where(.inner-v3) .pager__total { color: var(--c-grey); }
+:where(.inner-v3) .listing__crumb-menu a, :where(.inner-v3) .listing__filter-menu a { color: var(--c-grey); }
+:where(.inner-v3) .listing__crumb, :where(.inner-v3) .listing__crumb-toggle, :where(.inner-v3) .listing__title, :where(.inner-v3) .listing__filter-toggle, :where(.inner-v3) .listing__clear, :where(.inner-v3) .pager__num, :where(.inner-v3) .pager__total { color: var(--c-grey); }
 
 /* ── story cards ───────────────────────────────────────────────── */
 :where(.inner-v3) .story-card__title,
@@ -7494,17 +7110,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .story-card__tag { color: var(--c-grey); }
 
 /* ── article ───────────────────────────────────────────────────── */
-:where(.inner-v3) .article__title,
-:where(.inner-v3) .article__tag,
-:where(.inner-v3) .article__section-title,
-:where(.inner-v3) .article__send,
-:where(.inner-v3) .article__text,
-:where(.inner-v3) .article__pill,
-:where(.inner-v3) .article__download,
-:where(.inner-v3) .article__testimonial-quote,
-:where(.inner-v3) .article__testimonial-name,
-:where(.inner-v3) .article__related-title,
-:where(.inner-v3) .article__related-desc { color: var(--c-grey); }
+:where(.inner-v3) .article__send { color: var(--c-grey); }
+:where(.inner-v3) .article__title, :where(.inner-v3) .article__tag, :where(.inner-v3) .article__section-title, :where(.inner-v3) .article__text, :where(.inner-v3) .article__pill, :where(.inner-v3) .article__download, :where(.inner-v3) .article__testimonial-quote, :where(.inner-v3) .article__testimonial-name, :where(.inner-v3) .article__related-title, :where(.inner-v3) .article__related-desc { color: var(--c-grey); }
 
 /* ── connect ───────────────────────────────────────────────────── */
 :where(.inner-v3) .partnership__foot-text,
@@ -7542,7 +7149,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 :where(.inner-v3) .ethos__value-name,
 :where(.inner-v3) .strategy__name { color: var(--c-grey); }
 
-
 /* ================================================================
    13 — APPROACH (the institutes) + one INSTITUTE
 
@@ -7569,18 +7175,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .institutes__lede,
 .institute__lede,
 .institute__text { max-width: 890px; margin-inline: auto; }
-.institutes__lede,
-.institute__lede {
-  font-family: var(--f-serif);
-  font-size: var(--t-lede);
-  font-weight: 400;
-  line-height: 1.45;
-}
 .institute__text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   margin-top: 24px;
 }
 
@@ -7603,17 +7198,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   border-bottom: var(--rule-width) solid var(--c-rule-solid);
   margin-bottom: 32px;
 }
-.institutes__heading {
-  font-family: var(--f-serif);
-  font-size: clamp(28px, 2.4vw, 46px);
-  font-weight: 400;
-  line-height: 1.16;
-}
 .institutes__text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   margin-top: 24px;
 }
 
@@ -7663,9 +7248,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 /* the same per-institute palette the story cards use, so an institute
    is the same colour wherever it appears */
 .institute-card__eyebrow {
-  font-family: var(--f-sans);
-  font-size: 12px;
-  font-weight: 400;
   color: var(--cat, var(--c-orange));
 }
 .institute-card__eyebrow[data-cat="education-excellence"] { --cat: var(--cat-education-excellence); }
@@ -7675,24 +7257,12 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .institute-card__eyebrow[data-cat="impact-strategy"]      { --cat: var(--cat-impact-strategy); }
 
 .institute-card__title {
-  font-family: var(--f-serif);
-  font-size: clamp(26px, 2.1vw, 40px);
-  font-weight: 400;
-  line-height: 1.18;
   margin-top: 14px;
 }
 .institute-card__lede {
-  font-family: var(--f-sans);
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 28px;
   margin-top: 20px;
 }
 .institute-card__text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   margin-top: 16px;
 }
 /* the tags sit on the white plate, so the story card's #fff4ec chip
@@ -7711,12 +7281,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   max-width: 890px;
   margin: var(--sec-gap) auto 0;
   text-align: center;
-}
-.institutes__foot-text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
 }
 .institutes__cta {
   display: flex;
@@ -7745,9 +7309,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .institutes__foot,
   .institute__body { text-align: left; }
   .institutes__cta { justify-content: flex-start; }
-  .institute-card__lede { font-size: 17px; line-height: 26px; }
 }
-
 
 /* ================================================================
    14 — SEARCH RESULTS
@@ -7802,10 +7364,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   background: transparent;
   border: none;
   padding: 0;
-  font-family: var(--f-serif);
-  font-size: clamp(22px, 2vw, 34px);
-  font-weight: 400;
-  line-height: 1.3;
   color: var(--c-grey);
   -webkit-appearance: none;
   appearance: none;
@@ -7831,10 +7389,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .search__submit:hover { transform: translateX(2px); }
 
 .search__count {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   margin-top: 28px;
 }
@@ -7861,15 +7415,11 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   background: var(--c-white);
   border-radius: 100px;
   padding: 9px 20px;
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 400;
   color: var(--c-grey);
   white-space: nowrap;
   transition: background var(--ease), color var(--ease);
 }
 .s-tab__count {
-  font-size: 12px;
   /* not `opacity`, which would fade the whole chip's colour with it —
      this keeps the count a step back at both states */
   color: var(--c-orange);
@@ -7910,26 +7460,15 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    a label that was already orange would be the one thing on the row
    that did not respond. */
 .s-result__kind {
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: 12px;
   color: var(--c-grey);
 }
 
 .s-result__title {
-  font-family: var(--f-serif);
-  font-size: clamp(22px, 1.7vw, 30px);
-  font-weight: 400;
-  line-height: 1.25;
   color: var(--c-grey);
   margin-top: 10px;
   transition: color var(--ease);
 }
 .s-result__desc {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   margin-top: 12px;
   max-width: 62em;
@@ -7937,10 +7476,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 /* where the result lives, so a reader can tell two similarly-named
    things apart before clicking */
 .s-result__path {
-  font-family: var(--f-sans);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 20px;
   color: var(--c-grey);
   opacity: 0.7;
   margin-top: 14px;
@@ -7965,10 +7500,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 
 /* ── nothing in this tab ─────────────────────────────────────────── */
 .search__empty {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   padding: 56px 0;
   text-align: center;
@@ -7990,9 +7521,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   }
   .s-result__thumb { aspect-ratio: 16 / 9; }
   .s-tabs { gap: 8px; padding-bottom: 28px; }
-  .s-tab { padding: 8px 16px; font-size: 13px; }
+  .s-tab { padding: 8px 16px; }
 }
-
 
 /* ================================================================
    15 — STORY  (the alternate article arrangement)
@@ -8091,17 +7621,9 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 
 .story__facts { display: flex; flex-direction: column; gap: 22px; }
 .story__fact-label {
-  font-family: var(--f-sans);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 20px;
   color: var(--c-orange);
 }
 .story__fact-value {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   margin-top: 4px;
 }
@@ -8132,10 +7654,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 
 /* the opening line, a step up from the body copy */
 .story__lede {
-  font-family: var(--f-serif);
-  font-size: var(--t-lede);
-  font-weight: 400;
-  line-height: 1.45;
   color: var(--c-grey);
   margin-top: clamp(28px, 2.6vw, 48px);
 }
@@ -8153,9 +7671,9 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 /* on the body's tracks, so the page has one left edge and one right
    edge the whole way down */
-.story__related-title,
 .story__related-grid { grid-column: 3 / 13; }
-.story__related-title { font-size: 16px; margin-bottom: 28px; }
+.story__related-title { grid-column: 3 / 13; }
+.story__related-title { margin-bottom: 28px; }
 .story__related-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8192,8 +7710,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    it was leaving on the outside; this reclaims the one on the other. */
 @media (max-width: 1440px) {
   .story__main { grid-column: 2 / 9; }
-  .story__related-title,
   .story__related-grid { grid-column: 2 / 13; }
+  .story__related-title { grid-column: 2 / 13; }
 }
 @media (max-width: 1024px) {
   /* Below this the rail is too narrow to hold a credit line on one row,
@@ -8204,10 +7722,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
     grid-template-columns: minmax(0, 1fr);
     max-width: 900px;      /* `.article__body`'s stacked cap */
   }
-  .story__meta,
-  .story__main,
-  .story__related-title,
-  .story__related-grid { grid-column: auto; grid-row: auto; }
+  .story__meta, .story__main, .story__related-grid { grid-column: auto; grid-row: auto; }
+  .story__related-title { grid-column: auto; grid-row: auto; }
   .story__related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .story__meta { max-width: none; margin-bottom: 48px; }
   .story__meta-inner {
@@ -8224,7 +7740,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .story__facts { flex-direction: column; gap: 18px; }
   .story__related-grid { grid-template-columns: minmax(0, 1fr); }
 }
-
 
 /* ================================================================
    16 — LEGAL  (Privacy Policy · Disclaimer · Accessibility · Sitemap)
@@ -8250,10 +7765,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 
 .legal__meta {
-  font-family: var(--f-sans);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
   color: var(--c-grey);
   padding-bottom: 22px;
   border-bottom: var(--rule-width) solid var(--c-rule-solid);
@@ -8264,10 +7775,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    three, so it is a block each page opts into rather than a fixture. */
 .legal__toc { margin-top: 32px; }
 .legal__toc-label {
-  font-family: var(--f-sans);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 20px;
   color: var(--c-orange);
 }
 .legal__toc-list {
@@ -8277,10 +7784,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   margin-top: 14px;
 }
 .legal__toc-list a {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
   transition: color var(--ease);
 }
@@ -8290,10 +7793,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 /* the anchor lands under the sticky nav rather than behind it */
 .legal__section { scroll-margin-top: 120px; }
 .legal__heading {
-  font-family: var(--f-serif);
-  font-size: clamp(24px, 1.9vw, 30px);
-  font-weight: 400;
-  line-height: 1.3;
   color: var(--c-grey);
 }
 .legal__list {
@@ -8305,10 +7804,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .legal__list li {
   position: relative;
   padding-left: 22px;
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
 }
 .legal__list li::before {
@@ -8336,10 +7831,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   border-top: var(--rule-width) solid var(--c-rule-solid);
 }
 .legal__also-label {
-  font-family: var(--f-sans);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 20px;
   color: var(--c-orange);
   margin-bottom: 18px;
 }
@@ -8348,8 +7839,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   background: var(--c-white);
   border-radius: 100px;
   padding: 8px 20px;
-  font-family: var(--f-sans);
-  font-size: 14px;
   color: var(--c-grey);
   transition: background var(--ease), color var(--ease);
 }
@@ -8370,16 +7859,11 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   align-items: start;
 }
 .sitemap__group-title {
-  font-family: var(--f-serif);
-  font-size: clamp(22px, 1.7vw, 28px);
-  font-weight: 400;
-  line-height: 1.3;
   color: var(--c-grey);
   padding-bottom: 16px;
   border-bottom: var(--rule-width) solid var(--c-rule-solid);
 }
 .sitemap__links { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
-.sitemap__links a,
 .sitemap__links span {
   font-family: var(--f-sans);
   font-size: 16px;
@@ -8388,9 +7872,13 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   color: var(--c-grey);
   transition: color var(--ease);
 }
+.sitemap__links a {
+  color: var(--c-grey);
+  transition: color var(--ease);
+}
 .sitemap__links a:hover { color: var(--c-orange); }
 /* a child page, indented under the one it hangs off */
-.sitemap__links .is-sub { padding-left: 20px; font-size: 15px; }
+.sitemap__links .is-sub { padding-left: 20px; }
 /* named in the map but not built yet — shown, because a sitemap that
    hides them is not a map of the site that is planned */
 .sitemap__links span { opacity: 0.45; }
@@ -8404,7 +7892,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 @media (max-width: 599px) {
   .sitemap__body { grid-template-columns: minmax(0, 1fr); }
 }
-
 
 /* ================================================================
    17 — PARTNERSHIP  (the partner wall, standing still)
@@ -8428,10 +7915,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   border-top: var(--rule-width) solid var(--c-rule-solid);
 }
 .partners__label {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 25px;
   color: var(--c-orange);
   text-align: center;
 }
@@ -8490,10 +7973,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   text-align: center;
 }
 .partnership__foot-text {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 25px;
   color: var(--c-grey);
 }
 .partnership__cta { justify-content: center; margin-top: 32px; }
@@ -8508,278 +7987,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   .partnership__cta { justify-content: flex-start; }
 }
 
-
-/* ================================================================
-   DESKTOP READABILITY FLOOR
-
-   The desktop page is intentionally zoomed as a whole on narrower or
-   short windows. That keeps the 1920 x 1000 composition intact, but it
-   also used to shrink 16px running copy to as little as 10.8px on a
-   1600 x 660 viewport (`.9 width x .75 height`). Keep the composition
-   zoom and compensate the type instead of making the whole layout larger.
-
-   These values live in the zoomed coordinate space: after `body` zoom is
-   applied running copy lands at a real 15px type size with at least 22px
-   leading. Navigation and metadata labels use their own 14px rendered tier;
-   compact tags, copyright and the cursor's DISCOVER label keep a separate
-   12px rendered floor so their supporting hierarchy is not flattened. Mobile
-   has its own type system and stays untouched.
-   ================================================================ */
-@media (min-width: 768px) {
-  :root {
-    --copy-readable-min: calc(15px / var(--zoom));
-    --copy-leading-min: calc(22px / var(--zoom));
-    --label-readable-min: calc(14px / var(--zoom));
-    --microcopy-readable-min: calc(12px / var(--zoom));
-  }
-
-  /* Standard running copy: 16px (15px on listing cards). */
-  .hero__description,
-  .challenge__body,
-  .approach-card__body,
-  .article__text,
-  .panel__copy,
-  .panel__note,
-  .card-v3__desc,
-  .ventures__text,
-  .funding__text,
-  .connect__value,
-  .ethos__value-desc,
-  .strategy__desc,
-  .institute__text,
-  .institutes__text,
-  .institute-card__text,
-  .institutes__foot-text,
-  .search__count,
-  .s-result__desc,
-  .search__empty,
-  .story__fact-value,
-  .legal__toc-list a,
-  .legal__list li,
-  .sitemap__links a,
-  .sitemap__links span,
-  .partnership__foot-text {
-    font-size: max(16px, var(--copy-readable-min));
-    line-height: max(25px, var(--copy-leading-min));
-  }
-
-  /* Copy that starts one step smaller keeps that distinction at 1:1. */
-  .story-card__desc {
-    font-size: max(15px, var(--copy-readable-min));
-    line-height: max(22px, var(--copy-leading-min));
-  }
-
-  .strategy__note {
-    font-size: max(15px, var(--copy-readable-min));
-    line-height: max(24px, var(--copy-leading-min));
-  }
-
-  .sitemap__links .is-sub {
-    font-size: max(15px, var(--copy-readable-min));
-    line-height: max(25px, var(--copy-leading-min));
-  }
-
-  .article__caption {
-    font-size: max(16px, var(--copy-readable-min));
-  }
-
-  .article__related-name {
-    font-size: max(16px, var(--copy-readable-min));
-    line-height: max(24px, var(--copy-leading-min));
-  }
-
-  .card-v3__desc {
-    line-height: max(26px, var(--copy-leading-min));
-  }
-
-  /* This legacy carousel uses a larger copy step on full desktop. */
-  .news-card__description {
-    font-size: max(22px, var(--copy-readable-min));
-  }
-
-  /* The primary copy step remains larger whenever the screen allows it. */
-  .hero-v3__body,
-  .panel__label,
-  .panel__question,
-  .article__subtitle,
-  .connect__funding-text,
-  .institute-card__lede {
-    font-size: max(18px, var(--copy-readable-min));
-  }
-
-  .hero-v3__body {
-    line-height: max(30px, var(--copy-leading-min));
-  }
-
-  .connect__funding-text,
-  .institute-card__lede {
-    line-height: max(28px, var(--copy-leading-min));
-  }
-
-  /* Callout and testimonial prose uses a larger 20/30 step at 1:1. */
-  .article__highlight p,
-  .article__testimonial-quote,
-  .article__testimonial-name {
-    font-size: max(20px, var(--copy-readable-min));
-  }
-
-  .article__highlight p,
-  .article__testimonial-quote {
-    line-height: max(30px, var(--copy-leading-min));
-  }
-
-  /* Compact descriptive copy is still prose, rather than a UI label. */
-  .article__related-desc {
-    font-size: max(14px, var(--copy-readable-min));
-    line-height: max(20px, var(--copy-leading-min));
-  }
-
-  /* Display and navigation text that can still cross below 15px after the
-     short-window zoom. Keep each component's original desktop step whenever
-     it is already larger than the readability floor. */
-  .panel__crumbs {
-    font-size: max(calc(var(--t-lede) * 0.7), var(--copy-readable-min));
-  }
-
-  .panel__bullets li,
-  .card-v3__title,
-  .bullet-list__item,
-  .pillar-card__body,
-  .news-card__description {
-    font-size: max(22px, var(--copy-readable-min));
-  }
-
-  .bullet-list--sm .bullet-list__item,
-  .article__testimonial-name {
-    font-size: max(20px, var(--copy-readable-min));
-  }
-
-  .pager__num {
-    font-size: max(19px, var(--copy-readable-min));
-  }
-
-  .news-v3__filter {
-    font-size: max(clamp(16px, 1.15vw, 22px), var(--copy-readable-min));
-  }
-
-  .opening__cite-name {
-    font-size: max(clamp(16px, 1.25vw, 24px), var(--copy-readable-min));
-  }
-
-  .opening__cite-years {
-    font-size: max(clamp(12px, 0.83vw, 16px), var(--copy-readable-min));
-  }
-
-  .opening__skip {
-    font-size: max(clamp(13px, 0.94vw, 16px), var(--copy-readable-min));
-  }
-
-  .challenge__circle-title {
-    font-size: max(clamp(16px, 8cqw, 32px), var(--copy-readable-min));
-  }
-
-  /* Primary and secondary interface text. */
-  .footer-v3__nav a,
-  .footer__nav-link,
-  .news__filter {
-    font-size: max(18px, var(--copy-readable-min));
-  }
-
-  .search-overlay__hot a {
-    font-size: max(17px, var(--copy-readable-min));
-  }
-
-  .nav--v3 .nav__mega-links a,
-  .btn-pill,
-  .pager__total,
-  .article__testimonial-role,
-  .longform__eyebrow,
-  .partners__label,
-  .news-card__category,
-  .label,
-  .hero__description,
-  .challenge__body,
-  .approach-card__body,
-  .footer__tagline {
-    font-size: max(16px, var(--copy-readable-min));
-  }
-
-  .nav__lang,
-  .article__pill,
-  .article__download,
-  .challenge__circle-tag {
-    font-size: max(15px, var(--copy-readable-min));
-  }
-
-  .btn-circle,
-  .search-overlay__label,
-  .listing__filter-menu a,
-  .listing__clear,
-  .article__carousel-count,
-  .connect__label,
-  .connect__funding-eyebrow,
-  .ethos__value-num,
-  .s-tab,
-  .legal__meta,
-  .legal__also-links a,
-  .nav--v3 .nav__mega-label {
-    font-size: max(14px, var(--copy-readable-min));
-  }
-
-  /* Compact navigation and metadata are a 14px rendered tier, separate from
-     both running copy and the smaller card/legal microcopy below. */
-  .listing__crumb,
-  .listing__crumb-toggle,
-  .article__tag,
-  .article__related-title {
-    font-size: max(14px, var(--label-readable-min));
-  }
-
-  .footer-v3__legal a,
-  .footer__legal-link,
-  .s-result__path,
-  .story__fact-label,
-  .legal__toc-label,
-  .legal__also-label {
-    font-size: max(13px, var(--copy-readable-min));
-  }
-
-  .card-v3__cat,
-  .story-card__category,
-  .institute-card__eyebrow,
-  .s-tab__count,
-  .s-result__kind,
-  .article__send--copied::after {
-    font-size: max(12px, var(--copy-readable-min));
-  }
-
-  /* Compact card metadata stays visibly subordinate to titles and copy. */
-  .news-card__tag {
-    font-size: max(13px, var(--microcopy-readable-min));
-  }
-
-  .card-v3__tags li,
-  .story-card__tag {
-    font-size: max(12px, var(--microcopy-readable-min));
-  }
-
-  .listing__filter-toggle {
-    font-size: max(16px, var(--copy-readable-min));
-  }
-
-  .cursor__label,
-  .footer-v3__copyright,
-  .footer-v3__copyright *,
-  .footer__copyright p {
-    font-size: max(12px, var(--microcopy-readable-min));
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1440px) {
-  .news-card__description {
-    font-size: max(17px, var(--copy-readable-min));
-  }
-}
+/* Typography is defined once in typography.css, including zoom compensation. */
 
 /* ================================================================
    PROTOTYPE PLACEHOLDERS + INTERACTION STATES
@@ -8821,10 +8029,13 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   width: 360px; left: 30px; top: auto; bottom: 54px;
 }
 .footer-v3__logo { width: 205px; max-width: 100%; height: auto; object-fit: contain; }
-
+.home-v3 .hero-v3__body,
 .home-v3 .intro-v3 {
-  font-family: var(--f-sans); font-size: 23px; font-weight: 300; line-height: 1.65;
-  letter-spacing: 0; max-width: 1120px; padding-block: 58px;
+  /* Both opening paragraphs span seven of the twelve desktop columns. */
+  max-width: calc(7 * var(--col) + 6 * var(--grid-gap));
+}
+.home-v3 .intro-v3 {
+  padding-block: 58px;
 }
 .home-v3 .journey { isolation: isolate; gap: 22px; }
 .home-v3 .journey__step {
@@ -8835,8 +8046,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .home-v3 .journey__step .panel__title { margin-top: 0; }
 .home-v3 .journey__step .panel__body { margin-top: 18px; }
 .home-v3 .journey__step .panel__lede {
-  font-family: var(--f-sans); font-size: 25px; font-weight: 300; line-height: 1.5;
-  letter-spacing: 0; max-width: 530px;
+  max-width: 530px;
 }
 .home-v3 .journey__step [data-motion] { top: 50%; translate: none; transform: translateY(-50%); }
 .home-v3 .journey__step .panel__dots { height: 260px; }
@@ -8862,8 +8072,8 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   align-items: stretch; background: #f8e5d7; min-height: 620px; margin-top: 38px;
 }
 .compassion-outcome__copy { padding: clamp(32px,4vw,78px); display: flex; flex-direction: column; align-items: flex-start; }
-.compassion-outcome h2 { font-family: var(--f-serif); font-weight: 400; font-size: clamp(36px,3.8vw,66px); line-height: 1.1; color: var(--c-orange); margin: 44px 0 28px; max-width: 650px; }
-.compassion-outcome p { font: max(22px, calc(15.02px / var(--zoom)))/1.6 var(--f-sans); max-width: 580px; }
+.compassion-outcome h2 { color: var(--c-orange); margin: 44px 0 28px; max-width: 650px; }
+.compassion-outcome p { max-width: 580px; }
 /* Three slightly overlapping circles give the shared principles equal emphasis. */
 .compassion-outcome__values {
   --value-overlap: clamp(8px, 1vw, 16px);
@@ -8876,10 +8086,9 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   flex: 0 0 calc((100% + 2 * var(--value-overlap)) / 3);
   aspect-ratio: 1; border: 1.5px solid currentColor; border-radius: 50%;
   background: transparent; padding: 8px; text-align: center;
-  font: 400 max(18px, calc(14px / var(--zoom)))/1.3 var(--f-sans);
 }
 .compassion-outcome__values li + li { margin-left: calc(-1 * var(--value-overlap)); }
-.compassion-outcome__values span { max-width: 100%; font-weight: 400; }
+.compassion-outcome__values span { min-width: 0; max-width: 100%; font-weight: 400; overflow-wrap: anywhere; }
 .compassion-outcome__image.panel__photo { position: relative; inset: auto; translate: none; width: 100%; max-width: none; margin: 0; aspect-ratio: auto; overflow: hidden; min-height: 380px; }
 .compassion-outcome__image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .connection-motif { display: flex; align-items: center; gap: 18px; color: var(--c-orange); }
@@ -8903,7 +8112,31 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   [data-rail] { --rail-margin: var(--gm-mob); }
 }
 [data-rail] img { -webkit-user-drag: none; }
-.home-v3 .news-v3__grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc(3 * var(--rail-column) + 2 * var(--grid-gap)); grid-template-columns: none; gap: var(--grid-gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 var(--rail-inset) 18px; scroll-padding-inline: var(--rail-inset); }
+.home-v3 .news-v3__grid {
+  --rail-visible: 4;
+  display: grid;
+  grid-auto-flow: column;
+  /* The visible set must fill the content grid exactly. Any later card
+     begins after its right edge, in the page margin's bleed area. */
+  grid-auto-columns: calc((var(--rail-content) - (var(--rail-visible) - 1) * var(--grid-gap)) / var(--rail-visible));
+  grid-template-columns: none;
+  gap: var(--grid-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0 var(--rail-inset-end, var(--rail-inset)) 18px var(--rail-inset-start, var(--rail-inset));
+  scroll-padding-left: var(--rail-inset-start, var(--rail-inset));
+  scroll-padding-right: var(--rail-inset-end, var(--rail-inset));
+}
+@media (max-width: 1279px) {
+  .home-v3 .news-v3__grid { --rail-visible: 3; }
+}
+@media (max-width: 899px) {
+  .home-v3 .news-v3__grid { --rail-visible: 2; }
+}
+@media (max-width: 767px) {
+  .home-v3 .news-v3__grid { --rail-visible: 1; }
+}
 .home-v3 .news-v3__grid::-webkit-scrollbar { display: none; width: 0; height: 0; }
 .home-v3 .card-v3__tags { margin-top: auto; padding-top: 18px; }
 .home-v3 .card-v3__tags li { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
@@ -8917,49 +8150,66 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
   width: calc(100px / var(--zoom)); height: calc(2px / var(--zoom)); background: var(--c-orange);
 }
-.home-v3 .ventures__intro h2 { font: 400 clamp(32px,3.2vw,52px)/1.15 var(--f-serif); margin-bottom: 20px; }
-.home-v3 .ventures__intro p { max-width: 940px; margin-inline: auto; font: 21px/1.6 var(--f-sans); }
-.home-v3 .funding__text { max-width: 880px; font-family: var(--f-sans); line-height: 1.65; }
+.home-v3 .ventures__intro h2 { margin-bottom: 20px; }
+.home-v3 .ventures__intro p { max-width: 940px; margin-inline: auto; }
+.home-v3 .funding__text { max-width: 880px; }
 
 .listing__title--initiatives { margin-bottom: 0; }
-.listing__subtitle { font: 300 max(20px, calc(16px / var(--zoom)))/1.4 var(--f-sans); color: var(--c-orange); text-align: center; margin: 16px 0 0; }
+.listing__subtitle { color: var(--c-orange); text-align: center; margin: 16px 0 0; }
 .spotlight { margin: 48px 0 70px; padding-bottom: 40px; border-bottom: var(--rule-width) solid var(--c-rule); }
 .spotlight__head { display: flex; justify-content: center; align-items: center; gap: 24px; margin-bottom: 25px; text-align: center; }
-.spotlight__head h2, .listing__all-title { font: 400 32px/1.2 var(--f-serif); }
 .spotlight__rail { display: grid; grid-auto-flow: column; grid-auto-columns: calc(6 * var(--rail-column) + 5 * var(--grid-gap)); gap: var(--grid-gap); overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--rail-inset) 18px; scroll-padding-inline: var(--rail-inset); scrollbar-width: none; }
 .spotlight__rail::-webkit-scrollbar { display: none; width: 0; height: 0; }
 .spotlight__card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr auto; min-width: 0; min-height: 320px; background: var(--c-white); color: inherit; text-decoration: none; scroll-snap-align: start; }
 .spotlight__tags { grid-column: 2; display: flex; flex-wrap: wrap; align-content: end; gap: 8px; list-style: none; margin: 0; padding: 18px 27px 27px; }
-.spotlight__tags li { padding: 4px 13px; border-radius: 100px; background: #fff4ec; color: var(--c-grey); font: 300 12px/1.35 var(--f-sans); }
+.spotlight__tags li { padding: 4px 13px; border-radius: 100px; background: #fff4ec; color: var(--c-grey); }
 .spotlight__image { position: relative; grid-column: 1; grid-row: 1 / 4; overflow: hidden; background: var(--c-panel); }
 .spotlight__image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .spotlight__card:hover img { transform: scale(1.035); }
-.spotlight__card h3 { grid-column: 2; min-width: 0; font: 400 26px/32px var(--f-serif); color: var(--c-orange); margin: 0; padding: 27px 27px 10px; }
-.spotlight__card p { grid-column: 2; min-width: 0; font: 300 15px/22px var(--f-sans); padding: 0 27px; }
+.spotlight__card h3 { grid-column: 2; min-width: 0; color: var(--c-orange); margin: 0; padding: 27px 27px 10px; }
+.spotlight__card p { grid-column: 2; min-width: 0; padding: 0 27px; }
 .listing__all-title { margin-bottom: 28px; text-align: center; }
 .listing__filters { position: relative; z-index: 6; margin-top: 0; }
 .listing__filter-menu { min-width: max(100%, 240px); max-height: 330px; overflow: hidden; flex-direction: column; }
 .listing__filter.is-open .listing__filter-menu { display: flex; }
 .listing__filter-options { min-height: 0; overflow-y: auto; overscroll-behavior: contain; flex: 1 1 auto; scrollbar-width: thin; }
-.listing__filter-option { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 5px; color: var(--c-black); font: 300 15px/1.4 var(--f-sans); }
+.listing__filter-option { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 5px; color: var(--c-black); }
 .listing__filter-option:hover, .listing__filter-option:has(input:checked) { background: var(--c-bg); }
 .listing__filter-option input { width: 16px; height: 16px; flex: 0 0 16px; margin: 0; accent-color: var(--c-orange); }
 .listing__filter-option:focus-within { outline: 1px solid var(--c-orange); outline-offset: -1px; }
-.listing__filter-clear { position: static; flex: 0 0 auto; display: block; width: 100%; padding: 11px 12px; margin-top: 6px; border-top: var(--rule-width) solid var(--c-rule); background: white; color: var(--c-orange); text-align: left; font: 300 14px/1.4 var(--f-sans); }
+.listing__filter-clear { position: static; flex: 0 0 auto; display: block; width: 100%; padding: 11px 12px; margin-top: 6px; border-top: var(--rule-width) solid var(--c-rule); background: white; color: var(--c-orange); text-align: left; }
 .listing__filter-clear:disabled { color: #999; opacity: 1; }
 .listing__filter-clear:focus-visible { outline: 1px solid var(--c-orange); outline-offset: -2px; }
 body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .listing__filter.opens-up .listing__filter-menu { top: auto; bottom: calc(100% + 8px); }
 .listing__filter-toggle:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 5px; }
 .listing__grid { position: relative; z-index: 1; }
-.article__section-heading { font: 400 24px/1.25 var(--f-serif); color: var(--c-orange); margin: 40px 0 10px; padding-top: 24px; border-top: var(--rule-width) solid var(--c-rule); }
+.article__section-heading { color: var(--c-orange); margin: 40px 0 10px; padding-top: 24px; border-top: var(--rule-width) solid var(--c-rule); }
 .article__main-head + .article__section-heading { margin-top: 30px; }
 .article__section-heading + .article__text { margin-top: 0; }
 .article__title + .article__tags { margin-top: 22px; }
-.article__related-category { font: 400 13px/1.4 var(--f-sans); color: var(--c-orange); margin-top: 10px; }
-.listing__grid .story-card__tag[data-tag-group] { max-width: 100%; white-space: normal; line-height: 1.35; }
+.article__related-category {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 12px;
+  padding: 4px 13px;
+  border-radius: 100px;
+  background: var(--c-white);
+  color: var(--c-black);
+}
+.listing__grid .story-card__tag[data-tag-group] { max-width: 100%; white-space: normal; }
 .priorities-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
-.priorities-grid a { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px; background: var(--c-panel); border-top: 1px solid var(--c-orange); font: 26px/1.2 var(--f-serif); color: var(--c-orange); text-decoration: none; }
+.priorities-grid a { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px; background: var(--c-panel); border-top: 1px solid var(--c-orange); color: var(--c-orange); text-decoration: none; }
+.priorities-grid__arrow {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  background: currentColor;
+  -webkit-mask: url('assets/icons/right-arrow.svg') center / contain no-repeat;
+  mask: url('assets/icons/right-arrow.svg') center / contain no-repeat;
+}
 #priorities, #practices { scroll-margin-top: 140px; }
 .stories-index__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0 90px; }
 .stories-index__grid .story-card__thumb { margin: 0 0 24px; }
@@ -8970,31 +8220,23 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 }
 
 /* Compensate running copy for the existing art-directed desktop zoom. */
-@media (min-width: 768px) {
-  .article__related-category { font-size: max(13px, calc(12px / var(--zoom))); }
-  .home-v3 .ventures__intro p { font-size: max(21px, calc(15.02px / var(--zoom))); }
-  .spotlight__card p { line-height: max(22px, var(--copy-leading-min)); }
-  .spotlight__tags li { font-size: max(12px, var(--microcopy-readable-min)); }
-  .spotlight__card p,
-  .home-v3 .card-v3__desc, .article__text, .home-v3 .ventures__text,
-  .home-v3 .funding__text, .story-card__desc {
-    font-size: max(16px, calc(15.02px / var(--zoom))) !important;
-  }
-}
 @media (max-width: 1023px) {
   .home-v3 .journey__step { min-height: 430px; }
-  .home-v3 .journey__step .panel__lede { font-size: 21px; }
   .compassion-outcome { min-height: 430px; }
   .compassion-outcome__copy { padding: 34px; }
-  .compassion-outcome h2 { font-size: 40px; margin-top: 30px; }
-  .compassion-outcome p { font-size: 19px; }
-  .compassion-outcome__values li { font-size: max(15px, calc(14px / var(--zoom))); padding: 6px 2px; }
-}
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .home-v3 .news-v3__grid { grid-auto-columns: calc(2 * var(--rail-column) + var(--grid-gap)); }
+  .compassion-outcome h2 { margin-top: 30px; }
+  .compassion-outcome__values li { padding: 6px 2px; }
 }
 @media (max-width: 1279px) {
   .spotlight__rail { grid-auto-columns: var(--rail-content); }
+}
+@media (min-width: 900px) and (max-width: 1279px) {
+  .home-v3 .hero-v3__body,
+  .home-v3 .intro-v3 { max-width: var(--col4); }
+}
+@media (max-width: 899px) {
+  .home-v3 .hero-v3__body,
+  .home-v3 .intro-v3 { max-width: var(--col3); }
 }
 /* Stacked artwork follows the copy instead of inheriting desktop offsets. */
 @media (max-width: 899px) {
@@ -9006,41 +8248,51 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   }
 }
 @media (max-width: 767px) {
-  .home-v3 .intro-v3 { font-size: 18px; padding-block: 34px; }
+  .home-v3 .hero-v3__body,
+  .home-v3 .intro-v3 { max-width: 100%; }
+  .home-v3 .intro-v3 { padding-block: 34px; }
   .home-v3 .journey { gap: 16px; }
   .home-v3 .journey__step { min-height: 420px; padding: 28px 24px; }
-  .home-v3 .journey__step .panel__title { font-size: 38px; }
   .home-v3 .journey__step .panel__body { max-width: 100%; margin-top: 12px; }
-  .home-v3 .journey__step .panel__lede { font-size: 18px; }
   .compassion-outcome { grid-template-columns: 1fr; margin-top: 18px; }
   .compassion-outcome__copy { padding: 30px 24px; }
-  .compassion-outcome h2 { font-size: 39px; margin: 28px 0 20px; }
-  .compassion-outcome p { font-size: 18px; }
-  .compassion-outcome__values { --value-overlap: 8px; padding-top: 30px; max-width: 460px; }
-  .compassion-outcome__values li { font-size: clamp(12px, 3.3vw, 16px); padding: 6px 2px; }
+  .compassion-outcome h2 { margin: 28px 0 20px; }
+  .compassion-outcome__values {
+    --value-overlap: 0px;
+    width: calc(100% + 48px);
+    max-width: min(460px, calc(100vw - 2 * var(--gm-mob)));
+    margin-left: -24px;
+    padding-top: 30px;
+  }
+  .compassion-outcome__values li { padding: 6px 2px; }
   .compassion-outcome__image.panel__photo { min-height: 0; aspect-ratio: 1.25; }
   .home-v3 .news-v3__head { align-items: flex-start; gap: 20px; }
   .home-v3 .ventures__intro { margin-bottom: 34px; padding-bottom: 28px; }
-  .home-v3 .ventures__intro p { font-size: 18px; }
   .spotlight { margin: 32px 0 38px; padding-bottom: 24px; }
-  .spotlight__head h2, .listing__all-title { font-size: 28px; }
   .spotlight__rail { grid-auto-columns: calc(3 * var(--rail-column) + 2 * var(--grid-gap)); }
   .spotlight__card { display: flex; flex-direction: column; min-height: 0; }
   .spotlight__image { aspect-ratio: 1.5; }
   .spotlight__card h3 { padding: 20px 20px 8px; }
   .spotlight__card p { padding: 0 20px; }
   .spotlight__tags { margin-top: auto; padding: 20px; }
-  .spotlight__card h3 { font-size: 24px; }
   .listing__title--initiatives { margin-bottom: 0; }
-  .listing__subtitle { font-size: 18px; margin-top: 12px; }
+  .listing__subtitle { margin-top: 12px; }
   .listing__filters { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 18px; }
   .listing__filter { max-width: none; min-width: 0; }
   .listing__filter-menu { min-width: 220px; max-height: 270px; }
   .listing__filter:nth-child(even) .listing__filter-menu { left: auto; right: 0; }
   .listing__clear { justify-self: start; }
   .priorities-grid, .stories-index__grid { grid-template-columns: 1fr; }
-  .article__section-heading { font-size: 22px; margin-top: 30px; padding-top: 22px; }
+  .priorities-grid__arrow { width: 28px; height: 28px; flex-basis: 28px; }
+  .article__section-heading { margin-top: 30px; padding-top: 22px; }
   .footer-v3__logo { width: 170px; }
+}
+/* Keep full value labels at the shared lead size on narrow phones. */
+@media (max-width: 389px) {
+  .compassion-outcome__values { flex-wrap: wrap; justify-content: center; }
+  .compassion-outcome__values li { flex-basis: 50%; }
+  .compassion-outcome__values li:last-child { margin-top: -12px; }
+  .compassion-outcome__values span { overflow-wrap: normal; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -9048,24 +8300,14 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .journey__step { transform: none !important; position: relative !important; top: auto !important; }
 }
 
-/* Light running copy and supporting UI, with display headings intact. */
-body { font-weight: 300; }
-body :is(p, li, small, label, input, textarea, select, button, figcaption, dt, dd, td, th, blockquote),
-body :is(.article__tag, .story-card__category, .card-v3__category,
-  .listing__crumb, .listing__crumb a, .pager__total, .pager__num, .cursor__label,
-  .nav__lang, .footer__copyright, .footer-v3__copyright, .footer-v3__legal,
-  .footer-v3__nav a, .btn, .btn-pill, .skip-link, .card-v3__title,
-  .article__caption, .article__testimonial-name, .article__testimonial-role,
-  .article__related-title, .ethos__value-num,
-  .legal__toc-list a, .sitemap__links a, .sitemap__links span) { font-weight: 300 !important; }
-
 /* Edge controls share Discover's circle, with a white ground and orange arrow. */
 .cursor.cursor--rail { width: 96px; height: 96px; background: white; border: 0; box-shadow: 0 2px 16px #00000008; }
-.cursor--rail .cursor__label, .cursor--rail .cursor__arrow { opacity: 0; }
+.cursor--rail .cursor__arrow { opacity: 0; }
+.cursor--rail .cursor__label { opacity: 0; }
 .cursor--rail::before { content: ''; position: absolute; width: 28px; height: 15px; background: var(--c-orange); -webkit-mask: url('assets/icons/icon-arrow.svg') center / contain no-repeat; mask: url('assets/icons/icon-arrow.svg') center / contain no-repeat; }
 .cursor--rail.cursor--prev::before { transform: rotate(180deg); }
 .cursor.cursor--rail, .cursor.cursor--discover { transition: none; }
-.cursor .cursor__label { font-weight: 400 !important; transition: none; }
+.cursor .cursor__label { transition: none; }
 .cursor .cursor__arrow { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .spotlight__image img { transition: none; }
@@ -9074,45 +8316,13 @@ body :is(.article__tag, .story-card__category, .card-v3__category,
 
 /* Compact tablet content follows the phone scale before the desktop canvas. */
 @media (min-width: 768px) and (max-width: 1279px) {
-  .story-card__title, .spotlight__card h3 { font-size: max(22px, calc(20px / var(--zoom))); line-height: 1.3; }
-  .article__quote p { font-size: max(28px, calc(24px / var(--zoom))); line-height: 1.35; }
   .article__quote { padding-right: 64px; }
   .article__quote-mark { width: 54px; height: auto; top: 6px; }
 }
 
-/* Shared phone typography: the same content scale across the site. */
+/* Shared phone spacing; typography lives in typography.css. */
 @media (max-width: 767px) {
-  :root {
-    --mobile-page-size: clamp(36px, calc(12px + 5vw), 50.4px);
-    --mobile-section-size: clamp(24px, calc(21.6px + .5vw), 25.5px);
-    --mobile-feature-size: clamp(20px, calc(13px + 1.46vw), 24.2px);
-    --mobile-card-size: clamp(18px, calc(15px + .625vw), 20px);
-    --mobile-copy-size: 15px;
-    --mobile-label-size: 13px;
-  }
-  .listing__title, .article__title { font-size: var(--mobile-page-size); line-height: 1.1; }
-  .listing__subtitle, .article__subtitle { font-size: 16px; line-height: 1.5; }
-  .spotlight__head h2, .listing__all-title, .article__section-title,
-  .longform__heading, .institutes__heading, .connect__heading, .connect__funding-title,
-  .news-v3__heading, .ventures__title, .funding__title {
-    font-size: var(--mobile-section-size); line-height: 1.25;
-  }
-  .article__section-heading, .strategy__name, .ethos__value-name,
-  .institute-card__title { font-size: var(--mobile-feature-size); line-height: 1.3; }
-  .spotlight__card h3, .story-card__title, .home-v3 .card-v3__title {
-    font-size: var(--mobile-card-size); line-height: 1.3;
-  }
-  .longform__lede, .institutes__lede, .institute__lede, .article__text.story__lede {
-    font-size: var(--mobile-card-size); line-height: 1.55;
-  }
-  .article__text, .story-card__desc, .spotlight__card p, .ethos__value-desc,
-  .strategy__desc, .institute__text, .institutes__text, .institutes__foot-text,
-  .institute-card__lede, .institute-card__text, .partnership__foot-text,
-  .article__highlight p, .article__testimonial-quote {
-    font-size: var(--mobile-copy-size); line-height: 1.6;
-  }
   .article__quote { margin-block: 28px; padding-right: 48px; }
-  .article__quote p { font-size: var(--mobile-feature-size); line-height: 1.35; }
   .article__quote-mark { width: 38px; top: 4px; }
   .article__head { margin-bottom: 36px; }
   .article__section-heading { margin-top: 28px; padding-top: 20px; }
@@ -9127,15 +8337,14 @@ body :is(.article__tag, .story-card__category, .card-v3__category,
 
 /* People: typography-led profiles, shared biography dialog and careers. */
 .people { --person-hover-shift: 32px; --person-end-space: 100px; --person-icon-right: 26px; --person-hover-duration: .38s; --person-hover-ease: cubic-bezier(.22,.61,.36,1); padding-bottom: 100px; }
-.people-intro { text-align: center; text-wrap: balance; font-size: 22px; line-height: 1.6; margin: 42px auto; max-width: 1060px; }
-.people-jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 0; margin-bottom: 80px; font: 300 16px/1.4 var(--f-sans); }
+.people-intro { text-align: center; text-wrap: balance; margin: 42px auto; max-width: 1060px; }
+.people-jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 0; margin-bottom: 80px; }
 .people-jump a { position: relative; padding: 8px 28px; border: 0; text-decoration: none; text-align: center; }
 .people-jump a + a::before { content: ''; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--c-orange); transform: translate(-50%, -50%); pointer-events: none; }
 .people-jump a:hover { color: var(--c-orange); }
 .people-section { padding-block: 58px; border-top: var(--rule-width) solid var(--c-rule); scroll-margin-top: 130px; }
 .people-section:is(#foundation-office, #careers) { border-top: 0; }
-.people-section h2 { font: 400 clamp(32px, 3vw, 46px)/1.2 var(--f-serif); }
-.people-section__intro { max-width: 860px; margin-top: 22px; font: 300 20px/1.6 var(--f-sans); }
+.people-section__intro { max-width: 860px; margin-top: 22px; }
 .people-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; }
 .person-trigger { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; width: 100%; min-width: 0; min-height: 170px; padding: 28px var(--person-end-space) 28px 26px; background: #fffaf6; text-align: left; transition: background-color var(--person-hover-duration) var(--person-hover-ease); }
 .person-trigger__copy { display: block; width: 100%; min-width: 0; transition: transform var(--person-hover-duration) var(--person-hover-ease); }
@@ -9148,36 +8357,39 @@ body :is(.article__tag, .story-card__category, .card-v3__category,
   .person-trigger:hover .person-trigger__expand { opacity: 1; }
 }
 .person-trigger:focus-visible, .people-jump a:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 5px; }
-.person-trigger__name { display: block; font: 400 29px/1.25 var(--f-serif); color: var(--c-black); }
-.person-trigger__role { display: block; margin-top: 6px; font: 300 16px/1.5 var(--f-sans); color: var(--c-black); }
+.person-trigger__name { display: block; color: var(--c-black); }
+.person-trigger__role { display: block; margin-top: 6px; color: var(--c-black); }
 .person-trigger__expand { position: absolute; top: 50%; right: var(--person-icon-right); width: 28px; height: 28px; transform: translateY(-50%) scale(1.3); color: var(--c-orange); opacity: 0; transition: opacity .28s ease-out; }
 .person-trigger__expand::before, .person-trigger__expand::after { content: ''; position: absolute; top: 50%; left: 50%; width: 12px; height: 1px; background: currentColor; transform: translate(-50%, -50%); }
 .person-trigger__expand::after { transform: translate(-50%, -50%) rotate(90deg); }
-.people-feature { --people-feature-name-size: 38px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; gap: 64px; padding: 50px 0; border-bottom: var(--rule-width) solid var(--c-rule); }
+.people-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; gap: 64px; padding: 50px 0; border-bottom: var(--rule-width) solid var(--c-rule); }
 .people-feature .person-trigger { background: transparent; padding: 24px var(--person-end-space) 24px 0; min-height: 0; }
-.people-feature .person-trigger__name { font-size: var(--people-feature-name-size); }
 .people-feature__quote { position: relative; padding: 18px 112px 30px 0; }
-.people-feature__quote p { position: relative; z-index: 1; font: 400 var(--people-feature-name-size)/1.2 var(--f-serif); color: var(--c-orange); }
+.people-feature__quote p { position: relative; z-index: 1; color: var(--c-orange); }
 .people-feature__quote img { position: absolute; right: 0; bottom: 0; width: 110px; height: auto; transform: rotate(180deg); pointer-events: none; }
 .people-honorary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
 .people-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 42px 60px; margin-top: 40px; }
 .people-team { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 60px; margin-top: 40px; }
-.people-group h3 { font: 400 27px/1.3 var(--f-serif); color: var(--c-orange); margin-bottom: 16px; }
+.people-group h3 { color: var(--c-orange); margin-bottom: 16px; }
 .person-trigger--compact { min-height: 0; padding: 24px var(--person-end-space) 24px 0; background: transparent; border-bottom: var(--rule-width) solid var(--c-rule); }
-.person-trigger--compact .person-trigger__name { font-size: 24px; }
 .person-trigger--compact .person-trigger__role { margin-top: 4px; }
 .people-section__subhead { margin-top: 64px; }
 .people-dialog { position: fixed; inset: 0; width: min(850px, calc((100vw - 48px) / var(--zoom))); max-width: none; max-height: none; height: fit-content; margin: auto; padding: 0; border: 0; overflow: visible; background: transparent; color: var(--c-black); }
 .people-dialog::backdrop { background: #241b1470; }
 .people-dialog__panel { position: relative; padding-top: 58px; background: #fffaf6; box-shadow: 0 18px 80px #0002; }
 .people-dialog__scroll { max-height: calc((100dvh - 64px) / var(--zoom) - 58px); overflow-y: auto; overscroll-behavior: contain; padding: 18px 62px 44px; }
-.people-dialog__close { position: absolute; z-index: 2; top: 16px; right: 18px; width: 42px; height: 42px; border-radius: 50%; background: white; color: var(--c-orange); font: 300 32px/1 var(--f-sans); }
+.people-dialog__close { position: absolute; z-index: 2; top: 16px; right: 18px; width: 42px; height: 42px; border-radius: 50%; background: white; color: var(--c-orange); font: 400 32px/1 var(--f-sans); }
 .people-dialog__close:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 3px; }
-.people-dialog__label { font: 300 14px/1.5 var(--f-sans); color: var(--c-orange); margin-bottom: 20px; }
-.people-dialog h2 { font: 400 42px/1.15 var(--f-serif); padding-right: 20px; }
-#person-bio-role { font: 300 18px/1.5 var(--f-sans); margin: 14px 0 28px; padding-bottom: 26px; border-bottom: var(--rule-width) solid var(--c-rule); }
-.people-dialog__body p { font: 300 17px/1.65 var(--f-sans); margin-top: 18px; }
-.people-dialog__body p:last-child { font-size: 14px; color: var(--c-black); }
+.people-dialog__label { color: var(--c-orange); margin-bottom: 20px; }
+.people-dialog h2 { padding-right: 20px; }
+#person-bio-role { margin: 14px 0 26px; }
+.people-dialog__motto { border-bottom: var(--rule-width) solid var(--c-rule); padding-bottom: 30px; margin-bottom: 28px; }
+.people-dialog__motto-label { color: var(--c-orange); margin-bottom: 12px; }
+.people-dialog__quote { position: relative; margin: 0; padding-right: 100px; }
+.people-dialog__quote p { position: relative; z-index: 1; color: var(--c-orange); }
+.people-dialog__quote img { position: absolute; right: 0; bottom: -4px; width: 90px; height: auto; transform: rotate(180deg); pointer-events: none; }
+.people-dialog__body p { margin-top: 18px; }
+.people-dialog__body p:last-child { color: var(--c-black); }
 .careers[hidden] { display: none; }
 .careers__head { margin-bottom: 36px; }
 .career-job { background: #fffaf6; border-top: var(--rule-width) solid var(--c-rule); }
@@ -9185,86 +8397,68 @@ body :is(.article__tag, .story-card__category, .card-v3__category,
 .career-job summary { position: relative; padding: 32px 80px 32px 36px; list-style: none; cursor: pointer; }
 .career-job summary::-webkit-details-marker { display: none; }
 .career-job summary:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 3px; }
-.career-job h3 { font: 400 32px/1.2 var(--f-serif); }
-.career-job__meta { font: 300 max(15px, calc(13px / var(--zoom)))/1.5 var(--f-sans); color: var(--c-orange); margin-top: 10px; }
-.career-job__summary { font: 300 17px/1.6 var(--f-sans); margin-top: 15px; }
+.career-job__meta { color: var(--c-orange); margin-top: 10px; }
+.career-job__summary { margin-top: 15px; }
 .career-job__toggle { position: absolute; top: 36px; right: 36px; width: 24px; height: 24px; }
 .career-job__toggle::before, .career-job__toggle::after { content: ''; position: absolute; background: var(--c-orange); width: 20px; height: 1px; left: 2px; top: 12px; }
 .career-job__toggle::after { transform: rotate(90deg); }
 .career-job[open] .career-job__toggle::after { display: none; }
 .career-job__detail { padding: 30px 36px 38px; border-top: var(--rule-width) solid var(--c-rule); }
-.career-job__detail p { font: 300 17px/1.65 var(--f-sans); }
 .career-job__copy p + p { margin-top: 18px; }
 .career-job__apply-note { margin-top: 20px; }
 .career-job__apply { margin-top: 24px; }
-@media (min-width: 768px) {
-  .person-trigger__role, .people-jump, .people-section__intro, .people-intro,
-  .people-dialog__body p, .career-job__summary, .career-job__detail p { font-size: max(17px, calc(15.02px / var(--zoom))); }
-}
 /* Keep names and roles readable before adding the third profile column. */
 @media (max-width: 1279px) {
   .people { --person-hover-shift: 20px; --person-end-space: 82px; --person-icon-right: 20px; }
   .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
   .people-honorary { gap: 18px; }
   .person-trigger { min-height: 132px; padding: 22px var(--person-end-space) 22px 22px; }
-  .person-trigger__name { font-size: 20px; }
   .person-trigger--compact { min-height: 0; padding: 20px var(--person-end-space) 20px 0; }
-  .person-trigger--compact .person-trigger__name { font-size: 18px; }
-  .people-feature { --people-feature-name-size: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 32px; padding-block: 34px; }
+  .people-feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 32px; padding-block: 34px; }
   .people-feature__quote { padding-right: 82px; padding-bottom: 20px; }
   .people-feature__quote img { width: 75px; }
   .people-groups { gap: 28px; margin-top: 30px; }
   .people-team { column-gap: 28px; margin-top: 30px; }
-  .people-group h3 { font-size: 25px; }
 }
 @media (max-width: 767px) {
-  .people { --person-hover-shift: 8px; --person-end-space: 56px; --person-icon-right: 10px; --people-mobile-name-size: clamp(16px, calc(13px + .625vw), 18px); --people-mobile-feature-size: clamp(18px, calc(11px + 1.46vw), 22px); padding-bottom: 40px; }
-  .people .listing__title { font-size: var(--mobile-page-size); line-height: 1.1; }
-  .people .listing__subtitle { font-size: 16px; }
-  .people-intro { font-size: 15px; line-height: 1.5; margin-block: 24px; }
-  .people-jump { display: grid; grid-template-columns: repeat(3, max-content); gap: 0 12px; width: max-content; max-width: 100%; margin-inline: auto; font-size: clamp(10.5px, calc(4.2vw - 3px), 13px); margin-bottom: 30px; }
+  .people { --person-hover-shift: 8px; --person-end-space: 56px; --person-icon-right: 10px; padding-bottom: 40px; }
+  .people-intro { margin-block: 24px; }
+  .people-jump { display: grid; grid-template-columns: repeat(3, max-content); gap: 0 12px; width: max-content; max-width: 100%; margin-inline: auto; margin-bottom: 30px; }
   .people-jump a { padding: 6px 0; white-space: nowrap; }
   .people-jump a + a::before { left: -6px; width: 4px; height: 4px; }
   .people-jump a[data-careers-link] { grid-column: 1 / -1; justify-self: center; }
   .people-jump a[data-careers-link]::before { content: none; }
   .people-section { padding-block: 24px; scroll-margin-top: 96px; }
-  .people-section h2 { font-size: var(--mobile-section-size); }
-  .people-section__intro { font-size: 15px; line-height: 1.55; margin-top: 14px; }
+  .people-section__intro { margin-top: 14px; }
   .people-groups, .people-feature { grid-template-columns: minmax(0, 1fr); }
   .people-grid, .people-honorary { gap: 8px; margin-top: 18px; }
   .person-trigger { min-height: 0; padding: 12px var(--person-end-space) 12px 16px; }
-  .person-trigger__name { font-size: var(--people-mobile-name-size); line-height: 1.3; }
-  .person-trigger__role { font-size: var(--mobile-label-size); line-height: 1.45; margin-top: 4px; }
-  .people-feature { --people-feature-name-size: var(--people-mobile-feature-size); gap: 8px; padding-block: 18px; }
+  .person-trigger__role { margin-top: 4px; }
+  .people-feature { gap: 8px; padding-block: 18px; }
   .people-feature .person-trigger { padding-block: 10px; }
   .people-feature__quote { padding: 6px 44px 12px 0; }
   .people-feature__quote img { width: 36px; }
   .people-groups { gap: 20px; margin-top: 20px; }
   .people-team { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
-  .people-group h3 { font-size: var(--mobile-feature-size); line-height: 1.3; margin-bottom: 8px; }
+  .people-group h3 { margin-bottom: 8px; }
   .person-trigger--compact { padding: 12px var(--person-end-space) 12px 0; }
-  .person-trigger--compact .person-trigger__name { font-size: var(--people-mobile-name-size); }
   .people-section__subhead { margin-top: 32px; }
   .people-dialog { width: calc(100vw - 28px); }
   .people-dialog__panel { padding-top: 58px; }
   .people-dialog__scroll { padding: 10px 25px 28px; max-height: calc(100dvh - 90px); }
-  .people-dialog h2 { font-size: var(--mobile-section-size); }
-  .people-dialog__body p { font-size: var(--mobile-copy-size); }
   .careers__head { margin-bottom: 22px; }
   .career-job + .career-job { margin-top: 16px; }
   .career-job summary { padding: 22px 54px 22px 20px; }
-  .career-job h3 { font-size: var(--mobile-feature-size); }
-  .career-job__meta { font-size: 13px; margin-top: 8px; }
+  .career-job__meta { margin-top: 8px; }
   .career-job__summary { margin-top: 10px; }
   .career-job__toggle { right: 18px; top: 25px; }
   .career-job__detail { padding: 22px 20px; }
-  .career-job__summary, .career-job__detail p { font-size: 15px; line-height: 1.6; }
 }
 @media (max-width: 639px) {
   .people-grid, .people-honorary { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 389px) {
-  .people-jump { grid-template-columns: repeat(2, max-content); font-size: 13px; }
+  .people-jump { grid-template-columns: repeat(2, max-content); }
   .people-jump a:nth-child(3)::before { content: none; }
   .people-jump a[data-careers-link] { grid-column: auto; justify-self: stretch; }
   .people-jump a[data-careers-link]::before { content: ''; }
@@ -9279,54 +8473,282 @@ body :is(.article__tag, .story-card__category, .card-v3__category,
   .person-trigger, .person-trigger__copy, .person-trigger__expand { transition: none; }
 }
 
-/* Running copy uses the regular Fira Sans cut. Keep supporting labels and
-   compact metadata on the lighter tier. */
-body p,
-body :is(.hero-v3__body, .intro-v3, .legal__list li, .article__text li,
-  .article__testimonial-quote,
-  .people-intro, .career-job__summary, .strategy__desc, .strategy__note,
-  .ethos__value-desc, .institute-card__text, .s-result__desc) {
-  font-weight: 400 !important;
-}
-body :is(.footer-v3__copyright, .footer-v3__copyright *, .footer__copyright p,
-  .article__caption, .article__testimonial-role,
-  .story-card__category, .card-v3__cat, .listing__subtitle,
-  .people-dialog__label, .career-job__meta, .search-overlay__label,
-  .institute-card__eyebrow, .connect__funding-eyebrow,
-  .s-result__kind, .s-result__path, .legal__meta, .legal__toc-label,
-  .legal__also-label) {
-  font-weight: 300 !important;
-}
-
-/* Related labels use the regular text cut; related titles share the orange
-   used by content cards even inside the inner-page colour reset above. */
-.article__related-category { font-weight: 400 !important; }
-
-/* Orange content titles gain one small step without enlarging orange labels,
-   navigation states, or the white title on the Bettering panel. */
-.panel:not(.panel--bettering) .panel__title { font-size: calc(var(--t-title) + 2px); }
-.compassion-outcome h2 { font-size: calc(clamp(36px, 3.8vw, 66px) + 2px); }
-.home-v3 .card-v3__title { font-size: 24px; }
-.listing .story-card__title, .spotlight__card h3 { font-size: 28px; }
-.article__section-heading { font-size: 26px; }
-.priorities-grid a { font-size: 28px; }
-.people-group h3 { font-size: 29px; }
-
-@media (min-width: 768px) and (max-width: 1279px) {
-  .listing .story-card__title, .spotlight__card h3 {
-    font-size: calc(max(22px, calc(20px / var(--zoom))) + 2px);
+/* R3 feedback: the visible grid is the layout contract. The older article
+   and longform templates still used the 40px R1 gutter while the overlay and
+   listing cards had moved to the fluid R2/R3 gutter. */
+.article__body, .story__body, .story__related,
+.connect__body, .longform__body { column-gap: var(--grid-gap); }
+@media (min-width: 1280px) {
+  /* Keep the right edge at column 9 and ease the reading column from the
+     laptop inset to the full desktop column-3 position. */
+  .article__main, .story__main {
+    grid-column: 2 / 9;
+    margin-left: clamp(0px, calc(32.3vw - 465.12px), 155px);
   }
-  .people-group h3 { font-size: 27px; }
 }
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .article__body, .story__body, .story__related,
+  .connect__body, .longform__body {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .article__main, .story__main { grid-column: 1 / 5; }
+  .article__main, .story__main { margin-left: min(105px, calc(11vw - 30px)); }
+  .article__related, .story__meta { grid-column: 5 / 7; }
+  .story__related-grid { grid-column: 1 / 7; }
+  .story__related-title { grid-column: 1 / 7; }
+  .longform__col { grid-column: 2 / 6; }
+  .connect__col--info { grid-column: 1 / 4; }
+  .connect__col--aside { grid-column: 4 / 7; }
+}
+
+/* R3 desktop navigation uses the horizontal Figma header, with the original
+   controls kept for search, language and mega-menu interaction. */
+@media (min-width: 1024px) {
+  .nav--v3:not(.nav--scrolled) .nav__inner {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    height: 104px;
+    padding-block: 0;
+    column-gap: 28px;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__logo {
+    grid-column: 1; grid-row: 1; justify-self: start;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__logo-img { height: 69px; }
+  .nav--v3:not(.nav--scrolled) .nav__menu {
+    grid-column: 2; grid-row: 1; flex-direction: row;
+    justify-content: center; justify-self: center; align-items: center;
+    gap: clamp(24px, 2.9vw, 56px);
+  }
+  .nav--v3:not(.nav--scrolled) .nav__link { padding: 0;
+    background: none;
+  }
+  .nav--v3.nav--scrolled .nav__link { padding: 0;
+    background: none;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__actions {
+    grid-column: 3; grid-row: 1; display: flex; width: auto;
+    justify-self: end; justify-content: flex-end;
+    gap: 22px; align-items: center; pointer-events: auto;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__actions .nav__search-btn {
+    display: flex; order: 2; width: 44px; height: 44px; margin: 0;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__actions .nav__search-btn img {
+    width: 24px; height: 24px;
+  }
+  .nav--v3:not(.nav--scrolled) .nav__actions .nav__search-btn::before {
+    inset: auto;
+    top: 50%; left: 50%;
+    width: 63px; height: 63px;
+    transform: translate(-50%, -50%);
+  }
+  .nav--v3:not(.nav--scrolled) .nav__lang { order: 1; display: block; }
+  .nav--v3 .nav__search-btn--stacked { display: none !important; }
+  .nav--v3 .nav__mega {
+    left: 50%;
+    right: auto;
+    width: min(798px, calc(100% - 2 * var(--gm)));
+    top: 87px;
+    height: min(401px, calc(100svh / var(--zoom) - 87px));
+    transform: translateX(-50%);
+  }
+  .nav--v3.nav--mega-open .nav__mega {
+    transform: translateX(-50%);
+  }
+  .nav--v3 .nav__mega-links {
+    top: 81px;
+    left: 55px;
+    right: auto;
+    text-align: left;
+  }
+  .nav--v3 .nav__mega-links a {
+    padding: 12.4px 0 0;
+  }
+  .nav--v3 .nav__mega-panel::before {
+    content: attr(data-mega-panel); position: absolute; z-index: 1;
+    left: 55px; top: 33px;
+    text-transform: capitalize;
+  }
+  .nav--v3 .nav__mega-panel[data-mega-panel="work"]::before { content: "Approach"; }
+  .nav--v3 .nav__mega-panel .nav__mega-art,
+  .nav--v3 .nav__mega-panel[data-mega-panel="work"] .nav__mega-art,
+  .nav--v3 .nav__mega-panel[data-mega-panel="impact"] .nav__mega-art,
+  .nav--v3 .nav__mega-panel[data-mega-panel="about"] .nav__mega-art,
+  .nav--v3 .nav__mega-panel[data-mega-panel="partnership"] .nav__mega-art {
+    width: 290px;
+    max-width: 38%;
+    max-height: 312px;
+    height: auto;
+    left: auto;
+    right: 42px;
+    top: 64px;
+    bottom: auto;
+  }
+
+  /* The white bar returns only during upward scroll. Its seal sits on the
+     first grid edge and the four links stay in the same order as at top. */
+  .nav--v3.nav--scrolled {
+    background: var(--c-white); box-shadow: none;
+  }
+  .nav--v3.nav--scrolled .nav__inner,
+  .nav--v3.nav--scrolled.nav--mega-open .nav__inner {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center; column-gap: 28px;
+    height: 66px; padding: 0 var(--gm);
+  }
+  .nav--v3.nav--scrolled .nav__menu {
+    display: flex; grid-column: 2; grid-row: 1;
+    flex-direction: row; justify-content: center; justify-self: center; align-items: center;
+    gap: clamp(24px, 2.9vw, 56px);
+  }
+  .nav--v3.nav--scrolled .nav__actions {
+    grid-column: 3; grid-row: 1; display: flex; align-items: center;
+    justify-self: end; width: auto; height: auto; padding: 0;
+    gap: 22px; background: transparent; animation: none;
+  }
+  .nav--v3.nav--scrolled .nav__seal {
+    display: block; position: absolute; left: var(--gm); top: 50%;
+    margin: 0; transform: translateY(-50%);
+  }
+  .nav--v3.nav--scrolled .nav__lang { display: block; order: 1; }
+  .nav--v3.nav--scrolled .nav__actions .nav__search-btn {
+    display: flex; order: 2; width: 44px; height: 44px;
+  }
+  .nav--v3.nav--scrolled .nav__hamburger,
+  .nav--v3.nav--scrolled .nav__mega-menu { display: none; }
+  .nav--v3.nav--scrolled .nav__mega {
+    top: 82px;
+    right: auto;
+    height: min(401px, calc(100svh / var(--zoom) - 82px));
+  }
+  .nav--v3.nav--scrolled.nav--mega-bare .nav__mega {
+    height: min(401px, calc(100svh / var(--zoom) - 82px));
+  }
+}
+
+/* Suppress the fixed state while scrolling down, including on phones and
+   compact tablets. The opening header keeps scrolling away naturally. */
+.nav--v3.nav--scroll-hidden { pointer-events: none; }
+.nav--v3.nav--scroll-hidden .nav__inner,
+.nav--v3.nav--scroll-hidden .nav__mega { visibility: hidden; }
+
+/* About content, 28 September: grouped People directory and full Values copy.
+   Keep the site grid, serif headings, peach ground and orange rules. */
+.people--directory .people-intro { max-width: 1000px; }
+.people--directory .people-jump { margin-bottom: 64px; }
+.people-section--directory {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  align-items: start;
+  padding-block: 48px 64px;
+}
+.people-section__heading { position: relative; grid-column: 1 / 5; padding-right: var(--grid-gap); }
+.people-anchor { position: absolute; top: 0; scroll-margin-top: 130px; }
+.people-section--directory > .people-directory,
+.people-section__members { grid-column: 5 / -1; min-width: 0; }
+.people-directory { list-style: none; margin: 0; padding: 0; }
+.people-directory__item { min-width: 0; border-bottom: var(--rule-width) solid var(--c-rule); }
+.people--directory .person-trigger--directory {
+  min-height: 0;
+  padding: 22px 42px 22px 0;
+  background: transparent;
+  --person-hover-shift: 10px;
+  --person-icon-right: 6px;
+}
+.people--directory .person-trigger--directory:focus-visible { outline: none; }
+.people--directory .person-trigger--directory:focus-visible .person-trigger__name {
+  text-decoration: underline;
+  text-decoration-color: var(--c-orange);
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+.person-trigger--directory .person-trigger__copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  align-items: baseline;
+  gap: 12px var(--grid-gap);
+}
+.person-trigger--directory .person-trigger__role { margin: 0; }
+.person-trigger--directory .person-trigger__expand { width: 24px; height: 24px; opacity: .65; transform: translateY(-50%); }
+.people-team-group + .people-team-group { margin-top: 64px; }
+.people-team-group__title { margin: 0 0 20px; color: var(--c-orange); scroll-margin-top: 130px; }
+.people-directory--management { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--grid-gap); margin-top: 20px; }
+.people-directory--management .person-trigger__copy { display: block; }
+.people-directory--management .person-trigger__role { margin-top: 8px; }
+.people-directory--management .person-trigger--directory { height: 100%; justify-content: flex-start; }
+.people--directory .careers { border-top: var(--rule-width) solid var(--c-rule); }
+
+.values-legacy { margin-top: 0; }
+.values-section-heading { padding-top: 28px; border-top: var(--rule-width) solid var(--c-rule); }
+.values-people-link { display: inline-flex; align-items: center; gap: 16px; margin-top: 24px; color: var(--c-orange); text-decoration: underline; text-underline-offset: 5px; }
+.values-people-link .btn-pill__arrow { flex-shrink: 0; }
+.values-people-link:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 6px; }
+.values-origin__body {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  align-items: start;
+  gap: 20px var(--grid-gap);
+  border-top: var(--rule-width) solid var(--c-rule);
+  padding-top: 28px;
+}
+.values-origin__body > .values-section-heading {
+  grid-column: 3 / -1;
+  grid-row: 1;
+  border: 0;
+  padding: 0;
+}
+.values-origin__body > .values-founder { grid-column: 1 / 3; grid-row: 1 / 3; }
+.values-origin__body > .values-origin__copy { grid-column: 3 / -1; grid-row: 2; min-width: 0; }
+.values-founder { margin: 0; }
+.values-founder img { display: block; width: 100%; height: auto; }
+.values-founder figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; }
+.values-origin__copy .article__text:first-child { margin-top: 0; }
+.ethos__values--full { grid-template-columns: minmax(0, 1fr); gap: 20px; list-style: none; }
+.ethos__values--full .ethos__value { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr); gap: 32px; padding: 32px; }
+.ethos__values--full .ethos__value-name { margin-top: 16px; }
+.ethos__values--full .ethos__value-desc { color: var(--c-black); margin-top: 16px; }
+
 @media (max-width: 1023px) {
-  .compassion-outcome h2 { font-size: 42px; }
+  .people-section--directory { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
+  .people-section__heading, .people-section--directory > .people-directory,
+  .people-section__members { grid-column: 1; }
+  .people-section__heading { padding-right: 0; }
+  .people-section__intro { max-width: 760px; }
+  .values-origin__body { gap: 20px var(--grid-gap); }
 }
 @media (max-width: 767px) {
-  .home-v3 .journey__step.panel:not(.panel--bettering) .panel__title { font-size: 40px; }
-  .compassion-outcome h2 { font-size: 41px; }
-  .listing .story-card__title, .spotlight__card h3, .home-v3 .card-v3__title {
-    font-size: calc(var(--mobile-card-size) + 2px);
-  }
-  .article__section-heading { font-size: 24px; }
-  .people-group h3 { font-size: calc(var(--mobile-feature-size) + 2px); }
+  .people--directory .people-intro { text-align: left; text-wrap: pretty; margin-block: 28px; }
+  .people--directory .people-jump { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: max-content; gap: 4px 20px; margin-bottom: 32px; }
+  .people--directory .people-jump a { padding: 10px 0; white-space: normal; }
+  .people--directory .people-jump a + a::before { content: ''; left: -10px; }
+  .people--directory .people-jump a[data-careers-link] { grid-column: 1 / -1; justify-self: center; }
+  .people--directory .people-jump a[data-careers-link]::before { content: none; }
+  .people-section--directory { padding-block: 28px 40px; gap: 24px; }
+  .people--directory .person-trigger--directory { padding: 18px 34px 18px 0; }
+  .person-trigger--directory .person-trigger__copy { gap: 8px 24px; }
+  .people-dialog__motto { padding-bottom: 22px; margin-bottom: 20px; }
+  .people-dialog__quote { padding-right: 50px; }
+  .people-dialog__quote img { width: 46px; bottom: 0; }
+  .people-team-group__title { margin-bottom: 10px; }
+  .people-team-group + .people-team-group { margin-top: 40px; }
+  .people-directory--management { margin-top: 0; }
+  .values-origin__body { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .values-origin__body > .values-section-heading,
+  .values-origin__body > .values-founder,
+  .values-origin__body > .values-origin__copy { grid-column: 1; }
+  .values-origin__body > .values-section-heading { grid-row: 1; }
+  .values-origin__body > .values-founder { grid-row: 2; }
+  .values-origin__body > .values-origin__copy { grid-row: 3; }
+  .values-founder { width: min(220px, 65%); margin: 0; }
+  .ethos__values--full { margin-top: 28px; gap: 16px; }
+  .ethos__values--full .ethos__value { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 24px; }
+  .ethos__values--full .ethos__value-heading { display: flex; align-items: baseline; gap: 16px; }
+  .ethos__values--full .ethos__value-name { margin: 0; }
+}
+@media (max-width: 599px) {
+  .person-trigger--directory .person-trigger__copy { display: block; }
+  .person-trigger--directory .person-trigger__role { margin-top: 6px; }
+  .people-directory--management { grid-template-columns: minmax(0, 1fr); }
 }

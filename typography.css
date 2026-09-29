@@ -1,0 +1,191 @@
+/* Shared typography contract. Keep type choices here, layout in style.css.
+   Sizes are rendered CSS pixels: compensate for the existing page zoom so
+   laptop height adjustments cannot shrink copy or flatten the hierarchy. */
+:root {
+  --type-page: 70px;
+  --type-section: 41px;
+  --type-subheading: 30px;
+  --type-lead: 23px;
+  --type-body: 17px;
+  --type-meta: 14px;
+  --type-menu: 23px;
+
+  --font-page: calc(var(--type-page) / var(--zoom));
+  --font-section: calc(var(--type-section) / var(--zoom));
+  --font-subheading: calc(var(--type-subheading) / var(--zoom));
+  --font-lead: calc(var(--type-lead) / var(--zoom));
+  --font-body: calc(var(--type-body) / var(--zoom));
+  --font-meta: calc(var(--type-meta) / var(--zoom));
+  --font-menu: calc(var(--type-menu) / var(--zoom));
+  --leading-title: 1.16;
+  --leading-subheading: 1.25;
+  --leading-copy: 1.6;
+  --leading-ui: 1.4;
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  :root {
+    --type-page: 56px;
+    --type-section: 40px;
+    --type-subheading: 28px;
+    --type-lead: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --type-page: clamp(40px, 11vw, 48px);
+    --type-section: clamp(32px, 9vw, 38px);
+    --type-subheading: 26px;
+    --type-lead: 20px;
+  }
+}
+
+/* Default copy. Links and inline emphasis inherit their text role. */
+body {
+  font: 400 var(--font-body)/var(--leading-copy) var(--f-sans);
+}
+button, input, select, textarea { font: inherit; }
+p, blockquote, figcaption, dt, dd, label, small,
+.article__text, .legal__list, .career-job__copy {
+  font-family: var(--f-sans);
+  font-size: var(--font-body);
+  font-weight: 400;
+  line-height: var(--leading-copy);
+  letter-spacing: normal;
+}
+
+/* Page titles; the oversized home hero and opening animation are the
+   intentional display exceptions and retain their art-directed scale. */
+.listing__title, .article__title, .panel__title, .compassion-outcome h2,
+.news-v3__heading {
+  font: 400 var(--font-page)/var(--leading-title) var(--f-serif);
+  letter-spacing: normal;
+}
+
+/* Section headings: the same role on every page, including the homepage. */
+h2,
+.ventures__intro h2, .funding__title,
+.spotlight__head h2, .listing__all-title,
+.longform__heading, .article__section-title,
+.connect__heading, .connect__funding-title,
+.institutes__heading, .people-section h2, .people-dialog h2 {
+  font: 400 var(--font-section)/var(--leading-title) var(--f-serif);
+  letter-spacing: normal;
+}
+/* These narrative panels are page-scale, even though they are h2s. */
+.panel__title, .compassion-outcome h2 { font-size: var(--font-page); }
+
+/* Card titles and subsection headings use one serif tier. */
+h3, h4,
+.card-v3__title, .story-card__title, .spotlight__card h3,
+.article__section-heading, .article__related-title,
+.institute-card__title, .ventures__title,
+.strategy__name, .strategy__num, .ethos__value-name,
+.priorities-grid a, .s-result__title, .sitemap__group-title,
+.legal__heading, .people-team-group__title, .people-group h3,
+.person-trigger__name, .career-job h3,
+.search__input, .search-overlay__input {
+  font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif);
+  letter-spacing: normal;
+}
+
+/* Introductions and subtitles: visibly larger than running copy on phones. */
+.hero-v3__body, .intro-v3, .panel__lede,
+.compassion-outcome__copy > p,
+.ventures__intro p, .funding__text,
+.listing__subtitle, .article__subtitle,
+.longform__lede, .institutes__lede, .institute__lede,
+.story__lede, .institute-card__lede, .people-intro,
+.connect__funding-text, .article__highlight p,
+.article__testimonial-quote, .compassion-outcome__values li {
+  font: 400 var(--font-lead)/var(--leading-copy) var(--f-sans);
+  letter-spacing: normal;
+}
+/* Editorial introductions and short related titles retain their serif voice. */
+.longform__lede, .institutes__lede, .institute__lede, .story__lede,
+.ethos__value-lede, .article__related-name,
+.values-founder figcaption span:first-child {
+  font: 400 var(--font-lead)/1.4 var(--f-serif);
+  letter-spacing: normal;
+}
+.article__quote p, .people-feature__quote p, .people-dialog__quote p {
+  font: 400 var(--font-section)/var(--leading-subheading) var(--f-serif);
+}
+
+/* Main copy, including cards, biographies, values and legal pages. */
+.card-v3__desc, .story-card__desc, .spotlight__card p,
+.article__text, .article__related-desc, .ventures__text,
+.strategy__desc, .strategy__note, .ethos__value-desc,
+.institute__text, .institutes__text, .institute-card__text,
+.institutes__foot-text, .partnership__foot-text,
+.people-section__intro, .people-dialog__body p,
+.career-job__summary, .career-job__detail p,
+.s-result__desc, .search__empty,
+.connect__value, .story__fact-value, .legal__list li {
+  font: 400 var(--font-body)/var(--leading-copy) var(--f-sans);
+}
+.article__text.story__lede {
+  font: 400 var(--font-lead)/1.4 var(--f-serif);
+}
+
+/* Buttons, controls, breadcrumbs and links share the 17px body-size tier.
+   UI leading stays compact while prose retains its reading rhythm. */
+.btn, .btn-pill, .article__pill, .article__download,
+.news-v3__filter, .footer-v3__nav, .footer-v3__nav a,
+.search-overlay__hot a, .sitemap__links a, .sitemap__links span,
+.values-people-link, .pager__num,
+.listing__crumb, .listing__crumb-toggle, .listing__crumb-menu a,
+.listing__filter, .listing__filter-toggle, .listing__filter-option,
+.listing__filter-clear, .listing__clear,
+.s-tab, .pager__total, .search__count, .skip-link,
+.footer-v3__legal, .footer-v3__legal a,
+.people-jump, .person-trigger__role, #person-bio-role,
+.connect__label, .legal__toc-list a, .legal__also-links a,
+.longform__eyebrow, .partners__label, .article__testimonial-name,
+.article__testimonial-role, .nav__lang,
+.nav__mobile-lang, .nav__mobile-sublink {
+  font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
+  letter-spacing: normal;
+}
+
+/* One compact tier for tags, captions, dates and secondary metadata. */
+.card-v3__tags li, .story-card__tag, .spotlight__tags li, .article__tag,
+.card-v3__cat, .story-card__category, .article__related-category,
+.article__caption, .article__figcaption, .article__carousel-count,
+.footer-v3__copyright, .footer-v3__copyright a,
+.s-result__kind, .s-result__path, .s-tab__count,
+.story__fact-label, .ethos__value-num, .values-founder figcaption,
+.legal__meta, .legal__toc-label, .legal__also-label,
+.connect__funding-eyebrow, .institute-card__eyebrow,
+.people-dialog__label, .people-dialog__motto-label,
+.people-dialog__body p:last-child, .career-job__meta,
+.search-overlay__label, .cursor__label, .article__send--copied::after {
+  font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans);
+  letter-spacing: normal;
+}
+
+/* Navigation is the deliberate 300-weight exception requested by the client. */
+.nav--v3 .nav__link, .nav--v3 .nav__mobile-link {
+  font: 300 var(--font-menu)/1.2 var(--f-serif);
+}
+.nav--v3 .nav__mega-links a, .nav--v3 .nav__mobile-sub a {
+  font: 300 var(--font-menu)/1.2 var(--f-sans);
+}
+.nav--v3 .nav__mega-panel::before {
+  font: 300 var(--font-subheading)/1.2 var(--f-serif);
+}
+.opening__skip {
+  font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
+}
+.opening__cite-name {
+  font: 400 var(--font-lead)/var(--leading-ui) var(--f-sans);
+}
+.opening__cite-years {
+  font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
+}
+
+/* CJK headings use the existing Chinese serif family; copy stays sans. */
+html[lang^="zh"] {
+  --f-serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+}
