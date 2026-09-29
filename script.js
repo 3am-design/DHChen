@@ -172,8 +172,15 @@ window.__pageZoom = function () {
   let previousY = Math.max(0, window.scrollY);
   let directionAnchor = previousY;
   let direction = 0;
+  let leaveTimer;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   function measure() {
     if (isV3) trigger = Math.round(nav.getBoundingClientRect().height) + 12;
+  }
+  function finishLeave() {
+    leaveTimer = undefined;
+    nav.classList.remove('nav--scrolled', 'nav--leaving');
+    nav.classList.toggle('nav--scroll-hidden', window.scrollY > trigger);
   }
   function tick() {
     const y = Math.max(0, window.scrollY);
@@ -184,16 +191,26 @@ window.__pageZoom = function () {
         directionAnchor = previousY;
       }
       const pastOpening = y > trigger;
-      /* A short upward correction should not make the bar flash. Once
-         visible, a real downward gesture dismisses it immediately. */
+      /* Ignore small upward corrections. A downward gesture starts the
+         exit animation before the sticky layout is removed. */
       const reveal = pastOpening && direction < 0 && directionAnchor - y > 12;
       if (!pastOpening) directionAnchor = y;
-      nav.classList.toggle('nav--scrolled', pastOpening && (reveal ||
-        (nav.classList.contains('nav--scrolled') && direction <= 0)));
-      nav.classList.toggle('nav--scroll-hidden', pastOpening && !nav.classList.contains('nav--scrolled'));
-      if (nav.classList.contains('nav--scroll-hidden') &&
-          nav.classList.contains('nav--mega-open')) {
-        window.__closeMegaMenu?.();
+      const stayVisible = reveal || (nav.classList.contains('nav--scrolled') &&
+        !nav.classList.contains('nav--leaving') && direction <= 0);
+      if (!pastOpening || stayVisible) {
+        clearTimeout(leaveTimer);
+        leaveTimer = undefined;
+        nav.classList.remove('nav--leaving', 'nav--scroll-hidden');
+        nav.classList.toggle('nav--scrolled', pastOpening);
+      } else if (nav.classList.contains('nav--scrolled')) {
+        if (!nav.classList.contains('nav--leaving')) {
+          if (nav.classList.contains('nav--mega-open')) window.__closeMegaMenu?.();
+          nav.classList.add('nav--leaving');
+          if (reducedMotion.matches) finishLeave();
+          else leaveTimer = window.setTimeout(finishLeave, 320);
+        }
+      } else {
+        nav.classList.add('nav--scroll-hidden');
       }
     } else {
       nav.classList.toggle('nav--scrolled', y > trigger);
