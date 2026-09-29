@@ -90,6 +90,15 @@ h3, h4,
   letter-spacing: normal;
 }
 
+/* Headings share their words across lines instead of leaving one word
+   ("2.0", "Journey") alone on the last line. This changes line breaks only,
+   never sizes. The typed homepage heading is excluded so it cannot reflow
+   as its words change. */
+.listing__title, .article__title, .listing__subtitle, .article__subtitle,
+h2:not(.news-v3__heading), h3, h4 {
+  text-wrap: balance;
+}
+
 /* Introductions and subtitles: visibly larger than running copy on phones. */
 .hero-v3__body, .intro-v3, .panel__lede,
 .compassion-outcome__copy > p,
@@ -172,6 +181,9 @@ h3, h4,
 .nav--v3 .nav__mega-links a, .nav--v3 .nav__mobile-sub a {
   font: 300 var(--font-menu)/1.2 var(--f-sans);
 }
+/* The full-screen mobile menu has room for section-size headings. Its
+   links stay on the 23px menu tier, so the two levels read clearly apart. */
+.nav--v3 .nav__mobile-link { font-size: var(--font-section); }
 .nav--v3 .nav__mega-panel::before {
   font: 300 var(--font-subheading)/1.2 var(--f-serif);
 }

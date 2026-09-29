@@ -770,7 +770,7 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 12px;
   margin-top: 24px;
 }
 .nav__mobile-item {
@@ -786,7 +786,12 @@ body.lp-nav .nav__actions { opacity: 0; translate: 0 -18px; }
   background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1.5px;
   transition: background-size 0.35s ease;
 }
-.nav__mobile-link:hover { background-size: 100% 1.5px; }
+/* The open section keeps its underline; hover only draws it where a pointer
+   can hover, so a tapped section does not stay underlined after it closes. */
+.nav__mobile-link[aria-expanded="true"] { background-size: 100% 1.5px; }
+@media (hover: hover) {
+  .nav__mobile-link:hover { background-size: 100% 1.5px; }
+}
 /* section toggles are buttons — strip the native chrome (keep the underline bg) */
 button.nav__mobile-link {
   border: none;
@@ -800,12 +805,15 @@ button.nav__mobile-link {
    no peek is possible), then the links pop in one after another (first → last). */
 .nav__mobile-sub { display: none; }
 .nav__mobile-item.is-open .nav__mobile-sub { display: block; }
+/* 20px under the section heading, 16px between links (a ~44px tap row), and
+   20px + the list's 12px gap before the next section, so each group holds
+   together. */
 .nav__mobile-sub-inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  padding: 8px 0 18px 4px;
+  gap: 16px;
+  padding: 20px 0 20px;
 }
 .nav__mobile-sub a {
   color: var(--c-grey, #000000);   /* Shared black text. */
@@ -2577,14 +2585,27 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 }
 
 /* breadcrumb (sits just under the nav; "Impact" is a dropdown) */
+/* A long trail (Home / About / Our Institutes / Institute of …) wraps
+   between crumbs, never inside one, so it stays within the page margins. */
 .listing__crumb {
   position: relative;
   z-index: 40;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 4px 8px;
   color: var(--c-black);
+}
+.listing__crumb > a, .listing__crumb-drop { white-space: nowrap; }
+/* Phones: lay the trail out as centred text that may only break after a
+   "/", so a separator always stays with its crumb and never sits alone on
+   a line. The separator's margin plus the word space keep the 8px gap. */
+@media (max-width: 767px) {
+  .listing__crumb { display: block; text-align: center; white-space: nowrap; }
+  .listing__crumb > a, .listing__crumb-drop { display: inline-flex; margin-block: 2px; }
+  .listing__crumb-sep { margin-inline: 3.5px; }
+  .listing__crumb-sep::after { content: ' '; white-space: normal; }
 }
 .listing__crumb a { transition: color var(--ease); }
 .listing__crumb a:hover { color: var(--c-orange); }
@@ -2831,9 +2852,11 @@ body.home-v3 .search-overlay__close span { width: 22px; }
 /* keep a little breathing room above a bottom-pinned image */
 .story-card__tags { margin-bottom: 20px; }
 .story-card__tags:last-child { margin-bottom: 0; }
-/* text-only + logo cards: drop the category + tags to the bottom of the card */
+/* text-only + logo cards: drop the category + tags to the bottom of the card.
+   The padding keeps the usual 22px under the description once there is no
+   spare height to push into (one column, or the tallest card in a row). */
 .story-card--text .story-card__category,
-.story-card--logo .story-card__category { margin-top: auto; }
+.story-card--logo .story-card__category { margin-top: auto; padding-top: 22px; }
 
 /* logo card — brand logo sits at the top, above the title */
 .story-card__logo {
@@ -2927,6 +2950,12 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    breakpoints, so resizing the window never breaks the card area.      */
 @media (max-width: 1279px) { .listing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 899px)  { .listing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; } }
+/* Portrait tablets: four filters and Clear all share one row, so tighten the
+   gaps and keep each label on one line ("Service User" was wrapping). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .listing__filters { gap: 24px; }
+  .listing__filter-toggle { white-space: nowrap; }
+}
 @media (max-width: 767px) {
   .listing { padding: 104px var(--gm-mob) 130px; }
   /* Grow into the tablet title instead of jumping from 38px to a rendered
@@ -8101,7 +8130,9 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   background: transparent; padding: 8px; text-align: center;
 }
 .compassion-outcome__values li + li { margin-left: calc(-1 * var(--value-overlap)); }
-.compassion-outcome__values span { min-width: 0; max-width: 100%; font-weight: 400; overflow-wrap: anywhere; }
+/* Labels stay clear of the neighbouring circle's outline, and only break at
+   the hyphen in "Impact-driven" — never inside a word. */
+.compassion-outcome__values span { min-width: 0; max-width: calc(100% - 2 * var(--value-overlap)); font-weight: 400; overflow-wrap: normal; }
 .compassion-outcome__image.panel__photo { position: relative; inset: auto; translate: none; width: 100%; max-width: none; margin: 0; aspect-ratio: auto; overflow: hidden; min-height: 380px; }
 .compassion-outcome__image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .connection-motif { display: flex; align-items: center; gap: 18px; color: var(--c-orange); }
@@ -8233,9 +8264,17 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 }
 
 /* Compensate running copy for the existing art-directed desktop zoom. */
+/* Narrow laptops: widen the copy column so the three values keep their
+   one-line labels clear of the circles. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .compassion-outcome { grid-template-columns: 1.35fr 1fr; }
+}
 @media (max-width: 1023px) {
   .home-v3 .journey__step { min-height: 430px; }
-  .compassion-outcome { min-height: 430px; }
+  /* Stacked like the journey cards above: a half-width column left the
+     circles too small for their labels. */
+  .compassion-outcome { grid-template-columns: 1fr; min-height: 430px; }
+  .compassion-outcome__image.panel__photo { min-height: 0; aspect-ratio: 1.5; }
   .compassion-outcome__copy { padding: 34px; }
   .compassion-outcome h2 { margin-top: 30px; }
   .compassion-outcome__values li { padding: 6px 2px; }
@@ -8300,12 +8339,13 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .article__section-heading { margin-top: 30px; padding-top: 22px; }
   .footer-v3__logo { width: 170px; }
 }
-/* Keep full value labels at the shared lead size on narrow phones. */
-@media (max-width: 389px) {
+/* Keep full value labels at the shared lead size on phones: three across
+   left "Sustainable" touching its circle below 480px, so the row becomes
+   two plus one. */
+@media (max-width: 479px) {
   .compassion-outcome__values { flex-wrap: wrap; justify-content: center; }
   .compassion-outcome__values li { flex-basis: 50%; }
   .compassion-outcome__values li:last-child { margin-top: -12px; }
-  .compassion-outcome__values span { overflow-wrap: normal; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -8733,7 +8773,9 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 }
 @media (max-width: 767px) {
   .people--directory .people-intro { text-align: left; text-wrap: pretty; margin-block: 28px; }
-  .people--directory .people-jump { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: max-content; gap: 4px 20px; margin-bottom: 32px; }
+  /* Content-sized columns: equal halves wrapped "Trustees and Directors"
+     onto two lines on 390px phones when both links fit on one row. */
+  .people--directory .people-jump { display: grid; grid-template-columns: repeat(2, auto); width: max-content; max-width: 100%; gap: 4px 20px; margin-bottom: 32px; }
   .people--directory .people-jump a { padding: 10px 0; white-space: normal; }
   .people--directory .people-jump a + a::before { content: ''; left: -10px; }
   .people--directory .people-jump a[data-careers-link] { grid-column: 1 / -1; justify-self: center; }
