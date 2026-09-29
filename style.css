@@ -6909,6 +6909,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 }
 
 .longform__section { margin-top: var(--sec-gap); }
+#approach .longform__section:first-child { margin-top: 0; }
 
 .longform__eyebrow {
   color: var(--c-orange);
