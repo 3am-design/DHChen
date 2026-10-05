@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>What We Fund — The D. H. Chen Foundation</title>
+  <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Site styles -->
+  <link rel="stylesheet" href="style.css?v=20261003-content-motion" />
+  <link rel="stylesheet" href="typography.css" />
+  <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
+       page's own module (§11). Same pair of files as Listing / Articles. -->
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="funding-page inner-v3">
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+
+  <!-- ============================================================
+       00 — NAVIGATION   (V3: search left · logo centred · stacked menu right)
+       ============================================================ -->
+  <header class="nav nav--v3" id="nav">
+    <div class="nav__inner">
+
+      <a href="index.html" class="nav__logo" aria-label="D. H. Chen Foundation home">
+        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
+      </a>
+
+      <nav class="nav__menu" aria-label="Main navigation"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+<a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">About</a></nav>
+
+      <!-- R2 12141-53 puts the loupe under the stacked menu, right-aligned
+           with it. It is its own button rather than the one in
+           `.nav__actions` moved across: that group is what the sticky pill
+           is built out of, and an absolutely-placed child of it is at the
+           mercy of the landing translate, which makes it the containing
+           block for as long as it runs. Only ever one of the two is on
+           screen (see style.css). -->
+      <button class="nav__search-btn nav__search-btn--stacked" aria-label="Search">
+        <img src="assets/icons/icon-search.svg" alt="" />
+      </button>
+
+      <div class="nav__actions">
+        <!-- sticky bar only: the seal joins search + hamburger inside the
+             white pill (Figma R2 "stick" / node 12014-44) -->
+        <a href="index.html" class="nav__seal" aria-label="D. H. Chen Foundation home">
+          <img src="assets/icons/logo-seal.svg" alt="" />
+        </a>
+        <button class="nav__search-btn" aria-label="Search">
+          <img src="assets/icons/icon-search.svg" alt="" />
+        </button>
+        <a href="#" class="nav__lang">中文</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <img src="assets/icons/icon-hamburger.svg" alt="" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop mega-menu — R2 "02_Menu": a 530 × 724 white card in the
+         top-right corner, growing down from the top edge, sitting *behind*
+         the stacked menu so the section links read off the white. Stuck,
+         it drops below the pill and carries its own copy of the four
+         sections (`.nav__mega-menu`). Same markup as the home page. -->
+    <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
+<div class="nav__mega-menu"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+<a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
+<a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
+<a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
+<div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Approach.html">Practices</a></li>
+          <li><a href="Priorities.html">Priorities</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Listing.html">Initiatives</a></li>
+          <li><a href="Stories.html">Stories</a></li>
+          <li><a href="Learning.html">Learning</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="partnership"><img class="nav__mega-art" src="assets/images/menu-partnership-hands.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="WhatWeFund.html">What We Fund</a></li>
+          <li><a href="HowWeFund.html">How We Fund</a></li>
+          <li><a href="Partnership.html">Collaboration</a></li>
+        </ul></div>
+<div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
+          <li><a href="Ethos.html">Values</a></li>
+          <li><a href="People.html">People</a></li>
+          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="Connect.html">Contact Us</a></li>
+        </ul></div>
+</div>
+
+    <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+
+      <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
+      <div class="nav__mobile-bar">
+        <a href="#" class="nav__mobile-lang">中文</a>
+        <div class="nav__mobile-bar-actions">
+          <button class="nav__mobile-search" aria-label="Search">
+            <img src="assets/icons/icon-search.svg" alt="" />
+          </button>
+          <button class="nav__mobile-close" aria-label="Close menu">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary nav — big, left-aligned -->
+      <nav class="nav__mobile-links" aria-label="Mobile navigation">
+      <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Partnership</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
+<div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
+      <div class="nav__mobile-sub">
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+</nav>
+
+      <!-- Secondary links from the footer, two columns -->
+      <div class="nav__mobile-secondary">
+        <nav class="nav__mobile-col" aria-label="Get involved">
+          <a href="Partnership.html" class="nav__mobile-sublink">Partner with us</a>
+          <a href="#" class="nav__mobile-sublink">Stay connected</a>
+          <a class="nav__mobile-sublink" href="People.html#careers">Join our team</a>
+        </nav>
+        <nav class="nav__mobile-col" aria-label="Legal">
+          <a href="Privacy.html" class="nav__mobile-sublink">Privacy Policy</a>
+          <a href="Disclaimer.html" class="nav__mobile-sublink">Disclaimer</a>
+          <a href="Sitemap.html" class="nav__mobile-sublink">Sitemap</a>
+          <a href="Accessibility.html" class="nav__mobile-sublink">Accessibility</a>
+        </nav>
+      </div>
+
+      <div class="nav__mobile-social">
+        <a href="#" class="nav__mobile-social-link" aria-label="LinkedIn">
+          <img src="assets/icons/icon-linkedin.svg" alt="LinkedIn" />
+        </a>
+        <a href="#" class="nav__mobile-social-link" aria-label="YouTube">
+          <img src="assets/icons/icon-youtube.svg" alt="YouTube" />
+        </a>
+      </div>
+    </div>
+  </header>
+  <main id="main-content" tabindex="-1">
+    <article class="article longform content-page" id="what-we-fund">
+      <header class="article__head">
+        <nav class="listing__crumb article__crumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="listing__crumb-sep">/</span><a href="Partnership.html">Partnership</a><span class="listing__crumb-sep">/</span><div class="listing__crumb-drop"><span class="listing__crumb-toggle" aria-current="page">What We Fund<svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="listing__crumb-menu" role="menu"><a href="WhatWeFund.html" role="menuitem" aria-current="page">What We Fund</a><a href="HowWeFund.html" role="menuitem">How We Fund</a><a href="Partnership.html" role="menuitem">Collaboration</a></div></div><span class="listing__crumb-sep">/</span></nav>
+        <h1 class="article__title">What We Fund</h1>
+        <p class="article__subtitle">A Partnership for Meaningful Change</p>
+      </header>
+      <div class="longform__body"><div class="longform__col">
+<p class="longform__lede">We believe meaningful change begins with people and grows through collaboration.</p><p class="article__text">As a philanthropic trust, we support initiatives, including early-stage ideas, that nurture human potential, strengthen communities, and help shape a more compassionate society. We see our role as more than a funder. Through trusted partnerships, learning and capacity building, and the sharing of insights, we help cultivate promising ideas, accompanying them on their journey from possibility to sustainable impact.</p><p class="article__text">Our funding approach is guided by our commitment to:</p><ul class="content-list"><li>Engage with Compassion and Understanding</li><li>Invest in Human Potential</li><li>Connect the Dots</li><li>Seed New Possibilities</li><li>Cultivate Shared Learning</li></ul><div class="longform__inline-cta"><a href="Approach.html" class="btn-pill">Our funding approach<span class="btn-pill__arrow" aria-hidden="true"></span></a></div><section class="longform__section" id="funding-and-partnerships">
+<h2 class="longform__heading">Funding &amp; Partnerships</h2>
+<p class="article__text">We provide financial and partnership support to organisations whose work aligns with our priorities and values.</p>
+<p class="article__text">We are particularly interested in initiatives that contribute to:</p><ol class="strategy-list">
+<li class="strategy"><span class="strategy__num" aria-hidden="true">01</span><div class="strategy__text"><h3 class="strategy__name">Cultivating Purpose and Potential</h3><p class="strategy__desc">Supporting people to discover purpose, develop their strengths, and realise their potential. We are interested in initiatives that foster character, lifelong learning, personal growth, leadership, and the capacity to contribute meaningfully to society.</p></div></li>
+<li class="strategy"><span class="strategy__num" aria-hidden="true">02</span><div class="strategy__text"><h3 class="strategy__name">Supporting Wellbeing Across Life</h3><p class="strategy__desc">Supporting holistic approaches to wellbeing throughout the different stages of life. This includes mental, emotional, physical, social, and spiritual wellbeing, as well as initiatives that help people navigate life's opportunities, transitions, and challenges with resilience and dignity.</p></div></li>
+<li class="strategy"><span class="strategy__num" aria-hidden="true">03</span><div class="strategy__text"><h3 class="strategy__name">Strengthening Meaningful Connections</h3><p class="strategy__desc">Supporting efforts that nurture relationships, strengthen communities, and foster a sense of belonging. We are interested in initiatives that bring people together, build mutual understanding, encourage care for one another, and create the conditions for individuals and communities to thrive.</p></div></li>
+<li class="strategy"><span class="strategy__num" aria-hidden="true">04</span><div class="strategy__text"><h3 class="strategy__name">Enabling Positive Social Change</h3><p class="strategy__desc">Supporting initiatives that address emerging social needs, strengthen the social good ecosystem, and contribute to a more caring, connected, and compassionate society. This may include social innovation, cross-sector collaboration, organisational capacity building, knowledge sharing, and efforts that help create lasting and systemic change.</p></div></li>
+</ol>
+</section><section class="longform__section" id="strategic-initiatives">
+<h2 class="longform__heading">Foundation-led Strategic Initiatives</h2>
+<p class="article__text">Alongside our funding to values-aligned partners, we actively develop and support initiatives that explore emerging opportunities and strengthen the wider social ecosystem.</p>
+<p class="article__text">Through platforms such as D'Hub and D'Ventures, we bring together partners, practitioners, innovators and changemakers to:</p><ul class="content-list">
+<li>Explore new possibilities and emerging social needs</li>
+<li>Pilot innovative approaches and solutions</li>
+<li>Strengthen organisational and sector capacity</li>
+<li>Foster strategic partnerships and cross-sector collaboration</li>
+<li>Generate learning that can benefit the wider community</li>
+</ul><p class="article__text">These initiatives reflect our belief that lasting change often requires more than funding alone. By convening people, building relationships and creating space for experimentation, we can help ideas grow into meaningful and sustainable impact.</p>
+</section><aside class="content-callout" aria-labelledby="beyond-boundaries"><h2 class="longform__heading" id="beyond-boundaries">Beyond Traditional Boundaries</h2><p class="article__text">Meaningful change can come from many places.</p>
+<p class="article__text">We are interested in exploring opportunities with businesses, social enterprises, and other organisations that are leveraging the power of private enterprise to contribute to the public good.</p>
+<p class="article__text">If you are developing innovative approaches that align with our values and contribute to human potential, stronger communities, or positive social change, we would welcome a conversation.</p><div class="longform__inline-cta"><a href="mailto:info@dhchenfoundation.com" class="btn-pill">Explore a potential partnership<span class="btn-pill__arrow" aria-hidden="true"></span></a></div></aside><section class="longform__section" id="funding-considerations">
+<h2 class="longform__heading">Our Funding Considerations</h2>
+<p class="article__text">To ensure our resources are directed towards achieving meaningful and sustainable social impact, we generally do not support:</p><ul class="content-list">
+<li>Politically oriented initiatives</li>
+<li>Individual funding requests, except through Foundation-established scholarships or under exceptional circumstances</li>
+<li>Programmes that are scheduled to commence within three months of the application submission date</li>
+</ul>
+</section><div class="longform__cta longform__cta--titled"><h2 class="longform__cta-title">Continue exploring</h2><div class="longform__cta-links"><a href="HowWeFund.html" class="btn-pill">How we fund<span class="btn-pill__arrow" aria-hidden="true"></span></a></div></div>
+      </div></div>
+    </article>
+  </main>
+
+  <!-- ============================================================
+       05 — FOOTER
+       ============================================================ -->
+  <!-- ============================================================
+       07 — COLOUR BAR
+       ============================================================ -->
+  <div class="wrap">
+    <!-- draws itself left → right as it comes into view -->
+    <div class="colourbar" data-motion="bar" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       08 — FOOTER (V3)
+       ============================================================ -->
+  <footer class="footer-v3" id="footer">
+    <div class="wrap">
+
+      <div class="footer-v3__inner">
+
+        <a href="index.html" aria-label="D. H. Chen Foundation home">
+          <img src="assets/icons/logo-nav.png" alt="The D. H. Chen Foundation" class="footer-v3__logo" />
+        </a>
+
+        <div class="footer-v3__col">
+          <nav class="footer-v3__nav" aria-label="Footer navigation">
+            <a href="Partnership.html">Partner with us</a>
+            <a href="#">Stay connected</a>
+            <a href="People.html#careers">Join our team</a>
+          </nav>
+          <div class="footer-v3__social">
+            <a href="#" aria-label="LinkedIn">
+              <span class="footer-v3__social-icon footer-v3__social-icon--linkedin" aria-hidden="true"></span>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <span class="footer-v3__social-icon footer-v3__social-icon--youtube" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-v3__legal" aria-label="Legal navigation">
+          <a href="Privacy.html">Privacy Policy</a>
+          <a href="Disclaimer.html">Disclaimer</a>
+          <a href="Sitemap.html">Sitemap</a>
+          <a href="Accessibility.html">Accessibility</a>
+        </nav>
+
+      </div>
+
+      <p class="footer-v3__copyright">
+        © 2026 The D. H. Chen Foundation. All rights reserved<span class="footer-v3__copy-sep">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="https://www.assembly.com.hk" target="_blank" rel="noopener">Website designed by Assembly</a>
+      </p>
+
+    </div>
+  </footer>
+
+  <!-- Full-screen search overlay (opened from the nav search icon) -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true" inert>
+    <div class="search-overlay__bar">
+      <a href="index.html" class="search-overlay__logo" aria-label="D. H. Chen Foundation home">
+        <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" />
+      </a>
+      <button class="search-overlay__close" type="button" aria-label="Close search">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="search-overlay__inner">
+      <form class="search-overlay__field" role="search" action="Search.html" method="get">
+        <img class="search-overlay__icon" src="assets/icons/icon-search.svg" alt="" aria-hidden="true" />
+        <input class="search-overlay__input" type="search" name="q" placeholder="Looking for..." aria-label="Search" />
+      </form>
+      <p class="search-overlay__label">Whats hot</p>
+      <nav class="search-overlay__hot" aria-label="Popular searches">
+        <a href="Search.html?q=Scholarship">Scholarship</a>
+        <a href="Search.html?q=Funding+for+innovative">Funding for innovative</a>
+        <a href="Search.html?q=Join+us">Join us</a>
+        <a href="Search.html?q=Events">Events</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Custom cursor (desktop pointers only; script enables it) -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__label">DISCOVER</span>
+    <img class="cursor__arrow" src="assets/icons/icon-arrow.svg" alt="" />
+  </div>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="script.js?v=20261003-content-motion"></script>
+</body>
+</html>

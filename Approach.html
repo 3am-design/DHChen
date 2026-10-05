@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <title>Approach — The D. H. Chen Foundation</title>
+  <title>Practices — The D. H. Chen Foundation</title>
   <link rel="preload" href="assets/fonts/baskervville-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20261003-content-motion" />
   <link rel="stylesheet" href="typography.css" />
   <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
        page's own module (§11). Same pair of files as Listing / Articles. -->
@@ -75,7 +75,7 @@
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
           <li><a href="Approach.html">Practices</a></li>
-          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Priorities</a></li>
+          <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-ripples.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
           <li><a href="Listing.html">Initiatives</a></li>
@@ -83,7 +83,8 @@
           <li><a href="Learning.html">Learning</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="partnership"><img class="nav__mega-art" src="assets/images/menu-partnership-hands.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Funding</a></li>
+          <li><a href="WhatWeFund.html">What We Fund</a></li>
+          <li><a href="HowWeFund.html">How We Fund</a></li>
           <li><a href="Partnership.html">Collaboration</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -113,13 +114,13 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Partnership</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">Funding</a><a href="Partnership.html">Collaboration</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
@@ -144,173 +145,46 @@
         <a href="#" class="nav__mobile-social-link" aria-label="LinkedIn">
           <img src="assets/icons/icon-linkedin.svg" alt="LinkedIn" />
         </a>
-        <a href="#" class="nav__mobile-social-link" aria-label="Instagram">
-          <img src="assets/icons/icon-instagram.svg" alt="Instagram" />
+        <a href="#" class="nav__mobile-social-link" aria-label="YouTube">
+          <img src="assets/icons/icon-youtube.svg" alt="YouTube" />
         </a>
       </div>
     </div>
   </header>
   <main id="main-content" tabindex="-1">
-
-    <!-- ============================================================
-         APPROACH — how the Foundation works.
-
-         Not to be confused with About > Our Institutes, which is WHERE
-         the work lives. This page is the method: engaged philanthropy,
-         and the five moves it is made of. The five moves used to sit on
-         the philosophy page; they are the answer to "how", not to "who
-         we are", so they live here and Our Ethos points across.
-         ============================================================ -->
-    <article class="article longform" id="approach">
-
+    <article class="article longform content-page" id="approach">
       <header class="article__head">
-
-        <nav class="listing__crumb article__crumb" aria-label="Breadcrumb">
-          <a href="index.html">Home</a>
-          <span class="listing__crumb-sep">/</span>
-          <div class="listing__crumb-drop">
-            <a href="Approach.html" class="listing__crumb-toggle">
-              Approach
-              <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <div class="listing__crumb-menu" role="menu">
-              <a href="Approach.html" role="menuitem">Approach</a>
-              <a href="Listing.html" role="menuitem">Impact</a>
-              <a href="Partnership.html" role="menuitem">Partnership</a>
-              <a href="Ethos.html" role="menuitem">About</a>
-            </div>
-          </div>
-          <span class="listing__crumb-sep">/</span>
-          <div class="listing__crumb-drop">
-            <span class="listing__crumb-toggle" aria-current="page">
-              Practices
-              <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <div class="listing__crumb-menu" role="menu">
-              <a href="Approach.html" role="menuitem" aria-current="page">Practices</a>
-              <a data-placeholder-link="true" aria-disabled="true" tabindex="-1" role="menuitem">Priorities</a>
-            </div>
-          </div>
-          <span class="listing__crumb-sep">/</span>
-        </nav>
-
+        <nav class="listing__crumb article__crumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="listing__crumb-sep">/</span><a href="Approach.html">Approach</a><span class="listing__crumb-sep">/</span><div class="listing__crumb-drop"><span class="listing__crumb-toggle" aria-current="page">Practices<svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="listing__crumb-menu" role="menu"><a href="Approach.html" role="menuitem" aria-current="page">Practices</a><a href="Priorities.html" role="menuitem">Priorities</a></div></div><span class="listing__crumb-sep">/</span></nav>
         <h1 class="article__title" id="practices">Practices</h1>
-        <p class="article__subtitle">How we work</p>
+        <p class="article__subtitle">How We Put Compassion into Action</p>
+
       </header>
-
-      <div class="longform__body">
-        <div class="longform__col">
-
-          <!-- ── 1 · what engaged philanthropy means here ──────── -->
-          <section class="longform__section">
-            <p class="longform__eyebrow">Engaged philanthropy</p>
-            <h2 class="longform__heading">Rarely only the funder</h2>
-            <p class="article__text">
-              A grant on its own answers a shortfall; it does not usually answer the problem behind
-              the shortfall. So we initiate as well as fund, we build capacity as readily as we
-              write a cheque, and we introduce partners to each other when that is what the work
-              actually needs.
-            </p>
-            <p class="article__text">
-              It also means staying in the room. We sit with the organisations we support through
-              the difficult stretches, and we treat their judgement about their own field as better
-              than ours &mdash; which is what makes the support useful rather than merely welcome.
-            </p>
-
-            <div class="longform__media">
-              <img src="assets/images/news-2.png" alt="" />
-            </div>
-          </section>
-
-          <!-- ── 2 · the five moves ───────────────────────────── -->
-          <section class="longform__section">
-            <p class="longform__eyebrow">Our strategies</p>
-            <h2 class="longform__heading">Five moves, in the order we make them</h2>
-            <p class="article__text">
-              These are not five programmes. They are five things we do to any issue we take on,
-              and most projects pass through several of them before they are finished.
-            </p>
-
-            <ol class="strategy-list">
-              <li class="strategy">
-                <span class="strategy__num">01</span>
-                <div class="strategy__text">
-                  <h3 class="strategy__name">Initiate</h3>
-                  <p class="strategy__desc">Proactively addressing social issues together with aligned organisations and individuals.</p>
-                  <p class="strategy__note">We do not wait for a proposal to arrive. Where an issue is visible and under-served, we go looking for the people already working on it and start there.</p>
-                </div>
-              </li>
-              <li class="strategy">
-                <span class="strategy__num">02</span>
-                <div class="strategy__text">
-                  <h3 class="strategy__name">Capacity Building</h3>
-                  <p class="strategy__desc">Providing comprehensive support that strengthens organisational and individual resilience.</p>
-                  <p class="strategy__note">Money is the easiest thing to give and rarely the scarcest. Fellowship, shared services, governance help and time from people who have done it before tend to matter more.</p>
-                </div>
-              </li>
-              <li class="strategy">
-                <span class="strategy__num">03</span>
-                <div class="strategy__text">
-                  <h3 class="strategy__name">Innovate</h3>
-                  <p class="strategy__desc">Applying creativity and embracing unconventional methods where the usual ones fall short.</p>
-                  <p class="strategy__note">Some problems are under-served precisely because the standard approach does not fit them. We are willing to fund the attempt, and to carry the risk that it does not work.</p>
-                </div>
-              </li>
-              <li class="strategy">
-                <span class="strategy__num">04</span>
-                <div class="strategy__text">
-                  <h3 class="strategy__name">Catalyst for Collaboration</h3>
-                  <p class="strategy__desc">Connecting like-minded entities so shared resources go further than any one of them could alone.</p>
-                  <p class="strategy__note">A great deal of what we do is introduction: putting two organisations in a room because between them they have the whole answer.</p>
-                </div>
-              </li>
-              <li class="strategy">
-                <span class="strategy__num">05</span>
-                <div class="strategy__text">
-                  <h3 class="strategy__name">Impact Driven</h3>
-                  <p class="strategy__desc">Investing resources towards positive, systemic and sustainable change.</p>
-                  <p class="strategy__note">We ask what would still be standing if we stopped funding tomorrow, and we design backwards from the answer.</p>
-                </div>
-              </li>
-            </ol>
-
-            <div class="article__highlight longform__highlight">
-              <img class="article__highlight-icon" src="assets/icons/icon-goal.svg" alt="" aria-hidden="true" />
-              <p>
-                Creating a compassionate society together through approaches that are impact-driven,
-                sustainable and innovative &mdash; societal improvement, not commercial success, is
-                the measure we hold ourselves to.
-              </p>
-            </div>
-          </section>
-
-          <!-- ── 3 · where it gets applied ─────────────────────── -->
-          <section class="longform__section" id="priorities"><p class="longform__eyebrow">Our priorities</p><h2 class="longform__heading">Where we put compassion into action</h2><div class="priorities-grid"><a href="Listing.html?priority=Education">Education<span class="priorities-grid__arrow" aria-hidden="true"></span></a><a href="Listing.html?priority=Wellbeing">Wellbeing<span class="priorities-grid__arrow" aria-hidden="true"></span></a><a href="Listing.html?priority=Ageing%20and%20Dying">Ageing and Dying<span class="priorities-grid__arrow" aria-hidden="true"></span></a><a href="Listing.html?priority=Ecosystem%20Building">Ecosystem Building<span class="priorities-grid__arrow" aria-hidden="true"></span></a></div></section>
-
-          <div class="longform__cta">
-            <a href="Institutes.html" class="btn-pill">
-              Our institutes
-              <span class="btn-pill__arrow" aria-hidden="true"></span>
-            </a>
-            <a href="Ethos.html" class="btn-pill">
-              Our ethos
-              <span class="btn-pill__arrow" aria-hidden="true"></span>
-            </a>
-            <a href="Listing.html" class="btn-pill">
-              Our stories
-              <span class="btn-pill__arrow" aria-hidden="true"></span>
-            </a>
-          </div>
-
-        </div>
-      </div>
-
+      <div class="longform__body"><div class="longform__col">
+<p class="longform__lede">At The D. H. Chen Foundation, we believe our contribution goes beyond funding.</p><p class="article__text">Guided by our Founder Dr. Din Hwa Chen's belief to "Care for others as well as you would care for yourself", we bring together different forms of capital, including financial resources, knowledge, relationships, experience and opportunities, to support positive change. We see philanthropy not as a transaction, but as a journey of learning, partnership and shared growth.</p>
+<p class="article__text">Through five interconnected practices, we seek to put compassion into action and contribute to a more compassionate society.</p><div class="practice-list">
+<div class="practice" id="engage-with-compassion">
+<h3 class="practice__head"><button type="button" class="practice__trigger" aria-expanded="false" aria-controls="engage-with-compassion-panel" id="engage-with-compassion-trigger"><span class="practice__num" aria-hidden="true">01</span><span class="practice__text"><span class="practice__name">Engage with Compassion and Understanding</span><span class="practice__desc">We begin with listening, relationship-building and understanding lived experiences.</span></span><span class="practice__icon" aria-hidden="true"></span></button></h3>
+<div class="practice__panel" id="engage-with-compassion-panel" role="region" aria-labelledby="engage-with-compassion-trigger"><div class="practice__panel-inner"><div class="practice__body"><p class="article__text">Meaningful change begins with understanding.</p><p class="article__text">We take time to listen deeply and build trusted relationships with the people, communities and organisations we engage. By approaching others with openness, curiosity and humility, we develop a richer understanding of different experiences, perspectives and aspirations.</p><p class="article__text">This ongoing process of listening and learning helps shape how we act, partner and grow together.</p></div></div></div>
+</div>
+<div class="practice" id="invest-in-human-potential">
+<h3 class="practice__head"><button type="button" class="practice__trigger" aria-expanded="false" aria-controls="invest-in-human-potential-panel" id="invest-in-human-potential-trigger"><span class="practice__num" aria-hidden="true">02</span><span class="practice__text"><span class="practice__name">Invest in Human Potential</span><span class="practice__desc">We nurture people, leadership, organisations and communities while learning alongside them.</span></span><span class="practice__icon" aria-hidden="true"></span></button></h3>
+<div class="practice__panel" id="invest-in-human-potential-panel" role="region" aria-labelledby="invest-in-human-potential-trigger"><div class="practice__panel-inner"><div class="practice__body"><p class="article__text">We believe everyone has the capacity to learn, contribute and flourish.</p><p class="article__text">We invest in people, leadership, learning and organisational development, recognising that meaningful change is sustained by individuals and communities who continue to evolve and adapt. Through shared learning and mutual support, we seek to cultivate the conditions in which potential can be realised and aspirations can take shape.</p></div></div></div>
+</div>
+<div class="practice" id="connect-the-dots">
+<h3 class="practice__head"><button type="button" class="practice__trigger" aria-expanded="false" aria-controls="connect-the-dots-panel" id="connect-the-dots-trigger"><span class="practice__num" aria-hidden="true">03</span><span class="practice__text"><span class="practice__name">Connect the Dots</span><span class="practice__desc">We contribute intellectual, social and relational capital to bring together people, ideas and opportunities.</span></span><span class="practice__icon" aria-hidden="true"></span></button></h3>
+<div class="practice__panel" id="connect-the-dots-panel" role="region" aria-labelledby="connect-the-dots-trigger"><div class="practice__panel-inner"><div class="practice__body"><p class="article__text">We believe our greatest contribution often lies in the connections we help create.</p><p class="article__text">Alongside financial support, we bring intellectual, social and relational capital by connecting people, ideas, organisations and opportunities. By sharing knowledge, building relationships and linking complementary strengths, we help unlock possibilities that may not emerge in isolation.</p><p class="article__text">Because when the right connections are made, new pathways for impact can emerge.</p></div></div></div>
+</div>
+<div class="practice" id="seed-new-possibilities">
+<h3 class="practice__head"><button type="button" class="practice__trigger" aria-expanded="false" aria-controls="seed-new-possibilities-panel" id="seed-new-possibilities-trigger"><span class="practice__num" aria-hidden="true">04</span><span class="practice__text"><span class="practice__name">Seed New Possibilities</span><span class="practice__desc">We support experimentation, emerging ideas and new responses to societal needs.</span></span><span class="practice__icon" aria-hidden="true"></span></button></h3>
+<div class="practice__panel" id="seed-new-possibilities-panel" role="region" aria-labelledby="seed-new-possibilities-trigger"><div class="practice__panel-inner"><div class="practice__body"><p class="article__text">We remain open to what could be.</p><p class="article__text">We seek out emerging needs, fresh perspectives and promising ideas that can contribute to a more compassionate society. Through experimentation, learning and thoughtful risk-taking, we create space for new possibilities to be explored, refined and realised.</p><p class="article__text">We believe innovation is not only about finding solutions, but also about expanding what people imagine to be possible.</p></div></div></div>
+</div>
+<div class="practice" id="cultivate-shared-learning">
+<h3 class="practice__head"><button type="button" class="practice__trigger" aria-expanded="false" aria-controls="cultivate-shared-learning-panel" id="cultivate-shared-learning-trigger"><span class="practice__num" aria-hidden="true">05</span><span class="practice__text"><span class="practice__name">Learn and Grow Together / Cultivate Shared Learning</span><span class="practice__desc">We embrace learning, reflection and adaptation as a shared journey with partners and communities.</span></span><span class="practice__icon" aria-hidden="true"></span></button></h3>
+<div class="practice__panel" id="cultivate-shared-learning-panel" role="region" aria-labelledby="cultivate-shared-learning-trigger"><div class="practice__panel-inner"><div class="practice__body"><p class="article__text">We believe everyone has something to learn and something to contribute. Through reflection, dialogue, experimentation and knowledge exchange, we learn alongside our partners and communities. These insights not only strengthen individual initiatives, but also contribute to the wider social good sector.</p></div></div></div>
+</div>
+</div><div class="longform__cta longform__cta--titled"><h2 class="longform__cta-title">Continue exploring</h2><div class="longform__cta-links"><a href="Priorities.html" class="btn-pill">Our priorities<span class="btn-pill__arrow" aria-hidden="true"></span></a><a href="WhatWeFund.html" class="btn-pill">What we fund<span class="btn-pill__arrow" aria-hidden="true"></span></a></div></div>
+      </div></div>
     </article>
-
-
-
-
-
   </main>
 
   <!-- ============================================================
@@ -349,8 +223,8 @@
             <a href="#" aria-label="LinkedIn">
               <span class="footer-v3__social-icon footer-v3__social-icon--linkedin" aria-hidden="true"></span>
             </a>
-            <a href="#" aria-label="Instagram">
-              <span class="footer-v3__social-icon footer-v3__social-icon--instagram" aria-hidden="true"></span>
+            <a href="#" aria-label="YouTube">
+              <span class="footer-v3__social-icon footer-v3__social-icon--youtube" aria-hidden="true"></span>
             </a>
           </div>
         </div>
@@ -403,6 +277,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261003-content-motion"></script>
 </body>
 </html>

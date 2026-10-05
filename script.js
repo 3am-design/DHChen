@@ -1453,6 +1453,14 @@ window.__pageZoom = function () {
        no code change. The five value plates and the five strategy rows
        are named separately so each set ripples in order. */
     ['.longform__lede', 0],
+    /* New content pages also put introductory copy, lists and callouts
+       directly in the reading column. Reveal those blocks individually;
+       sections and numbered groups already have their own choreography. */
+    ['.content-page .longform__col > :not(.longform__section):not(.strategy-list):not(.longform__lede):not(.longform__cta):not(.funding-process)', 120],
+    ['.funding-process__step:nth-child(1)', 0],
+    ['.funding-process__step:nth-child(2)', 120],
+    ['.funding-process__step:nth-child(3)', 240],
+    ['.funding-process__step:nth-child(4)', 360],
     /* the two lists are skipped here — their rows are named below and
        reveal one at a time, so fading the container over them as well
        would put two fades on the same pixels */
@@ -1463,6 +1471,8 @@ window.__pageZoom = function () {
     ['.strategy:nth-child(1)', 0], ['.strategy:nth-child(2)', 90],
     ['.strategy:nth-child(3)', 180], ['.strategy:nth-child(4)', 270],
     ['.strategy:nth-child(5)', 360],
+    ['.content-page .strategy:nth-child(6)', 450],
+    ['.content-page .strategy:nth-child(7)', 540],
     ['.longform__cta', 0],
 
     /* Institutes.html and Institute.html — the opening
@@ -4140,4 +4150,27 @@ window.__pageZoom = function () {
       });
     }
   }
+})();
+
+
+/* Practices accordion: opening one closes the one that was open. */
+(function () {
+  const list = document.querySelector('.practice-list');
+  if (!list) return;
+  const rows = Array.from(list.querySelectorAll('.practice'));
+  function set(row, open) {
+    row.classList.toggle('is-open', open);
+    row.querySelector('.practice__trigger').setAttribute('aria-expanded', open ? 'true' : 'false');
+    const panel = row.querySelector('.practice__panel');
+    if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
+  }
+  rows.forEach(function (row) {
+    set(row, false);
+    row.querySelector('.practice__trigger').addEventListener('click', function () {
+      const open = !row.classList.contains('is-open');
+      rows.forEach(function (other) { set(other, other === row && open); });
+    });
+  });
+  const target = window.location.hash && rows.find(function (r) { return '#' + r.id === window.location.hash; });
+  if (target) set(target, true);
 })();
