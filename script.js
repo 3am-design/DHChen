@@ -1220,7 +1220,7 @@ window.__pageZoom = function () {
     if (card.closest('[data-rail]')) return; // The rail owns edge arrows and Discover.
     card.addEventListener('mouseenter', function () { cursor.classList.add('cursor--discover'); });
     card.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--discover'); });
-    card.querySelectorAll('.story-card__tag, .card-v3__tags li').forEach(function (tag) {
+    card.querySelectorAll('.story-card__tag, .card-v3__tags li, .tag-more').forEach(function (tag) {
       tag.addEventListener('mouseenter', function () { cursor.classList.remove('cursor--discover'); });
       tag.addEventListener('mouseleave', function () { cursor.classList.add('cursor--discover'); });
     });
@@ -1406,6 +1406,11 @@ window.__pageZoom = function () {
        column when they land, see `columnOf`. */
     ['.listing__crumb', 0], ['.listing__title', 100],
     ['.listing__filters', 200], ['.story-card', 0], ['.listing__pager', 0],
+    /* Stories / Initiatives — the line under the title, the spotlight
+       (its heading, then the cards) and the "Explore all" heading */
+    ['.listing__title--initiatives + .listing__subtitle', 180],
+    ['.spotlight__head', 260], ['.spotlight__card', 340],
+    ['.listing__all-title', 0],
 
     /* People.html — carry the opening sequence into the introduction,
        then reveal each directory heading and row as it reaches view. */
@@ -1479,6 +1484,13 @@ window.__pageZoom = function () {
        copy, then the cards. The cards are `.story-card`s, already
        covered above, and take their stagger from `columnOf` like every
        other card grid on the site. */
+    /* Legal pages (Privacy / Disclaimer / Accessibility), Sitemap,
+       Partnership's closing blocks, Search, and two home blocks that
+       had no entry */
+    ['.legal__body > *', 0], ['.sitemap__group', 0],
+    ['.partners', 0], ['.partnership__foot-text', 0],
+    ['.search__count', 0], ['.s-tabs', 100], ['.s-results', 200],
+    ['.compassion-outcome__copy', 0], ['.ventures__intro', 0],
     ['.institutes__lede', 0],
     ['.institute-card', 0], ['.institutes__foot', 0],
     ['.institute__lede', 0], ['.institute__text', 100]
@@ -1714,7 +1726,11 @@ window.__pageZoom = function () {
       const line = document.createElement('span');
       line.className = 'lines__line';
       line.style.setProperty('--y', (i * 100 / RULES) + '%');
-      line.style.setProperty('--dl', ringDelay(Math.abs(i - RULES_MID), 420));
+      /* Belonging: the middle rule draws alone first, then the rest open
+         out above and below it, each one drawn left to right */
+      const d = Math.abs(i - RULES_MID);
+      line.style.setProperty('--dl', d === 0 ? '0ms'
+        : Math.round(650 + Math.pow(d / RULES_MID, 0.8) * 750) + 'ms');
       box.appendChild(line);
     }
   });
@@ -1855,6 +1871,15 @@ window.__pageZoom = function () {
       later(resetAndReplay, LOOP_FADE);
     }
 
+    /* Where the cards stack (sticky, each folding over the one above) the
+       motif keeps looping while its card is still in view, and holds on
+       the finished frame once the next card has covered it. Scrolling back
+       uncovers it and it plays again. Where the cards don't stack, it
+       simply loops. */
+    const journeyEl = graphic.closest('.journey');
+    const nextCard = graphic.closest('.panel') && graphic.closest('.panel').nextElementSibling;
+    function stacked() { return !!journeyEl && journeyEl.classList.contains('journey--stack'); }
+
     function scheduleNext(runDelay) {
       later(fadeOut, runDelay + LOOP_RUN[kind] + LOOP_REST);
     }
@@ -1904,9 +1929,12 @@ window.__pageZoom = function () {
     }
 
     function syncLifecycle() {
-      if (document.hidden || !inRange) pause();
+      if (document.hidden || !inRange || covered) pause();
       else resume();
     }
+
+    let covered = false;
+    let coverPending = false;
 
     /* First pass keeps the existing panel timing exactly. */
     graphic.classList.add('is-lit');
@@ -1917,6 +1945,30 @@ window.__pageZoom = function () {
       graphic.classList.add('is-on');
     }
     scheduleNext(firstAt);
+
+    /* Stacked: the next card slides over this motif. Once it has covered
+       it, the next time it is uncovered the motif plays again from its
+       first step. */
+    function checkCover() {
+      coverPending = false;
+      let now = false;
+      if (stacked() && nextCard) {
+        const g = graphic.getBoundingClientRect();
+        const n = nextCard.getBoundingClientRect();
+        now = covered ? n.top < g.bottom + 60 : n.top < g.bottom - 20;
+      }
+      if (now !== covered) {
+        covered = now;
+        syncLifecycle();
+      }
+    }
+    function queueCover() {
+      if (coverPending) return;
+      coverPending = true;
+      window.requestAnimationFrame(checkCover);
+    }
+    window.addEventListener('scroll', queueCover, { passive: true });
+    window.addEventListener('resize', queueCover);
 
     if ('IntersectionObserver' in window) {
       const visibilityObserver = new IntersectionObserver(function (entries) {
@@ -2641,11 +2693,15 @@ window.__pageZoom = function () {
    Native navigation also preserves keyboard and open-in-new-tab behaviour.
    ---------------------------------------------------------------- */
 (function () {
-  const cards = Array.prototype.slice.call(document.querySelectorAll('.story-card, .card-v3'));
+  const cards = Array.prototype.slice.call(document.querySelectorAll('.story-card, .card-v3, .spotlight__card'));
   if (!cards.length) return;
   cards.forEach(function (card) {
     card.addEventListener('click', function (e) {
-      if (e.target.closest('.story-card__tag, .card-v3__tags li')) e.preventDefault();
+      const tag = e.target.closest('.story-card__tag, .card-v3__tags li, .tag-more, .spotlight__tags li');
+      if (!tag) return;
+      e.preventDefault();
+      /* the institute tag leads to that institute on the Institutes page */
+      if (tag.dataset.href) window.location.href = tag.dataset.href;
     });
   });
 })();
@@ -3276,6 +3332,12 @@ window.__pageZoom = function () {
     barIn:  320    /* then the colour bar wipes                        */
   };
 
+  /* The whole opening runs 20% faster: every beat here, the per-element
+     delays below, and the matching CSS durations (style.css §13) share
+     this factor. */
+  const SPEED = 0.8;
+  Object.keys(T).forEach(function (key) { T[key] = Math.round(T[key] * SPEED); });
+
   /* The founder's motto, in the language of the page it is opening. Two
      lines because the quote lifts one line at a time (each is its own
      `.opening__line`), so the break is part of the choreography rather
@@ -3433,7 +3495,7 @@ window.__pageZoom = function () {
 
   /* the quote lines lift one behind the other */
   intro.querySelectorAll('.opening__line > i').forEach(function (el, n) {
-    el.style.setProperty('--dl', (n * 170) + 'ms');
+    el.style.setProperty('--dl', Math.round(n * 170 * SPEED) + 'ms');
   });
 
   const timers = [];
@@ -3461,7 +3523,7 @@ window.__pageZoom = function () {
     const dot = document.createElement('span');
     dot.className = 'dots__dot ' + DRIFT[n % 4];
     dot.style.cssText = '--x:' + d[0] + '%;--y:' + d[1] + '%;--s:' + d[2] +
-                        '%;--o:' + d[3] + ';--dl:' + d[4] + 'ms';
+                        '%;--o:' + d[3] + ';--dl:' + Math.round(d[4] * SPEED) + 'ms';
     dots.appendChild(dot);
   });
   /* the core: the one dot the others collapse into, and the one the line
@@ -3477,7 +3539,7 @@ window.__pageZoom = function () {
      out, so the delay grows with log2 of the distance from the middle —
      the first few land one at a time, the rest rush out. */
   function ringDelay(distance, beat) {
-    return Math.round(Math.log2(distance + 1) * beat) + 'ms';
+    return Math.round(Math.log2(distance + 1) * beat * SPEED) + 'ms';
   }
 
   /* 線 — odd count so the row opens on the single centre dot. Positions
@@ -3505,7 +3567,7 @@ window.__pageZoom = function () {
        out *with* the edge instead of trailing behind it. The 90ms lead
        starts the fade just before the edge lands on it. */
     dot.style.setProperty('--dx',
-      Math.max(0, Math.round(684 * Math.pow(d / ROW_MID, 1.6)) - 90) + 'ms');
+      Math.max(0, Math.round((684 * Math.pow(d / ROW_MID, 1.6) - 90) * SPEED)) + 'ms');
     dotrow.appendChild(dot);
   }
 
@@ -3529,8 +3591,8 @@ window.__pageZoom = function () {
        little quicker than the one before it (`--dur`), so the whole plane
        closes on the beat rather than trailing at the corners. */
     rule.style.setProperty('--dl', d === 0 ? '0ms'
-      : Math.round(Math.pow(d / RULES_MID, 0.8) * 660) + 'ms');
-    rule.style.setProperty('--dur', (1350 - d * 34) + 'ms');
+      : Math.round(Math.pow(d / RULES_MID, 0.8) * 660 * SPEED) + 'ms');
+    rule.style.setProperty('--dur', Math.round((1350 - d * 34) * SPEED) + 'ms');
     lines.appendChild(rule);
   }
 
@@ -3622,8 +3684,8 @@ window.__pageZoom = function () {
   });
 
   /* --- skip ---------------------------------------------------------
-     Only the button skips — not a stray click or key, which is how the
-     sequence used to be cut short by accident.
+     Only the button — or Esc — skips, not a stray click or other key,
+     which is how the sequence used to be cut short by accident.
 
      It does not run the rest of the beats at speed. The frame dims out, the
      mark goes with it, and the header is assembled underneath while the
@@ -3655,6 +3717,9 @@ window.__pageZoom = function () {
     }, 300);
   }
   intro.querySelector('.opening__skip').addEventListener('click', skip);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') skip();
+  });
 
   /* keep the parked mark centred if the window is resized mid-intro */
   window.addEventListener('resize', function () {
@@ -4173,4 +4238,40 @@ window.__pageZoom = function () {
   });
   const target = window.location.hash && rows.find(function (r) { return '#' + r.id === window.location.hash; });
   if (target) set(target, true);
+})();
+
+
+/* ----------------------------------------------------------------
+   Card tags — show at most three; the rest fold into an outlined
+   "+N" chip whose hover / focus lists them. The hidden tags stay in
+   the DOM (the listing filters read them), the list is a copy.
+   ---------------------------------------------------------------- */
+(function () {
+  const MAX = 3;
+  document.querySelectorAll('.story-card__tags, .card-v3__tags').forEach(function (ul) {
+    const items = Array.prototype.slice.call(ul.children);
+    if (items.length <= MAX) return;
+    const rest = items.slice(MAX);            // three real tags, then "+N"
+    rest.forEach(function (li) { li.classList.add('tag-hidden'); });
+    const more = document.createElement('li');
+    more.className = 'tag-more';
+    more.tabIndex = 0;
+    more.textContent = '+' + rest.length;
+    const pop = document.createElement('ul');
+    pop.className = 'tag-more__list';
+    rest.forEach(function (li) {
+      const item = document.createElement('li');
+      item.textContent = li.textContent;
+      pop.appendChild(item);
+    });
+    more.appendChild(pop);
+    ul.appendChild(more);
+    more.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
+    /* a plain cursor over the chip, like the other tags (the card's DISCOVER state resumes on leave) */
+    const cur = document.getElementById('cursor');
+    if (cur) {
+      more.addEventListener('mouseenter', function () { cur.classList.remove('cursor--discover'); });
+      more.addEventListener('mouseleave', function () { cur.classList.add('cursor--discover'); });
+    }
+  });
 })();

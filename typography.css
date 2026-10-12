@@ -105,7 +105,7 @@ h2:not(.news-v3__heading), h3, h4 {
 .ventures__intro p, .funding__text,
 .listing__subtitle, .article__subtitle,
 .longform__lede, .institutes__lede, .institute__lede,
-.story__lede, .institute-card__lede, .people-intro,
+.story__lede, .people-intro,
 .connect__funding-text, .article__highlight p,
 .article__testimonial-quote, .compassion-outcome__values li {
   font: 400 var(--font-lead)/var(--leading-copy) var(--f-sans);
@@ -126,7 +126,7 @@ h2:not(.news-v3__heading), h3, h4 {
 .card-v3__desc, .story-card__desc, .spotlight__card p,
 .article__text, .article__related-desc, .ventures__text,
 .strategy__desc, .strategy__note, .ethos__value-desc,
-.institute__text, .institutes__text, .institute-card__text,
+.institute__text, .institutes__text, .institute-card__text, .institute-card__lede,
 .institutes__foot-text, .partnership__foot-text,
 .people-section__intro, .people-dialog__body p,
 .career-job__summary, .career-job__detail p,
