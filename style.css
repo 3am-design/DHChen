@@ -878,7 +878,7 @@ button.nav__mobile-link {
   filter: invert(0%);               /* icon → #000000 */
 }
 
-a[aria-label="YouTube"].nav__mobile-social-link img { width: 22px; }
+a[aria-label="YouTube"].nav__mobile-social-link img { width: 32px; height: 32px; }
 
 /* ================================================================
    SEARCH OVERLAY — full-screen orange search (Figma "Desktop_Search")
@@ -5796,7 +5796,10 @@ body.home-v3.lp-logo-return .nav__logo {
 .footer-v3__social-icon--linkedin  { --icon: url("data:image/svg+xml,%3Csvg preserveAspectRatio=%22xMidYMid meet%22 width=%2225.6%22 height=%2225.6002%22 overflow=%22visible%22 style=%22display: block;%22 viewBox=%220 0 25.6 25.6002%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22%3E %3Cg id=%22_x31_0.Linkedin%22%3E %3Cpath id=%22Vector%22 d=%22M25.6 25.6V16.224C25.6 11.616 24.608 8.096 19.232 8.096C16.64 8.096 14.912 9.504 14.208 10.848H14.144V8.512H9.056V25.6H14.368V17.12C14.368 14.88 14.784 12.736 17.536 12.736C20.256 12.736 20.288 15.264 20.288 17.248V25.568H25.6V25.6Z%22 fill=%22black%22/%3E %3Cpath id=%22Vector_2%22 d=%22M0.416 8.512H5.728V25.6H0.416V8.512Z%22 fill=%22black%22/%3E %3Cpath id=%22Vector_3%22 d=%22M3.072 0C1.376 0 0 1.376 0 3.072C0 4.768 1.376 6.176 3.072 6.176C4.768 6.176 6.144 4.768 6.144 3.072C6.144 1.376 4.768 0 3.072 0Z%22 fill=%22black%22/%3E %3C/g%3E %3C/svg%3E"); }
 .footer-v3__social-icon--youtube { --icon: url("data:image/svg+xml,%3Csvg width=%2226%22 height=%2226%22 viewBox=%220 0 24 24%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z%22 fill=%22black%22/%3E%3C/svg%3E"); }
 .footer-v3__social { align-items: center; }
-.footer-v3__social-icon--youtube { width: 22px; }
+/* The YouTube glyph is a wide, short shape inside a square viewBox, so at
+   the LinkedIn box size it read noticeably smaller. A 32px box gives it
+   about the same visual weight as the 26px LinkedIn mark. */
+.footer-v3__social-icon--youtube { width: 32px; height: 32px; }
 .footer-v3__social a:hover .footer-v3__social-icon { background-color: var(--c-orange); }
 
 .footer-v3__legal { display: flex; flex-direction: column; gap: 18px; }
@@ -8161,35 +8164,35 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .home-v3 .intro-v3 {
   padding-block: 58px;
 }
-.home-v3 .journey { isolation: isolate; gap: 22px; }
-.home-v3 .journey__step {
+:is(.home-v3, .journey-host) .journey { isolation: isolate; gap: 22px; }
+:is(.home-v3, .journey-host) .journey__step {
   min-height: 520px; padding-top: 42px; padding-bottom: 48px;
   transform-origin: center top;
 }
-.home-v3 .journey__step .panel__head { position: relative; z-index: 2; }
-.home-v3 .journey__step .panel__title { margin-top: 0; }
-.home-v3 .journey__step .panel__body { margin-top: 18px; }
-.home-v3 .journey__step .panel__lede {
+:is(.home-v3, .journey-host) .journey__step .panel__head { position: relative; z-index: 2; }
+:is(.home-v3, .journey-host) .journey__step .panel__title { margin-top: 0; }
+:is(.home-v3, .journey-host) .journey__step .panel__body { margin-top: 18px; }
+:is(.home-v3, .journey-host) .journey__step .panel__lede {
   max-width: 530px;
 }
-.home-v3 .journey__step [data-motion] { top: 50%; translate: none; transform: translateY(-50%); }
-.home-v3 .journey__step .panel__dots { height: 260px; }
-.home-v3 .journey__step .panel__lines { height: 260px; }
-.home-v3 .journey__step .panel__dotrow { height: 100px; }
+:is(.home-v3, .journey-host) .journey__step [data-motion] { top: 50%; translate: none; transform: translateY(-50%); }
+:is(.home-v3, .journey-host) .journey__step .panel__dots { height: 260px; }
+:is(.home-v3, .journey-host) .journey__step .panel__lines { height: 260px; }
+:is(.home-v3, .journey-host) .journey__step .panel__dotrow { height: 100px; }
 /* the dots hang 12px from the top of their box, which put the row above the card's middle; centre them on the box like the phone layout does */
-.home-v3 .journey__step .panel__dotrow .dotrow__dot { top: 50%; translate: 0 -50%; }
+:is(.home-v3, .journey-host) .journey__step .panel__dotrow .dotrow__dot { top: 50%; translate: 0 -50%; }
 
 /* Sticky cards retain a readable heading as the following card folds over.
    Flow and full copy stay intact without JS and under reduced motion. */
 @media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
-  .home-v3 .journey--stack .journey__step {
+  :is(.home-v3, .journey-host) .journey--stack .journey__step {
     position: sticky;
     top: calc(var(--journey-top, 96px) / var(--zoom));
     z-index: var(--journey-layer);
     transform: scale(var(--journey-scale, 1));
     border-top: var(--rule-width) solid var(--c-rule);
   }
-  .home-v3 .journey--stack .journey__step .panel__body {
+  :is(.home-v3, .journey-host) .journey--stack .journey__step .panel__body {
     opacity: var(--journey-copy-opacity, 1);
   }
 }
@@ -8354,7 +8357,7 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .compassion-outcome { grid-template-columns: 1.35fr 1fr; }
 }
 @media (max-width: 1023px) {
-  .home-v3 .journey__step { min-height: 430px; }
+  :is(.home-v3, .journey-host) .journey__step { min-height: 430px; }
   /* Stacked like the journey cards above: a half-width column left the
      circles too small for their labels. */
   .compassion-outcome { grid-template-columns: 1fr; min-height: 430px; }
@@ -8379,9 +8382,9 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   /* 28px is the least air between the copy and the artwork; the artwork
      then centres itself (auto margins) in whatever height the card has left,
      so it sits mid-card whether the copy is one line or three. */
-  .home-v3 .journey__step { padding-bottom: 28px; }
-  .home-v3 .journey__step .panel__body { margin-bottom: 28px; }
-  .home-v3 .journey__step [data-motion] {
+  :is(.home-v3, .journey-host) .journey__step { padding-bottom: 28px; }
+  :is(.home-v3, .journey-host) .journey__step .panel__body { margin-bottom: 28px; }
+  :is(.home-v3, .journey-host) .journey__step [data-motion] {
     position: relative; inset: auto; translate: none; transform: none;
     width: 100%; max-width: 400px; height: 170px; aspect-ratio: auto;
     margin: auto;
@@ -8391,9 +8394,9 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .home-v3 .hero-v3__body,
   .home-v3 .intro-v3 { max-width: 100%; }
   .home-v3 .intro-v3 { padding-block: 34px; }
-  .home-v3 .journey { gap: 16px; }
-  .home-v3 .journey__step { min-height: 420px; padding: 28px 24px; }
-  .home-v3 .journey__step .panel__body { max-width: 100%; margin-top: 12px; }
+  :is(.home-v3, .journey-host) .journey { gap: 16px; }
+  :is(.home-v3, .journey-host) .journey__step { min-height: 420px; padding: 28px 24px; }
+  :is(.home-v3, .journey-host) .journey__step .panel__body { max-width: 100%; margin-top: 12px; }
   .compassion-outcome { grid-template-columns: 1fr; margin-top: 18px; }
   .compassion-outcome__copy { padding: 30px 24px; }
   .compassion-outcome h2 { margin: 28px 0 20px; }
@@ -9099,3 +9102,518 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 
 /* every plate on the content pages is plain white */
 .funding-forms__item, .content-overview__item, .content-callout { background: var(--c-white); }
+
+
+/* ================================================================
+   18 — COMMENTS 12.10  (acronyms · topic tags · dividers · cards)
+   ================================================================ */
+
+/* ── VALUE / CARE: the acronym line and its marked letters ────────
+   The line spells the word in large orange serif, then names it.
+   Each row / card repeats its letter in the number slot, and the
+   same letter is orange where it opens the title. */
+.acronym {
+  display: block;
+  margin: 56px 0 8px;
+  color: var(--c-orange);
+}
+.acronym em {
+  /* stacked lockup: the suffix sits on its own line under the word */
+  display: block; margin: 12px 0 0;
+  color: var(--c-black);
+  font-style: normal;
+}
+.acronym-letter { color: var(--c-orange); }
+.content-overview--care h3 { margin-top: 0; }
+
+/* ── topics as tags: the same pill the cards wear, and each one
+   opens Initiatives filtered to that topic ─────────────────────── */
+.topic-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding: 0; list-style: none; }
+.topic-tags a {
+  display: block; padding: 4px 13px;
+  border-radius: 100px;
+  background: var(--c-white);
+  color: var(--c-black);
+  transition: background var(--ease), color var(--ease);
+}
+.topic-tags a:hover, .topic-tags a:focus-visible { background: var(--c-orange); color: var(--c-white); }
+
+/* taxonomy tags on cards link to their filtered list as well */
+.story-card__tag[data-href], .card-v3__tags li[data-href], .spotlight__tags li[data-href],
+.tag-more__list li[data-href] { cursor: pointer; }
+.tag-more__list li[data-href]:hover { color: var(--c-orange); }
+
+/* ── section dividers: four weights for four jobs ─────────────────
+   .divider            solid   — one block of content from the next
+   .divider--dotted    dotted  — items inside one block (lighter)
+   .divider--dashed    dashed  — an aside or a change of register
+   .divider--dots      a row of brand dots — a pause between chapters
+   The same styles can be put on any section's top rule with
+   data-divider="dotted|dashed|dots". */
+:root { --dotted-rule: radial-gradient(circle, #ff9a57 1.1px, transparent 1.3px); }
+/* a 2px dot every 8px — a CSS dotted border can't set its own gap */
+.divider { height: 0; margin: 48px 0; border: 0; border-top: var(--rule-width) solid var(--c-rule-solid); }
+.divider--dotted { height: 2px; border: 0; background: var(--dotted-rule) left center / 8px 2px repeat-x; }
+.divider--dashed { border-top-style: dashed; }
+.divider--dots {
+  height: 6px; border: 0;
+  background: radial-gradient(circle, var(--c-orange) 2.5px, transparent 3px) left center / 18px 6px repeat-x;
+  opacity: .55;
+}
+[data-divider] { padding-top: 40px; border-top: var(--rule-width) solid var(--c-rule-solid); }
+[data-divider="dotted"] { border-top: 0; background: var(--dotted-rule) left top / 8px 2px repeat-x; }
+[data-divider="dashed"] { border-top-style: dashed; }
+[data-divider="dots"] {
+  border-top: 0;
+  background: radial-gradient(circle, var(--c-orange) 2.5px, transparent 3px) left top / 18px 6px repeat-x;
+}
+[data-divider="dotted"] > .longform__eyebrow { border-bottom: 0; background: var(--dotted-rule) left bottom / 8px 2px repeat-x; }
+[data-divider="dashed"] > .longform__eyebrow { border-bottom-style: dashed; }
+[data-divider="dots"] > .longform__eyebrow {
+  border-bottom: 0;
+  background: radial-gradient(circle, var(--c-orange) 2.5px, transparent 3px) left bottom / 18px 6px repeat-x;
+}
+
+/* ── listing cards: photo on top (default) or at the foot ──────── */
+.listing__grid .story-card--img-bottom > .story-card__thumb { order: 99; margin: 24px 0 0; }
+.listing__grid .story-card--img-bottom > :first-child { margin-top: 30px; }
+.listing__grid .story-card--img-bottom > .story-card__tags { margin-bottom: 0; }
+
+/* ── Approach overview: the two acronyms as short linked lists ── */
+.acronym-list { margin-top: 28px; padding: 0; list-style: none; border-bottom: var(--rule-width) solid var(--c-rule-solid); }
+.acronym-list li { border-top: var(--rule-width) solid var(--c-rule-solid); }
+.acronym-list__row { display: grid; grid-template-columns: 90px minmax(0, 1fr); align-items: baseline; gap: 0 clamp(20px, 2vw, 40px); padding: 18px 0; }
+.acronym-list__letter { color: var(--c-orange); }
+.acronym-list__name { transition: color var(--ease); }
+.acronym-list .acronym-letter, .practice__name .acronym-letter { color: inherit; }
+.approach-overview__more { margin-top: 28px; }
+/* Being · Becoming · Belonging: the landing page's cards, as-is */
+.journey-host .journey { margin-top: 32px; }
+@media (max-width: 767px) {
+  .acronym-list__row { grid-template-columns: 44px minmax(0, 1fr); }
+}
+
+/* ── Home: two linked circles (VALUE · CARE) instead of three ──── */
+.compassion-outcome__values--two { max-width: 440px; }
+.compassion-outcome__values--two li {
+  flex-basis: calc((100% + var(--value-overlap)) / 2);
+  padding: 0;
+}
+.compassion-outcome__values--two a {
+  display: grid; place-items: center;
+  width: 100%; height: 100%; border-radius: 50%;
+  color: inherit;
+  transition: background var(--ease), color var(--ease);
+}
+.compassion-outcome__values--two a:hover,
+.compassion-outcome__values--two a:focus-visible { background: var(--c-orange); color: var(--c-white); }
+.compassion-outcome__values--two span { max-width: none; line-height: var(--leading-ui); }
+.compassion-outcome__values--two b { font-weight: 400; }
+/* three circles had to bleed into the card's padding on phones to fit
+   their labels; two have room, so they stay inside it and keep the overlap */
+@media (max-width: 767px) {
+  .compassion-outcome__values--two { --value-overlap: 12px; width: 100%; max-width: 380px; margin-left: 0; }
+}
+@media (max-width: 479px) {
+  .compassion-outcome__values--two { flex-wrap: nowrap; }
+  .compassion-outcome__values--two li { flex-basis: calc((100% + var(--value-overlap)) / 2); }
+  .compassion-outcome__values--two li:last-child { margin-top: 0; }
+}
+
+/* ── Home: the category tabs always sit under the heading, so a
+   longer retyped word never pushes them onto a line of their own ── */
+.news-v3__head, .home-v3 .news-v3__head { flex-direction: column; align-items: flex-start; gap: 28px; }
+.news-v3__filters { flex-wrap: wrap; padding-bottom: 0; }
+
+/* ── Home: Belonging rules draw from either side (order is random,
+   set in script) ─────────────────────────────────────────────── */
+.panel__lines .lines__line--rtl { transform-origin: 100% 50%; }
+
+/* ── Home: as the next card folds over, the covered card's motif
+   fades with its copy, so the stack never shows three sets of dots ── */
+@media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+  :is(.home-v3, .journey-host) .journey--stack .journey__step [data-motion] { filter: opacity(var(--journey-copy-opacity, 1)); }
+}
+
+/* ── Home: each Being / Becoming / Belonging card opens Approach ─ */
+.panel__cover { position: absolute; inset: 0; z-index: 3; }
+.panel__cover:focus-visible { outline: 2px solid var(--c-orange); outline-offset: -2px; }
+
+/* ── Rails: mouse drag (script) — no snapping or smooth scroll while
+   the rail follows the pointer ─────────────────────────────────── */
+[data-rail].is-dragging { scroll-snap-type: none; scroll-behavior: auto; cursor: grabbing; user-select: none; }
+[data-rail].is-dragging a { pointer-events: none; }
+
+/* ── Filters: the new option names are long (the four priorities, the
+   institutes), so the menu grows to its widest option, within reason;
+   the right-hand menus open leftwards so they stay on the page ─── */
+.listing__filter-menu { width: max-content; max-width: 340px; }
+.listing__filter:nth-last-of-type(-n+2) .listing__filter-menu { left: auto; right: 0; }
+@media (max-width: 767px) {
+  .listing__filter-menu { max-width: min(300px, calc(100vw - 32px)); }
+}
+@media (max-width: 767px) {
+  .acronym { margin-top: 40px; }
+
+}
+
+/* ================================================================
+   19 — FILTERS AS CHIPS  (after stepworks.co)
+   One row: "All", then each category. Opening a category drops a
+   full-width panel under the row with every option as a chip, so
+   the whole list is read in one go. The category wrappers are
+   `display: contents`, which lets each panel break out of its
+   button's column and take the row below as its own.
+   ================================================================ */
+.listing__filters--chips {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 10px 8px;
+  max-width: none;
+  margin: 0 0 56px;
+}
+.listing__filters--chips .listing__filter { display: contents; }
+.listing__filters--chips .listing__filter-toggle,
+.listing__filters--chips .listing__clear {
+  width: auto; flex: 0 0 auto; justify-content: flex-start; gap: 8px;
+  padding: 9px 20px;
+  border: 0; border-radius: 100px;
+  background: transparent;
+  color: var(--c-black);
+  white-space: nowrap;
+  opacity: 1;
+  transition: background var(--ease), color var(--ease);
+}
+.listing__filters--chips .listing__clear { order: -1; align-self: auto; margin: 0; }
+/* "All" reads as selected while nothing is filtered */
+.listing__filters--chips .listing__clear:disabled { background: var(--c-white); color: var(--c-orange); cursor: default; }
+.listing__filters--chips .listing__clear:not(:disabled):hover,
+.listing__filters--chips .listing__filter-toggle:hover { color: var(--c-orange); background: transparent; }
+.listing__filters--chips .listing__filter.is-open .listing__filter-toggle { background: var(--c-white); color: var(--c-orange); }
+.listing__filters--chips .listing__filter-toggle:focus-visible,
+.listing__filters--chips .listing__clear:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+
+/* the panel */
+.listing__filters--chips .listing__filter-menu {
+  order: 99; flex: 0 0 100%;
+  position: static; top: auto; bottom: auto; left: auto; right: auto;
+  width: auto; min-width: 0; max-width: none; max-height: none !important;
+  margin-top: 8px; padding: 20px;
+  border: 0; border-radius: 16px;
+  background: var(--c-white);
+  box-shadow: none;
+  overflow: visible;
+}
+.listing__filters--chips .listing__filter.is-open .listing__filter-menu { display: block; }
+.listing__filters--chips .listing__filter-options { display: flex; flex-wrap: wrap; gap: 10px; overflow: visible; }
+.listing__filters--chips .listing__filter-clear { display: none; }
+
+/* each option is a chip; its checkbox stays in the DOM for the filters
+   and for keyboard / screen readers, just not drawn */
+.listing__filters--chips .listing__filter-option {
+  position: relative; display: block;
+  padding: 7px 18px;
+  border-radius: 100px;
+  background: #fff4ec;
+  color: var(--c-black);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+.listing__filters--chips .listing__filter-option input {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; opacity: 0; cursor: pointer;
+}
+.listing__filters--chips .listing__filter-option:hover { background: #ffe3cf; }
+.listing__filters--chips .listing__filter-option:has(input:checked) { background: var(--c-orange); color: var(--c-white); }
+.listing__filters--chips .listing__filter-option:focus-within { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+
+@media (max-width: 767px) {
+  .listing__filters--chips { display: flex; gap: 6px 4px; margin-bottom: 36px; }
+  .listing__filters--chips .listing__filter-toggle,
+  .listing__filters--chips .listing__clear { padding: 8px 14px; }
+  .listing__filters--chips .listing__filter-menu { padding: 14px; }
+  .listing__filters--chips .listing__filter-options { gap: 8px; }
+  .listing__filters--chips .listing__filter-option { white-space: normal; padding: 6px 14px; border-radius: 18px; }
+}
+
+/* filter count: a small orange disc in place of "(2)" */
+.listing__count {
+  display: inline-grid; place-items: center;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 11px;
+  background: var(--c-orange); color: var(--c-white);
+  margin-left: -2px;
+}
+.listing__count[hidden] { display: none; }
+.listing__filter-toggle .listing__count { margin-right: auto; }
+
+/* ── Opening: the plane's rules draw in from either side ─────────── */
+.opening__lines .lines__line--ltr { transform-origin: 0 50%; }
+.opening__lines .lines__line--rtl { transform-origin: 100% 50%; }
+
+
+/* ================================================================
+   20 — COMMENTS 12.10, ABOUT  (People · Values · News)
+   ================================================================ */
+
+/* Values: the portrait's illustration credit, under name and dates */
+.values-founder__credit { margin-top: 6px; color: var(--c-grey); }
+
+/* CMS image blocks for long-form pages. Full width runs the reading
+   column; half sits beside the next paragraphs on desktop and goes full
+   width on phones. Caption optional. */
+.content-figure { margin: 36px 0; }
+.content-figure img { display: block; width: 100%; height: auto; }
+.content-figure figcaption { margin-top: 10px; color: var(--c-grey); }
+.content-figure--half { float: right; width: calc(50% - var(--grid-gap) / 2); margin: 6px 0 24px var(--grid-gap); }
+.content-figure--half.content-figure--left { float: left; margin: 6px var(--grid-gap) 24px 0; }
+.longform__col::after, .longform__section::after { content: ''; display: table; clear: both; }
+@media (max-width: 767px) {
+  .content-figure--half, .content-figure--half.content-figure--left { float: none; width: 100%; margin: 28px 0; }
+}
+
+/* People: the section links take How We Fund's look — between two rules,
+   no dots — and the Board's message opens the page */
+.people { --rule-dark: #ff9a57; }
+.people-jump-rules { margin: 36px auto 80px; }
+/* the same split as the directory sections: heading left, message right */
+.people-section--board {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap); align-items: start;
+  padding-block: 48px 64px; border-top: 0;
+}
+.people-section--board .people-board { grid-column: 5 / -1; display: grid; gap: 28px; min-width: 0; }
+.people-board__figure { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; background: var(--c-panel); }
+.people-board__figure img { width: 100%; height: 100%; object-fit: cover; }
+.people-board__body > * + * { margin-top: 18px; }
+.people-board__lede { color: var(--c-black); }
+.people-board__sign { color: var(--c-orange); }
+@media (max-width: 767px) {
+  .people-section--board { grid-template-columns: minmax(0, 1fr); row-gap: 24px; padding-block: 28px 40px; }
+  .people-section--board .people-board { grid-column: 1; }
+  .people-jump-rules { margin-bottom: 40px; }
+}
+
+/* People: find a person — a name field with the filter arrow at its far
+   right; the chips open underneath only when asked for */
+.people-filter { margin: 0 0 56px; }
+.people-filter__bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 6px 6px 6px 24px;
+  border-radius: 100px;
+  background: var(--c-white);
+}
+.people-filter__name { flex: 1 1 auto; min-width: 0; padding: 10px 0; border: 0; background: transparent; color: var(--c-black); }
+.people-filter__name::placeholder { color: var(--c-grey); }
+.people-filter__name:focus { outline: none; }
+.people-filter__bar:focus-within { box-shadow: 0 0 0 2px var(--c-orange); }
+.people-filter__toggle {
+  display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
+  padding: 10px 20px; border-radius: 100px;
+  background: #fff4ec; color: var(--c-black);
+  transition: background var(--ease), color var(--ease);
+}
+.people-filter__toggle:hover, .people-filter.is-open .people-filter__toggle { color: var(--c-orange); }
+.people-filter.is-open .people-filter__toggle .listing__chev { transform: rotate(180deg); }
+.people-filter__toggle:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+.people-filter__panel {
+  display: grid; gap: 22px;
+  margin-top: 10px; padding: 24px;
+  border-radius: 16px; background: var(--c-white);
+}
+.people-filter__panel[hidden] { display: none; }
+.people-filter__group { margin: 0; padding: 0; border: 0; min-width: 0; }
+.people-filter__group legend { margin-bottom: 10px; padding: 0; color: var(--c-grey); }
+.people-filter__group .listing__filter-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.people-filter__panel .listing__filter-option {
+  position: relative; display: block; padding: 7px 18px; border-radius: 100px;
+  background: #fff4ec; color: var(--c-black); white-space: nowrap; cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+.people-filter__panel .listing__filter-option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.people-filter__panel .listing__filter-option:hover { background: #ffe3cf; }
+.people-filter__panel .listing__filter-option:has(input:checked) { background: var(--c-orange); color: var(--c-white); }
+.people-filter__panel .listing__filter-option:focus-within { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+.people-filter__clear { justify-self: start; color: var(--c-grey); text-decoration: underline; text-underline-offset: 4px; }
+.people-filter__clear:disabled { opacity: .4; text-decoration: none; cursor: default; }
+.people-filter__empty { margin-top: 24px; color: var(--c-grey); }
+@media (max-width: 767px) {
+  .people-filter__bar { padding-left: 18px; }
+  .people-filter__toggle { padding: 8px 14px; }
+  .people-filter__panel { padding: 18px; }
+  .people-filter__panel .listing__filter-option { white-space: normal; border-radius: 18px; }
+}
+
+/* People: bio email and the vacancy's second button (job PDF) */
+.people-dialog__contact { margin-top: 6px; }
+.people-dialog__email { color: var(--c-orange); text-decoration: underline; text-underline-offset: 4px; }
+.career-job__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.career-job__actions .career-job__apply { margin-top: 0; }
+.btn-pill--outline { background: transparent; color: var(--c-orange); box-shadow: inset 0 0 0 1.5px var(--c-orange); }
+.btn-pill--outline:hover { background: var(--c-orange); color: var(--c-white); }
+.career-job__pdf[hidden] { display: none; }
+
+/* Articles: room for a long headline (script marks it) */
+.article__head--long { max-width: 1100px; }
+.article__head--long .article__title { max-width: none; }
+
+/* ── Institute tag, quieter (12.10): the institute's colour as text with
+   a half-strength outline, no fill; it sits last among the tags and
+   every tag shows (no "+N" fold) ─────────────────────────────────── */
+.story-card__tag.story-card__tag--inst,
+.home-v3 .card-v3__tags li.card-v3__tag--inst,
+.card-v3__tags li.card-v3__tag--inst,
+.spotlight__tags li.spotlight__tag--inst {
+  background: transparent;
+  color: var(--cat, var(--c-orange));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--c-orange)) 45%, transparent);
+  filter: none;
+}
+.story-card__tag.story-card__tag--inst:hover,
+.home-v3 .card-v3__tags li.card-v3__tag--inst:hover,
+.card-v3__tags li.card-v3__tag--inst:hover,
+.spotlight__tags li.spotlight__tag--inst:hover {
+  background: color-mix(in srgb, var(--cat, var(--c-orange)) 10%, transparent);
+  color: var(--cat, var(--c-orange));
+  filter: none;
+}
+
+/* Approach: the three stage names inside the Being / Becoming /
+   Belonging explanation pick up the cards' orange */
+.approach-bbb__term { color: var(--c-orange); font-weight: 400; }
+
+/* ── Text left, image right (CMS block). Copy and picture share the
+   reading column half and half on desktop; the picture drops under the
+   copy on phones. `--reverse` puts the picture on the left. ─────── */
+.content-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0; align-items: stretch;
+}
+/* the copy sits on a white plate the height of the square picture */
+.content-split__copy {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(28px, 3vw, 48px);
+  background: var(--c-white);
+}
+.content-split__copy > :first-child { margin-top: 0; }
+.content-split__media { position: relative; margin: 0; overflow: hidden; background: var(--c-panel); }
+/* at least square, never wider than its column: when the copy runs taller
+   than the square (tablet widths), the picture grows in height only */
+.content-split__media::before { content: ''; display: block; padding-top: 100%; }
+.content-split__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+.content-split--reverse .content-split__media { order: -1; }
+@media (max-width: 767px) {
+  .content-split { grid-template-columns: minmax(0, 1fr); }
+  .content-split__copy { padding: 28px 24px; }
+  .content-split--reverse .content-split__media { order: 0; }
+}
+
+/* Approach: the opening line in the text-and-picture block is the page's
+   statement, so it takes the orange */
+.content-split .longform__lede { color: var(--c-orange); }
+
+/* ── Priorities: each priority is one white block — copy on the left,
+   an optional picture on the right (without one the copy takes the full
+   width). The overview cards and the detail sections are now one part. */
+.content-split--solo { grid-template-columns: minmax(0, 1fr); }
+.priority-detail { margin-top: 24px; }
+.priority-detail:first-of-type, #priorities + .priority-detail { margin-top: 40px; }
+.priority-block .longform__heading { margin: 0 0 16px; }
+.priority-block .content-topics-label { margin-top: 24px; color: var(--c-grey); }
+.priority-block .topic-tags { margin-top: 10px; }
+.priority-block .topic-tags a { background: #fff4ec; }
+.priority-block .topic-tags a:hover, .priority-block .topic-tags a:focus-visible { background: var(--c-orange); color: var(--c-white); }
+.acronym + .acronym-caption { margin-top: 14px; }
+
+/* Priorities: the four blocks share a height, and a picture fills its
+   half of the block at whatever shape that makes (no fixed square) */
+.priority-block { min-height: 440px; }
+.priority-block .content-split__media::before { padding-top: 0; }
+@media (max-width: 767px) {
+  .priority-block { min-height: 0; }
+  .priority-block .content-split__media::before { padding-top: 62.5%; }
+}
+
+/* Contact: a long email address in the funding block may break on phones */
+.connect__funding-contacts a { overflow-wrap: anywhere; }
+
+/* People finder: the Search button sits last in the bar */
+.people-filter__go { flex: 0 0 auto; margin: 0; }
+.people-section--directory[hidden] { display: none; }
+@media (max-width: 767px) {
+  .people-filter__bar { flex-wrap: wrap; border-radius: 28px; padding: 8px 8px 8px 18px; }
+  .people-filter__name { flex: 1 1 100%; }
+  .people-filter__toggle { flex: 1 1 auto; justify-content: center; }
+  .people-filter__go { flex: 1 1 auto; justify-content: center; }
+}
+
+/* People: "Our People" opens the finder under a rule of its own, which
+   separates it from the Board's message above; the directory stays
+   hidden until Search is pressed */
+.people-section--finder { display: block; padding-block: 48px 8px; border-top: var(--rule-width-strong) solid var(--c-rule-strong); }
+.people-section--finder .people-finder__title { margin: 0 0 28px; }
+.people-section--finder .people-filter { margin-bottom: 40px; }
+
+
+/* ================================================================
+   21 — ACCESSIBILITY MENU  (display only for now)
+   An icon between 中文 and search opens a small card with two items:
+   the text-size instruction (use the browser) and a high-contrast
+   colour switch. Neither changes the site yet; the switch only
+   flips its own state.
+   ================================================================ */
+.a11y { position: relative; display: none; align-items: center; }
+.a11y__btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; padding: 0; border-radius: 50%;
+  color: var(--c-grey);
+  transition: color var(--ease);
+}
+.a11y__btn:hover, .a11y__btn[aria-expanded="true"] { color: var(--c-orange); }
+.a11y__btn:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 2px; }
+.a11y__icon {
+  display: block; width: 24px; height: 24px; background-color: currentColor;
+  -webkit-mask: url('assets/icons/icon-accessibility.svg') center / contain no-repeat;
+          mask: url('assets/icons/icon-accessibility.svg') center / contain no-repeat;
+}
+.a11y__panel {
+  position: absolute; top: calc(100% + 14px); right: -12px; z-index: 60;
+  width: 400px; padding: 22px 24px 24px;
+  background: var(--c-white); color: var(--c-black);
+  border: var(--rule-width) solid var(--c-rule-solid);
+  text-align: left;
+}
+.a11y__panel[hidden] { display: none; }
+.a11y__title { margin: 0 0 14px; color: var(--c-orange); }
+.a11y__item + .a11y__item { margin-top: 16px; padding-top: 16px; border-top: var(--rule-width) solid var(--c-rule-solid); }
+.a11y__item--switch { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.a11y__label { margin: 0; color: var(--c-black); }
+.a11y__hint { margin: 4px 0 0; color: var(--c-grey); }
+.a11y__switch {
+  position: relative; flex: 0 0 auto; width: 46px; height: 26px; padding: 0;
+  border-radius: 13px; background: #d9d9d9;
+  transition: background var(--ease);
+}
+.a11y__switch span {
+  position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--c-white); box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: translate .25s ease;
+}
+.a11y__switch[aria-checked="true"] { background: var(--c-orange); }
+.a11y__switch[aria-checked="true"] span { translate: 20px 0; }
+.a11y__switch:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .a11y__switch span, .a11y__switch { transition: none; } }
+
+/* desktop bar and sticky pill: between 中文 and the search glyph */
+@media (min-width: 1024px) {
+  .nav__actions .a11y { display: flex; order: 1; }
+}
+/* below 1024 the bar's own 中文 is gone, and the icon moves into the
+   full-screen menu's top bar beside search */
+.nav__mobile-bar-actions .a11y { display: flex; }
+.nav__mobile-bar-actions .a11y__btn { width: 44px; height: 44px; }
+/* the card anchors to the whole top bar, so it can use the phone's width */
+.nav__mobile-bar { position: relative; }
+.nav__mobile-bar-actions .a11y { position: static; }
+.nav__mobile-bar-actions .a11y__panel { top: calc(100% + 8px); left: 16px; right: 16px; width: auto; max-width: 400px; margin-left: auto; }
+@media (min-width: 1024px) { .nav__mobile-bar-actions .a11y { display: none; } }

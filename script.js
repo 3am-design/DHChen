@@ -1208,7 +1208,7 @@ window.__pageZoom = function () {
      button's hover disc, the legacy article highlight and approach cards.
      An orange dot on orange is invisible, so it knocks out white. */
   document.querySelectorAll(
-    '.nav__search-btn, .nav__mobile-search, .article__highlight, .approach-card--orange, .panel--bettering'
+    '.nav__search-btn, .nav__mobile-search, .article__highlight, .approach-card--orange, .panel--bettering, .compassion-outcome__values--two a'
   ).forEach(function (el) {
     el.addEventListener('mouseenter', function () { cursor.classList.add('cursor--on-dark'); });
     el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--on-dark'); });
@@ -1720,17 +1720,15 @@ window.__pageZoom = function () {
   /* 面 — 25 rules at the design's 18px pitch: twice the depth of the
      Figma block, and an odd count so it opens on one centre rule */
   const RULES     = 25;
-  const RULES_MID = (RULES - 1) / 2;
   document.querySelectorAll('.lines').forEach(function (box) {
     for (let i = 0; i < RULES; i++) {
       const line = document.createElement('span');
       line.className = 'lines__line';
       line.style.setProperty('--y', (i * 100 / RULES) + '%');
-      /* Belonging: the middle rule draws alone first, then the rest open
-         out above and below it, each one drawn left to right */
-      const d = Math.abs(i - RULES_MID);
-      line.style.setProperty('--dl', d === 0 ? '0ms'
-        : Math.round(650 + Math.pow(d / RULES_MID, 0.8) * 750) + 'ms');
+      /* Belonging: the rules arrive in a random order rather than opening
+         out from the middle, each drawn in from the left or the right */
+      line.style.setProperty('--dl', Math.round(Math.random() * 1400) + 'ms');
+      if (Math.random() < 0.5) line.classList.add('lines__line--rtl');
       box.appendChild(line);
     }
   });
@@ -2422,9 +2420,19 @@ window.__pageZoom = function () {
       menu.setAttribute('data-lenis-prevent', '');
       toggle.setAttribute('aria-controls', menu.id);
     }
+    /* the number of choices sits in a small orange disc after the label */
+    const count = document.createElement('span');
+    count.className = 'listing__count';
+    count.hidden = true;
+    if (labelSpan) labelSpan.insertAdjacentElement('afterend', count);
     function update(notify) {
       const choices = inputs.filter(function (input) { return input.checked; }).map(function (input) { return input.value; });
-      if (labelSpan) labelSpan.textContent = d.dataset.dropdownLabel + (choices.length ? ' (' + choices.length + ')' : '');
+      if (labelSpan) labelSpan.textContent = d.dataset.dropdownLabel;
+      count.textContent = choices.length || '';
+      count.hidden = !choices.length;
+      toggle.setAttribute('aria-label', d.dataset.dropdownLabel + (choices.length
+        ? (document.documentElement.lang === 'zh-Hant' ? '，已選 ' + choices.length + ' 項' : ', ' + choices.length + ' selected')
+        : ''));
       if (clear) clear.disabled = !choices.length;
       if (notify) d.dispatchEvent(new CustomEvent('dropdownchange', { bubbles: true, detail: { values: choices } }));
     }
@@ -2553,7 +2561,7 @@ window.__pageZoom = function () {
       function accepts(kind, predicate) {
         return !selected[kind] || selected[kind].some(function (choice) { return predicate(value(choice)); });
       }
-      const taxonomyKinds = ['priority', 'topics', 'approach', 'users'];
+      const taxonomyKinds = ['priority', 'topics', 'users', 'resource', 'type'];
       if (taxonomyKinds.some(function (kind) {
         const choices = (card.dataset[kind] || '').split('|').map(value);
         return !accepts(kind, function (choice) { return choices.indexOf(choice) !== -1; });
@@ -2561,7 +2569,10 @@ window.__pageZoom = function () {
       const cat = category(card);
       const cardTags = tags(card);
       if (!accepts('focus', function (choice) { return cat.indexOf(choice) !== -1; })) return false;
-      if (!accepts('institute', function (choice) { return cat.indexOf(choice) !== -1; })) return false;
+      /* institute: the coloured tag on the card carries the institute slug */
+      const inst = card.querySelector('[class*="--inst"], .story-card__category');
+      const instKey = value(inst && inst.dataset.cat);
+      if (!accepts('institute', function (choice) { return choice === instKey || cat.indexOf(choice) !== -1; })) return false;
       if (!accepts('pillar', function (choice) { return cardTags.indexOf(choice) !== -1; })) return false;
       if (!accepts('year', function (choice) { return value(card.dataset.year) === choice; })) return false;
       return true;
@@ -2640,15 +2651,19 @@ window.__pageZoom = function () {
       scrollToGrid(grid);
     });
 
-    const initialPriorities = new URLSearchParams(window.location.search).getAll('priority').map(value);
-    if (initialPriorities.length) {
-      const drop = drops.find(function (d) { return d.dataset.filterKind === 'priority'; });
-      const inputs = drop && Array.from(drop.querySelectorAll('input'));
-      if (inputs) inputs.forEach(function (input) {
-        input.checked = initialPriorities.indexOf(value(input.value)) !== -1;
+    /* ?priority= / ?topics= / ?users= / ?institute= / ?resource= preselect a
+       filter, so a tag on any card (or a topic on the Priorities page) opens
+       the list already narrowed to it. */
+    const params = new URLSearchParams(window.location.search);
+    drops.forEach(function (drop) {
+      const wanted = params.getAll(drop.dataset.filterKind).map(value);
+      if (!wanted.length) return;
+      const inputs = Array.from(drop.querySelectorAll('input'));
+      inputs.forEach(function (input) {
+        input.checked = wanted.indexOf(value(input.value)) !== -1;
       });
-      if (inputs && inputs.length) inputs[0].dispatchEvent(new Event('change'));
-    }
+      if (inputs.length) inputs[0].dispatchEvent(new Event('change'));
+    });
     render();
   });
 })();
@@ -3583,16 +3598,18 @@ window.__pageZoom = function () {
     rule.className = 'lines__line' + (d === 0 ? ' lines__line--mid' : '');
     rule.style.setProperty('--y', 'calc(50% + ' +
       ((i - RULES_MID) * RULE_PITCH) + 'px)');
-    /* A power curve, not the row's log2 one. log2 spacing crowds the outer
-       rules together — the first pair either side of the middle took as
-       long to arrive as the last six put together, so the plane crept and
-       then finished in a rush. `d^0.8` across a fixed span spreads the
-       wavefront evenly to the edge instead, and each rule out draws a
-       little quicker than the one before it (`--dur`), so the whole plane
-       closes on the beat rather than trailing at the corners. */
-    rule.style.setProperty('--dl', d === 0 ? '0ms'
-      : Math.round(Math.pow(d / RULES_MID, 0.8) * 660 * SPEED) + 'ms');
-    rule.style.setProperty('--dur', Math.round((1350 - d * 34) * SPEED) + 'ms');
+    /* The middle rule is the dot row fused into a line, so it still draws
+       first, from its centre. The others arrive in a random order, each
+       drawn in from the left or the right (matches the Belonging card).
+       The latest a rule can start (660) plus its draw (1010) is the same
+       1670 the old wavefront took, so the clock below is unchanged. */
+    if (d === 0) {
+      rule.style.setProperty('--dl', '0ms');
+    } else {
+      rule.style.setProperty('--dl', Math.round(Math.random() * 660 * SPEED) + 'ms');
+      rule.classList.add(Math.random() < 0.5 ? 'lines__line--ltr' : 'lines__line--rtl');
+    }
+    rule.style.setProperty('--dur', Math.round(1010 * SPEED) + 'ms');
     lines.appendChild(rule);
   }
 
@@ -4037,6 +4054,38 @@ window.__pageZoom = function () {
     }
     rail.addEventListener('pointerup', finishTouch);
     rail.addEventListener('pointercancel', finishTouch);
+
+    /* Mouse: press and drag the rail left or right. A drag past a few
+       pixels takes over from the click (no paging, no opening a card);
+       on release the rail settles back onto its snap points. */
+    let mouseDrag = null;
+    rail.addEventListener('pointerdown', function (event) {
+      if (event.pointerType !== 'mouse' || event.button !== 0) return;
+      mouseDrag = { x: event.clientX, left: rail.scrollLeft, moved: false, id: event.pointerId };
+    });
+    rail.addEventListener('pointermove', function (event) {
+      if (!mouseDrag || event.pointerId !== mouseDrag.id) return;
+      const dx = event.clientX - mouseDrag.x;
+      if (!mouseDrag.moved && Math.abs(dx) < 6) return;
+      if (!mouseDrag.moved) {
+        mouseDrag.moved = true;
+        rail.classList.add('is-dragging');
+        rail.setPointerCapture(event.pointerId);
+      }
+      const zoom = window.__pageZoom ? window.__pageZoom() : 1;
+      rail.scrollLeft = mouseDrag.left - dx / zoom;
+    });
+    function endMouseDrag(event) {
+      if (!mouseDrag || event.pointerId !== mouseDrag.id) return;
+      if (mouseDrag.moved) {
+        suppressClickUntil = performance.now() + 400;
+        rail.classList.remove('is-dragging');
+        if (rail.hasPointerCapture(event.pointerId)) rail.releasePointerCapture(event.pointerId);
+      }
+      mouseDrag = null;
+    }
+    rail.addEventListener('pointerup', endMouseDrag);
+    rail.addEventListener('pointercancel', endMouseDrag);
     rail.addEventListener('click', function (event) {
       if (event.detail && performance.now() < suppressClickUntil) {
         event.preventDefault();
@@ -4127,6 +4176,125 @@ window.__pageZoom = function () {
   render();
 })();
 
+/* Articles: a long headline (News items often run longer than a
+   programme name) steps down to the section-title tier and gets a wider
+   measure, so it reads in two or three lines rather than six. The CMS
+   can also set the class itself. */
+(function () {
+  const title = document.querySelector('.article__head .article__title');
+  if (!title || title.textContent.trim().length <= 55) return;
+  title.classList.add('article__title--long');
+  title.closest('.article__head').classList.add('article__head--long');
+})();
+
+
+/* People: find a person. The page opens with only the search field, the
+   Filter arrow (which unfolds the Position / Team / Institute chips) and a
+   Search button; the directory stays hidden until Search is pressed (or
+   Enter in the name field). After that, further changes update the list
+   live. Choices are OR within a group and AND between groups. Clear all
+   resets everything and hides the directory again. */
+(function () {
+  'use strict';
+  const root = document.querySelector('[data-people-filter-root]');
+  if (!root) return;
+  const isTC = document.documentElement.lang === 'zh-Hant';
+  const name = root.querySelector('.people-filter__name');
+  const toggle = root.querySelector('.people-filter__toggle');
+  const panel = root.querySelector('.people-filter__panel');
+  const count = root.querySelector('.people-filter__count');
+  const clear = root.querySelector('.people-filter__clear');
+  const go = root.querySelector('.people-filter__go');
+  const empty = root.querySelector('.people-filter__empty');
+  const live = root.querySelector('[data-people-filter-live]');
+  const groups = Array.prototype.slice.call(root.querySelectorAll('[data-people-filter]'));
+  const people = Array.prototype.slice.call(document.querySelectorAll('.people-section--directory .people-directory__item'));
+  const sections = Array.prototype.slice.call(document.querySelectorAll('.people-section--directory'));
+  let searched = false;
+
+  function norm(text) { return String(text || '').toLowerCase().replace(/[’']/g, '').replace(/\s+/g, ' ').trim(); }
+
+  function chosen() {
+    const out = {};
+    groups.forEach(function (group) {
+      const values = Array.prototype.filter.call(group.querySelectorAll('input'), function (i) { return i.checked; })
+        .map(function (i) { return norm(i.value); });
+      if (values.length) out[group.dataset.peopleFilter] = values;
+    });
+    return out;
+  }
+
+  function badge() {
+    const picks = chosen();
+    const n = Object.keys(picks).reduce(function (sum, k) { return sum + picks[k].length; }, 0);
+    count.textContent = n || '';
+    count.hidden = !n;
+    toggle.setAttribute('aria-label', isTC
+      ? '篩選' + (n ? '，已選 ' + n + ' 項' : '')
+      : 'Filter' + (n ? ', ' + n + ' selected' : ''));
+    clear.disabled = !n && !norm(name.value) && !searched;
+    return picks;
+  }
+
+  function render() {
+    const picks = badge();
+    const query = norm(name.value);
+    let shown = 0;
+    people.forEach(function (li) {
+      const button = li.querySelector('[data-person-name]');
+      let on = !query || norm(button.dataset.personName).indexOf(query) !== -1;
+      Object.keys(picks).forEach(function (kind) {
+        if (!on) return;
+        const have = (li.dataset[kind] || '').split('|').map(norm);
+        on = picks[kind].some(function (v) { return have.indexOf(v) !== -1; });
+      });
+      li.hidden = !on;
+      if (on) shown++;
+    });
+    sections.forEach(function (sec) {
+      sec.hidden = !searched || !sec.querySelector('.people-directory__item:not([hidden])');
+      sec.querySelectorAll('.people-directory, .people-team-group').forEach(function (box) {
+        box.hidden = !box.querySelector('.people-directory__item:not([hidden])');
+      });
+    });
+    empty.hidden = !searched || shown !== 0;
+    live.textContent = !searched ? '' : (isTC ? '顯示 ' + shown + ' 位' : shown + (shown === 1 ? ' person shown' : ' people shown'));
+  }
+
+  function search() {
+    searched = true;
+    render();
+    const first = sections.find(function (sec) { return !sec.hidden; });
+    const target = first || empty;
+    if (target && !target.hidden) target.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
+
+  toggle.addEventListener('click', function () {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    root.classList.toggle('is-open', open);
+  });
+  go.addEventListener('click', search);
+  name.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); search(); } });
+  name.addEventListener('input', function () { searched ? render() : badge(); });
+  root.addEventListener('change', function () { searched ? render() : badge(); });
+  clear.addEventListener('click', function () {
+    name.value = '';
+    root.querySelectorAll('input[type="checkbox"]').forEach(function (i) { i.checked = false; });
+    searched = false;
+    render();
+  });
+  /* an incoming link to a directory section (#trustees, #foundation-team)
+     opens the list first, so the anchor has something to land on */
+  document.querySelectorAll('a[href="#trustees"], a[href="#foundation-team"]').forEach(function (link) {
+    link.addEventListener('click', function () { if (!searched) { searched = true; render(); } });
+  });
+  if (/^#(trustees|foundation-team|institute-boards)$/.test(window.location.hash)) searched = true;
+  render();
+})();
+
+
 /* People: shared demo biography and open-vacancy cards. */
 (function () {
   'use strict';
@@ -4144,6 +4312,15 @@ window.__pageZoom = function () {
       openedByKeyboard = event.detail === 0;
       dialog.querySelector('#person-bio-name').textContent = button.dataset.personName;
       dialog.querySelector('#person-bio-role').textContent = button.dataset.personRole;
+      /* optional: a colleague's email, so people can reach out directly */
+      const contact = dialog.querySelector('.people-dialog__contact');
+      if (contact) {
+        const email = button.dataset.personEmail || '';
+        const link = contact.querySelector('a');
+        link.textContent = email;
+        link.href = email ? 'mailto:' + email : '';
+        contact.hidden = !email;
+      }
       previouslyLocked = document.documentElement.classList.contains('lock-scroll');
       document.documentElement.classList.add('lock-scroll');
       if (window.__lenis) window.__lenis.stop();
@@ -4199,6 +4376,13 @@ window.__pageZoom = function () {
     const apply = card.querySelector('.career-job__apply');
     apply.href = 'mailto:' + job.email + '?subject=' + encodeURIComponent('Application — ' + job.title);
     apply.setAttribute('aria-label', 'Apply for ' + job.title + ' by email');
+    /* optional: the vacancy can also link a job description PDF */
+    const pdf = card.querySelector('.career-job__pdf');
+    if (pdf && job.pdf) {
+      pdf.href = job.pdf;
+      pdf.hidden = false;
+      pdf.setAttribute('aria-label', job.title + ' job description (PDF, opens in a new tab)');
+    }
     section.querySelector('.careers__jobs').appendChild(fragment);
   });
 
@@ -4241,37 +4425,45 @@ window.__pageZoom = function () {
 })();
 
 
+/* (Card tags used to fold into a "+N" chip after three; every tag now
+   shows, as requested in the 12.10 comments.) */
+
+
 /* ----------------------------------------------------------------
-   Card tags — show at most three; the rest fold into an outlined
-   "+N" chip whose hover / focus lists them. The hidden tags stay in
-   the DOM (the listing filters read them), the list is a copy.
+   Accessibility menu (display only). The icon opens a small card with
+   the text-size note and the high-contrast switch. The switch only
+   flips its own state: nothing on the site changes yet.
    ---------------------------------------------------------------- */
 (function () {
-  const MAX = 3;
-  document.querySelectorAll('.story-card__tags, .card-v3__tags').forEach(function (ul) {
-    const items = Array.prototype.slice.call(ul.children);
-    if (items.length <= MAX) return;
-    const rest = items.slice(MAX);            // three real tags, then "+N"
-    rest.forEach(function (li) { li.classList.add('tag-hidden'); });
-    const more = document.createElement('li');
-    more.className = 'tag-more';
-    more.tabIndex = 0;
-    more.textContent = '+' + rest.length;
-    const pop = document.createElement('ul');
-    pop.className = 'tag-more__list';
-    rest.forEach(function (li) {
-      const item = document.createElement('li');
-      item.textContent = li.textContent;
-      pop.appendChild(item);
+  const menus = Array.prototype.slice.call(document.querySelectorAll('[data-a11y]'));
+  if (!menus.length) return;
+  function close(menu, restore) {
+    const btn = menu.querySelector('.a11y__btn');
+    menu.querySelector('.a11y__panel').hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    if (restore) btn.focus();
+  }
+  menus.forEach(function (menu) {
+    const btn = menu.querySelector('.a11y__btn');
+    const panel = menu.querySelector('.a11y__panel');
+    const sw = menu.querySelector('.a11y__switch');
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const open = panel.hidden;
+      menus.forEach(function (m) { close(m, false); });
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
     });
-    more.appendChild(pop);
-    ul.appendChild(more);
-    more.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
-    /* a plain cursor over the chip, like the other tags (the card's DISCOVER state resumes on leave) */
-    const cur = document.getElementById('cursor');
-    if (cur) {
-      more.addEventListener('mouseenter', function () { cur.classList.remove('cursor--discover'); });
-      more.addEventListener('mouseleave', function () { cur.classList.add('cursor--discover'); });
-    }
+    sw.addEventListener('click', function () {
+      const on = sw.getAttribute('aria-checked') !== 'true';
+      /* keep every copy of the switch (bar + phone menu) in step */
+      document.querySelectorAll('.a11y__switch').forEach(function (s) { s.setAttribute('aria-checked', String(on)); });
+    });
+    menu.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) { e.stopPropagation(); close(menu, true); }
+    });
+  });
+  document.addEventListener('click', function (e) {
+    menus.forEach(function (m) { if (!m.contains(e.target)) close(m, false); });
   });
 })();

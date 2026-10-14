@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
 </head>
@@ -61,6 +61,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="#" class="nav__lang">中文</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -78,7 +79,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">Practices</a></li>
+          <li><a href="Practices.html">Practices</a></li>
           <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -95,7 +96,7 @@
           <li><a href="Ethos.html">Values</a></li>
           <li><a href="Institutes.html">Institutes</a></li>
           <li><a href="People.html">People</a></li>
-          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="News.html">News</a></li>
           <li><a href="Connect.html">Contact Us</a></li>
         </ul></div>
 </div>
@@ -106,6 +107,7 @@
       <div class="nav__mobile-bar">
         <a href="#" class="nav__mobile-lang">中文</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="Search">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -119,7 +121,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -128,7 +130,7 @@
       <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News</a><a href="Connect.html">Contact Us</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -184,196 +186,121 @@
               <a href="Ethos.html" role="menuitem">About</a>
             </div>
         </div>
-        <span class="listing__crumb-sep">/</span>
-        <div class="listing__crumb-drop">
-          <span class="listing__crumb-toggle" aria-current="page">
-            Learning
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <div class="listing__crumb-menu" role="menu">
-              <a href="Listing.html" role="menuitem">Initiatives</a>
-              <a href="Stories.html" role="menuitem">Stories</a>
-              <a href="Learning.html" role="menuitem">Learning</a>
-            </div>
-        </div>
+        
         <span class="listing__crumb-sep">/</span>
       </nav>
 
       <h1 class="listing__title">Learning</h1>
 
       <!-- filter bar -->
-      <div class="listing__filters">
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Focus Area</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Mindful Living"/><span>Mindful Living</span></label><label class="listing__filter-option"><input type="checkbox" value="Wellbeing"/><span>Wellbeing</span></label><label class="listing__filter-option"><input type="checkbox" value="Education Excellence"/><span>Education Excellence</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Pillar</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Issues-focused"/><span>Issues-focused</span></label><label class="listing__filter-option"><input type="checkbox" value="Sector-facing"/><span>Sector-facing</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Institute</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Above &amp; Beyond"/><span>Above &amp; Beyond</span></label><label class="listing__filter-option"><input type="checkbox" value="Impact Strategy"/><span>Impact Strategy</span></label><label class="listing__filter-option"><input type="checkbox" value="D&#x27;Ventures"/><span>D'Ventures</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Year</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="2026"/><span>2026</span></label><label class="listing__filter-option"><input type="checkbox" value="2025"/><span>2025</span></label><label class="listing__filter-option"><input type="checkbox" value="2024"/><span>2024</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <button class="listing__clear" type="button">Clear all</button>
-      </div>
+      <div class="listing__filters listing__filters--chips">
+<button class="listing__clear" type="button">All</button>
+<div class="listing__filter" data-dropdown="" data-filter-kind="priority"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Priority</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Connecting Value and Purpose with Education"/><span>Connecting Value and Purpose with Education</span></label><label class="listing__filter-option"><input type="checkbox" value="Advancing Holistic Wellbeing"/><span>Advancing Holistic Wellbeing</span></label><label class="listing__filter-option"><input type="checkbox" value="Reframing Ageing and Dying"/><span>Reframing Ageing and Dying</span></label><label class="listing__filter-option"><input type="checkbox" value="Energising Social Impact Ecosystems"/><span>Energising Social Impact Ecosystems</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+<div class="listing__filter" data-dropdown="" data-filter-kind="topics"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Topic</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Life and Values Education"/><span>Life and Values Education</span></label><label class="listing__filter-option"><input type="checkbox" value="Life and Career Exploration"/><span>Life and Career Exploration</span></label><label class="listing__filter-option"><input type="checkbox" value="Mental Wellness"/><span>Mental Wellness</span></label><label class="listing__filter-option"><input type="checkbox" value="Contemplative Practices"/><span>Contemplative Practices</span></label><label class="listing__filter-option"><input type="checkbox" value="Spiritual Wellbeing/Care"/><span>Spiritual Wellbeing/Care</span></label><label class="listing__filter-option"><input type="checkbox" value="Family Support"/><span>Family Support</span></label><label class="listing__filter-option"><input type="checkbox" value="Ageing Well"/><span>Ageing Well</span></label><label class="listing__filter-option"><input type="checkbox" value="Dying Well"/><span>Dying Well</span></label><label class="listing__filter-option"><input type="checkbox" value="Social Purpose Organisation Development"/><span>Social Purpose Organisation Development</span></label><label class="listing__filter-option"><input type="checkbox" value="Social Innovation Incubation"/><span>Social Innovation Incubation</span></label><label class="listing__filter-option"><input type="checkbox" value="Impact Institutionalisation"/><span>Impact Institutionalisation</span></label><label class="listing__filter-option"><input type="checkbox" value="Emergency Relief"/><span>Emergency Relief</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+<div class="listing__filter" data-dropdown="" data-filter-kind="users"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Service User</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Children"/><span>Children</span></label><label class="listing__filter-option"><input type="checkbox" value="Youth"/><span>Youth</span></label><label class="listing__filter-option"><input type="checkbox" value="Parents"/><span>Parents</span></label><label class="listing__filter-option"><input type="checkbox" value="Older Adults"/><span>Older Adults</span></label><label class="listing__filter-option"><input type="checkbox" value="Teachers"/><span>Teachers</span></label><label class="listing__filter-option"><input type="checkbox" value="Social Workers"/><span>Social Workers</span></label><label class="listing__filter-option"><input type="checkbox" value="Carers"/><span>Carers</span></label><label class="listing__filter-option"><input type="checkbox" value="Organisations"/><span>Organisations</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+<div class="listing__filter" data-dropdown="" data-filter-kind="institute"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Institute</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="mindful-living"/><span>Institute of Mindful Living</span></label><label class="listing__filter-option"><input type="checkbox" value="education-excellence"/><span>Institute of Education Excellence</span></label><label class="listing__filter-option"><input type="checkbox" value="wellbeing"/><span>Institute of Wellbeing</span></label><label class="listing__filter-option"><input type="checkbox" value="impact-strategy"/><span>Institute of Impact Strategy</span></label><label class="listing__filter-option"><input type="checkbox" value="above-beyond"/><span>Above and Beyond Institute</span></label><label class="listing__filter-option"><input type="checkbox" value="dventures"/><span>D’Hub &amp; D’Ventures</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+<div class="listing__filter" data-dropdown="" data-filter-kind="resource"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Resources</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Research &amp; Report"/><span>Research &amp; Report</span></label><label class="listing__filter-option"><input type="checkbox" value="Insights &amp; Articles"/><span>Insights &amp; Articles</span></label><label class="listing__filter-option"><input type="checkbox" value="Guides &amp; Toolkits"/><span>Guides &amp; Toolkits</span></label><label class="listing__filter-option"><input type="checkbox" value="Videos"/><span>Videos</span></label><label class="listing__filter-option"><input type="checkbox" value="Publication"/><span>Publication</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div></div>
 
       <!-- card grid -->
       <div class="listing__grid">
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Energising Social Impact Ecosystems" data-topics="Social Innovation Incubation" data-users="Organisations" data-resource="Research &amp; Report" href="Articles.html">
           <h2 class="story-card__title">Community Changemaker Fellowship</h2>
           <p class="story-card__desc">Cultivating Changemakers to Advance Social Inclusion</p>
           <p class="story-card__category" data-cat="above-beyond">Above &amp; Beyond Institute</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li class="story-card__tag" data-href="Learning.html?topics=Social%20Innovation%20Incubation" data-tag-group="topics">Social Innovation Incubation</li><li class="story-card__tag" data-href="Learning.html?users=Organisations" data-tag-group="users">Organisations</li><li class="story-card__tag" data-href="Learning.html?resource=Research%20%26%20Report" data-tag-group="resource">Research &amp; Report</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-2.png" alt="Community Changemaker Fellowship" /></div>
         </a>
 
-        <a class="story-card story-card--text" href="Articles.html">
+        <a class="story-card story-card--text" data-priority="Energising Social Impact Ecosystems" data-topics="Social Purpose Organisation Development" data-users="Organisations" data-resource="Insights &amp; Articles" href="Articles.html">
           <h2 class="story-card__title">Compassionate Social Good Community</h2>
           <p class="story-card__desc">Bringing the Social Good Community Closer through shared learning, networks and trust.</p>
           <p class="story-card__category" data-cat="mindful-living">Mindful Living</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li class="story-card__tag" data-href="Learning.html?topics=Social%20Purpose%20Organisation%20Development" data-tag-group="topics">Social Purpose Organisation Development</li><li class="story-card__tag" data-href="Learning.html?users=Organisations" data-tag-group="users">Organisations</li><li class="story-card__tag" data-href="Learning.html?resource=Insights%20%26%20Articles" data-tag-group="resource">Insights &amp; Articles</li><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul>
         </a>
 
-        <a class="story-card story-card--logo" href="Articles.html">
+        <a class="story-card story-card--logo" data-priority="Advancing Holistic Wellbeing" data-topics="Family Support" data-users="Parents" data-resource="Guides &amp; Toolkits" href="Articles.html">
           <div class="story-card__logo"><img src="assets/images/logo-pfpw.png" alt="Parenting for a Peaceful World" /></div>
           <h2 class="story-card__title">Parenting for a Peaceful World</h2>
           <p class="story-card__desc">Bringing Peace Through Parenting in a Self-Sustainable Manner</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Advancing%20Holistic%20Wellbeing" data-tag-group="priority">Advancing Holistic Wellbeing</li><li class="story-card__tag" data-href="Learning.html?topics=Family%20Support" data-tag-group="topics">Family Support</li><li class="story-card__tag" data-href="Learning.html?users=Parents" data-tag-group="users">Parents</li><li class="story-card__tag" data-href="Learning.html?resource=Guides%20%26%20Toolkits" data-tag-group="resource">Guides &amp; Toolkits</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Energising Social Impact Ecosystems" data-topics="Impact Institutionalisation" data-users="Organisations" data-resource="Videos" href="Articles.html">
           <h2 class="story-card__title">PILnet – Legal Health Check Programme</h2>
           <p class="story-card__desc">Strengthening the Resilience of Local &amp; Diaspora Organisations in Hong Kong</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li class="story-card__tag" data-href="Learning.html?topics=Impact%20Institutionalisation" data-tag-group="topics">Impact Institutionalisation</li><li class="story-card__tag" data-href="Learning.html?users=Organisations" data-tag-group="users">Organisations</li><li class="story-card__tag" data-href="Learning.html?resource=Videos" data-tag-group="resource">Videos</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-8.png" alt="PILnet – Legal Health Check Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Connecting Value and Purpose with Education" data-topics="Life and Career Exploration" data-users="Youth" data-resource="Publication" href="Articles.html">
           <h2 class="story-card__title">The D. H. Chen Foundation Scholarship Programme</h2>
           <p class="story-card__desc">Investing Today, Impacting Tomorrow</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li class="story-card__tag" data-href="Learning.html?topics=Life%20and%20Career%20Exploration" data-tag-group="topics">Life and Career Exploration</li><li class="story-card__tag" data-href="Learning.html?users=Youth" data-tag-group="users">Youth</li><li class="story-card__tag" data-href="Learning.html?resource=Publication" data-tag-group="resource">Publication</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-1.png" alt="Scholarship Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Connecting Value and Purpose with Education" data-topics="Life and Values Education" data-users="Children" data-resource="Research &amp; Report" href="Articles.html">
           <h2 class="story-card__title">Compassionate Children Programme</h2>
           <p class="story-card__desc">Promoting Compassion-based Values in School-based Curriculum</p>
           <p class="story-card__category" data-cat="mindful-living">Mindful Living</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-            <li class="story-card__tag">Mindful Living</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li class="story-card__tag" data-href="Learning.html?topics=Life%20and%20Values%20Education" data-tag-group="topics">Life and Values Education</li><li class="story-card__tag" data-href="Learning.html?users=Children" data-tag-group="users">Children</li><li class="story-card__tag" data-href="Learning.html?resource=Research%20%26%20Report" data-tag-group="resource">Research &amp; Report</li><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-6.png" alt="Compassionate Children Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Connecting Value and Purpose with Education" data-topics="Life and Career Exploration" data-users="Youth|Teachers" data-resource="Insights &amp; Articles" href="Articles.html">
           <h2 class="story-card__title">Future Education in Action 2.0</h2>
           <p class="story-card__desc">Fostering Values-driven Life Exploration Education Through Cross-sector Collaboration</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li class="story-card__tag" data-href="Learning.html?topics=Life%20and%20Career%20Exploration" data-tag-group="topics">Life and Career Exploration</li><li class="story-card__tag" data-href="Learning.html?users=Youth" data-tag-group="users">Youth</li><li class="story-card__tag" data-href="Learning.html?users=Teachers" data-tag-group="users">Teachers</li><li class="story-card__tag" data-href="Learning.html?resource=Insights%20%26%20Articles" data-tag-group="resource">Insights &amp; Articles</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-3.png" alt="Future Education in Action 2.0" /></div>
         </a>
 
-        <a class="story-card story-card--logo" href="Articles.html">
+        <a class="story-card story-card--logo" data-priority="Advancing Holistic Wellbeing" data-topics="Family Support" data-users="Parents" data-resource="Guides &amp; Toolkits" href="Articles.html">
           <div class="story-card__logo"><img src="assets/images/logo-barts.png" alt="Barts Charity" /></div>
           <h2 class="story-card__title">Parenting for a Peaceful World</h2>
           <p class="story-card__desc">Bringing Peace Through Parenting in a Self-Sustainable Manner</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Advancing%20Holistic%20Wellbeing" data-tag-group="priority">Advancing Holistic Wellbeing</li><li class="story-card__tag" data-href="Learning.html?topics=Family%20Support" data-tag-group="topics">Family Support</li><li class="story-card__tag" data-href="Learning.html?users=Parents" data-tag-group="users">Parents</li><li class="story-card__tag" data-href="Learning.html?resource=Guides%20%26%20Toolkits" data-tag-group="resource">Guides &amp; Toolkits</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Reframing Ageing and Dying" data-topics="Spiritual Wellbeing/Care" data-users="Carers" data-resource="Videos" href="Articles.html">
           <h2 class="story-card__title">Shadowing the Golden Path</h2>
           <p class="story-card__desc">Supporting Carers' Wellbeing through Exercise and Self-rediscovery</p>
           <p class="story-card__category" data-cat="wellbeing">Wellbeing</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Wellbeing</li>
-            <li class="story-card__tag">Wellbeing</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Reframing%20Ageing%20and%20Dying" data-tag-group="priority">Reframing Ageing and Dying</li><li class="story-card__tag" data-href="Learning.html?topics=Spiritual%20Wellbeing/Care" data-tag-group="topics">Spiritual Wellbeing/Care</li><li class="story-card__tag" data-href="Learning.html?users=Carers" data-tag-group="users">Carers</li><li class="story-card__tag" data-href="Learning.html?resource=Videos" data-tag-group="resource">Videos</li><li class="story-card__tag story-card__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Institute of Wellbeing</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-7.png" alt="Shadowing the Golden Path" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Connecting Value and Purpose with Education" data-topics="Life and Values Education" data-users="Youth" data-resource="Publication" href="Articles.html">
           <h2 class="story-card__title">Youth ImpACT Award</h2>
           <p class="story-card__desc">A Landmark Social Innovation Award for Youth to Promote and Cultivate Compassion</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li class="story-card__tag" data-href="Learning.html?topics=Life%20and%20Values%20Education" data-tag-group="topics">Life and Values Education</li><li class="story-card__tag" data-href="Learning.html?users=Youth" data-tag-group="users">Youth</li><li class="story-card__tag" data-href="Learning.html?resource=Publication" data-tag-group="resource">Publication</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-4.png" alt="Youth ImpACT Award" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-priority="Reframing Ageing and Dying" data-topics="Ageing Well" data-users="Older Adults|Carers" data-resource="Research &amp; Report" href="Articles.html">
           <h2 class="story-card__title">NeuroCare Community Project</h2>
           <p class="story-card__desc">Transforming Alzheimer&rsquo;s Care Through Accessible Screening and Community Support</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Wellbeing</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Reframing%20Ageing%20and%20Dying" data-tag-group="priority">Reframing Ageing and Dying</li><li class="story-card__tag" data-href="Learning.html?topics=Ageing%20Well" data-tag-group="topics">Ageing Well</li><li class="story-card__tag" data-href="Learning.html?users=Older%20Adults" data-tag-group="users">Older Adults</li><li class="story-card__tag" data-href="Learning.html?users=Carers" data-tag-group="users">Carers</li><li class="story-card__tag" data-href="Learning.html?resource=Research%20%26%20Report" data-tag-group="resource">Research &amp; Report</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-5.png" alt="NeuroCare Community Project" /></div>
         </a>
 
-        <a class="story-card story-card--text" href="Articles.html">
+        <a class="story-card story-card--text" data-priority="Energising Social Impact Ecosystems" data-topics="Impact Institutionalisation" data-users="Organisations" data-resource="Insights &amp; Articles" href="Articles.html">
           <h2 class="story-card__title">PILnet – Legal Health Check Programme</h2>
           <p class="story-card__desc">Strengthening the Resilience of Local &amp; Diaspora Organisations in Hong Kong through pro-bono legal support.</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="Learning.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li class="story-card__tag" data-href="Learning.html?topics=Impact%20Institutionalisation" data-tag-group="topics">Impact Institutionalisation</li><li class="story-card__tag" data-href="Learning.html?users=Organisations" data-tag-group="users">Organisations</li><li class="story-card__tag" data-href="Learning.html?resource=Insights%20%26%20Articles" data-tag-group="resource">Insights &amp; Articles</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
         </a>
 
       </div>
@@ -485,6 +412,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>

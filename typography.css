@@ -174,6 +174,42 @@ h2:not(.news-v3__heading), h3, h4 {
   letter-spacing: normal;
 }
 
+/* VALUE / CARE (comments 12.10). The spelled-out word takes the page-title
+   tier, the word after it the card tier; the letter that marks each row
+   takes the section tier. Topic tags and the filter count use the tag tier. */
+.acronym { font: 400 var(--font-page)/1 var(--f-serif); letter-spacing: 0.04em; }
+.acronym em { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); letter-spacing: normal; }
+.practice__letter, .acronym-list__letter { font: 400 var(--font-section)/1 var(--f-serif); }
+.acronym-list__name { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
+.topic-tags a { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
+.listing__count { font: 400 var(--font-meta)/1 var(--f-sans); }
+
+/* About pages (comments 12.10): the People finder is a control row on the
+   body tier; the Board's opening line is an introduction; credits and
+   captions use the tag tier. */
+.people-filter__name, .people-filter__toggle, .people-filter__clear,
+.people-filter__group legend, .people-filter__empty, .people-dialog__contact {
+  font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
+}
+.people-board__lede { font: 400 var(--font-lead)/1.4 var(--f-serif); }
+.values-founder__credit, .content-figure figcaption {
+  font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans);
+}
+
+/* A long article headline takes the section-title tier (see script). */
+.article__title.article__title--long { font-size: var(--font-section); }
+
+/* The opening line beside a picture steps up to the card-title tier. */
+.content-split .longform__lede { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
+
+/* "Topics include" is a label, not a heading: the body tier, sans. */
+.priority-block .content-topics-label { font: 400 var(--font-body)/var(--leading-ui) var(--f-sans); }
+
+/* Accessibility menu: title and hints are small labels, the item names
+   are body copy. */
+.a11y__title, .a11y__hint { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
+.a11y__label { font: 400 var(--font-body)/var(--leading-ui) var(--f-sans); }
+
 /* Navigation is the deliberate 300-weight exception requested by the client. */
 .nav--v3 .nav__link, .nav--v3 .nav__mobile-link {
   font: 300 var(--font-menu)/1.2 var(--f-serif);

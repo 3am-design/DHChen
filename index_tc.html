@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
@@ -70,6 +70,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="index.html" class="nav__lang">EN</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="無障礙" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="無障礙" hidden><p class="a11y__title">無障礙</p><div class="a11y__item"><p class="a11y__label">文字大小</p><p class="a11y__hint">請使用瀏覽器調整文字大小：按 Ctrl（Mac 為 ⌘）配合 + 或 −。</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">高對比顏色</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -91,7 +92,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">實踐方法</a></li>
+          <li><a href="Practices.html">實踐方法</a></li>
           <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -106,7 +107,7 @@
 <div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
           <li><a href="Ethos.html">價值觀</a></li>
           <li><a href="People.html">團隊</a></li>
-          <li><a href="News.html">消息及新聞</a></li>
+          <li><a href="News.html">最新消息</a></li>
           <li><a href="Connect.html">聯絡我們</a></li>
         </ul></div>
 </div>
@@ -117,6 +118,7 @@
       <div class="nav__mobile-bar">
         <a href="index.html" class="nav__mobile-lang">EN</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="無障礙" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="無障礙" hidden><p class="a11y__title">無障礙</p><div class="a11y__item"><p class="a11y__label">文字大小</p><p class="a11y__hint">請使用瀏覽器調整文字大小：按 Ctrl（Mac 為 ⌘）配合 + 或 −。</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">高對比顏色</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="搜尋">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -130,7 +132,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">理念實踐</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">實踐方法</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">實踐方法</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">社會影響</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing_tc.html">項目</a><a href="Stories_tc.html">故事</a><a href="Learning.html">學習</a></div></div></div>
@@ -139,7 +141,7 @@
       <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a><a href="Partnership.html">協作</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">消息及新聞</a><a href="Connect.html">聯絡我們</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">最新消息</a><a href="Connect.html">聯絡我們</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -231,6 +233,7 @@
           </div>
           <div class="panel__head">
             <h2 class="panel__title">Being</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Being：了解我們的理念"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">從這裡開始覺察，讓慈悲扎根。</p></div>
         </section>
@@ -241,6 +244,7 @@
           <div class="panel__dotrow dotrow" data-motion="dotrow" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Becoming</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Becoming：了解我們的理念"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">在這裡，潛能遇上使命，可能性化成正面影響。</p></div>
         </section>
@@ -251,12 +255,13 @@
           <div class="panel__lines lines" data-motion="lines" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Belonging</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Belonging：了解我們的理念"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">在這裡，連繫與社群匯聚成共同的力量。</p></div>
         </section>
 
         <!-- 4 — Bettering -->
-        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">共建慈悲社會</h2><p>讓每個人茁壯成長、社群蓬勃發展，以慈悲啟發正面改變的未來。</p><ul class="compassion-outcome__values" role="list"><li><span>影響為本</span></li><li><span>創新</span></li><li><span>可持續</span></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
+        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">共建慈悲社會</h2><p>讓每個人茁壯成長、社群蓬勃發展，以慈悲啟發正面改變的未來。</p><ul class="compassion-outcome__values compassion-outcome__values--two" role="list"><li><a href="Practices.html"><span><b>VALUE</b><br />實踐方法</span></a></li><li><a href="Priorities.html"><span><b>CARE</b><br />關注範疇</span></a></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
   <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
   <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
   <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
@@ -286,33 +291,14 @@
 
           <div class="news-v3__filters" role="tablist" aria-label="Filter news by category">
             <button class="news-v3__filter news-v3__filter--active" role="tab" aria-selected="true"  data-filter="all">全部</button>
-            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="learning">學習</button>
+            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="initiatives">項目</button>
             <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="stories">故事</button>
+            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="learning">學習</button>
             <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="news">最新消息</button>
           </div>
         </div>
 
-        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="news" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">讓靜觀與自我關懷融入日常生活。</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-          <li>Contemplative Practices</li>
-          <li>Spiritual Wellbeing</li>
-          <li>Individuals</li>
-        </ul></div></a><a class="card-v3" data-category="learning" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">連繫教育工作者與社群，支持年輕人探索生命與生涯。</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-          <li>Piloting</li>
-          <li>Life and Values Education</li>
-          <li>Cross-sector Collaboration</li>
-          <li>Teachers, Social Workers</li>
-        </ul></div></a><a class="card-v3" data-category="stories" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">透過時間銀行，建立互助關係與社區連繫。</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Wellbeing</li>
-          <li>Meaningful Participation</li>
-          <li>Ageing</li>
-          <li>Community Building</li>
-        </ul></div></a><a class="card-v3" data-category="stories" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">支持社區領袖推動共融，讓每個人都能參與改變。</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Impact Strategy</li>
-          <li>Systems Change</li>
-          <li>Peer Learning</li>
-          <li>Leadership Development</li>
-          <li>Organisation Development</li>
-        </ul></div></a><a class="card-v3" data-category="news" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">讓社會目的機構互相學習、分享資源，一起成長。</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Impact Strategy</li>
-          <li>Ecosystem Building</li>
-        </ul></div></a></div>
+        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="initiatives" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">讓靜觀與自我關懷融入日常生活。</p><ul class="card-v3__tags"><li data-href="Listing_tc.html?priority=Advancing%20Holistic%20Wellbeing" data-tag-group="priority">Advancing Holistic Wellbeing</li><li data-href="Listing_tc.html?topics=Mental%20Wellness" data-tag-group="topics">Mental Wellness</li><li data-href="Listing_tc.html?topics=Contemplative%20Practices" data-tag-group="topics">Contemplative Practices</li><li data-href="Listing_tc.html?users=Older%20Adults" data-tag-group="users">Older Adults</li><li class="card-v3__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul></div></a><a class="card-v3" data-category="learning" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">連繫教育工作者與社群，支持年輕人探索生命與生涯。</p><ul class="card-v3__tags"><li data-href="Listing_tc.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li data-href="Listing_tc.html?topics=Life%20and%20Career%20Exploration" data-tag-group="topics">Life and Career Exploration</li><li data-href="Listing_tc.html?users=Youth" data-tag-group="users">Youth</li><li data-href="Listing_tc.html?users=Teachers" data-tag-group="users">Teachers</li><li class="card-v3__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul></div></a><a class="card-v3" data-category="stories" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">透過時間銀行，建立互助關係與社區連繫。</p><ul class="card-v3__tags"><li data-href="Listing_tc.html?priority=Reframing%20Ageing%20and%20Dying" data-tag-group="priority">Reframing Ageing and Dying</li><li data-href="Listing_tc.html?topics=Ageing%20Well" data-tag-group="topics">Ageing Well</li><li data-href="Listing_tc.html?users=Older%20Adults" data-tag-group="users">Older Adults</li><li class="card-v3__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Institute of Wellbeing</li></ul></div></a><a class="card-v3" data-category="initiatives" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">支持社區領袖推動共融，讓每個人都能參與改變。</p><ul class="card-v3__tags"><li data-href="Listing_tc.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li data-href="Listing_tc.html?topics=Social%20Innovation%20Incubation" data-tag-group="topics">Social Innovation Incubation</li><li data-href="Listing_tc.html?users=Organisations" data-tag-group="users">Organisations</li><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Institute of Impact Strategy</li></ul></div></a><a class="card-v3" data-category="news" href="Articles_tc.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">讓社會目的機構互相學習、分享資源，一起成長。</p><ul class="card-v3__tags"><li data-href="Listing_tc.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li data-href="Listing_tc.html?topics=Social%20Purpose%20Organisation%20Development" data-tag-group="topics">Social Purpose Organisation Development</li><li data-href="Listing_tc.html?users=Organisations" data-tag-group="users">Organisations</li><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Institute of Impact Strategy</li></ul></div></a></div>
 
 
         <div class="news-v3__cta">
@@ -547,6 +533,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>

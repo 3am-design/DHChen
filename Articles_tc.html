@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
   <!-- R2 nav / footer / canvas — same sheet the EN pages load. Nothing in
        the nav, mega, colour bar or footer blocks is scoped to a language. -->
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
@@ -62,6 +62,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="Articles.html" class="nav__lang">EN</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="無障礙" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="無障礙" hidden><p class="a11y__title">無障礙</p><div class="a11y__item"><p class="a11y__label">文字大小</p><p class="a11y__hint">請使用瀏覽器調整文字大小：按 Ctrl（Mac 為 ⌘）配合 + 或 −。</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">高對比顏色</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -75,7 +76,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">夥伴合作</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">關於我們</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">實踐方法</a></li>
+          <li><a href="Practices.html">實踐方法</a></li>
           <li><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -90,7 +91,7 @@
 <div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art" src="assets/images/menu-about-illustration.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
           <li><a href="Ethos.html">價值觀</a></li>
           <li><a href="People.html">團隊</a></li>
-          <li><a href="News.html">消息及新聞</a></li>
+          <li><a href="News.html">最新消息</a></li>
           <li><a href="Connect.html">聯絡我們</a></li>
         </ul></div>
 </div>
@@ -101,6 +102,7 @@
       <div class="nav__mobile-bar">
         <a href="Articles.html" class="nav__mobile-lang">EN</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="無障礙" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="無障礙" hidden><p class="a11y__title">無障礙</p><div class="a11y__item"><p class="a11y__label">文字大小</p><p class="a11y__hint">請使用瀏覽器調整文字大小：按 Ctrl（Mac 為 ⌘）配合 + 或 −。</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">高對比顏色</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="搜尋">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -114,7 +116,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">理念實踐</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">實踐方法</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">實踐方法</a><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">關注範疇</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">社會影響</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing_tc.html">項目</a><a href="Stories_tc.html">故事</a><a href="Learning.html">學習</a></div></div></div>
@@ -123,7 +125,7 @@
       <div class="nav__mobile-sub-inner"><a data-placeholder-link="true" aria-disabled="true" tabindex="-1">資助</a><a href="Partnership.html">協作</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">關於我們</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">消息及新聞</a><a href="Connect.html">聯絡我們</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">價值觀</a><a href="People.html">團隊</a><a href="News.html">最新消息</a><a href="Connect.html">聯絡我們</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -451,6 +453,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>

@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
   <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
        page's own module (§11). Same pair of files as Listing / Articles. -->
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
@@ -57,6 +57,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="#" class="nav__lang">中文</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -74,7 +75,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">Practices</a></li>
+          <li><a href="Practices.html">Practices</a></li>
           <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -91,7 +92,7 @@
           <li><a href="Ethos.html">Values</a></li>
           <li><a href="Institutes.html">Institutes</a></li>
           <li><a href="People.html">People</a></li>
-          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="News.html">News</a></li>
           <li><a href="Connect.html">Contact Us</a></li>
         </ul></div>
 </div>
@@ -102,6 +103,7 @@
       <div class="nav__mobile-bar">
         <a href="#" class="nav__mobile-lang">中文</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="Search">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -115,7 +117,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -124,7 +126,7 @@
       <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News</a><a href="Connect.html">Contact Us</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -182,17 +184,7 @@
               <a href="Ethos.html" role="menuitem">About</a>
             </div>
           </div>
-          <span class="listing__crumb-sep">/</span>
-          <div class="listing__crumb-drop">
-            <span class="listing__crumb-toggle" aria-current="page">
-              Collaboration
-              <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <div class="listing__crumb-menu" role="menu">
-              <a href="WhatWeFund.html" role="menuitem">What We Fund</a><a href="HowWeFund.html" role="menuitem">How We Fund</a>
-              <a href="Partnership.html" role="menuitem" aria-current="page">Collaboration</a>
-            </div>
-          </div>
+          
           <span class="listing__crumb-sep">/</span>
         </nav>
 
@@ -394,6 +386,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>

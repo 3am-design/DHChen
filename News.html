@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
 </head>
@@ -61,6 +61,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="#" class="nav__lang">中文</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -78,7 +79,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">Practices</a></li>
+          <li><a href="Practices.html">Practices</a></li>
           <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -95,7 +96,7 @@
           <li><a href="Ethos.html">Values</a></li>
           <li><a href="Institutes.html">Institutes</a></li>
           <li><a href="People.html">People</a></li>
-          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="News.html">News</a></li>
           <li><a href="Connect.html">Contact Us</a></li>
         </ul></div>
 </div>
@@ -106,6 +107,7 @@
       <div class="nav__mobile-bar">
         <a href="#" class="nav__mobile-lang">中文</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="Search">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -119,7 +121,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -128,7 +130,7 @@
       <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News</a><a href="Connect.html">Contact Us</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -184,197 +186,116 @@
               <a href="Ethos.html" role="menuitem">About</a>
             </div>
         </div>
-        <span class="listing__crumb-sep">/</span>
-        <div class="listing__crumb-drop">
-          <span class="listing__crumb-toggle" aria-current="page">
-            News &amp; Press
-              <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <div class="listing__crumb-menu" role="menu">
-              <a href="Ethos.html" role="menuitem">Values</a>
-              <a href="People.html" role="menuitem">People</a>
-              <a href="News.html" role="menuitem" aria-current="page">News &amp; Press</a>
-              <a href="Connect.html" role="menuitem">Contact Us</a>
-            </div>
-        </div>
+        
         <span class="listing__crumb-sep">/</span>
       </nav>
 
       <h1 class="listing__title">News</h1>
 
       <!-- filter bar -->
-      <div class="listing__filters">
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Focus Area</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Mindful Living"/><span>Mindful Living</span></label><label class="listing__filter-option"><input type="checkbox" value="Wellbeing"/><span>Wellbeing</span></label><label class="listing__filter-option"><input type="checkbox" value="Education Excellence"/><span>Education Excellence</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Pillar</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Issues-focused"/><span>Issues-focused</span></label><label class="listing__filter-option"><input type="checkbox" value="Sector-facing"/><span>Sector-facing</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Institute</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Above &amp; Beyond"/><span>Above &amp; Beyond</span></label><label class="listing__filter-option"><input type="checkbox" value="Impact Strategy"/><span>Impact Strategy</span></label><label class="listing__filter-option"><input type="checkbox" value="D&#x27;Ventures"/><span>D'Ventures</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <div class="listing__filter" data-dropdown>
-          <button class="listing__filter-toggle" type="button" aria-expanded="false">
-            <span>Year</span>
-            <svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="2026"/><span>2026</span></label><label class="listing__filter-option"><input type="checkbox" value="2025"/><span>2025</span></label><label class="listing__filter-option"><input type="checkbox" value="2024"/><span>2024</span></label></div><button class="listing__filter-clear" type="button" disabled>Clear all</button></div>
-        </div>
-
-        <button class="listing__clear" type="button">Clear all</button>
-      </div>
+      <div class="listing__filters listing__filters--chips">
+<button class="listing__clear" type="button">All</button>
+<div class="listing__filter" data-dropdown="" data-filter-kind="year"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Year</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="2026"/><span>2026</span></label><label class="listing__filter-option"><input type="checkbox" value="2025"/><span>2025</span></label><label class="listing__filter-option"><input type="checkbox" value="2024"/><span>2024</span></label><label class="listing__filter-option"><input type="checkbox" value="2023"/><span>2023</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+<div class="listing__filter" data-dropdown="" data-filter-kind="type"><button aria-expanded="false" class="listing__filter-toggle" type="button"><span>Type</span><svg aria-hidden="true" class="listing__chev" viewbox="0 0 12 8"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+<div class="listing__filter-menu" role="group"><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Events"/><span>Events</span></label><label class="listing__filter-option"><input type="checkbox" value="Press"/><span>Press</span></label><label class="listing__filter-option"><input type="checkbox" value="Recognition"/><span>Recognition</span></label><label class="listing__filter-option"><input type="checkbox" value="Foundation News"/><span>Foundation News</span></label><label class="listing__filter-option"><input type="checkbox" value="Programme Updates"/><span>Programme Updates</span></label></div><button class="listing__filter-clear" disabled="" type="button">Clear all</button></div></div>
+</div>
 
       <!-- card grid -->
       <div class="listing__grid">
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Events" data-year="2026" href="Articles.html">
           <h2 class="story-card__title">Community Changemaker Fellowship</h2>
           <p class="story-card__desc">Cultivating Changemakers to Advance Social Inclusion</p>
           <p class="story-card__category" data-cat="above-beyond">Above &amp; Beyond Institute</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Events" data-tag-group="type">Events</li><li class="story-card__tag" data-href="News.html?year=2026" data-tag-group="year">2026</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-2.png" alt="Community Changemaker Fellowship" /></div>
         </a>
 
-        <a class="story-card story-card--text" href="Articles.html">
+        <a class="story-card story-card--text" data-type="Press" data-year="2025" href="Articles.html">
           <h2 class="story-card__title">Compassionate Social Good Community</h2>
           <p class="story-card__desc">Bringing the Social Good Community Closer through shared learning, networks and trust.</p>
           <p class="story-card__category" data-cat="mindful-living">Mindful Living</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Press" data-tag-group="type">Press</li><li class="story-card__tag" data-href="News.html?year=2025" data-tag-group="year">2025</li><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul>
         </a>
 
-        <a class="story-card story-card--logo" href="Articles.html">
+        <a class="story-card story-card--logo" data-type="Recognition" data-year="2024" href="Articles.html">
           <div class="story-card__logo"><img src="assets/images/logo-pfpw.png" alt="Parenting for a Peaceful World" /></div>
           <h2 class="story-card__title">Parenting for a Peaceful World</h2>
           <p class="story-card__desc">Bringing Peace Through Parenting in a Self-Sustainable Manner</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Recognition" data-tag-group="type">Recognition</li><li class="story-card__tag" data-href="News.html?year=2024" data-tag-group="year">2024</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Foundation News" data-year="2023" href="Articles.html">
           <h2 class="story-card__title">PILnet – Legal Health Check Programme</h2>
           <p class="story-card__desc">Strengthening the Resilience of Local &amp; Diaspora Organisations in Hong Kong</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Foundation%20News" data-tag-group="type">Foundation News</li><li class="story-card__tag" data-href="News.html?year=2023" data-tag-group="year">2023</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-8.png" alt="PILnet – Legal Health Check Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Programme Updates" data-year="2026" href="Articles.html">
           <h2 class="story-card__title">The D. H. Chen Foundation Scholarship Programme</h2>
           <p class="story-card__desc">Investing Today, Impacting Tomorrow</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Programme%20Updates" data-tag-group="type">Programme Updates</li><li class="story-card__tag" data-href="News.html?year=2026" data-tag-group="year">2026</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-1.png" alt="Scholarship Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Events" data-year="2025" href="Articles.html">
           <h2 class="story-card__title">Compassionate Children Programme</h2>
           <p class="story-card__desc">Promoting Compassion-based Values in School-based Curriculum</p>
           <p class="story-card__category" data-cat="mindful-living">Mindful Living</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-            <li class="story-card__tag">Mindful Living</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Events" data-tag-group="type">Events</li><li class="story-card__tag" data-href="News.html?year=2025" data-tag-group="year">2025</li><li class="story-card__tag story-card__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-6.png" alt="Compassionate Children Programme" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Press" data-year="2024" href="Articles.html">
           <h2 class="story-card__title">Future Education in Action 2.0</h2>
           <p class="story-card__desc">Fostering Values-driven Life Exploration Education Through Cross-sector Collaboration</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Press" data-tag-group="type">Press</li><li class="story-card__tag" data-href="News.html?year=2024" data-tag-group="year">2024</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-3.png" alt="Future Education in Action 2.0" /></div>
         </a>
 
-        <a class="story-card story-card--logo" href="Articles.html">
+        <a class="story-card story-card--logo" data-type="Recognition" data-year="2023" href="Articles.html">
           <div class="story-card__logo"><img src="assets/images/logo-barts.png" alt="Barts Charity" /></div>
           <h2 class="story-card__title">Parenting for a Peaceful World</h2>
           <p class="story-card__desc">Bringing Peace Through Parenting in a Self-Sustainable Manner</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-            <li class="story-card__tag">Wellbeing</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Recognition" data-tag-group="type">Recognition</li><li class="story-card__tag" data-href="News.html?year=2023" data-tag-group="year">2023</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Foundation News" data-year="2026" href="Articles.html">
           <h2 class="story-card__title">Shadowing the Golden Path</h2>
           <p class="story-card__desc">Supporting Carers' Wellbeing through Exercise and Self-rediscovery</p>
           <p class="story-card__category" data-cat="wellbeing">Wellbeing</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Wellbeing</li>
-            <li class="story-card__tag">Wellbeing</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Foundation%20News" data-tag-group="type">Foundation News</li><li class="story-card__tag" data-href="News.html?year=2026" data-tag-group="year">2026</li><li class="story-card__tag story-card__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Institute of Wellbeing</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-7.png" alt="Shadowing the Golden Path" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Programme Updates" data-year="2025" href="Articles.html">
           <h2 class="story-card__title">Youth ImpACT Award</h2>
           <p class="story-card__desc">A Landmark Social Innovation Award for Youth to Promote and Cultivate Compassion</p>
           <p class="story-card__category" data-cat="education-excellence">Education Excellence</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Education</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Programme%20Updates" data-tag-group="type">Programme Updates</li><li class="story-card__tag" data-href="News.html?year=2025" data-tag-group="year">2025</li><li class="story-card__tag story-card__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-4.png" alt="Youth ImpACT Award" /></div>
         </a>
 
-        <a class="story-card" href="Articles.html">
+        <a class="story-card" data-type="Events" data-year="2024" href="Articles.html">
           <h2 class="story-card__title">NeuroCare Community Project</h2>
           <p class="story-card__desc">Transforming Alzheimer&rsquo;s Care Through Accessible Screening and Community Support</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Wellbeing</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Events" data-tag-group="type">Events</li><li class="story-card__tag" data-href="News.html?year=2024" data-tag-group="year">2024</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
           <div class="story-card__thumb"><img src="assets/images/news-5.png" alt="NeuroCare Community Project" /></div>
         </a>
 
-        <a class="story-card story-card--text" href="Articles.html">
+        <a class="story-card story-card--text" data-type="Press" data-year="2023" href="Articles.html">
           <h2 class="story-card__title">PILnet – Legal Health Check Programme</h2>
           <p class="story-card__desc">Strengthening the Resilience of Local &amp; Diaspora Organisations in Hong Kong through pro-bono legal support.</p>
           <p class="story-card__category" data-cat="above-beyond">Above and Beyond</p>
-          <ul class="story-card__tags"><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond</li>
-            <li class="story-card__tag">Capacity Building</li>
-            <li class="story-card__tag">Issues-focused</li>
-          </ul>
+          <ul class="story-card__tags"><li class="story-card__tag" data-href="News.html?type=Press" data-tag-group="type">Press</li><li class="story-card__tag" data-href="News.html?year=2023" data-tag-group="year">2023</li><li class="story-card__tag story-card__tag--inst" data-cat="above-beyond" data-href="Institutes.html#above-beyond">Above and Beyond Institute</li></ul>
         </a>
 
       </div>
@@ -486,6 +407,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>

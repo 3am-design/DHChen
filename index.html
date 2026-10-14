@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="style.css?v=20261014-a11y4" />
+  <link rel="stylesheet" href="typography.css?v=20261014-a11y4" />
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
@@ -70,6 +70,7 @@
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
         <a href="index_tc.html" class="nav__lang">中文</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -87,7 +88,7 @@
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><img class="nav__mega-art" src="assets/images/menu-approach-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
-          <li><a href="Approach.html">Practices</a></li>
+          <li><a href="Practices.html">Practices</a></li>
           <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><img class="nav__mega-art" src="assets/images/menu-impact-art.svg" alt="" aria-hidden="true"/><ul class="nav__mega-links">
@@ -104,7 +105,7 @@
           <li><a href="Ethos.html">Values</a></li>
           <li><a href="Institutes.html">Institutes</a></li>
           <li><a href="People.html">People</a></li>
-          <li><a href="News.html">News &amp; Press</a></li>
+          <li><a href="News.html">News</a></li>
           <li><a href="Connect.html">Contact Us</a></li>
         </ul></div>
 </div>
@@ -115,6 +116,7 @@
       <div class="nav__mobile-bar">
         <a href="index_tc.html" class="nav__mobile-lang">中文</a>
         <div class="nav__mobile-bar-actions">
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="Search">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -128,7 +130,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Approach.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -137,7 +139,7 @@
       <div class="nav__mobile-sub-inner"><a href="WhatWeFund.html">What We Fund</a><a href="HowWeFund.html">How We Fund</a><a href="Partnership.html">Collaboration</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">About</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News &amp; Press</a><a href="Connect.html">Contact Us</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Ethos.html">Values</a><a href="Institutes.html">Institutes</a><a href="People.html">People</a><a href="News.html">News</a><a href="Connect.html">Contact Us</a></div></div></div>
 </nav>
 
       <!-- Secondary links from the footer, two columns -->
@@ -229,6 +231,7 @@
           </div>
           <div class="panel__head">
             <h2 class="panel__title">Being</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Being: read about our approach"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">This is where awareness begins and compassion takes root.</p></div>
         </section>
@@ -239,6 +242,7 @@
           <div class="panel__dotrow dotrow" data-motion="dotrow" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Becoming</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Becoming: read about our approach"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">This is where potential meets purpose, and possibilities become positive impact.</p></div>
         </section>
@@ -249,12 +253,13 @@
           <div class="panel__lines lines" data-motion="lines" aria-hidden="true"></div>
           <div class="panel__head">
             <h2 class="panel__title">Belonging</h2>
+            <a class="panel__cover" href="Approach.html#being-becoming-belonging" aria-label="Belonging: read about our approach"></a>
           </div>
           <div class="panel__body"><p class="panel__lede">This is where connection and community create collective impact.</p></div>
         </section>
 
         <!-- 4 — Bettering -->
-        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">Creating a Compassionate Society</h2><p>A future where individuals thrive, communities flourish, and compassion inspires positive change.</p><ul class="compassion-outcome__values" role="list"><li><span>Impact-<wbr>driven</span></li><li><span>Innovative</span></li><li><span>Sustainable</span></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
+        <section class="compassion-outcome" aria-labelledby="outcome-title"><div class="compassion-outcome__copy"><span class="connection-motif" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="outcome-title">Creating a Compassionate Society</h2><p>A future where individuals thrive, communities flourish, and compassion inspires positive change.</p><ul class="compassion-outcome__values compassion-outcome__values--two" role="list"><li><a href="Practices.html"><span><b>VALUE</b>-led<br />Practices</span></a></li><li><a href="Priorities.html"><span><b>CARE</b>-centred<br />Priorities</span></a></li></ul></div><div class="compassion-outcome__image panel__photo" data-slideshow aria-hidden="true">
   <img class="panel__photo-img" src="assets/images/bettering-1.png" alt="" />
   <img class="panel__photo-img" src="assets/images/bettering-2.png" alt="" loading="lazy" />
   <img class="panel__photo-img" src="assets/images/bettering-3.png" alt="" loading="lazy" />
@@ -284,33 +289,14 @@
 
           <div class="news-v3__filters" role="tablist" aria-label="Filter news by category">
             <button class="news-v3__filter news-v3__filter--active" role="tab" aria-selected="true"  data-filter="all">All</button>
-            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="learning">Learning</button>
+            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="initiatives">Initiatives</button>
             <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="stories">Stories</button>
+            <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="learning">Learning</button>
             <button class="news-v3__filter" role="tab" aria-selected="false" data-filter="news">News</button>
           </div>
         </div>
 
-        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="news" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">Mindfulness and self-care, made part of everyday life.</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Mindful Living</li>
-          <li>Contemplative Practices</li>
-          <li>Spiritual Wellbeing</li>
-          <li>Individuals</li>
-        </ul></div></a><a class="card-v3" data-category="learning" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">Connecting educators and communities to support life and career exploration.</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Education Excellence</li>
-          <li>Piloting</li>
-          <li>Life and Values Education</li>
-          <li>Cross-sector Collaboration</li>
-          <li>Teachers, Social Workers</li>
-        </ul></div></a><a class="card-v3" data-category="stories" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">Growing mutual care and connection through time banking.</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Wellbeing</li>
-          <li>Meaningful Participation</li>
-          <li>Ageing</li>
-          <li>Community Building</li>
-        </ul></div></a><a class="card-v3" data-category="stories" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">Supporting community leaders to advance social inclusion.</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Impact Strategy</li>
-          <li>Systems Change</li>
-          <li>Peer Learning</li>
-          <li>Leadership Development</li>
-          <li>Organisation Development</li>
-        </ul></div></a><a class="card-v3" data-category="news" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">A community where social purpose organisations learn and grow together.</p><ul class="card-v3__tags"><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Impact Strategy</li>
-          <li>Ecosystem Building</li>
-        </ul></div></a></div>
+        <div class="news-v3__grid" id="home-initiatives" data-rail tabindex="0" aria-label="Featured initiatives"><a class="card-v3" data-category="initiatives" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/d-well.webp" alt="D’ Well" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">D’ Well</h3><p class="card-v3__desc">Mindfulness and self-care, made part of everyday life.</p><ul class="card-v3__tags"><li data-href="Listing.html?priority=Advancing%20Holistic%20Wellbeing" data-tag-group="priority">Advancing Holistic Wellbeing</li><li data-href="Listing.html?topics=Mental%20Wellness" data-tag-group="topics">Mental Wellness</li><li data-href="Listing.html?topics=Contemplative%20Practices" data-tag-group="topics">Contemplative Practices</li><li data-href="Listing.html?users=Older%20Adults" data-tag-group="users">Older Adults</li><li class="card-v3__tag--inst" data-cat="mindful-living" data-href="Institutes.html#mindful-living">Institute of Mindful Living</li></ul></div></a><a class="card-v3" data-category="learning" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/future-education-in-action-2.webp" alt="Future Education in Action 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Future Education in Action 2.0</h3><p class="card-v3__desc">Connecting educators and communities to support life and career exploration.</p><ul class="card-v3__tags"><li data-href="Listing.html?priority=Connecting%20Value%20and%20Purpose%20with%20Education" data-tag-group="priority">Connecting Value and Purpose with Education</li><li data-href="Listing.html?topics=Life%20and%20Career%20Exploration" data-tag-group="topics">Life and Career Exploration</li><li data-href="Listing.html?users=Youth" data-tag-group="users">Youth</li><li data-href="Listing.html?users=Teachers" data-tag-group="users">Teachers</li><li class="card-v3__tag--inst" data-cat="education-excellence" data-href="Institutes.html#education-excellence">Institute of Education Excellence</li></ul></div></a><a class="card-v3" data-category="stories" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/lion-rock-2-0.webp" alt="Lion Rock 2.0" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Lion Rock 2.0</h3><p class="card-v3__desc">Growing mutual care and connection through time banking.</p><ul class="card-v3__tags"><li data-href="Listing.html?priority=Reframing%20Ageing%20and%20Dying" data-tag-group="priority">Reframing Ageing and Dying</li><li data-href="Listing.html?topics=Ageing%20Well" data-tag-group="topics">Ageing Well</li><li data-href="Listing.html?users=Older%20Adults" data-tag-group="users">Older Adults</li><li class="card-v3__tag--inst" data-cat="wellbeing" data-href="Institutes.html#wellbeing">Institute of Wellbeing</li></ul></div></a><a class="card-v3" data-category="initiatives" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/community-changemaker-fellowship.webp" alt="Community Changemaker Fellowship" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Community Changemaker Fellowship</h3><p class="card-v3__desc">Supporting community leaders to advance social inclusion.</p><ul class="card-v3__tags"><li data-href="Listing.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li data-href="Listing.html?topics=Social%20Innovation%20Incubation" data-tag-group="topics">Social Innovation Incubation</li><li data-href="Listing.html?users=Organisations" data-tag-group="users">Organisations</li><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Institute of Impact Strategy</li></ul></div></a><a class="card-v3" data-category="news" href="Articles.html"><div class="card-v3__image"><img src="assets/images/initiatives/coasis-2.webp" alt="Co’asis" loading="lazy" /></div><div class="card-v3__body"><h3 class="card-v3__title">Co’asis</h3><p class="card-v3__desc">A community where social purpose organisations learn and grow together.</p><ul class="card-v3__tags"><li data-href="Listing.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</li><li data-href="Listing.html?topics=Social%20Purpose%20Organisation%20Development" data-tag-group="topics">Social Purpose Organisation Development</li><li data-href="Listing.html?users=Organisations" data-tag-group="users">Organisations</li><li class="card-v3__tag--inst" data-cat="impact-strategy" data-href="Institutes.html#impact-strategy">Institute of Impact Strategy</li></ul></div></a></div>
 
 
         <div class="news-v3__cta">
@@ -548,6 +534,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261014-a11y4"></script>
 </body>
 </html>
