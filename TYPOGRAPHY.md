@@ -33,10 +33,12 @@ wide, they render at 42.9px and 35.1px respectively.
 - The homepage hero and opening motto retain their existing display typography
   and animation. Being / Becoming / Belonging and the landing heading
   “Compassion is not only a value. It is a way of …” use the page-title tier.
-- VALUE / CARE acronyms (Approach, Practices, Priorities): the spelled-out
-  word uses the page-title tier, the word after it ("‑led Practices") the
-  card-title tier, and the letter marking each row the section-title tier.
-  Topic tags and the orange filter-count disc use the tag tier.
+- VALUE / CARE acronyms (Approach, Practices, Priorities): one line at the
+  section-title tier, the acronym orange and its suffix ("‑led Practices")
+  black. On phones the line shrinks fluidly (24–36px) so it stays on one
+  line, the single deliberate exception to the 32–38px section tier. The
+  letter marking each row uses the section-title tier. Topic tags and the
+  orange filter-count disc use the tag tier.
 
 ## Leading
 

@@ -9118,8 +9118,9 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   color: var(--c-orange);
 }
 .acronym em {
-  /* stacked lockup: the suffix sits on its own line under the word */
-  display: block; margin: 12px 0 0;
+  /* one line: the word is orange, the suffix follows in black at the
+     same size (the client asked for it on a single line) */
+  display: inline; margin: 0;
   color: var(--c-black);
   font-style: normal;
 }
@@ -9523,7 +9524,6 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .priority-block .topic-tags { margin-top: 10px; }
 .priority-block .topic-tags a { background: #fff4ec; }
 .priority-block .topic-tags a:hover, .priority-block .topic-tags a:focus-visible { background: var(--c-orange); color: var(--c-white); }
-.acronym + .acronym-caption { margin-top: 14px; }
 
 /* Priorities: the four blocks share a height, and a picture fills its
    half of the block at whatever shape that makes (no fixed square) */
@@ -9617,3 +9617,6 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .nav__mobile-bar-actions .a11y { position: static; }
 .nav__mobile-bar-actions .a11y__panel { top: calc(100% + 8px); left: 16px; right: 16px; width: auto; max-width: 400px; margin-left: auto; }
 @media (min-width: 1024px) { .nav__mobile-bar-actions .a11y { display: none; } }
+
+/* the lockup is followed straight by the first block, so give it room */
+.acronym { margin-bottom: 28px; }

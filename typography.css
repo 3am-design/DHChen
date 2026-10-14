@@ -177,8 +177,12 @@ h2:not(.news-v3__heading), h3, h4 {
 /* VALUE / CARE (comments 12.10). The spelled-out word takes the page-title
    tier, the word after it the card tier; the letter that marks each row
    takes the section tier. Topic tags and the filter count use the tag tier. */
-.acronym { font: 400 var(--font-page)/1 var(--f-serif); letter-spacing: 0.04em; }
-.acronym em { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); letter-spacing: normal; }
+/* VALUE-led Practices / CARE-centred Priorities: one line at the section-title tier */
+.acronym { font: 400 var(--font-section)/var(--leading-title) var(--f-serif); letter-spacing: 0; }
+.acronym em { font: inherit; letter-spacing: 0; }
+/* On phones the single line shrinks with the screen (24px at 320, about 30px
+   at 390) rather than wrapping, since the lockup should stay on one line. */
+@media (max-width: 767px) { .acronym { font-size: clamp(24px, 7.6vw, 36px); } }
 .practice__letter, .acronym-list__letter { font: 400 var(--font-section)/1 var(--f-serif); }
 .acronym-list__name { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
 .topic-tags a { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
