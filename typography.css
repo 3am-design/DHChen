@@ -205,6 +205,12 @@ h2:not(.news-v3__heading), h3, h4 {
 
 /* The opening line beside a picture steps up to the card-title tier. */
 .content-split .longform__lede { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
+/* Between phone and wide desktop the half-width column is narrow, and the
+   larger line pushed the block taller than its picture is wide; there it
+   keeps the introduction tier so the picture stays landscape. */
+@media (min-width: 768px) and (max-width: 1679px) {
+  .content-split:not(.content-split--stacked) .longform__lede { font-size: var(--font-lead); }
+}
 
 /* "Topics include" is a label, not a heading: the body tier, sans. */
 .priority-block .content-topics-label { font: 400 var(--font-body)/var(--leading-ui) var(--f-sans); }
@@ -236,6 +242,24 @@ h2:not(.news-v3__heading), h3, h4 {
 .opening__cite-years {
   font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
 }
+
+/* Initiative facts: the label is a tag-tier caption, the value body copy. */
+.article__fact-label { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
+.article__fact-value { font: 400 var(--font-body)/var(--leading-ui) var(--f-sans); }
+
+/* Topic page: the introduction under the keyword reads as a lede. */
+.topic-intro__text { font: 400 var(--font-lead)/var(--leading-copy) var(--f-sans); }
+
+/* Homepage (comments 20.10). The banner description steps up to the card
+   tier (in the 300 weight, one step lighter), so it no longer reads tiny
+   under the display headline; the
+   ventures copy sits 1px above the body tier, at 18px. */
+.home-v3 .hero-v3__body { font: 300 var(--font-subheading)/1.4 var(--f-sans); }
+/* Balanced lines: the measure narrows to share the words evenly across
+   its lines, so the last line never holds a single word. */
+.home-v3 .hero-v3__body { text-wrap: balance; }
+@media (max-width: 767px) { .home-v3 .hero-v3__body { font-size: var(--font-lead); } }
+.home-v3 .ventures__text { font-size: calc(18px / var(--zoom)); }
 
 /* CJK headings use the existing Chinese serif family; copy stays sans. */
 html[lang^="zh"] {

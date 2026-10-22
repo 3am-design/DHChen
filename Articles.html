@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Preview only: keep search engines out and ask for the preview
+       password (gate.js). Remove both at launch. -->
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <script src="gate.js?v=20261022-2"></script>
+  <!-- High-contrast colours: applied before first paint (see script.js). -->
+  <script>try{if(localStorage.getItem('dhc-contrast')==='1')document.documentElement.classList.add('hc')}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Force the iOS Safari status bar / bottom toolbar to a fixed white instead
        of sampling page content (which flips between peach hero and white nav as
@@ -16,8 +22,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css?v=20261014-lockup2" />
-  <link rel="stylesheet" href="typography.css?v=20261014-lockup2" />
+  <link rel="stylesheet" href="style.css?v=20261020-c32" />
+  <link rel="stylesheet" href="typography.css?v=20261020-c32" />
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
 </head>
@@ -205,11 +211,13 @@
 
         <h1 class="article__title">Project Fuel</h1>
 
+        <!-- Tags follow the site taxonomy: priority, topic and service user
+             open their tag page; the institute tag opens its institute. -->
         <ul class="article__tags">
-          <li><span class="article__tag" data-tag-group="priority">Ecosystem Building</span></li>
-          <li><span class="article__tag" data-tag-group="topics">Organisation Development</span></li>
-          <li><span class="article__tag" data-tag-group="approach">Capacity Building</span></li>
-          <li><span class="article__tag" data-tag-group="users">Organisations</span></li>
+          <li><a class="article__tag" href="Topic.html?priority=Energising%20Social%20Impact%20Ecosystems" data-tag-group="priority">Energising Social Impact Ecosystems</a></li>
+          <li><a class="article__tag" href="Topic.html?topics=Social%20Purpose%20Organisation%20Development" data-tag-group="topics">Social Purpose Organisation Development</a></li>
+          <li><a class="article__tag" href="Topic.html?users=Organisations" data-tag-group="users">Organisations</a></li>
+          <li><a class="article__tag article__tag--inst" href="Institutes.html#impact-strategy" data-cat="impact-strategy">Institute of Impact Strategy</a></li>
         </ul>
       </header>
 
@@ -229,6 +237,26 @@
 </svg>
 </button>
 </div>
+<!-- Initiative facts (CMS: Year, Partners, Beneficiaries; a row left
+     empty drops out), under the article title. Carried over from the
+     current site's initiative pages. Placeholder values. -->
+<dl class="article__facts">
+  <div class="article__fact">
+    <span class="article__fact-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="m39.5 30.6c-2.3 2.3-4.5 4.5-6.8 6.8-1.4-1.4-2.9-2.9-4.3-4.3-1.8-1.8-4.7 1-2.8 2.8 1.9 1.9 3.8 3.8 5.7 5.7.8.8 2.1.8 2.8 0l8.2-8.2c1.9-1.8-.9-4.6-2.8-2.8z"/><path d="m51.6 8.8c0-.2 0-.4 0-.6 0-1-.9-2-2-2s-2 .9-2 2v.6h-24.7v-.1c0-.2 0-.4 0-.6 0-1-.9-2-2-2s-2 .9-2 2v.8c-4.6 0-8.4 3.8-8.4 8.4v7.7c-.1.3-.2.5-.2.8-.6 4.3-1.6 8.6-3 12.7-.7 1.9-1.5 3.9-2.4 5.7-.8 1.7-.7 3.6.3 5.1s2.6 2.4 4.4 2.4h1.1c.9 3.7 4.2 6.4 8.2 6.4h32.4c4.6 0 8.4-3.8 8.4-8.4v-32.5c0-4.6-3.6-8.2-8.1-8.4zm-32.8 4v.4c0 1 .9 2 2 2s2-.9 2-2c0-.1 0-.3 0-.4h24.8v.6c0 1 .9 2 2 2s2-.9 2-2c0-.2 0-.4 0-.6 2.3.2 4.1 2.1 4.1 4.4v4.8c-.1 0-.3 0-.4 0h-40.9v-4.8c0-2.5 2-4.4 4.4-4.4zm-10.3 34.3c-.2-.4-.3-.8-.1-1.2.9-2 1.8-4 2.5-6.1 1.5-4.4 2.6-8.9 3.2-13.5 0-.1.1-.2.2-.2h40.9s.1 0 .2.1c0 0 .1.1.1.2-.5 4.5-1.5 8.9-2.9 13.1-.7 2.1-1.6 4.2-2.6 6.3-.6 1.2-1.9 2-3.3 2h-37.1c-.5-.2-.9-.4-1.1-.7zm42.8 6.9h-32.5c-1.7 0-3.1-1-3.9-2.4h31.7c2.9 0 5.6-1.7 6.9-4.3.8-1.6 1.5-3.3 2.1-5v7.3c.1 2.4-1.9 4.4-4.3 4.4z"/></svg></span>
+    <dt class="article__fact-label">Year</dt>
+    <dd class="article__fact-value">2020 &ndash; 2022</dd>
+  </div>
+  <div class="article__fact">
+    <span class="article__fact-icon"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M94,28a2.55,2.55,0,0,0-2.15-.46L82.26,30C78.72,29.8,67.43,25.46,61,22.7l-.13-.05c-8.54-3.07-15.93-2.38-22.11,2-8.22-2.81-18.75,3.12-22,5.15L8.12,27.58A2.49,2.49,0,0,0,5,30V65a2.5,2.5,0,0,0,2.5,2.5h5.31L35.54,85.42A7.5,7.5,0,0,0,47.62,83a7.56,7.56,0,0,0,3.72,1,7.5,7.5,0,0,0,6.89-4.53,7.44,7.44,0,0,0,3.72,1,7.5,7.5,0,0,0,6.88-4.53A7.48,7.48,0,0,0,80,69.21l5.35-1.71H92.5A2.5,2.5,0,0,0,95,65V30A2.48,2.48,0,0,0,94,28Zm-84,5.2,4.47,1.15L12.68,51,11.44,62.5H10ZM74.32,71.16a2.55,2.55,0,0,1-3.54,0l-3.53-3.53L53.11,53.48A2.5,2.5,0,0,0,49.57,57L63.72,71.17a2.5,2.5,0,0,1-3.54,3.53l-3.54-3.54L46,60.55a2.5,2.5,0,1,0-3.54,3.54L53.11,74.7a2.5,2.5,0,1,1-3.54,3.53L39,67.63a2.49,2.49,0,0,0-3.53,0,2.45,2.45,0,0,0-.73,1.76,2.49,2.49,0,0,0,.73,1.77l7.07,7.07a2.51,2.51,0,0,1,0,3.54,2.57,2.57,0,0,1-3.54,0,2.09,2.09,0,0,0-.22-.2L16.31,63.89,18.82,40.7l.73-6.76c3.18-2,9.39-5.09,14.54-5A39.07,39.07,0,0,0,30,34.62a8.63,8.63,0,0,0,2.54,11.47c3.54,2.42,10,4.67,18-2.24L74.32,67.62A2.52,2.52,0,0,1,74.32,71.16Zm3.93-6.63a5.34,5.34,0,0,0-.39-.44l-23.8-23.8c1-1.14,2-2.41,3-3.85A2.5,2.5,0,1,0,53,33.56c-4.44,6.29-11.08,12.85-17.6,8.4a3.61,3.61,0,0,1-1-4.8,28.18,28.18,0,0,1,6.26-7.64,2.11,2.11,0,0,0,.23-.19c5-4,11-4.61,18.28-2,1.89.8,14.48,6.13,21.08,7.4l2.2,28.49ZM90,62.5H87.32L85.15,34.41,90,33.2Z"/></svg></span>
+    <dt class="article__fact-label">Partners</dt>
+    <dd class="article__fact-value">Partner organisation</dd>
+  </div>
+  <div class="article__fact">
+    <span class="article__fact-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m23 11a4 4 0 1 0 -4-4 4 4 0 0 0 4 4zm0-6a2 2 0 1 1 -2 2 2 2 0 0 1 2-2z"/><path d="m9 11a4 4 0 1 0 -4-4 4 4 0 0 0 4 4zm0-6a2 2 0 1 1 -2 2 2 2 0 0 1 2-2z"/><path d="m16 17a4 4 0 1 0 -4-4 4 4 0 0 0 4 4zm0-6a2 2 0 1 1 -2 2 2 2 0 0 1 2-2z"/><path d="m25 12h-2a1 1 0 0 0 0 2h2a3 3 0 0 1 3 3v4h-2a1 1 0 0 0 0 2h3a1 1 0 0 0 1-1v-5a5 5 0 0 0 -5-5z"/><path d="m7 14h2a1 1 0 0 0 0-2h-2a5 5 0 0 0 -5 5v5a1 1 0 0 0 1 1h3a1 1 0 0 0 0-2h-2v-4a3 3 0 0 1 3-3z"/><path d="m18 18h-4a5 5 0 0 0 -5 5v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a5 5 0 0 0 -5-5zm3 9h-10v-4a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3z"/></svg></span>
+    <dt class="article__fact-label">Beneficiaries</dt>
+    <dd class="article__fact-value">Social purpose organisations</dd>
+  </div>
+</dl>
 <h3 class="article__section-heading">Why it matters</h3><p class="article__text">The COVID-19 pandemic has been causing devastating disruption on our society and economy worldwide, which in turn causes impact on the charitable sector. Many nonprofits are struggling to stay afloat when the economic downturn triggers the cancellation of fundraising events as well as a decline in private contributions from individuals who are less inclined or able to give.</p>
 <h3 class="article__section-heading">What we do</h3><p class="article__text">At times like this, however, the local community needs even more support from nonprofits to provide a safety net of various services than ever before. To weather the storm together as a companion, The D. H. Chen Foundation (“the Foundation”) initiated Project Fuel (“the Project”) which provides emergency financial support to its selected Hong Kong’s small-sized, non-subvented nonprofits (“the Awardees”) in order to maintain their core operations amid this challenging moment.</p>
 <!-- image carousel -->
@@ -458,6 +486,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261014-lockup2"></script>
+  <script src="script.js?v=20261020-c32"></script>
 </body>
 </html>

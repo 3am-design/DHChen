@@ -8316,7 +8316,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .listing__filter-toggle:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 5px; }
 .listing__grid { position: relative; z-index: 1; }
 .article__section-heading { color: var(--c-orange); margin: 40px 0 10px; padding-top: 24px; border-top: var(--rule-width) solid var(--c-rule); }
-.article__main-head + .article__section-heading { margin-top: 30px; }
+.article__main-head + .article__section-heading,
+.article__facts + .article__section-heading { margin-top: 30px; }
 .article__section-heading + .article__text { margin-top: 0; }
 .article__title + .article__tags { margin-top: 22px; }
 .article__related-category {
@@ -8685,7 +8686,10 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
     inset: auto;
     top: 50%; left: 50%;
     width: 63px; height: 63px;
-    transform: translate(-50%, -50%);
+    /* centred with margins, not translate(-50%,-50%): the hover's `scale`
+       is applied around the box before a transform moves it, which made
+       the disc grow out of its bottom-right corner. */
+    margin: -31.5px 0 0 -31.5px;
   }
   .nav--v3:not(.nav--scrolled) .nav__lang { order: 1; display: block; }
   .nav--v3 .nav__search-btn--stacked { display: none !important; }
@@ -9150,7 +9154,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
    .divider--dashed    dashed  — an aside or a change of register
    .divider--dots      a row of brand dots — a pause between chapters
    The same styles can be put on any section's top rule with
-   data-divider="dotted|dashed|dots". */
+   data-divider="solid|dotted|dashed|dots" (CMS option; "solid" is the
+   full line, and also what an empty value gives). */
 :root { --dotted-rule: radial-gradient(circle, #ff9a57 1.1px, transparent 1.3px); }
 /* a 2px dot every 8px — a CSS dotted border can't set its own gap */
 .divider { height: 0; margin: 48px 0; border: 0; border-top: var(--rule-width) solid var(--c-rule-solid); }
@@ -9181,8 +9186,10 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .listing__grid .story-card--img-bottom > .story-card__tags { margin-bottom: 0; }
 
 /* ── Approach overview: the two acronyms as short linked lists ── */
-.acronym-list { margin-top: 28px; padding: 0; list-style: none; border-bottom: var(--rule-width) solid var(--c-rule-solid); }
-.acronym-list li { border-top: var(--rule-width) solid var(--c-rule-solid); }
+/* Rows inside a section take the light dotted rule, so the solid rules
+   are left to mark the sections themselves (comments 20.10). */
+.acronym-list { margin-top: 28px; padding: 0 0 2px; list-style: none; background: var(--dotted-rule) left bottom / 8px 2px repeat-x; }
+.acronym-list li { background: var(--dotted-rule) left top / 8px 2px repeat-x; }
 .acronym-list__row { display: grid; grid-template-columns: 90px minmax(0, 1fr); align-items: baseline; gap: 0 clamp(20px, 2vw, 40px); padding: 18px 0; }
 .acronym-list__letter { color: var(--c-orange); }
 .acronym-list__name { transition: color var(--ease); }
@@ -9498,15 +9505,24 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 }
 .content-split__copy > :first-child { margin-top: 0; }
 .content-split__media { position: relative; margin: 0; overflow: hidden; background: var(--c-panel); }
-/* at least square, never wider than its column: when the copy runs taller
-   than the square (tablet widths), the picture grows in height only */
-.content-split__media::before { content: ''; display: block; padding-top: 100%; }
+/* 4:3 landscape (comments 20.10: a quarter shorter than the square it
+   used to be), never wider than its column: when the copy runs taller
+   (tablet widths), the picture grows in height only */
+.content-split__media::before { content: ''; display: block; padding-top: 75%; }
 .content-split__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .content-split--reverse .content-split__media { order: -1; }
 @media (max-width: 767px) {
   .content-split { grid-template-columns: minmax(0, 1fr); }
   .content-split__copy { padding: 28px 24px; }
   .content-split--reverse .content-split__media { order: 0; }
+}
+/* `--stacked` (CMS option): the picture runs the full width of the column
+   on top, a wide 16:7 strip, with the copy on its white plate below. */
+.content-split--stacked { grid-template-columns: minmax(0, 1fr); }
+.content-split--stacked .content-split__media { order: -1; }
+.content-split--stacked .content-split__media::before { padding-top: 43.75%; }
+@media (max-width: 767px) {
+  .content-split--stacked .content-split__media::before { padding-top: 62.5%; }
 }
 
 /* Approach: the opening line in the text-and-picture block is the page's
@@ -9556,11 +9572,10 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 
 
 /* ================================================================
-   21 — ACCESSIBILITY MENU  (display only for now)
+   21 — ACCESSIBILITY MENU
    An icon between 中文 and search opens a small card with two items:
    the text-size instruction (use the browser) and a high-contrast
-   colour switch. Neither changes the site yet; the switch only
-   flips its own state.
+   colour switch (rules at the end of this section).
    ================================================================ */
 .a11y { position: relative; display: none; align-items: center; }
 .a11y__btn {
@@ -9620,3 +9635,185 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 
 /* the lockup is followed straight by the first block, so give it room */
 .acronym { margin-bottom: 28px; }
+
+/* ── Tag page (comments 20.10): a priority, topic or service-user tag
+   opens its own page. Title, what kind of tag it is, a short
+   introduction, then the initiatives that carry it. The filter bar is kept in the
+   markup (it narrows the grid) but not shown. ─────────────────────── */
+.topic-page .listing__filters { display: none; }
+.topic-intros { max-width: 860px; margin: 28px auto clamp(56px, 5vw, 96px); text-align: center; }
+.topic-intro[hidden], .topic-page .listing__crumb[hidden] { display: none; }
+.topic-intro__text { margin: 0; }
+
+/* Initiative page facts: Year, Partners and Beneficiaries, carried over
+   from the current site. They sit under the article title, in the
+   article column; each cell is as wide as its copy, with a short rule
+   between cells. Phones stack them into ruled rows. */
+.article__facts {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 16px 0; min-width: 0; margin: 28px 0 0; padding: 0;
+}
+/* Each cell is as wide as its copy, and the value stays on one line. */
+.article__fact {
+  position: relative; flex: 0 0 auto;
+  display: grid; grid-template-columns: 34px auto;
+  grid-template-areas: "icon label" "icon value";
+  align-items: center; align-content: center; column-gap: 14px; row-gap: 2px;
+  padding: 0 clamp(20px, 2.4vw, 40px);
+}
+.article__fact:first-child { padding-left: 0; }
+/* a short rule between cells, the height of the icon rather than the cell */
+.article__fact + .article__fact::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  width: var(--rule-width); height: 34px; translate: 0 -50%;
+  background: var(--c-rule-solid);
+}
+.article__fact-icon { grid-area: icon; display: flex; color: var(--c-orange); }
+.article__fact-icon svg { width: 34px; height: 34px; fill: currentColor; }
+/* the calendar and the group read heavier than the handshake: 5% smaller */
+.article__fact:first-child .article__fact-icon svg,
+.article__fact:last-child .article__fact-icon svg { scale: .95; }
+.article__fact-label { grid-area: label; color: var(--c-orange); }
+.article__fact-value { grid-area: value; margin: 0; color: var(--c-black); white-space: nowrap; }
+.article__fact:has(dd:empty) { display: none; }
+/* Laptops: the article column is narrow, so each icon sits above its
+   label and the cells close up, keeping the three on one line. */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .article__fact { grid-template-columns: auto; grid-template-areas: "icon" "label" "value"; padding-inline: 18px; }
+  .article__fact-icon { margin-bottom: 6px; }
+  .article__fact + .article__fact::before { height: 56px; }
+}
+@media (max-width: 767px) {
+  .article__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .article__fact { padding: 12px 0; grid-template-columns: 34px minmax(0, 1fr); }
+  .article__fact-value { white-space: normal; }
+  .article__fact + .article__fact { border-top: var(--rule-width) solid var(--c-rule-solid); }
+  .article__fact + .article__fact::before { content: none; }
+}
+
+/* Article tags are links now: the peach-on-white pill turns orange on
+   hover, and the institute tag takes its institute's outline. */
+a.article__tag { cursor: pointer; text-decoration: none; transition: background-color var(--ease), color var(--ease); }
+a.article__tag:hover, a.article__tag:focus-visible { background: var(--c-orange); color: var(--c-white); }
+.article__tag.article__tag--inst {
+  background: transparent; color: var(--cat, var(--c-orange));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--c-orange)) 45%, transparent);
+}
+.article__tag.article__tag--inst:hover, .article__tag.article__tag--inst:focus-visible {
+  background: color-mix(in srgb, var(--cat, var(--c-orange)) 10%, transparent);
+  color: var(--cat, var(--c-orange));
+}
+
+/* Cards without a photo (text / logo) keep a photo card's height even when
+   no photo card shares their row, so a filtered list or a tag page with
+   only these cards no longer shrinks them. The floor is the photo a card
+   in this grid would carry (one column's width at 420 × 289, plus the 24px
+   under it) and a typical card's copy; it is a minimum, so in a row with
+   photo cards the row height is unchanged. */
+:has(> .listing__grid) { container-type: inline-size; }
+.listing__grid { --cols: 4; --card-copy: 290px; }
+@media (max-width: 1679px) { .listing__grid { --card-copy: 352px; } }
+@media (max-width: 1279px) { .listing__grid { --cols: 3; } }
+@media (max-width: 899px)  { .listing__grid { --cols: 2; --card-copy: 315px; } }
+@media (max-width: 599px)  { .listing__grid { --cols: 1; } }
+.listing__grid .story-card--text,
+.listing__grid .story-card--logo {
+  min-height: calc((100cqw - (var(--cols) - 1) * var(--grid-gap)) / var(--cols) * 289 / 420 + 24px + var(--card-copy) / var(--zoom));
+}
+/* One column (phones): cards stack, so there is no row to keep level and
+   the floor would only leave an empty plate; the card fits its content. */
+@media (max-width: 599px) {
+  .listing__grid .story-card--text, .listing__grid .story-card--logo { min-height: 0; }
+}
+
+/* Homepage and spotlight card tags take the listing cards' hover: orange
+   pill, white text (institute tags keep their own outline hover). */
+.card-v3__tags li[data-href]:not(.card-v3__tag--inst):not(.tag-more):hover,
+.spotlight__tags li[data-href]:not(.spotlight__tag--inst):not(.tag-more):hover {
+  background: var(--c-orange); color: var(--c-white);
+}
+.card-v3__tags li, .spotlight__tags li { transition: background-color var(--ease), color var(--ease); }
+
+/* Text-and-picture block: once the block itself is too narrow to give the
+   picture a landscape half (under 900px wide, which the reading column
+   reaches on laptops and tablets as well as phones), it stacks, the
+   picture on top at 16:9 and the copy on its plate below, instead of
+   squeezing the picture into a portrait. Priority blocks keep their own
+   layout. */
+:has(> .content-split) { container-type: inline-size; }
+@container (max-width: 899px) {
+  .content-split:not(.priority-block) { grid-template-columns: minmax(0, 1fr); }
+  .content-split:not(.priority-block) .content-split__media { order: -1; }
+  .content-split:not(.priority-block) .content-split__media::before { padding-top: 56.25%; }
+}
+
+/* Initiative head: the tags and the facts band need more than the 900px
+   title measure, so the head widens to 1240px while the title keeps its
+   900px; on desktop the tags stay on one line. */
+.article:has(.article__facts) .article__head { max-width: 1240px; }
+.article:has(.article__facts) .article__head .article__title { max-width: 900px; margin-inline: auto; }
+@media (min-width: 1280px) {
+  .article:has(.article__facts) .article__head .article__tags { flex-wrap: nowrap; }
+}
+
+
+/* ── High-contrast colours (accessibility switch, html.hc) ──────────
+   The brand orange #FF6900 is 2.9:1 on white and 2.6:1 on the peach
+   page: below WCAG AA for text (4.5:1) and UI (3:1). With the switch on,
+   everything drawn in the orange (text, buttons, tags, rules made from
+   it) takes #B84D00 instead: 5.1:1 on white, 4.7:1 on the peach, and
+   white text on it 5.1:1. Logos, illustrations and the colour bar keep
+   their artwork colours (logos are exempt; the rest is decorative). */
+html.hc {
+  --c-orange: #b84d00;
+  --cat-education-excellence: #b84d00;
+  /* Institute colours used as tag text, each darkened just past 4.5:1 on
+     the peach page in its own hue (Impact Strategy's purple already
+     passes at 8.0:1). Above & Beyond's pink would turn red at that
+     depth, so it becomes a muted rose instead. */
+  --cat-wellbeing:      #297e3e;   /* 3.8 → 4.6:1 */
+  --cat-mindful-living: #287879;   /* 2.7 → 4.7:1 */
+  --cat-above-beyond:   #b8475a;   /* 2.3 → 4.7:1 */
+  --cat-dventures:      #79649c;   /* 4.1 → 4.7:1 */
+  /* Rules and dotted lines: the same strength of the brown as the pale
+     oranges they replace (#FFC49C is the orange at 39% on white, #FF9A57
+     at 66%; the rgba rules keep their alpha). */
+  --c-rule: rgba(184,77,0,.322);
+  --c-rule-solid: #e3ba9c;
+  --c-rule-strong: rgba(184,77,0,.5);
+  --dotted-rule: radial-gradient(circle, #d08a57 1.1px, transparent 1.3px);
+}
+html.hc .content-page, html.hc .partnership-page, html.hc .people { --rule-dark: #d08a57; }
+html.hc .ventures__rule { border-top-color: rgba(184,77,0,.5); }
+@media (max-width: 1023px) {
+  html.hc .ventures__col + .ventures__col { border-top-color: rgba(184,77,0,.5); }
+}
+/* black icons tinted orange on hover: the same filter, darkened to
+   #B84D00. Scoped like the rules they replace, so the search icon that
+   turns white on the orange disc stays white. */
+html.hc .nav__hamburger:hover img,
+html.hc .footer__social-link:hover img {
+  filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
+          brightness(102%) contrast(104%) brightness(72%);
+}
+@media (min-width: 768px) {
+  html.hc .nav--v3.nav--scrolled .nav__search-btn:hover img,
+  html.hc .nav--v3.nav--scrolled .nav__hamburger:hover img {
+    filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
+            brightness(102%) contrast(104%) brightness(72%);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  html.hc .nav--v3:not(.nav--scrolled) .nav__search-btn:hover img,
+  html.hc .nav--v3:not(.nav--scrolled) .nav__hamburger:hover img {
+    filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
+            brightness(102%) contrast(104%) brightness(72%);
+  }
+}
+@media (max-width: 767px) {
+  html.hc .nav--v3 .nav__search-btn:hover img,
+  html.hc .nav--v3 .nav__hamburger:hover img {
+    filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
+            brightness(102%) contrast(104%) brightness(72%);
+  }
+}

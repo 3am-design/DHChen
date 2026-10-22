@@ -1422,7 +1422,7 @@ window.__pageZoom = function () {
     /* no `.article__crumb` — the article's breadcrumb *is* a `.listing__crumb`
        (it carries both classes) and is already covered above */
     ['.article__title', 100],
-    ['.article__subtitle', 200], ['.article__tags', 300],
+    ['.article__subtitle', 200], ['.article__tags', 300], ['.article__facts', 360],
     /* every block of the article in turn — copy, figures, the pull quote,
        the video, the highlight panel, the testimonial. Taking the children
        rather than naming each class means anything added to the article
@@ -2142,7 +2142,7 @@ window.__pageZoom = function () {
     ring.setAttribute('cy', '50');
     ring.setAttribute('r', '49.5');
     ring.setAttribute('fill', 'none');
-    ring.setAttribute('stroke', '#ff6900');
+    ring.style.stroke = 'var(--c-orange)';   /* follows the high-contrast switch */
     /* plain scaling stroke draws reliably as a full circle (non-scaling-stroke
        broke the dash → partial arcs). Width is set per-circle below so it
        renders a constant ~1px at every circle size. */
@@ -2482,6 +2482,38 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
+   10a. Tag page — a priority, topic or service-user tag anywhere on the
+   site opens Topic.html with ?priority= / ?topics= / ?users=. The page
+   shows that tag's title and introduction, centred, over the cards that
+   carry it. Runs before 10b so that, when the address names no known tag,
+   the default one is written into it first and the grid is narrowed the
+   same way.
+   ---------------------------------------------------------------- */
+(function () {
+  const intros = Array.prototype.slice.call(document.querySelectorAll('.topic-intro'));
+  if (!intros.length) return;
+  const norm = function (t) { return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); };
+  const params = new URLSearchParams(window.location.search);
+  const intro = intros.find(function (el) {
+    return params.getAll(el.dataset.kind).some(function (v) { return norm(v) === norm(el.dataset.topic); });
+  }) || intros.find(function (el) { return el.dataset.kind === 'topics'; });
+  if (!params.getAll(intro.dataset.kind).length) {
+    params.set(intro.dataset.kind, intro.dataset.topic);
+    history.replaceState(null, '', window.location.pathname + '?' + params.toString());
+  }
+  intro.hidden = false;
+  const title = document.getElementById('topic-title');
+  const parent = document.getElementById('topic-parent');
+  if (title) title.textContent = intro.dataset.topic;
+  if (parent) parent.textContent = intro.dataset.parent;
+  document.querySelectorAll('[data-crumb]').forEach(function (nav) {
+    if (nav.classList.contains('listing__crumb')) nav.hidden = nav.dataset.crumb !== intro.dataset.crumb;
+  });
+  document.title = intro.dataset.topic + ' — The D. H. Chen Foundation';
+})();
+
+
+/* ----------------------------------------------------------------
    10b. Story grids — real filters, clear state and twelve-card pagination.
 
    Category and tag data are read from the card DOM. No year is inferred:
@@ -2535,9 +2567,11 @@ window.__pageZoom = function () {
     const empty = document.createElement('p');
     empty.className = 'listing__empty';
     empty.hidden = true;
+    /* the tag page has no filters to adjust, so it says so plainly */
+    const onTagPage = document.body.classList.contains('topic-page');
     empty.textContent = isTC
-      ? '暫時沒有符合所選條件的內容，請調整篩選或清除全部。'
-      : 'No items match those filters. Adjust a selection or clear all.';
+      ? (onTagPage ? '暫時未有相關項目。' : '暫時沒有符合所選條件的內容，請調整篩選或清除全部。')
+      : (onTagPage ? 'There are no initiatives under this tag yet.' : 'No items match those filters. Adjust a selection or clear all.');
     grid.insertAdjacentElement('afterend', empty);
 
     const live = document.createElement('span');
@@ -4430,13 +4464,24 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
-   Accessibility menu (display only). The icon opens a small card with
-   the text-size note and the high-contrast switch. The switch only
-   flips its own state: nothing on the site changes yet.
+   Accessibility menu. The icon opens a small card with the text-size
+   note and the high-contrast switch. The switch puts `hc` on <html>,
+   which turns the brand orange into a darker #B84D00 that meets WCAG AA
+   for text (see style.css §21), and remembers the choice; an inline
+   script in each page's <head> applies it before first paint.
    ---------------------------------------------------------------- */
 (function () {
   const menus = Array.prototype.slice.call(document.querySelectorAll('[data-a11y]'));
   if (!menus.length) return;
+  const KEY = 'dhc-contrast';
+  function setContrast(on) {
+    document.documentElement.classList.toggle('hc', on);
+    /* keep every copy of the switch (bar + phone menu) in step */
+    document.querySelectorAll('.a11y__switch').forEach(function (s) { s.setAttribute('aria-checked', String(on)); });
+    try { if (on) localStorage.setItem(KEY, '1'); else localStorage.removeItem(KEY); } catch (e) {}
+  }
+  /* the switch shows the state the page opened in */
+  setContrast(document.documentElement.classList.contains('hc'));
   function close(menu, restore) {
     const btn = menu.querySelector('.a11y__btn');
     menu.querySelector('.a11y__panel').hidden = true;
@@ -4455,9 +4500,7 @@ window.__pageZoom = function () {
       btn.setAttribute('aria-expanded', String(open));
     });
     sw.addEventListener('click', function () {
-      const on = sw.getAttribute('aria-checked') !== 'true';
-      /* keep every copy of the switch (bar + phone menu) in step */
-      document.querySelectorAll('.a11y__switch').forEach(function (s) { s.setAttribute('aria-checked', String(on)); });
+      setContrast(sw.getAttribute('aria-checked') !== 'true');
     });
     menu.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !panel.hidden) { e.stopPropagation(); close(menu, true); }

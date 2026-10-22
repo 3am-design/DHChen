@@ -5,6 +5,12 @@
 <html lang="zh-Hant" class="lp-boot">
 <head>
   <meta charset="UTF-8" />
+  <!-- Preview only: keep search engines out and ask for the preview
+       password (gate.js). Remove both at launch. -->
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <script src="gate.js?v=20261022-2"></script>
+  <!-- High-contrast colours: applied before first paint (see script.js). -->
+  <script>try{if(localStorage.getItem('dhc-contrast')==='1')document.documentElement.classList.add('hc')}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Force the iOS Safari status bar / bottom toolbar to a fixed white instead
        of sampling page content (which flips between peach hero and white nav as
@@ -19,8 +25,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css?v=20261014-lockup2" />
-  <link rel="stylesheet" href="typography.css?v=20261014-lockup2" />
+  <link rel="stylesheet" href="style.css?v=20261020-c32" />
+  <link rel="stylesheet" href="typography.css?v=20261020-c32" />
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <!-- …and released again for anyone without JS, who never gets the intro. -->
   <noscript><style>
@@ -318,7 +324,7 @@
     <section class="ventures" id="ventures">
       <div class="wrap">
 
-        <div class="ventures__intro"><h2>前瞻項目</h2><p>我們發起不同項目，透過人才發展、生態圈建設及社區影響，推動使命實踐。</p></div>
+        <div class="ventures__intro"><h2>基金會主導項目</h2><p>我們發起不同項目，透過人才發展、生態圈建設及社區影響，推動使命實踐。</p></div>
 <div class="ventures__grid">
 
           <div class="ventures__col">
@@ -533,6 +539,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261014-lockup2"></script>
+  <script src="script.js?v=20261020-c32"></script>
 </body>
 </html>

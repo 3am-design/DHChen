@@ -33,6 +33,10 @@ wide, they render at 42.9px and 35.1px respectively.
 - The homepage hero and opening motto retain their existing display typography
   and animation. Being / Becoming / Belonging and the landing heading
   “Compassion is not only a value. It is a way of …” use the page-title tier.
+- Homepage banner description: card-title size (30 / 28 / 26px) in Fira
+  Sans 300, balanced over three lines on desktop (20px on phones). The
+  D'Ventures / Scholarship copy is 18px, one step above body.
+- Tag page (`Topic.html`) introduction: introduction tier, centred.
 - VALUE / CARE acronyms (Approach, Practices, Priorities): one line at the
   section-title tier, the acronym orange and its suffix ("‑led Practices")
   black. On phones the line shrinks fluidly (24–36px) so it stays on one
