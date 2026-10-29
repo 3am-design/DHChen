@@ -2811,11 +2811,13 @@ body.home-v3 .search-overlay__close span { width: 22px; }
    A category with no entry here falls back to orange, so a new one is never
    invisible — it just has not been given its colour yet. */
 :root {
-  --cat-education-excellence: #ff6900;   /* colour bar 1 */
-  --cat-wellbeing:            #2e8d46;   /* colour bar 2 */
-  --cat-mindful-living:       #36a4a5;   /* colour bar 4 */
-  --cat-above-beyond:         #e88793;   /* colour bar 5 */
-  --cat-impact-strategy:      #573c83;   /* colour bar 6 */
+  /* comments 27.10: IML turquoise, IWB green, IEE pink, IIS deep soil
+     yellow, ABI purple */
+  --cat-education-excellence: #e88793;   /* pink (colour bar 5) */
+  --cat-wellbeing:            #2e8d46;   /* green (colour bar 2) */
+  --cat-mindful-living:       #36a4a5;   /* turquoise (colour bar 4) */
+  --cat-above-beyond:         #573c83;   /* purple (colour bar 6) */
+  --cat-impact-strategy:      #b8892a;   /* deep soil yellow */
   --cat-dventures:            #816da2;   /* stands in for the bar's yellow */
 }
 .story-card__category {
@@ -8184,7 +8186,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 
 /* Sticky cards retain a readable heading as the following card folds over.
    Flow and full copy stay intact without JS and under reduced motion. */
-@media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+@media (min-height: 560px) and (prefers-reduced-motion: no-preference) {
   :is(.home-v3, .journey-host) .journey--stack .journey__step {
     position: sticky;
     top: calc(var(--journey-top, 96px) / var(--zoom));
@@ -8685,11 +8687,11 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .nav--v3:not(.nav--scrolled) .nav__actions .nav__search-btn::before {
     inset: auto;
     top: 50%; left: 50%;
-    width: 63px; height: 63px;
+    width: 60px; height: 60px;   /* 5% under the first 63 (comments 27.10) */
     /* centred with margins, not translate(-50%,-50%): the hover's `scale`
        is applied around the box before a transform moves it, which made
        the disc grow out of its bottom-right corner. */
-    margin: -31.5px 0 0 -31.5px;
+    margin: -30px 0 0 -30px;
   }
   .nav--v3:not(.nav--scrolled) .nav__lang { order: 1; display: block; }
   .nav--v3 .nav__search-btn--stacked { display: none !important; }
@@ -9239,7 +9241,7 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 
 /* ── Home: as the next card folds over, the covered card's motif
    fades with its copy, so the stack never shows three sets of dots ── */
-@media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+@media (min-height: 560px) and (prefers-reduced-motion: no-preference) {
   :is(.home-v3, .journey-host) .journey--stack .journey__step [data-motion] { filter: opacity(var(--journey-copy-opacity, 1)); }
 }
 
@@ -9766,14 +9768,14 @@ a.article__tag:hover, a.article__tag:focus-visible { background: var(--c-orange)
    their artwork colours (logos are exempt; the rest is decorative). */
 html.hc {
   --c-orange: #b84d00;
-  --cat-education-excellence: #b84d00;
   /* Institute colours used as tag text, each darkened just past 4.5:1 on
-     the peach page in its own hue (Impact Strategy's purple already
-     passes at 8.0:1). Above & Beyond's pink would turn red at that
-     depth, so it becomes a muted rose instead. */
+     the peach page in its own hue. Education Excellence's pink would
+     turn red at that depth, so it becomes a muted rose instead. */
   --cat-wellbeing:      #297e3e;   /* 3.8 → 4.6:1 */
   --cat-mindful-living: #287879;   /* 2.7 → 4.7:1 */
-  --cat-above-beyond:   #b8475a;   /* 2.3 → 4.7:1 */
+  --cat-education-excellence: #b8475a; /* pink 2.3 → 4.7:1 (rose) */
+  --cat-impact-strategy: #86641a;  /* soil yellow 2.9 → 5.0:1 */
+  /* Above & Beyond is now the purple, which passes as it is (8.0:1) */
   --cat-dventures:      #79649c;   /* 4.1 → 4.7:1 */
   /* Rules and dotted lines: the same strength of the brown as the pale
      oranges they replace (#FFC49C is the orange at 39% on white, #FF9A57
@@ -9784,6 +9786,10 @@ html.hc {
   --dotted-rule: radial-gradient(circle, #d08a57 1.1px, transparent 1.3px);
 }
 html.hc .content-page, html.hc .partnership-page, html.hc .people { --rule-dark: #d08a57; }
+/* The opening's dots, row and plane are artwork, and the plane is carved
+   into the logo's seal, which keeps #FF6900: in the darker orange the
+   block showed as a brown slab over the seal while it was wiped away. */
+html.hc .opening__stage { --c-orange: #ff6900; }
 html.hc .ventures__rule { border-top-color: rgba(184,77,0,.5); }
 @media (max-width: 1023px) {
   html.hc .ventures__col + .ventures__col { border-top-color: rgba(184,77,0,.5); }
@@ -9816,4 +9822,771 @@ html.hc .footer__social-link:hover img {
     filter: invert(46%) sepia(89%) saturate(3098%) hue-rotate(359deg)
             brightness(102%) contrast(104%) brightness(72%);
   }
+}
+
+/* ── Main menu markers (comments 26.10) ──────────────────────────────
+   One marker for "this section": a small orange dot under the name, in
+   orange, for the page you are on and for the section whose menu is
+   open (the same dot as the home page's All / Initiatives tabs). It
+   replaces the underline and the leading dot. Hover only turns the name
+   orange. While a menu is open, only that section shows the dot. The
+   section title inside the open menu is removed. */
+@media (min-width: 1024px) {
+  .nav--v3 .nav__link,
+  .nav--v3 .nav__link:hover,
+  .nav--v3 .nav__link--mega-active,
+  .nav--v3 .nav__link--active { background-size: 0% 1px; }
+  .nav--v3 .nav__link { position: relative; }
+  .nav--v3 .nav__link:hover { color: var(--c-orange); }
+  .nav--v3 .nav__link--active,
+  .nav--v3 .nav__link--mega-active { color: var(--c-orange); }
+  .nav--v3 .nav__link::after,
+  .inner-v3 .nav--v3 .nav__link::after {
+    content: ''; display: block; position: absolute;
+    left: 50%; bottom: -9px; width: 5.5px; height: 5.5px; margin-left: -2.75px;
+    border-radius: 50%; background: var(--c-orange);
+    transform: none; scale: 0; transition: scale var(--ease);
+  }
+  .nav--v3 .nav__link--active::after,
+  .nav--v3 .nav__link--mega-active::after,
+  .inner-v3 .nav--v3 .nav__link--active::after,
+  .inner-v3 .nav--v3 .nav__link--mega-active::after { display: block; scale: 1; }
+  .inner-v3 .nav--v3 .nav__link--active::before { scale: 0; }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active) { color: var(--c-grey); }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after,
+  .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after { scale: 0; }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active):hover { color: var(--c-orange); }
+
+  .nav--v3 .nav__mega-panel::before,
+  .nav--v3 .nav__mega-panel[data-mega-panel="work"]::before { content: none; }
+  .nav--v3 .nav__mega-links { top: 40px; }
+}
+
+/* Home banner (comments 26.10): the description sits on the right of
+   the grid (columns 6–12) and the #Compassion lockup stands above it, on
+   its left edge, so the headline owns the left. Below 1024 the two stack
+   on the left, lockup first, and the lockup is drawn larger. */
+.home-v3 .hero-v3__mark { order: -1; }
+@media (min-width: 1024px) {
+  .home-v3 .hero-v3__foot {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap); row-gap: clamp(18px, 1.6vw, 30px);
+    align-items: end;
+  }
+  /* from the middle of the colour bar's third (yellow-green) segment:
+     the bar's six segments are two columns each, so its middle is
+     column 6's edge */
+  /* the bar's segments have no gutters, so that middle sits half a
+     gutter before column 6: both pull back by that much */
+  .home-v3 .hero-v3__mark { grid-column: 6 / 13; grid-row: 1; justify-self: start; width: clamp(250px, 15vw, 300px); margin-left: calc(var(--grid-gap) / -2); }
+  /* …and stops at the middle of the purple segment (column 11's edge),
+     so the lines run long and wrap a few words lower */
+  .home-v3 .hero-v3__body { grid-column: 6 / 12; grid-row: 2; width: auto; max-width: none; margin-left: calc(var(--grid-gap) / -2); }
+}
+@media (max-width: 1023px) {
+  .home-v3 .hero-v3__mark { width: clamp(240px, 34vw, 300px); }
+}
+
+/* Home, Foundation-led Initiatives and Partner with us (comments 26.10):
+   the short orange line sits between each section title and its text,
+   the same on both, and the long line above Partner with us is gone (its
+   space is kept). */
+.home-v3 .ventures__intro { padding-bottom: 0; }
+.home-v3 .ventures__intro::after { content: none; }
+.home-v3 .ventures__intro h2::after,
+.home-v3 .funding__title::after {
+  content: ''; display: block;
+  width: calc(100px / var(--zoom)); height: calc(2px / var(--zoom));
+  margin: 24px auto 0; background: var(--c-orange);
+}
+.home-v3 .ventures__intro h2 { margin-bottom: 24px; }
+.home-v3 .funding__text { margin-top: 24px; }
+.home-v3 .ventures__rule { display: none; }
+.home-v3 .funding { padding-top: 160px; }
+@media (max-width: 1023px) { .home-v3 .funding { padding-top: 120px; } }
+@media (max-width: 767px)  { .home-v3 .funding { padding-top: 96px; } }
+
+/* Breadcrumbs (comments 26.10): shown only on phones, and on the detail
+   pages a card opens (initiative / story / learning articles), where
+   the trail back is useful. Hidden on every other page from 768px up. */
+@media (min-width: 768px) {
+  body:not(.article-page):not(.story-page) .listing__crumb { display: none; }
+}
+
+/* ── Lines (comments 26.10) ─────────────────────────────────────────
+   Two kinds only:
+   · section dividers, between one section and the next: a solid 2px line
+     in the half-strength orange (as on Values, "Where Our Values Begin");
+   · lines inside a block's content (rows of a list, questions, results):
+     the dotted rule, a 2px dot every 8px.
+   Controls (filters, menus, the search field) and the vertical rails
+   keep their thin solid lines. */
+[data-divider]:not([data-divider="dotted"]):not([data-divider="dashed"]):not([data-divider="dots"]),
+.divider:not(.divider--dotted):not(.divider--dashed):not(.divider--dots) {
+  border-top: var(--rule-width-strong) solid var(--c-rule-strong);
+}
+.article__section-heading,
+.content-callout, .partners, .legal__also {
+  border-top: var(--rule-width-strong) solid var(--c-rule-strong);
+}
+.spotlight { border-bottom: var(--rule-width-strong) solid var(--c-rule-strong); }
+.content-jump, .content-guidance {
+  border-top: var(--rule-width-strong) solid var(--c-rule-strong);
+  border-bottom: var(--rule-width-strong) solid var(--c-rule-strong);
+}
+.content-callout { border-top-color: var(--c-rule-strong); }
+.content-jump, .content-guidance { border-top-color: var(--c-rule-strong); border-bottom-color: var(--c-rule-strong); }
+
+/* rows: a dotted rule on top (and one under the last row) */
+.practice, .content-accordion, .content-faq > .content-accordion,
+.content-faq > .content-accordion:first-child,
+.strategy + .strategy, .content-overview__item, .funding-forms__item,
+.career-job, .career-job__detail, .article__related-item {
+  border-top: 0;
+  background-image: var(--dotted-rule);
+  background-position: left top; background-size: 8px 2px; background-repeat: repeat-x;
+}
+.practice-list, .content-accordion:last-child,
+.content-faq > .content-accordion:last-child {
+  border-bottom: 0;
+  background-image: var(--dotted-rule), var(--dotted-rule);
+  background-position: left top, left bottom; background-size: 8px 2px, 8px 2px; background-repeat: repeat-x, repeat-x;
+}
+.practice-list { background-image: var(--dotted-rule); background-position: left bottom; background-size: 8px 2px; background-repeat: repeat-x; }
+/* rows ruled underneath */
+.connect__item, .s-result, .people-directory__item, .person-trigger--compact {
+  border-bottom: 0;
+  background-image: var(--dotted-rule);
+  background-position: left bottom; background-size: 8px 2px; background-repeat: repeat-x;
+}
+
+/* Main menu on the right (comments 26.10): the four sections sit just
+   before 中文 / accessibility / search, in the top bar and the sticky bar,
+   and the dropdown card hangs from the right edge under them. */
+@media (min-width: 1024px) {
+  .nav--v3:not(.nav--scrolled) .nav__inner,
+  .nav--v3.nav--scrolled .nav__inner,
+  .nav--v3.nav--scrolled.nav--mega-open .nav__inner {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    /* clearly more than the gap between the menu items, so the small
+       utilities read as their own group (comments 27.10) */
+    column-gap: clamp(56px, 5.2vw, 100px);
+  }
+  .nav--v3:not(.nav--scrolled) .nav__menu,
+  .nav--v3.nav--scrolled .nav__menu { justify-self: end; justify-content: flex-end; }
+  .nav--v3 .nav__mega,
+  .nav--v3.nav--mega-open .nav__mega,
+  .nav--v3.nav--scrolled .nav__mega {
+    left: auto;
+    right: calc(var(--nav-overhang) + var(--gm));
+    transform: none;
+  }
+}
+
+/* Menu art (comments 26.10): the three sections that match the journey
+   carry its motifs: Approach the Being dots, Impact the Becoming row,
+   Partnership the Belonging plane. About traces the outline of the seal.
+   They sit in the right half of the card and replay on every open. */
+.nav__mega-motion { position: absolute; pointer-events: none; }
+.nav__mega-motion.is-loop-reset .dots__dot,
+.nav__mega-motion.is-loop-reset .dotrow__dot,
+.nav__mega-motion.is-loop-reset .lines__line { transition: none !important; }
+.nav__mega-motion--dots {
+  right: 60px; top: 50%; translate: 0 -50%;
+  width: 300px; max-width: 46%; aspect-ratio: 618 / 552;
+}
+.nav__mega-motion--dotrow {
+  right: 42px; top: 50%; translate: 0 -50%;
+  width: 360px; max-width: 52%; height: 40px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%, #000 58%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%, #000 58%, transparent 100%);
+}
+.nav__mega-motion--dotrow .dotrow__dot { top: 12px; width: 2.4%; }
+.nav__mega-motion--lines {
+  right: 42px; top: 50%; translate: 0 -50%;
+  width: 360px; max-width: 52%; height: 240px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.18) 0%, #000 45%, #000 55%, rgba(0,0,0,.18) 100%);
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,.18) 0%, #000 45%, #000 55%, rgba(0,0,0,.18) 100%);
+}
+.nav__mega-motion--lines .lines__line { transform-origin: 0 50%; }
+.nav__mega-motion--lines .lines__line--rtl { transform-origin: 100% 50%; }
+/* the seal's outline: a little under the motifs' 2px (0.4 units, about
+   1.6px at its drawn size) so the fine strokes of the character stay
+   open; drawn in the brand orange, which follows high contrast */
+.nav__mega-panel[data-mega-panel="about"] .nav__mega-art path { stroke: var(--c-orange); }
+@media (min-width: 1024px) {
+  .nav--v3 .nav__mega-panel[data-mega-panel="about"] .nav__mega-art {
+    width: 153px; max-width: 27%; max-height: 270px;   /* 10% under the first cut (comments 27.10) */
+    left: auto; right: 110px; bottom: auto; top: 50%; translate: 0 -50%;
+  }
+}
+
+/* ── VALUE / CARE cards (comments 26.10) ────────────────────────────
+   The lists become white cards: the letter large in orange, then the
+   title and a one-line subtitle. They rise in one after another (script
+   reveal list). Approach: VALUE takes two rows (three, then two filling
+   the width), CARE one row of four; each card opens its section on
+   Practices / Priorities. Practices: the same cards, each still opening
+   in place to show its full text. */
+.acronym-cards {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--grid-gap); margin: 32px 0 0; padding: 0; list-style: none;
+}
+.acronym-cards--value .acronym-card:nth-child(-n+3) { grid-column: span 2; }
+.acronym-cards--value .acronym-card:nth-child(n+4) { grid-column: span 3; }
+.acronym-cards--care { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* four across only where each card still gets a readable width */
+@media (min-width: 1600px) { .acronym-cards--care { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.acronym-card { display: flex; }
+.acronym-card__link {
+  display: flex; flex-direction: column; width: 100%;
+  padding: clamp(24px, 2.2vw, 36px) clamp(22px, 2vw, 32px) clamp(26px, 2.4vw, 40px);
+  background: var(--c-white); color: var(--c-black); text-decoration: none;
+  transition: translate var(--ease), box-shadow var(--ease);
+}
+.acronym-card__letter { color: var(--c-orange); margin-bottom: 18px; }
+.acronym-card__title { display: block; transition: color var(--ease); }
+.acronym-card__desc { display: block; margin-top: 12px; color: var(--c-black); }
+.acronym-card__link:hover { translate: 0 -4px; box-shadow: 0 10px 24px rgba(184, 77, 0, .08); }
+.acronym-card__link:hover .acronym-card__title { color: var(--c-orange); }
+.acronym-card__link:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 3px; }
+.acronym-card .acronym-letter { color: inherit; }
+
+/* Practices: the five accordions as cards. Each card is the practice's
+   button; its full text opens as a white panel across the whole row
+   directly under that row of cards (the practice wrapper is
+   `display: contents`, so button and panel are placed on the grid
+   separately). One practice is open at a time. */
+.practice-list--cards {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: var(--grid-gap); row-gap: 0;
+  margin-top: 40px; background: none;
+}
+.practice-list--cards .practice { display: contents; }
+.practice-list--cards .practice__head {
+  display: flex; margin-bottom: var(--grid-gap);
+  background: var(--c-white); transition: box-shadow var(--ease), translate var(--ease);
+}
+.practice-list--cards .practice__head:hover { translate: 0 -4px; box-shadow: 0 10px 24px rgba(184, 77, 0, .08); }
+.practice-list--cards .practice.is-open .practice__head { box-shadow: inset 0 -3px 0 var(--c-orange); translate: none; }
+.practice-list--cards .practice.is-open .practice__name { color: var(--c-orange); }
+.practice-list--cards .practice__trigger {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0; height: 100%;
+  padding: clamp(24px, 2.2vw, 36px) clamp(22px, 2vw, 32px) clamp(26px, 2.4vw, 40px);
+}
+.practice-list--cards .practice__num { margin-bottom: 18px; }
+.practice-list--cards .practice__desc { margin-top: 12px; color: var(--c-black); }
+.practice-list--cards .practice__icon { top: clamp(30px, 2.8vw, 46px); right: 22px; translate: none; }
+.practice-list--cards .practice__panel { grid-column: 1 / -1; }
+.practice-list--cards .practice__panel-inner { background: var(--c-white); }
+.practice-list--cards .practice.is-open .practice__panel { margin-bottom: var(--grid-gap); }
+.practice-list--cards .practice__body { padding: clamp(26px, 2.4vw, 40px) clamp(22px, 2vw, 32px); max-width: 980px; }
+/* three cards, their panel, then two cards, their panel */
+.practice-list--cards .practice:nth-child(-n+3) .practice__head { grid-row: 1; grid-column: span 2; }
+.practice-list--cards .practice:nth-child(-n+3) .practice__panel { grid-row: 2; }
+.practice-list--cards .practice:nth-child(n+4) .practice__head { grid-row: 3; grid-column: span 3; }
+.practice-list--cards .practice:nth-child(n+4) .practice__panel { grid-row: 4; }
+
+@media (max-width: 1023px) {
+  .acronym-cards, .acronym-cards--care, .practice-list--cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .acronym-cards .acronym-card, .acronym-cards--value .acronym-card:nth-child(n) { grid-column: auto; }
+  .acronym-cards--value .acronym-card:last-child { grid-column: 1 / -1; }
+  /* two by two, each pair's panel under it, the fifth card full width */
+  .practice-list--cards .practice:nth-child(n) .practice__head { grid-column: auto; }
+  .practice-list--cards .practice:nth-child(-n+2) .practice__head { grid-row: 1; }
+  .practice-list--cards .practice:nth-child(-n+2) .practice__panel { grid-row: 2; }
+  .practice-list--cards .practice:nth-child(n+3):nth-child(-n+4) .practice__head { grid-row: 3; }
+  .practice-list--cards .practice:nth-child(n+3):nth-child(-n+4) .practice__panel { grid-row: 4; }
+  .practice-list--cards .practice:nth-child(5) .practice__head { grid-row: 5; grid-column: 1 / -1; }
+  .practice-list--cards .practice:nth-child(5) .practice__panel { grid-row: 6; }
+}
+@media (max-width: 599px) {
+  .acronym-cards, .acronym-cards--care { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  /* one column: each card with its panel straight under it */
+  .practice-list--cards { grid-template-columns: minmax(0, 1fr); }
+  .practice-list--cards .practice:nth-child(n) .practice__head,
+  .practice-list--cards .practice:nth-child(n) .practice__panel { grid-row: auto; grid-column: 1; }
+  .practice-list--cards .practice__head { margin-bottom: 16px; }
+  .practice-list--cards .practice.is-open .practice__head { margin-bottom: 0; }
+  .practice-list--cards .practice.is-open .practice__panel { margin-bottom: 16px; }
+}
+
+/* Practices rows (comments 26.10): five rows again, the letter at the
+   page-title tier, the practice name in orange like its letter and line,
+   the row centred on the larger letter. */
+.practice-list .practice__trigger { align-items: center; grid-template-columns: clamp(64px, 6vw, 110px) minmax(0, 1fr); }
+.practice-list .practice__name { color: var(--c-orange); }
+.practice-list .practice__body { padding-left: calc(clamp(64px, 6vw, 110px) + clamp(20px, 2vw, 40px)); }
+@media (max-width: 767px) {
+  .practice-list .practice__trigger { grid-template-columns: minmax(0, 1fr); }
+  .practice-list .practice__body { padding-left: 0; }
+}
+.acronym-card__letter { margin-bottom: 14px; }
+
+/* Approach VALUE / CARE cards, second pass (comments 26.10): no subtitle
+   and not links. The letter stands at the top of a taller card and the
+   title, in orange, settles at its foot. */
+.acronym-card__link {
+  justify-content: space-between; gap: 28px;
+  min-height: clamp(220px, 17vw, 300px);
+}
+.acronym-card__letter { margin-bottom: 0; }
+.acronym-card__title { color: var(--c-orange); }
+div.acronym-card__link:hover { translate: none; box-shadow: none; }
+div.acronym-card__link:hover .acronym-card__title { color: var(--c-orange); }
+
+/* Page-end links ("Continue exploring", "Get in touch"; comments 26.10):
+   an orange panel with the title in white and white buttons in place of
+   the ruled row. */
+.longform__cta--titled {
+  padding: clamp(28px, 3vw, 48px) clamp(24px, 3vw, 48px);
+  border-top: 0; background: var(--c-orange);
+}
+.longform__cta--titled .longform__cta-title { color: var(--c-white); }
+.longform__cta--titled .btn-pill {
+  background: var(--c-white); color: var(--c-orange);
+}
+.longform__cta--titled .btn-pill:hover,
+.longform__cta--titled .btn-pill:focus-visible {
+  background: transparent; color: var(--c-white);
+  box-shadow: inset 0 0 0 1.5px var(--c-white);
+}
+.longform__cta--titled .btn-pill:focus-visible { outline: 2px solid var(--c-white); outline-offset: 3px; }
+.partnership__foot {
+  padding: clamp(28px, 3vw, 48px) clamp(24px, 3vw, 48px);
+  background: var(--c-orange);
+}
+.partnership__foot .partnership__foot-text { color: var(--c-white); }
+.partnership__foot .btn-pill,
+.longform__cta--titled .btn-pill { background: var(--c-white); color: var(--c-orange); }
+.partnership__foot .btn-pill:hover,
+.partnership__foot .btn-pill:focus-visible {
+  background: transparent; color: var(--c-white);
+  box-shadow: inset 0 0 0 1.5px var(--c-white);
+}
+/* Partnership page end: the line on the left, the buttons on the right,
+   like "Continue exploring"; stacked on phones */
+.partnership__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px 40px; text-align: left;
+}
+/* on the reading column (it sits in its own .longform__col), full width */
+.partnership__foot { max-width: none; margin: var(--sec-gap) 0 0; }
+.partnership__foot .partnership__foot-text { margin: 0; max-width: 34em; }
+.partnership__foot .partnership__cta { margin-top: 0; justify-content: flex-end; flex-wrap: nowrap; }
+@media (max-width: 767px) {
+  .partnership__foot { flex-direction: column; align-items: flex-start; }
+  .partnership__foot .partnership__cta { justify-content: flex-start; flex-wrap: wrap; }
+}
+
+/* ── How We Fund (copy of 22.10) ────────────────────────────────────
+   The four steps are links to their sections. Each circle lifts and
+   fills orange on hover/focus, so it reads as something to press; a soft
+   ring breathes around them while the page is idle. The sections repeat
+   the step number in an orange disc beside their heading. */
+@media (min-width: 1024px) { .funding-process { width: min(100%, calc(900px / var(--zoom))); } }
+a.funding-process__card {
+  position: relative; text-decoration: none; cursor: pointer;
+  transition: background-color .3s ease, color .3s ease, translate .3s ease, box-shadow .3s ease;
+}
+a.funding-process__card::after {
+  content: ''; position: absolute; inset: -1px; border-radius: 50%;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-orange) 35%, transparent);
+  animation: process-breathe 2.8s ease-out infinite;
+  animation-delay: calc(var(--i, 0) * .7s);
+  pointer-events: none;
+}
+.funding-process__step:nth-child(2) a.funding-process__card::after { --i: 1; }
+.funding-process__step:nth-child(3) a.funding-process__card::after { --i: 2; }
+.funding-process__step:nth-child(4) a.funding-process__card::after { --i: 3; }
+@keyframes process-breathe {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-orange) 35%, transparent); }
+  70%  { box-shadow: 0 0 0 calc(10px / var(--zoom)) color-mix(in srgb, var(--c-orange) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+a.funding-process__card:hover,
+a.funding-process__card:focus-visible { background: var(--c-orange); color: var(--c-white); translate: 0 -4px; }
+a.funding-process__card:hover h2,
+a.funding-process__card:focus-visible h2 { color: var(--c-white); }
+a.funding-process__card:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { a.funding-process__card::after { animation: none; } }
+
+.funding-step { scroll-margin-top: calc(120px / var(--zoom)); }
+.funding-step > .longform__heading { display: flex; align-items: center; gap: 16px; }
+.funding-step__num {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 1.2em; height: 1.2em; border-radius: 50%;
+  background: var(--c-orange); color: var(--c-white);
+  font: 400 0.62em/1 var(--f-sans);
+}
+.funding-step__sub { scroll-margin-top: calc(120px / var(--zoom)); }
+#frequently-asked-questions { scroll-margin-top: calc(120px / var(--zoom)); }
+/* tablets: the two-by-two steps at a readable size (an older width rule
+   had let them grow to the full column) */
+@media (min-width: 600px) and (max-width: 1023px) { .funding-process { width: min(100%, calc(440px / var(--zoom))); } }
+
+/* "Questions to Guide Your Thinking" is a row inside the step, not a
+   section boundary: dotted above and below (comments 27.10) */
+.content-guidance, .content-accordion.content-guidance {
+  border-top: 0; border-bottom: 0;
+  background-image: var(--dotted-rule), var(--dotted-rule);
+  background-position: left top, left bottom; background-size: 8px 2px, 8px 2px; background-repeat: repeat-x, repeat-x;
+}
+
+/* How We Fund lines (comments 27.10): a solid line only between the four
+   numbered steps and before the FAQ; every line inside a step is dotted. */
+.funding-step + .funding-step,
+.funding-step + #frequently-asked-questions {
+  border-top: var(--rule-width-strong) solid var(--c-rule-strong);
+  padding-top: clamp(40px, 3.6vw, 64px);
+}
+.funding-step .article__section-heading,
+.funding-step .content-callout {
+  border-top: 0;
+  background-image: var(--dotted-rule);
+  background-position: left top; background-size: 8px 2px; background-repeat: repeat-x;
+}
+.funding-page .content-jump {
+  border-top: 0; border-bottom: 0;
+  background-image: var(--dotted-rule), var(--dotted-rule);
+  background-position: left top, left bottom; background-size: 8px 2px, 8px 2px; background-repeat: repeat-x, repeat-x;
+}
+
+/* White cards carry no rule of their own: the plate is the edge
+   (comments 27.10) */
+.funding-forms__item, .content-overview__item, .content-card,
+.funding-step .content-callout.content-card { background-image: none; border-top: 0; }
+/* the step disc sits on the heading's first line, not the middle of a
+   two-line heading: the line box is 1.16em of the heading and the disc
+   0.744em (1.2 × its 0.62em type), so it drops (1.16 − 0.744) / 2 =
+   0.208em of the heading, i.e. 0.335em in its own type */
+.funding-step > .longform__heading { align-items: flex-start; }
+.funding-step__num { margin-top: 0.335em; }
+
+/* ── How We Fund, step flow (comments 27.10) ─────────────────────────
+   In each circle the label comes first and the number sits under it in
+   a filled orange disc. The label is a step smaller and the circle a
+   little more padded so the longest one stays inside the ring. */
+.funding-process__card { padding: calc(24px / var(--zoom)); gap: calc(12px / var(--zoom)); }
+.funding-process__card h2 { order: 1; font-size: calc(15px / var(--zoom)); }
+.funding-process__num {
+  order: 2; display: inline-flex; align-items: center; justify-content: center;
+  width: calc(36px / var(--zoom)); height: calc(36px / var(--zoom)); border-radius: 50%;
+  background: var(--c-orange); color: var(--c-white);
+  font: 400 calc(17px / var(--zoom))/1 var(--f-sans);
+  transition: background-color .3s ease, color .3s ease;
+}
+a.funding-process__card:hover .funding-process__num,
+a.funding-process__card:focus-visible .funding-process__num { background: var(--c-white); color: var(--c-orange); }
+
+/* FAQ: a text link with an arrow under the circles, no rules */
+.funding-faq-link { margin: 36px 0 0; text-align: center; }
+.funding-faq-link .values-people-link { margin-top: 0; }
+
+/* Sticky step bar: a white bar pinned to the top once the circles are
+   out of view (under the site's sticky bar while that is showing). Small
+   orange discs, the labels, an arrow between steps; the step being read
+   turns orange. */
+.funding-stepbar {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 40;
+  background: var(--c-white);
+  box-shadow: 0 6px 18px rgba(184, 77, 0, .06);
+  translate: 0 -110%;
+  /* moves with the site's sticky bar, on its timing (nav-pill-in / out) */
+  transition: translate .35s ease, top .32s ease;
+  border-top: 1px solid transparent;
+}
+/* a thin grey line between the site's bar and this one when stacked */
+.funding-stepbar.is-under-nav { border-top-color: rgba(0, 0, 0, .1); }
+.funding-stepbar[hidden] { display: block; visibility: hidden; }
+.funding-stepbar.is-visible { translate: 0 0; visibility: visible; }
+.funding-stepbar__list {
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  max-width: var(--canvas); margin: 0 auto; padding: 14px var(--gm); list-style: none;
+}
+.funding-stepbar__item { display: flex; align-items: center; }
+.funding-stepbar__item + .funding-stepbar__item::before {
+  content: ''; flex: none; width: 16px; height: 16px; margin: 0 clamp(10px, 1.3vw, 26px);
+  background: var(--c-orange);
+  -webkit-mask: url("assets/icons/right-arrow.svg") center / contain no-repeat;
+          mask: url("assets/icons/right-arrow.svg") center / contain no-repeat;
+}
+.funding-stepbar__link { display: flex; align-items: center; gap: 10px; color: var(--c-black); text-decoration: none; }
+.funding-stepbar__num {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--c-orange); color: var(--c-white); font: 400 14px/1 var(--f-sans);
+}
+.funding-stepbar__label {
+  /* one line; the type steps down a little on narrower desktops */
+  font: 400 calc(clamp(13px, 1.05vw, 15px) / var(--zoom))/1.3 var(--f-sans);
+  white-space: nowrap; transition: color var(--ease);
+}
+.funding-stepbar__link:hover .funding-stepbar__label,
+.funding-stepbar__link[aria-current="step"] .funding-stepbar__label { color: var(--c-orange); }
+.funding-stepbar__link:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 4px; }
+/* below desktop only the current step keeps its label */
+@media (max-width: 1023px) {
+  .funding-stepbar__label { display: none; }
+  .funding-stepbar__link[aria-current="step"] .funding-stepbar__label {
+    display: block; max-width: none; min-width: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* the current step takes the spare width for its one-line label */
+  .funding-stepbar__list { justify-content: flex-start; padding-inline: var(--gm-mob); }
+  .funding-stepbar__item:has([aria-current="step"]) { flex: 1 1 auto; min-width: 0; }
+  .funding-stepbar__item:has([aria-current="step"]) .funding-stepbar__link { min-width: 0; }
+  .funding-stepbar__item + .funding-stepbar__item::before { margin: 0 10px; width: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .funding-stepbar { transition: none; } }
+
+/* Step circles, second pass (comments 27.10): the number is plain orange
+   type, no disc, and sits at the same height near the foot of every
+   circle; the label centres in the space above it. */
+.funding-process__card { position: relative; justify-content: center; padding-bottom: 30%; }
+.funding-process__num {
+  position: absolute; left: 50%; bottom: 14%; translate: -50% 0;
+  width: auto; height: auto; border-radius: 0;
+  background: none; color: var(--c-orange);
+  font: 400 calc(23px / var(--zoom))/1 var(--f-sans);
+}
+a.funding-process__card:hover .funding-process__num,
+a.funding-process__card:focus-visible .funding-process__num { background: none; color: var(--c-white); }
+/* small circles (laptops, where the reading column is narrow, and phones):
+   smaller type and padding so the longest label clears its number */
+@media (min-width: 1024px) and (max-width: 1279px), (max-width: 599px) {
+  .funding-process__card { padding: calc(14px / var(--zoom)); padding-bottom: 32%; }
+  .funding-process__card h2 { font-size: calc(12.5px / var(--zoom)); line-height: 1.3; }
+  .funding-process__num { font-size: calc(18px / var(--zoom)); bottom: 13%; }
+}
+/* 1024–1199: the reading column is too narrow for four circles in a row,
+   so the steps take the tablet's two-by-two at its size */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .funding-process { grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, calc(440px / var(--zoom))); row-gap: 20px; column-gap: calc(20px / var(--zoom)); }
+  .funding-process__step::after { display: none; }
+  .funding-process__card { padding: calc(24px / var(--zoom)); padding-bottom: 30%; }
+  .funding-process__card h2 { font-size: calc(15px / var(--zoom)); }
+  .funding-process__num { font-size: calc(23px / var(--zoom)); bottom: 14%; }
+}
+/* labels sit nearer the circle's centre, numbers a touch heavier
+   (comments 27.10) */
+.funding-process__card { padding-bottom: 16%; }
+.funding-process__num { font-weight: 500; }
+@media (min-width: 1024px) and (max-width: 1279px), (max-width: 599px) {
+  .funding-process__card { padding-bottom: 20%; }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .funding-process__card { padding-bottom: 16%; }
+}
+/* numbers at the labels' size (still the heavier weight), a little lower
+   in the circle (comments 27.10) */
+.funding-process__num { font-size: calc(15px / var(--zoom)); bottom: 10%; }
+@media (min-width: 1024px) and (max-width: 1279px), (max-width: 599px) {
+  .funding-process__num { font-size: calc(12.5px / var(--zoom)); bottom: 10%; }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .funding-process__num { font-size: calc(15px / var(--zoom)); bottom: 10%; }
+}
+
+/* Practices rows, third pass (comments 27.10): each practice is its own
+   white plate, stacked with a small gap; no rules between them; the
+   one-line description in black. */
+.practice-list { display: flex; flex-direction: column; gap: 12px; background-image: none; border: 0; }
+.practice-list .practice {
+  background: var(--c-white); background-image: none; border: 0;
+}
+.practice-list .practice__trigger { padding-left: clamp(22px, 2.4vw, 40px); padding-right: 72px; }
+.practice-list .practice__icon { right: clamp(22px, 2.4vw, 40px); }
+.practice-list .practice__desc { color: var(--c-black); }
+.practice-list .practice__body { padding-right: clamp(22px, 2.4vw, 40px); padding-left: calc(clamp(22px, 2.4vw, 40px) + clamp(64px, 6vw, 110px) + clamp(20px, 2vw, 40px)); }
+@media (max-width: 767px) {
+  .practice-list .practice__body { padding-left: clamp(22px, 2.4vw, 40px); }
+  .practice-list .practice__trigger { padding-right: 56px; }
+}
+
+/* Accessibility as a word (comments 27.10), set like 中文 beside it:
+   the same type and colour, orange on hover / while its card is open */
+.a11y__btn { width: auto; height: auto; border-radius: 0; padding: 4px 0; background: none; border: 0; cursor: pointer; }
+/* phone menu bar: the word needs air before the search icon */
+.nav__mobile-bar .a11y { margin-right: 16px; }
+/* Accessibility comes first, then 中文, then search (comments 27.10) */
+.nav__actions > .a11y { order: 0; }
+.nav__actions > .nav__lang { order: 1; }
+.nav__actions > .nav__search-btn { order: 2; }
+/* the search glyph sits in a 44px button: pull it back by its side
+   padding so 中文 → icon matches Accessibility → 中文 */
+@media (min-width: 1024px) {
+  .nav--v3:not(.nav--scrolled) .nav__actions > .nav__search-btn,
+  .nav--v3.nav--scrolled .nav__actions > .nav__search-btn { margin-left: -10px; }
+}
+/* the menu button always comes last (after search) */
+.nav__actions > .nav__hamburger { order: 3; }
+
+/* Tablets (768–1023) take the phone's header (comments 27.10): logo on
+   the left like every other width, search and menu on the right. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav--v3 .nav__logo { grid-column: 1; justify-self: start; }
+  .nav--v3 .nav__actions { justify-content: flex-end; gap: 4px; }
+}
+
+/* Accessibility card (comments 27.10): no orange outline, the plain white
+   card the main menu uses. On desktop the script sets its top to the
+   menu card's, so both hang from the same line. */
+.a11y__panel { border: 0; }
+
+/* Main menu markers, final (comments 27.10): the dot belongs to the page
+   you are on. Its section stays orange with the dot even while another
+   section's menu is open; hovering or opening any other section only
+   turns that name orange, with no dot. */
+@media (min-width: 1024px) {
+  .nav--v3 .nav__link--mega-active:not(.nav__link--active)::after,
+  .inner-v3 .nav--v3 .nav__link--mega-active:not(.nav__link--active)::after { scale: 0; }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active),
+  .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active) { color: var(--c-orange); }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after,
+  .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after { scale: 1; }
+}
+
+/* Phone menu, accessibility view (comments 27.10): tapping Accessibility
+   turns the whole sheet over to it, with "Back to menu" on top, instead
+   of opening a card over the menu. */
+.nav__mobile-menu.is-a11y .nav__mobile-links,
+.nav__mobile-menu.is-a11y .nav__mobile-secondary,
+.nav__mobile-menu.is-a11y .nav__mobile-social { display: none; }
+.nav__mobile-bar-actions .a11y__panel {
+  top: calc(100% + 24px); left: 0; right: 0; width: auto; max-width: none; margin: 0;
+  padding: 0; background: transparent; box-shadow: none;
+}
+.nav__mobile-bar-actions .a11y__panel .a11y__title {
+  margin: 8px 0 22px; color: var(--c-grey);
+  font: 400 var(--font-section)/var(--leading-title) var(--f-serif);
+}
+.a11y__back {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 36px; padding: 6px 0; border: 0; background: none; color: var(--c-orange); cursor: pointer;
+  font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
+}
+.a11y__back:focus-visible { outline: 2px solid var(--c-orange); outline-offset: 3px; }
+.a11y__back-arrow {
+  width: 15px; height: 7.27px; background: currentColor; rotate: 180deg;
+  -webkit-mask: url("assets/icons/icon-arrow.svg") center / contain no-repeat;
+          mask: url("assets/icons/icon-arrow.svg") center / contain no-repeat;
+}
+.nav__actions .a11y__back { display: none; }
+
+/* ================================================================
+   22 — COMMENTS 27.10
+   ================================================================ */
+
+/* Home, Foundation-led Initiatives: the logos and the copy under them
+   line up on the left of each column (the section title stays centred). */
+.ventures__col { align-items: flex-start; text-align: left; }
+.ventures__logos, .ventures__title { justify-content: flex-start; }
+
+/* Impact, In the Spotlight: no tags; a band in the institute's colour
+   across the top of each card, and a landscape image so the cards sit
+   lower. The card takes its colour from `data-cat` (orange if none). */
+.spotlight__card { position: relative; min-height: 0; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: auto 1fr; }
+.spotlight__card::before {
+  content: ''; position: absolute; z-index: 1; inset: 0 0 auto;
+  height: calc(10px / var(--zoom)); background: var(--cat, var(--c-orange));
+}
+.spotlight__image { grid-row: 1 / 3; aspect-ratio: 3 / 2; }
+.spotlight__card h3 { padding-top: calc(27px + 10px / var(--zoom)); }
+.spotlight__card p { padding-bottom: 27px; }
+@media (max-width: 767px) {
+  .spotlight__card h3 { padding-top: 20px; }
+  .spotlight__card p { padding-bottom: 22px; }
+}
+
+/* Approach (copy of 20 Oct): each of Being / Becoming / Belonging opens
+   with its line in the lead size, then a sentence of body copy. */
+.journey-host .panel__desc { margin-top: 12px; max-width: 530px; color: var(--c-black); }
+.approach-motto {
+  margin: clamp(40px, 4vw, 64px) 0 24px;
+  color: var(--c-orange);
+  font: 400 var(--font-subheading)/var(--leading-title) var(--f-serif);
+  text-wrap: balance;
+}
+/* "Putting our philosophy into practice" introduces both acronyms, so
+   VALUE and CARE follow it without a rule of their own */
+.longform__section--tight { margin-top: 0; }
+#priorities .acronym { margin-top: clamp(64px, 6vw, 104px); }
+.acronym-kicker {
+  margin: -16px 0 14px;
+  font: 400 var(--font-lead)/1.4 var(--f-sans);
+  color: var(--c-black);
+}
+/* the values in the opening line link to the Values page */
+#approach .longform__lede a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+#approach .longform__lede a:hover { text-decoration-thickness: 2px; }
+
+/* Layout review (27.10): white cards on the same page open their copy at
+   the same inset. The form cards were a fixed 30px and the callouts a
+   fluid 24–48px, so on How We Fund the two stacked cards started their
+   text 11px apart; both now share one fluid inset. */
+.content-overview__item, .funding-forms__item, .content-callout { padding: clamp(24px, 2.6vw, 40px); }
+/* Contact: the orange funding panel opens its copy at the same inset as
+   the contact-details plate above it (they share a left edge) */
+.connect__funding { padding-inline: clamp(28px, 2.9vw, 56px); }
+@media (max-width: 767px) { .connect__funding { padding-inline: 24px; } }
+/* Spotlight, 1024–1279: without tags the cards no longer need the whole
+   content width; four of the six tablet columns (two thirds) keep the
+   image landscape and show the
+   next card at the edge, between the full-width tablet card and the
+   six-column desktop one. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .spotlight__rail { grid-auto-columns: calc(4 * var(--rail-column) + 3 * var(--grid-gap)); }
+}
+
+/* ================================================================
+   23 — COMMENTS 28.10
+   ================================================================ */
+
+/* Home: brand guideline — the Foundation logo should read larger than
+   #CompassionInAction. The mark is a single wide line (270 × 45) while
+   the logo is a tall block (648 × 222), so at the same width the logo
+   still carries about twice the area: the mark matches the logo's width
+   (2.92 × its height) rather than shrinking below it. Below 1024 the logo
+   follows --logo-h; from 1024 it stands at 69px at the top of the page. */
+.home-v3 .hero-v3__mark { width: calc(var(--logo-h) * 2.92); }
+@media (min-width: 1024px) {
+  .home-v3 .hero-v3__mark { width: calc(69px * 2.92); }
+}
+
+/* Title and orange subtitle read as one group: the subtitle sits close
+   under the title, and the copy that follows stands further off
+   (tag pages, and every page with the same head, e.g. Practices). */
+/* the title's line box leaves air under its descenders, so the subtitle
+   pulls up into it a little */
+.article__subtitle, .listing__subtitle { margin-top: -0.35em; }
+.article__head .article__subtitle { margin-bottom: clamp(20px, 2vw, 32px); }
+.topic-intros { margin-top: clamp(40px, 3.4vw, 56px); }
+@media (max-width: 767px) {
+  .article__subtitle, .listing__subtitle { margin-top: -0.2em; }
+}
+
+/* Anchor links (People: Message from the Board · Trustees · …): more air
+   between them, an orange dot between each, and on hover the link turns
+   orange with a dot beneath, as in the main menu. */
+.content-jump { gap: 12px 0; }
+.content-jump a {
+  position: relative; padding: 4px clamp(20px, 2vw, 32px);
+  text-decoration: none; transition: color var(--ease);
+}
+.content-jump a + a::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--c-orange);
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.content-jump a::after {
+  content: ''; position: absolute; left: 50%; bottom: -8px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--c-orange);
+  transform: translateX(-50%) scale(0); transition: transform var(--ease);
+}
+.content-jump a:hover, .content-jump a:focus-visible { color: var(--c-orange); }
+.content-jump a:hover::after, .content-jump a:focus-visible::after { transform: translateX(-50%) scale(1); }
+@media (max-width: 767px) {
+  .content-jump { justify-content: center; }
+  .content-jump a { padding-inline: 16px; }
 }

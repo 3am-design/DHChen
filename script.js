@@ -1457,11 +1457,13 @@ window.__pageZoom = function () {
        Articles.html, so anything added to a section later joins in with
        no code change. The five value plates and the five strategy rows
        are named separately so each set ripples in order. */
-    ['.longform__lede', 0],
+    /* a lede inside a text-and-picture block arrives with its block (the
+       block is revealed as one piece below), not on its own beat */
+    ['.longform__lede:not(.content-split .longform__lede)', 0],
     /* New content pages also put introductory copy, lists and callouts
        directly in the reading column. Reveal those blocks individually;
        sections and numbered groups already have their own choreography. */
-    ['.content-page .longform__col > :not(.longform__section):not(.strategy-list):not(.longform__lede):not(.longform__cta):not(.funding-process)', 120],
+    ['.content-page .longform__col > :not(.longform__section):not(.strategy-list):not(.longform__lede):not(.longform__cta):not(.funding-process):not(.practice-list):not(.funding-stepbar)', 120],
     ['.funding-process__step:nth-child(1)', 0],
     ['.funding-process__step:nth-child(2)', 120],
     ['.funding-process__step:nth-child(3)', 240],
@@ -1469,7 +1471,19 @@ window.__pageZoom = function () {
     /* the two lists are skipped here — their rows are named below and
        reveal one at a time, so fading the container over them as well
        would put two fades on the same pixels */
-    ['.longform__section > :not(.ethos__values):not(.strategy-list)', 0],
+    ['.longform__section > :not(.ethos__values):not(.strategy-list):not(.acronym-cards)', 0],
+    /* VALUE / CARE cards (Approach) and the practice cards (Practices)
+       rise one after another */
+    ['.acronym-card:nth-child(1)', 0], ['.acronym-card:nth-child(2)', 120],
+    ['.acronym-card:nth-child(3)', 240], ['.acronym-card:nth-child(4)', 360],
+    ['.acronym-card:nth-child(5)', 480],
+    /* Practices: the five rows rise one after another */
+    ['.practice-list:not(.practice-list--cards) .practice:nth-child(1)', 0], ['.practice-list:not(.practice-list--cards) .practice:nth-child(2)', 140],
+    ['.practice-list:not(.practice-list--cards) .practice:nth-child(3)', 280], ['.practice-list:not(.practice-list--cards) .practice:nth-child(4)', 420],
+    ['.practice-list:not(.practice-list--cards) .practice:nth-child(5)', 560],
+    ['.practice-list--cards .practice:nth-child(1) .practice__head', 0], ['.practice-list--cards .practice:nth-child(2) .practice__head', 120],
+    ['.practice-list--cards .practice:nth-child(3) .practice__head', 240], ['.practice-list--cards .practice:nth-child(4) .practice__head', 360],
+    ['.practice-list--cards .practice:nth-child(5) .practice__head', 480],
     ['.ethos__value:nth-child(1)', 0], ['.ethos__value:nth-child(2)', 110],
     ['.ethos__value:nth-child(3)', 220], ['.ethos__value:nth-child(4)', 330],
     ['.ethos__value:nth-child(5)', 440],
@@ -2757,6 +2771,29 @@ window.__pageZoom = function () {
 
 
 /* ----------------------------------------------------------------
+   12b. Current section — the main-menu link of the section this page
+   belongs to gets `nav__link--active` (an orange dot under the name, see
+   style.css) and aria-current, from the page's file name.
+   ---------------------------------------------------------------- */
+(function () {
+  const SECTION = {
+    work: ['Approach', 'Practices', 'Priorities'],
+    impact: ['Listing', 'Stories', 'Learning', 'Topic', 'Articles', 'Story'],
+    partnership: ['WhatWeFund', 'HowWeFund', 'Partnership'],
+    about: ['Ethos', 'Institutes', 'Institute', 'People', 'News', 'Connect']
+  };
+  const file = (window.location.pathname.split('/').pop() || 'index.html')
+    .replace(/\.html$/, '').replace(/_tc$/, '');
+  const key = Object.keys(SECTION).find(function (k) { return SECTION[k].indexOf(file) !== -1; });
+  if (!key) return;
+  document.querySelectorAll('.nav .nav__link[data-mega="' + key + '"]').forEach(function (l) {
+    l.classList.add('nav__link--active');
+    l.setAttribute('aria-current', 'true');
+  });
+})();
+
+
+/* ----------------------------------------------------------------
    13. Desktop mega-menu — pointer hover and keyboard focus both open
    Work / Impact / About. Arrow Down enters the active panel, Escape
    closes it and restores focus to the control that opened it.
@@ -2972,7 +3009,29 @@ window.__pageZoom = function () {
       l.classList.toggle('nav__link--mega-active', active);
       if (l.hasAttribute('aria-expanded')) l.setAttribute('aria-expanded', String(active));
     });
+    if (key && window.__closeA11y) window.__closeA11y();
     if (key && !wasActive && !reduce && drawables[key]) startDraw(drawables[key]);
+    if (key && !wasActive) playMotion(mega.querySelector('.nav__mega-panel[data-mega-panel="' + key + '"] .nav__mega-motion'));
+  }
+  /* Approach / Impact / Partnership carry the Being · Becoming · Belonging
+     motifs (comments 26.10). Each open replays its motif from the start:
+     the dots fade in scattered and gather into one; the row writes itself
+     out from the middle; the rules draw in. */
+  let motionTimer = null;
+  function playMotion(el) {
+    if (!el) return;
+    clearTimeout(motionTimer);
+    if (reduce) { el.classList.add('is-lit', 'is-on'); return; }
+    el.classList.add('is-loop-reset');
+    el.classList.remove('is-lit', 'is-on');
+    void el.offsetWidth;
+    el.classList.remove('is-loop-reset');
+    el.classList.add('is-lit');
+    if (el.classList.contains('dots')) {
+      motionTimer = setTimeout(function () { el.classList.add('is-on'); }, 900);
+    } else {
+      requestAnimationFrame(function () { el.classList.add('is-on'); });
+    }
   }
   function close(restoreFocus) {
     clearTimeout(closeTimer);
@@ -4153,7 +4212,10 @@ window.__pageZoom = function () {
   const journey = document.querySelector('.journey');
   if (!journey) return;
   const steps = Array.from(journey.querySelectorAll('.journey__step'));
-  const media = window.matchMedia('(min-width: 1024px) and (min-height: 700px)');
+  /* comments 28.10: the cards stack ("move up") on phones and tablets
+     too, wherever the screen is tall enough to hold the stack */
+  const media = window.matchMedia('(min-height: 560px)');
+  const desktop = window.matchMedia('(min-width: 1024px)');
   let pending = false;
   let inRange = true;
   steps.forEach(function (step, i) {
@@ -4165,7 +4227,11 @@ window.__pageZoom = function () {
     const active = media.matches && !reduce.matches;
     journey.classList.toggle('journey--stack', active);
     const zoom = window.__pageZoom ? window.__pageZoom() : 1;
-    let nextTop = 96;
+    /* below 1024 the stack starts under the phone / tablet bar */
+    /* measured from the bar's layout height, not its on-screen box: the
+       bar slides away on scroll, and following it would jolt the cards */
+    const bar = document.querySelector('.nav .nav__inner');
+    let nextTop = desktop.matches || !bar ? 96 : bar.offsetHeight + 12;
     const tops = steps.map(function (step) {
       const top = nextTop;
       const heading = step.querySelector('.panel__head');
@@ -4267,6 +4333,10 @@ window.__pageZoom = function () {
       ? '篩選' + (n ? '，已選 ' + n + ' 項' : '')
       : 'Filter' + (n ? ', ' + n + ' selected' : ''));
     clear.disabled = !n && !norm(name.value) && !searched;
+    /* comments 27.10: with nothing typed or chosen the button lists
+       everyone ("Show all"); once a name or a filter is in, it searches */
+    const label = (n || norm(name.value)) ? (isTC ? '搜尋' : 'Search') : (isTC ? '顯示全部' : 'Show all');
+    if (go.firstChild.nodeValue !== label) go.firstChild.nodeValue = label;
     return picks;
   }
 
@@ -4486,19 +4556,79 @@ window.__pageZoom = function () {
     const btn = menu.querySelector('.a11y__btn');
     menu.querySelector('.a11y__panel').hidden = true;
     btn.setAttribute('aria-expanded', 'false');
+    const sheet = menu.closest('.nav__mobile-menu');
+    /* only touch the class when it is there: removing an absent class
+       still rewrites the attribute, which re-fires the sheet's observer */
+    if (sheet && sheet.classList.contains('is-a11y')) sheet.classList.remove('is-a11y');
     if (restore) btn.focus();
+  }
+  /* Desktop bar (comments 27.10): the card opens on hover like the main
+     menu, and hangs at the same height as the menu's card, top bar and
+     sticky bar alike. Click and keyboard still toggle it. */
+  const hoverable = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const desktop = window.matchMedia('(min-width: 1024px)');
+  const mega = document.getElementById('nav-mega');
+  function placeLikeMega(menu, panel) {
+    if (!mega || !desktop.matches || !menu.closest('.nav__actions')) { panel.style.top = ''; return; }
+    const z = parseFloat(getComputedStyle(document.body).zoom) || 1;
+    const nav = document.getElementById('nav');
+    const megaTop = nav.getBoundingClientRect().top + parseFloat(getComputedStyle(mega).top) * z;
+    panel.style.top = ((megaTop - menu.getBoundingClientRect().top) / z) + 'px';
+  }
+  function open(menu) {
+    const btn = menu.querySelector('.a11y__btn');
+    const panel = menu.querySelector('.a11y__panel');
+    menus.forEach(function (m) { if (m !== menu) close(m, false); });
+    if (window.__closeMegaMenu) window.__closeMegaMenu();
+    placeLikeMega(menu, panel);
+    panel.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    /* phone menu: the whole sheet turns to the accessibility view */
+    const sheet = menu.closest('.nav__mobile-menu');
+    if (sheet) {
+      sheet.classList.add('is-a11y');
+      sheet.scrollTop = 0;
+      const back = panel.querySelector('.a11y__back');
+      if (back) back.focus();
+    }
   }
   menus.forEach(function (menu) {
     const btn = menu.querySelector('.a11y__btn');
     const panel = menu.querySelector('.a11y__panel');
     const sw = menu.querySelector('.a11y__switch');
+    let leaveTimer = null;
+    /* phone menu: a way back from the accessibility view to the menu */
+    const sheet = menu.closest('.nav__mobile-menu');
+    if (sheet) {
+      const isTC = document.documentElement.lang === 'zh-Hant';
+      const back = document.createElement('button');
+      back.type = 'button';
+      back.className = 'a11y__back';
+      back.innerHTML = '<span class="a11y__back-arrow" aria-hidden="true"></span>' + (isTC ? '返回選單' : 'Back to menu');
+      back.addEventListener('click', function (e) { e.stopPropagation(); close(menu, true); });
+      panel.appendChild(back);   /* at the foot of the view (comments 27.10) */
+      /* closing the whole menu leaves it on the menu view next time */
+      new MutationObserver(function () {
+        if (!sheet.classList.contains('nav__mobile-menu--open') &&
+            (sheet.classList.contains('is-a11y') || !panel.hidden)) close(menu, false);
+      }).observe(sheet, { attributes: true, attributeFilter: ['class'] });
+    }
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      const open = panel.hidden;
-      menus.forEach(function (m) { close(m, false); });
-      panel.hidden = !open;
-      btn.setAttribute('aria-expanded', String(open));
+      if (panel.hidden) open(menu); else close(menu, false);
     });
+    if (menu.closest('.nav__actions')) {
+      menu.addEventListener('mouseenter', function () {
+        if (!hoverable.matches || !desktop.matches) return;
+        clearTimeout(leaveTimer);
+        if (panel.hidden) open(menu);
+      });
+      menu.addEventListener('mouseleave', function () {
+        if (!hoverable.matches || !desktop.matches) return;
+        clearTimeout(leaveTimer);
+        leaveTimer = setTimeout(function () { close(menu, false); }, 260);
+      });
+    }
     sw.addEventListener('click', function () {
       setContrast(sw.getAttribute('aria-checked') !== 'true');
     });
@@ -4509,4 +4639,67 @@ window.__pageZoom = function () {
   document.addEventListener('click', function (e) {
     menus.forEach(function (m) { if (!m.contains(e.target)) close(m, false); });
   });
+  /* the main menu closes this card when one of its own opens */
+  window.__closeA11y = function () { menus.forEach(function (m) { close(m, false); }); };
+})();
+
+
+/* ----------------------------------------------------------------
+   How We Fund — sticky step bar. Once the four circles have scrolled
+   out of view, a white bar with the steps slides in at the top (under
+   the site's own sticky bar while that is showing), and the step whose
+   section is being read is marked with aria-current.
+   ---------------------------------------------------------------- */
+(function () {
+  const bar = document.querySelector('.funding-stepbar');
+  const process = document.querySelector('.funding-process');
+  if (!bar || !process) return;
+  const nav = document.getElementById('nav');
+  const links = Array.prototype.slice.call(bar.querySelectorAll('.funding-stepbar__link'));
+  const sections = links.map(function (l) { return document.querySelector(l.getAttribute('href')); });
+  /* fixed to the window, so it lives on the body, outside the column and
+     its reveal choreography */
+  bar.classList.remove('reveal', 'is-in');
+  document.body.appendChild(bar);
+  bar.hidden = false;
+
+  /* the sticky bar's settled height, read from layout (offsetTop +
+     offsetHeight), not from its on-screen box: the bar slides in with a
+     translate, and measuring it mid-slide made the step bar jitter */
+  function navOffset() {
+    if (!nav || !nav.classList.contains('nav--scrolled') ||
+        nav.classList.contains('nav--scroll-hidden') || nav.classList.contains('nav--leaving')) return 0;
+    const inner = nav.querySelector('.nav__inner');
+    return inner ? inner.offsetTop + inner.offsetHeight : 0;
+  }
+  let lastTop = -1;
+
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const past = process.getBoundingClientRect().bottom < 0;
+    bar.classList.toggle('is-visible', past);
+    const top = navOffset();
+    if (top !== lastTop) {
+      lastTop = top;
+      bar.style.top = top + 'px';
+      bar.classList.toggle('is-under-nav', top > 0);
+    }
+    /* the current step: the last section whose top has passed the bar */
+    const line = (bar.getBoundingClientRect().bottom || 0) + 40;
+    let current = -1;
+    sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= line) current = i; });
+    const faq = document.getElementById('frequently-asked-questions');
+    if (faq && faq.getBoundingClientRect().top <= line) current = -1;
+    links.forEach(function (l, i) {
+      if (i === current) l.setAttribute('aria-current', 'step'); else l.removeAttribute('aria-current');
+    });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  if (nav && 'MutationObserver' in window) {
+    new MutationObserver(onScroll).observe(nav, { attributes: true, attributeFilter: ['class'] });
+  }
+  update();
 })();

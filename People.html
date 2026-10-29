@@ -23,8 +23,8 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 <!-- Site styles -->
-<link href="style.css?v=20261020-c32" rel="stylesheet"/>
-  <link rel="stylesheet" href="typography.css?v=20261020-c32" />
+<link href="style.css?v=20261028-c46" rel="stylesheet"/>
+  <link rel="stylesheet" href="typography.css?v=20261028-c46" />
 
 <link href="assets/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
 </head>
@@ -62,7 +62,7 @@
 <img alt="" src="assets/icons/icon-search.svg"/>
 </button>
 <a aria-disabled="true" class="nav__lang" data-placeholder-link="true" tabindex="-1">中文</a>
-        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
+        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
 <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="nav__hamburger">
 <img alt="" src="assets/icons/icon-hamburger.svg"/>
 </button>
@@ -105,7 +105,7 @@
 <div class="nav__mobile-bar">
 <a class="nav__mobile-lang" href="People.html">中文</a>
 <div class="nav__mobile-bar-actions">
-          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-label="Accessibility" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
+          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
 <button aria-label="Search" class="nav__mobile-search">
 <img alt="" src="assets/icons/icon-search.svg"/>
 </button>
@@ -191,7 +191,7 @@
       <label class="visually-hidden" for="people-name">Search by name</label>
       <input class="people-filter__name" id="people-name" type="search" placeholder="Search by name" autocomplete="off" />
       <button class="people-filter__toggle" type="button" aria-expanded="false" aria-controls="people-filter-panel"><span>Filter</span><span class="listing__count people-filter__count" hidden></span><svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <button class="people-filter__go btn-pill" type="button">Search<span class="btn-pill__arrow" aria-hidden="true"></span></button>
+      <button class="people-filter__go btn-pill" type="button">Show all<span class="btn-pill__arrow" aria-hidden="true"></span></button>
     </div>
     <div class="people-filter__panel listing__filters--chips" id="people-filter-panel" hidden>
 <fieldset class="people-filter__group" data-people-filter="position"><legend>Position</legend><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Trustee"/><span>Trustee</span></label><label class="listing__filter-option"><input type="checkbox" value="Honorary Member"/><span>Honorary Member</span></label><label class="listing__filter-option"><input type="checkbox" value="Board Director"/><span>Board Director</span></label><label class="listing__filter-option"><input type="checkbox" value="Committee Member"/><span>Committee Member</span></label><label class="listing__filter-option"><input type="checkbox" value="Foundation Office Team"/><span>Foundation Office Team</span></label></div></fieldset><fieldset class="people-filter__group" data-people-filter="team"><legend>Team</legend><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Programme"/><span>Programme</span></label><label class="listing__filter-option"><input type="checkbox" value="Operations"/><span>Operations</span></label><label class="listing__filter-option"><input type="checkbox" value="D&#x27;Hub &amp; D&#x27;Ventures"/><span>D&#x27;Hub &amp; D&#x27;Ventures</span></label></div></fieldset><fieldset class="people-filter__group" data-people-filter="institute"><legend>Institute</legend><div class="listing__filter-options"><label class="listing__filter-option"><input type="checkbox" value="Institute of Mindful Living"/><span>Institute of Mindful Living</span></label><label class="listing__filter-option"><input type="checkbox" value="Institute of Education Excellence"/><span>Institute of Education Excellence</span></label><label class="listing__filter-option"><input type="checkbox" value="Institute of Wellbeing"/><span>Institute of Wellbeing</span></label><label class="listing__filter-option"><input type="checkbox" value="Institute of Impact Strategy"/><span>Institute of Impact Strategy</span></label><label class="listing__filter-option"><input type="checkbox" value="Above and Beyond Institute"/><span>Above and Beyond Institute</span></label></div></fieldset>
@@ -508,13 +508,6 @@
 <img alt="" aria-hidden="true" class="search-overlay__icon" src="assets/icons/icon-search.svg"/>
 <input aria-label="Search" class="search-overlay__input" name="q" placeholder="Looking for..." type="search"/>
 </form>
-<p class="search-overlay__label">Whats hot</p>
-<nav aria-label="Popular searches" class="search-overlay__hot">
-<a href="Search.html?q=Scholarship">Scholarship</a>
-<a href="Search.html?q=Funding+for+innovative">Funding for innovative</a>
-<a href="Search.html?q=Join+us">Join us</a>
-<a href="Search.html?q=Events">Events</a>
-</nav>
 </div>
 </div>
 <!-- Custom cursor (desktop pointers only; script enables it) -->
@@ -523,6 +516,6 @@
 <img alt="" class="cursor__arrow" src="assets/icons/icon-arrow.svg"/>
 </div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="script.js?v=20261020-c32"></script>
+<script src="script.js?v=20261028-c46"></script>
 </body>
 </html>

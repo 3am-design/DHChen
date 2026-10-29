@@ -243,6 +243,19 @@ h2:not(.news-v3__heading), h3, h4 {
   font: 400 var(--font-body)/var(--leading-ui) var(--f-sans);
 }
 
+/* Opening line, sans option (CMS: "Lede style: Serif / Sans"). Same size
+   and leading as the serif lede, in Fira Sans. Used on Practices. */
+.longform__lede.longform__lede--sans { font-family: var(--f-sans); line-height: var(--leading-copy); }
+
+/* VALUE / CARE cards: the letter at the section tier, the title at the
+   introduction tier in the serif, the subtitle body copy. */
+/* the letters lead: page-title tier on the Approach cards and the
+   Practices rows (comments 26.10) */
+.acronym-card__letter, .practice-list--cards .practice__num,
+.practice-list .practice__letter { font: 400 var(--font-page)/1 var(--f-serif); }
+.acronym-card__title, .practice-list--cards .practice__name { font: 400 var(--font-lead)/var(--leading-subheading) var(--f-serif); }
+.acronym-card__desc, .practice-list--cards .practice__desc { font: 400 var(--font-body)/var(--leading-copy) var(--f-sans); }
+
 /* Initiative facts: the label is a tag-tier caption, the value body copy. */
 .article__fact-label { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
 .article__fact-value { font: 400 var(--font-body)/var(--leading-ui) var(--f-sans); }
@@ -255,9 +268,17 @@ h2:not(.news-v3__heading), h3, h4 {
    under the display headline; the
    ventures copy sits 1px above the body tier, at 18px. */
 .home-v3 .hero-v3__body { font: 300 var(--font-subheading)/1.4 var(--f-sans); }
+/* desktop: scales with the window, 22px on a small laptop up to 30px, so
+   the five-column measure keeps a comfortable number of lines */
+@media (min-width: 1024px) {
+  .home-v3 .hero-v3__body { font-size: calc(clamp(22px, 1.56vw, 30px) / var(--zoom)); }
+  /* desktop: lines run the full measure to the bar's end (comments 27.10);
+     `pretty` still keeps a single word off the last line */
+  .home-v3 .hero-v3__body { text-wrap: pretty; }
+}
 /* Balanced lines: the measure narrows to share the words evenly across
    its lines, so the last line never holds a single word. */
-.home-v3 .hero-v3__body { text-wrap: balance; }
+@media (max-width: 1023px) { .home-v3 .hero-v3__body { text-wrap: balance; } }
 @media (max-width: 767px) { .home-v3 .hero-v3__body { font-size: var(--font-lead); } }
 .home-v3 .ventures__text { font-size: calc(18px / var(--zoom)); }
 
@@ -265,3 +286,11 @@ h2:not(.news-v3__heading), h3, h4 {
 html[lang^="zh"] {
   --f-serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
 }
+
+/* A card's heading inside a How We Fund step (Supporting Documents) is a
+   sub-heading: the card-title tier, like "Budget Summary" above it. */
+.funding-step .content-callout .longform__heading { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
+
+/* 中文 and the Accessibility label beside it, both small (13px;
+   comments 27.10) */
+.nav__lang, .nav__mobile-lang, .a11y__text { font: 400 calc(13px / var(--zoom))/var(--leading-ui) var(--f-sans); letter-spacing: normal; }
