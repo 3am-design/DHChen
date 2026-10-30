@@ -1528,6 +1528,9 @@ window.__pageZoom = function () {
     : { threshold: 0.2, rootMargin: '0px 0px -22% 0px' };
 
   const targets = [];
+  const FEATURE_REVEAL = '.approach-overview .acronym-card, #approach .practice-list--value .practice';
+  const FEATURE_PAUSE = 180;
+  const FEATURE_STAGGER = 180;
   ITEMS.forEach(function (item) {
     document.querySelectorAll(item[0]).forEach(function (el) {
       /* Hide it WITHOUT animating the hiding.
@@ -1545,6 +1548,7 @@ window.__pageZoom = function () {
          the per-item delay set just below. */
       el.style.transitionProperty = 'none';
       el.classList.add('reveal');
+      if (el.matches(FEATURE_REVEAL)) el.classList.add('reveal--feature');
       if (item[1]) el.style.transitionDelay = item[1] + 'ms';
       targets.push(el);
     });
@@ -1590,6 +1594,17 @@ window.__pageZoom = function () {
   function land(el) {
     /* set before the class, so the transition starts with the delay already
        on it — both land in the same style recalculation */
+    if (el.classList.contains('reveal--feature')) {
+      /* Cards ripple across their actual row; stacked phone items only
+         pause briefly as each reaches view, without a growing wait. */
+      const order = el.classList.contains('acronym-card')
+        ? Array.prototype.filter.call(el.parentElement.children, function (card) {
+          return Math.abs(card.offsetTop - el.offsetTop) < 2;
+        }).indexOf(el)
+        : (window.matchMedia('(min-width: 768px)').matches
+          ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0);
+      el.style.transitionDelay = (FEATURE_PAUSE + order * FEATURE_STAGGER) + 'ms';
+    }
     if (el.classList.contains('card-v3') && el.parentElement.classList.contains('news-v3__grid')) {
       const rail = el.parentElement;
       const index = Array.prototype.indexOf.call(rail.children, el);
@@ -1608,7 +1623,10 @@ window.__pageZoom = function () {
        1.5s rise, which overran the old 2000 and had its delay pulled out
        from under it mid-transition. */
     const revealDelay = parseFloat(el.style.transitionDelay) || 0;
-    window.setTimeout(function () { el.style.transitionDelay = ''; }, Math.max(2600, revealDelay + 1700));
+    const revealDuration = Math.max.apply(null, getComputedStyle(el).transitionDuration.split(',').map(function (duration) {
+      return parseFloat(duration) * 1000;
+    }));
+    window.setTimeout(function () { el.style.transitionDelay = ''; }, Math.max(2600, revealDelay + revealDuration + 200));
   }
 
   const obs = new IntersectionObserver(function (entries) {

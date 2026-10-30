@@ -6608,6 +6608,27 @@ body.inner-v3 {
    ever comes back to zero. */
 .inner-v3 .reveal.is-in { translate: 0 0; }
 
+/* Approach VALUE / CARE cards and Practices rows: a longer, clearer rise.
+   Only JS-registered reveals receive this profile; no-JS stays visible. */
+.inner-v3 .reveal.reveal--feature {
+  translate: 0 52px;
+  transition-duration: 1.8s;
+  transition-timing-function: cubic-bezier(0.22, 0.68, 0.22, 1);
+}
+.inner-v3 .reveal.reveal--feature.is-in { translate: 0 0; }
+.inner-v3 .reveal.reveal--feature:focus-within {
+  opacity: 1;
+  translate: 0 0;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .inner-v3 .reveal.reveal--feature {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
+
 /* ── the current section ─────────────────────────────────────────
    Only the inner pages mark one, and the legacy marker does not survive
    the change of axis: `.nav__link--active::after` (style.css) hangs a dot
@@ -9862,11 +9883,9 @@ html.hc .footer__social-link:hover img {
   .nav--v3 .nav__mega-links { top: 40px; }
 }
 
-/* Home banner (comments 26.10): the description sits on the right of
-   the grid (columns 6–12) and the #Compassion lockup stands above it, on
-   its left edge, so the headline owns the left. Below 1024 the two stack
-   on the left, lockup first, and the lockup is drawn larger. */
-.home-v3 .hero-v3__mark { order: -1; }
+/* Home banner: the description stays in the right-hand reading column;
+   the #Compassion lockup follows it at the banner's bottom-right edge. */
+.home-v3 .hero-v3__mark { order: 0; align-self: flex-end; }
 @media (min-width: 1024px) {
   .home-v3 .hero-v3__foot {
     display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -9876,12 +9895,10 @@ html.hc .footer__social-link:hover img {
   /* from the middle of the colour bar's third (yellow-green) segment:
      the bar's six segments are two columns each, so its middle is
      column 6's edge */
-  /* the bar's segments have no gutters, so that middle sits half a
-     gutter before column 6: both pull back by that much */
-  .home-v3 .hero-v3__mark { grid-column: 6 / 13; grid-row: 1; justify-self: start; width: clamp(250px, 15vw, 300px); margin-left: calc(var(--grid-gap) / -2); }
+  .home-v3 .hero-v3__mark { grid-column: 6 / 13; grid-row: 2; justify-self: end; width: clamp(250px, 15vw, 300px); }
   /* …and stops at the middle of the purple segment (column 11's edge),
      so the lines run long and wrap a few words lower */
-  .home-v3 .hero-v3__body { grid-column: 6 / 12; grid-row: 2; width: auto; max-width: none; margin-left: calc(var(--grid-gap) / -2); }
+  .home-v3 .hero-v3__body { grid-column: 6 / 12; grid-row: 1; width: auto; max-width: none; margin-left: calc(var(--grid-gap) / -2); }
 }
 @media (max-width: 1023px) {
   .home-v3 .hero-v3__mark { width: clamp(240px, 34vw, 300px); }
@@ -10564,6 +10581,13 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 .topic-intros { margin-top: clamp(40px, 3.4vw, 56px); }
 @media (max-width: 767px) {
   .article__subtitle, .listing__subtitle { margin-top: -0.2em; }
+}
+
+/* Our Approach: leave the standard heading-to-subtitle breathing room
+   rather than pulling the subtitle up into the title's descenders. */
+.approach-overview .article__subtitle { margin-top: 16px; }
+@media (max-width: 767px) {
+  .approach-overview .article__subtitle { margin-top: 12px; }
 }
 
 /* Anchor links (People: Message from the Board · Trustees · …): more air
