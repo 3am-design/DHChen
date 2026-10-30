@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <!-- Site styles -->
-  <link rel="stylesheet" href="style.css?v=20261030-c47" />
+  <link rel="stylesheet" href="style.css?v=20261030-c48" />
   <link rel="stylesheet" href="typography.css?v=20261028-c46" />
   <!-- R2 nav / footer / colour bar + the inner-page rules (§09) and this
        page's own module (§11). Same pair of files as Listing / Articles. -->
@@ -37,7 +37,7 @@
         <img src="assets/icons/logo-nav.png" alt="D. H. Chen Foundation" class="nav__logo-img" />
       </a>
 
-      <nav class="nav__menu" aria-label="Main navigation"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+      <nav class="nav__menu" aria-label="Main navigation"><button type="button" class="nav__link" data-mega="work">Approach</button>
 <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></nav>
@@ -62,8 +62,8 @@
         <button class="nav__search-btn" aria-label="Search">
           <img src="assets/icons/icon-search.svg" alt="" />
         </button>
-        <a href="#" class="nav__lang">中文</a>
-        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
+        <a href="#" class="nav__lang">中</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" aria-label="Accessibility" type="button" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <img src="assets/icons/icon-hamburger.svg" alt="" />
         </button>
@@ -76,12 +76,13 @@
          it drops below the pill and carries its own copy of the four
          sections (`.nav__mega-menu`). Same markup as the home page. -->
     <div class="nav__mega" id="nav-mega" aria-hidden="true" inert>
-<div class="nav__mega-menu"><a href="Approach.html" class="nav__link" data-mega="work">Approach</a>
+<div class="nav__mega-menu"><button type="button" class="nav__link" data-mega="work">Approach</button>
 <a href="Listing.html" class="nav__link" data-mega="impact">Impact</a>
 <a href="Partnership.html" class="nav__link" data-mega="partnership">Partnership</a>
 <a href="Ethos.html" class="nav__link" data-mega="about">About</a></div>
 <div class="nav__mega-panel" data-mega-panel="work"><div class="nav__mega-motion nav__mega-motion--dots dots" aria-hidden="true"><span class="dots__dot drift-a" style="--x:0.00%;  --y:22.58%; --s:1.72%; --o:1;  --dl:380ms"></span><span class="dots__dot drift-b" style="--x:94.42%; --y:44.21%; --s:1.72%; --o:1;  --dl:120ms"></span><span class="dots__dot drift-c" style="--x:96.35%; --y:0.00%;  --s:2.36%; --o:1;  --dl:640ms"></span><span class="dots__dot drift-d" style="--x:73.18%; --y:62.95%; --s:1.07%; --o:1;  --dl:240ms"></span><span class="dots__dot drift-a" style="--x:98.71%; --y:77.60%; --s:1.29%; --o:.3; --dl:820ms"></span><span class="dots__dot drift-b" style="--x:67.96%; --y:32.43%; --s:1.29%; --o:.1; --dl:60ms"></span><span class="dots__dot drift-c" style="--x:23.46%; --y:47.83%; --s:1.13%; --o:.5; --dl:500ms"></span><span class="dots__dot drift-d" style="--x:40.13%; --y:91.29%; --s:1.07%; --o:.6; --dl:700ms"></span><span class="dots__dot drift-a" style="--x:78.48%; --y:44.20%; --s:1.29%; --o:.3; --dl:300ms"></span><span class="dots__dot drift-b" style="--x:0.65%;  --y:95.65%; --s:3.88%; --o:.4; --dl:900ms"></span><span class="dots__dot drift-c" style="--x:87.70%; --y:23.01%; --s:2.59%; --o:.1; --dl:180ms"></span><span class="dots__dot drift-d" style="--x:44.17%; --y:64.13%; --s:2.59%; --o:.1; --dl:560ms"></span><span class="dots__dot dots__dot--core" style="--x:50.00%; --y:48.29%; --s:3.86%; --o:1; --dl:0ms"></span></div><ul class="nav__mega-links">
-          <li><a href="Practices.html">Practices</a></li>
+          <li><a href="Philosophy.html">Philosophy</a></li>
+<li><a href="Practices.html">Practices</a></li>
           <li><a href="Priorities.html">Priorities</a></li>
         </ul></div>
 <div class="nav__mega-panel" data-mega-panel="impact"><div class="nav__mega-motion nav__mega-motion--dotrow dotrow" aria-hidden="true"></div><ul class="nav__mega-links">
@@ -107,9 +108,9 @@
 
       <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
       <div class="nav__mobile-bar">
-        <a href="#" class="nav__mobile-lang">中文</a>
+        <a href="#" class="nav__mobile-lang">中</a>
         <div class="nav__mobile-bar-actions">
-          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
+          <div class="a11y" data-a11y><button class="a11y__btn" aria-label="Accessibility" type="button" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
           <button class="nav__mobile-search" aria-label="Search">
             <img src="assets/icons/icon-search.svg" alt="" />
           </button>
@@ -123,7 +124,7 @@
       <nav class="nav__mobile-links" aria-label="Mobile navigation">
       <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Approach</button>
       <div class="nav__mobile-sub">
-      <div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+      <div class="nav__mobile-sub-inner"><a href="Philosophy.html">Philosophy</a><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button type="button" class="nav__mobile-link" aria-expanded="false">Impact</button>
       <div class="nav__mobile-sub">
       <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -470,6 +471,6 @@
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261030-c47"></script>
+  <script src="script.js?v=20261030-c48"></script>
 </body>
 </html>

@@ -4128,7 +4128,7 @@ body.home-v3 {
   transition: color var(--ease), background-size 0.35s ease;
 }
 .nav--v3 .nav__mega-links a:hover {
-  color: var(--c-orange);
+  color: var(--c-grey);
   background-size: 100% 1px;
 }
 
@@ -9858,9 +9858,9 @@ html.hc .footer__social-link:hover img {
   .nav--v3 .nav__link--mega-active,
   .nav--v3 .nav__link--active { background-size: 0% 1px; }
   .nav--v3 .nav__link { position: relative; }
-  .nav--v3 .nav__link:hover { color: var(--c-orange); }
+  .nav--v3 .nav__link:hover { color: var(--c-grey); background-size: 100% 1px; }
   .nav--v3 .nav__link--active,
-  .nav--v3 .nav__link--mega-active { color: var(--c-orange); }
+  .nav--v3 .nav__link--mega-active { color: var(--c-grey); }
   .nav--v3 .nav__link::after,
   .inner-v3 .nav--v3 .nav__link::after {
     content: ''; display: block; position: absolute;
@@ -9876,29 +9876,24 @@ html.hc .footer__social-link:hover img {
   .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active) { color: var(--c-grey); }
   .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after,
   .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after { scale: 0; }
-  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active):hover { color: var(--c-orange); }
+  .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active):hover { color: var(--c-grey); }
 
   .nav--v3 .nav__mega-panel::before,
   .nav--v3 .nav__mega-panel[data-mega-panel="work"]::before { content: none; }
   .nav--v3 .nav__mega-links { top: 40px; }
 }
 
-/* Home banner: the description stays in the right-hand reading column;
-   the #Compassion lockup follows it at the banner's bottom-right edge. */
-.home-v3 .hero-v3__mark { order: 0; align-self: flex-end; }
+/* Home banner: the lockup follows the description on the same left edge. */
+.home-v3 .hero-v3__mark { order: 0; align-self: flex-start; }
 @media (min-width: 1024px) {
   .home-v3 .hero-v3__foot {
-    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--grid-gap); row-gap: clamp(18px, 1.6vw, 30px);
+    /* Copy spans from the colour bar's midpoint to the purple segment's end. */
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0; row-gap: clamp(18px, 1.6vw, 30px);
     align-items: end;
   }
-  /* from the middle of the colour bar's third (yellow-green) segment:
-     the bar's six segments are two columns each, so its middle is
-     column 6's edge */
-  .home-v3 .hero-v3__mark { grid-column: 6 / 13; grid-row: 2; justify-self: end; width: clamp(250px, 15vw, 300px); }
-  /* …and stops at the middle of the purple segment (column 11's edge),
-     so the lines run long and wrap a few words lower */
-  .home-v3 .hero-v3__body { grid-column: 6 / 12; grid-row: 1; width: auto; max-width: none; margin-left: calc(var(--grid-gap) / -2); }
+  .home-v3 .hero-v3__mark { grid-column: 2; grid-row: 2; justify-self: start; width: clamp(250px, 15vw, 300px); }
+  .home-v3 .hero-v3__body { grid-column: 2; grid-row: 1; width: auto; max-width: none; margin-left: 0; }
 }
 @media (max-width: 1023px) {
   .home-v3 .hero-v3__mark { width: clamp(240px, 34vw, 300px); }
@@ -10349,9 +10344,9 @@ a.funding-process__card:focus-visible .funding-process__num { background: var(--
     display: block; max-width: none; min-width: 0;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  /* the current step takes the spare width for its one-line label */
+  /* Keep the next arrow beside the label; only shrink when space runs out. */
   .funding-stepbar__list { justify-content: flex-start; padding-inline: var(--gm-mob); }
-  .funding-stepbar__item:has([aria-current="step"]) { flex: 1 1 auto; min-width: 0; }
+  .funding-stepbar__item:has([aria-current="step"]) { flex: 0 1 auto; min-width: 0; }
   .funding-stepbar__item:has([aria-current="step"]) .funding-stepbar__link { min-width: 0; }
   .funding-stepbar__item + .funding-stepbar__item::before { margin: 0 10px; width: 12px; }
 }
@@ -10421,14 +10416,20 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
   .practice-list .practice__trigger { padding-right: 56px; }
 }
 
-/* Accessibility as a word (comments 27.10), set like 中文 beside it:
-   the same type and colour, orange on hover / while its card is open */
-.a11y__btn { width: auto; height: auto; border-radius: 0; padding: 4px 0; background: none; border: 0; cursor: pointer; }
+/* The human figure remains a comfortably sized pointer/touch target. */
+.a11y__btn { width: 44px; height: 44px; border-radius: 50%; padding: 10px; background: none; border: 0; cursor: pointer; }
 /* phone menu bar: the word needs air before the search icon */
 .nav__mobile-bar .a11y { margin-right: 16px; }
-/* Accessibility comes first, then 中文, then search (comments 27.10) */
-.nav__actions > .a11y { order: 0; }
-.nav__actions > .nav__lang { order: 1; }
+/* Language, accessibility, search: keep the three controls centred. */
+@media (min-width: 1024px) {
+  .nav.nav--v3 .nav__actions > .a11y { order: 1; }
+  .nav.nav--v3 .nav__actions > .nav__lang {
+    order: 0; display: inline-flex; align-items: center; justify-content: center;
+    height: calc(44px / var(--zoom)); min-width: calc(20px / var(--zoom));
+    font-size: calc(16px / var(--zoom)); line-height: 1;
+  }
+}
+.nav--v3 .nav__mobile-lang { font-size: calc(16px / var(--zoom)); }
 .nav__actions > .nav__search-btn { order: 2; }
 /* the search glyph sits in a 44px button: pull it back by its side
    padding so 中文 → icon matches Accessibility → 中文 */
@@ -10451,15 +10452,13 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
    menu card's, so both hang from the same line. */
 .a11y__panel { border: 0; }
 
-/* Main menu markers, final (comments 27.10): the dot belongs to the page
-   you are on. Its section stays orange with the dot even while another
-   section's menu is open; hovering or opening any other section only
-   turns that name orange, with no dot. */
+/* The dot belongs to the current page's section even while another
+   section's menu is open. The words retain their normal colour. */
 @media (min-width: 1024px) {
   .nav--v3 .nav__link--mega-active:not(.nav__link--active)::after,
   .inner-v3 .nav--v3 .nav__link--mega-active:not(.nav__link--active)::after { scale: 0; }
   .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active),
-  .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active) { color: var(--c-orange); }
+  .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active) { color: var(--c-grey); }
   .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after,
   .inner-v3 .nav--v3.nav--mega-open .nav__link--active:not(.nav__link--mega-active)::after { scale: 1; }
 }
@@ -10613,4 +10612,97 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 @media (max-width: 767px) {
   .content-jump { justify-content: center; }
   .content-jump a { padding-inline: 16px; }
+}
+
+/* ================================================================
+   24 — CLIENT COMMENTS 30.10
+   ================================================================ */
+/* Current section: keep the word's normal colour; the dot is the marker.
+   Hover uses an underline for both the parent and its submenu links. */
+.inner-v3 .nav--v3 .nav__link--active,
+.inner-v3 .nav--v3 .nav__link--active:hover { color: var(--c-grey); }
+.nav--v3 .nav__link { cursor: pointer; }
+.nav.nav--v3 .nav__link {
+  background: linear-gradient(var(--c-orange), var(--c-orange)) no-repeat 0 100% / 0% 1px;
+}
+.nav.nav--v3 .nav__link:hover, .nav.nav--v3 .nav__link:focus-visible { background-size: 100% 1px; }
+.nav--v3 .nav__mega-links a {
+  background-image: linear-gradient(var(--c-orange), var(--c-orange));
+}
+.nav--v3 .nav__mega-links a:focus-visible {
+  color: var(--c-grey); background-size: 100% 1px;
+}
+.nav__mega-motion, .nav__mega-art { transition: opacity .7s ease; }
+.nav__mega-motion.is-loop-fading, .nav__mega-art.is-loop-fading { opacity: 0; }
+.philosophy-links { margin-top: 28px; }
+
+/* Brand-colour strips, in the order shown in the client reference. */
+.practice-list--value .practice, .priority-block {
+  border-left: calc(6px / var(--zoom)) solid var(--section-colour);
+}
+.practice-list--value .practice:nth-child(1),
+#connecting-value-and-purpose { --section-colour: #2e8d46; }
+.practice-list--value .practice:nth-child(2),
+#advancing-holistic-wellbeing { --section-colour: #c6c925; }
+.practice-list--value .practice:nth-child(3),
+#reframing-ageing-and-dying { --section-colour: #36a4a5; }
+.practice-list--value .practice:nth-child(4),
+#energising-social-impact-ecosystems { --section-colour: #e88793; }
+.practice-list--value .practice:nth-child(5) { --section-colour: #573c83; }
+.practice-list--value .practice__letter,
+.priority-block .acronym-letter { color: var(--section-colour); }
+html.hc .practice-list--value .practice:nth-child(1),
+html.hc #connecting-value-and-purpose { --section-colour: var(--cat-wellbeing); }
+html.hc .practice-list--value .practice:nth-child(2),
+html.hc #advancing-holistic-wellbeing { --section-colour: var(--cat-impact-strategy); }
+html.hc .practice-list--value .practice:nth-child(3),
+html.hc #reframing-ageing-and-dying { --section-colour: var(--cat-mindful-living); }
+html.hc .practice-list--value .practice:nth-child(4),
+html.hc #energising-social-impact-ecosystems { --section-colour: var(--cat-education-excellence); }
+
+/* CARE's divider, title and first card form one compact introduction. */
+#priorities-page #priorities {
+  margin-top: clamp(32px, 3vw, 48px);
+  padding-top: clamp(24px, 2.4vw, 36px);
+}
+#priorities-page #priorities .acronym { margin: 0; }
+#priorities-page #priorities + .priority-detail { margin-top: clamp(24px, 2vw, 32px); }
+
+/* The orange magnifier and grey name prompt share one input row. */
+.people-filter__query { display: flex; align-items: center; gap: 12px; flex: 1 1 auto; min-width: 0; }
+.people-filter__query .people-filter__name { flex: 1 1 auto; width: 100%; color: #666; }
+.people-filter__name::placeholder { color: #888; opacity: 1; }
+.people-filter__search-icon {
+  display: block; flex: 0 0 22px; width: 22px; height: 22px;
+  background: var(--c-orange);
+  -webkit-mask: url('assets/icons/icon-search.svg') center / contain no-repeat;
+          mask: url('assets/icons/icon-search.svg') center / contain no-repeat;
+}
+.funding-step > .longform__heading { margin-bottom: calc(32px / var(--zoom)); }
+.people-jump-rules a::before, .people-jump-rules a + a::before {
+  content: ''; position: absolute; left: 0; top: calc(4px + .7em); width: 5px; height: 5px;
+  background: var(--c-orange); border-radius: 50%; transform: translateY(-50%);
+}
+@media (max-width: 1023px) {
+  .funding-process__card h2 { font-size: calc(16px / var(--zoom)); line-height: 1.25; }
+  .funding-process__num { font-size: calc(16px / var(--zoom)); }
+}
+@media (max-width: 767px) {
+  /* Read down the left pair, then down the right pair, with a leading dot. */
+  .people-jump-rules {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto); grid-auto-flow: column;
+    align-items: start; gap: 12px 24px;
+  }
+  .people-jump-rules a { padding: 4px 0 4px 16px; text-align: left; }
+  .people-filter__query { flex-basis: 100%; }
+}
+/* The longest label needs a full circle on the narrowest phones. */
+@media (max-width: 359px) {
+  .funding-process { grid-template-columns: minmax(0, 1fr); width: min(100%, 240px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__mega-motion, .nav__mega-art { transition: none; }
+  .nav__mega-motion .dots__dot { animation: none; }
+  .nav__mega-art path { transition: none !important; }
 }

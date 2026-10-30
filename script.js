@@ -58,9 +58,10 @@ window.__pageZoom = function () {
   }
 
   const routes = {
+    '中': 'index_tc.html',
     '中文': 'index_tc.html',
-    '我們的工作': 'Approach.html',
-    '工作方式': 'Approach.html',
+    '我們的工作': 'Philosophy.html',
+    '工作方式': 'Philosophy.html',
     '夥伴同行': 'Partnership.html',
     '學習與洞察': 'Learning.html',
     '我們的故事': 'Listing_tc.html',
@@ -2795,7 +2796,7 @@ window.__pageZoom = function () {
    ---------------------------------------------------------------- */
 (function () {
   const SECTION = {
-    work: ['Approach', 'Practices', 'Priorities'],
+    work: ['Approach', 'Philosophy', 'Practices', 'Priorities'],
     impact: ['Listing', 'Stories', 'Learning', 'Topic', 'Articles', 'Story'],
     partnership: ['WhatWeFund', 'HowWeFund', 'Partnership'],
     about: ['Ethos', 'Institutes', 'Institute', 'People', 'News', 'Connect']
@@ -2869,7 +2870,8 @@ window.__pageZoom = function () {
      every time the panel opens (same hand-drawn effect as the pillars):
        · stroke art  → just draw the stroke (dashoffset len → 0)
        · filled art  → trace each shape's outline, then fade the fill in    */
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const menuMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let reduce = menuMotionPreference.matches;
   const drawables = {};   /* panel-key → svg (once inlined) */
 
   /* Assets are authored in separate SVG files and several reuse ids such as
@@ -2966,7 +2968,7 @@ window.__pageZoom = function () {
         const svg = tmp.querySelector('svg');
         if (!svg) return;
         namespaceIds(svg, 'mega-' + panel.dataset.megaPanel);
-        svg.setAttribute('class', 'nav__mega-art');
+        svg.setAttribute('class', img.getAttribute('class') || 'nav__mega-art');
         svg.setAttribute('aria-hidden', 'true');
 
         /* attach to the live DOM FIRST — getTotalLength()/getComputedStyle()
@@ -3005,7 +3007,11 @@ window.__pageZoom = function () {
           });
         }
         /* priming + first draw happen lazily on open (see startDraw) */
-        if (panel.classList.contains('is-active')) startDraw(svg);
+        if (reduce) draw(svg);
+        else if (panel.classList.contains('is-active') && !document.hidden) {
+          startDraw(svg);
+          scheduleMotionReplay(svg, true);
+        }
       })
       .catch(function () { /* file:// or fetch blocked → static image stays */ });
   });
@@ -3016,6 +3022,7 @@ window.__pageZoom = function () {
     if (trigger) lastTrigger = trigger;
     const wasActive = nav.classList.contains('nav--mega-open') &&
                       mega.querySelector('.nav__mega-panel.is-active[data-mega-panel="' + key + '"]');
+    if (!wasActive) stopMotion();
     mega.inert = false;
     nav.classList.add('nav--mega-open');
     mega.setAttribute('aria-hidden', 'false');
@@ -3028,7 +3035,10 @@ window.__pageZoom = function () {
       if (l.hasAttribute('aria-expanded')) l.setAttribute('aria-expanded', String(active));
     });
     if (key && window.__closeA11y) window.__closeA11y();
-    if (key && !wasActive && !reduce && drawables[key]) startDraw(drawables[key]);
+    if (key && !wasActive && !reduce && drawables[key]) {
+      startDraw(drawables[key]);
+      scheduleMotionReplay(drawables[key], true);
+    }
     if (key && !wasActive) playMotion(mega.querySelector('.nav__mega-panel[data-mega-panel="' + key + '"] .nav__mega-motion'));
   }
   /* Approach / Impact / Partnership carry the Being · Becoming · Belonging
@@ -3036,6 +3046,27 @@ window.__pageZoom = function () {
      the dots fade in scattered and gather into one; the row writes itself
      out from the middle; the rules draw in. */
   let motionTimer = null;
+  let motionLoopTimer = null;
+  let motionFadeTimer = null;
+  function stopMotion() {
+    clearTimeout(motionTimer);
+    clearTimeout(motionLoopTimer);
+    clearTimeout(motionFadeTimer);
+    mega.querySelectorAll('.is-loop-fading').forEach(function (el) { el.classList.remove('is-loop-fading'); });
+  }
+  function scheduleMotionReplay(el, svg) {
+    if (reduce || document.hidden) return;
+    clearTimeout(motionLoopTimer);
+    motionLoopTimer = setTimeout(function () {
+      if (!isOpen() || !el.closest('.is-active') || document.hidden) return;
+      el.classList.add('is-loop-fading');
+      motionFadeTimer = setTimeout(function () {
+        if (svg) { startDraw(el); scheduleMotionReplay(el, true); }
+        else playMotion(el);
+        el.classList.remove('is-loop-fading');
+      }, 700);
+    }, 4800);
+  }
   function playMotion(el) {
     if (!el) return;
     clearTimeout(motionTimer);
@@ -3050,9 +3081,11 @@ window.__pageZoom = function () {
     } else {
       requestAnimationFrame(function () { el.classList.add('is-on'); });
     }
+    scheduleMotionReplay(el, false);
   }
   function close(restoreFocus) {
     clearTimeout(closeTimer);
+    stopMotion();
     if (restoreFocus && lastTrigger && lastTrigger.isConnected) {
       const target = mega.contains(lastTrigger) && burger ? burger : lastTrigger;
       target.focus({ preventScroll: true });
@@ -3068,6 +3101,27 @@ window.__pageZoom = function () {
     if (burger) burger.setAttribute('aria-expanded', 'false');
   }
   function isOpen() { return nav.classList.contains('nav--mega-open'); }
+  document.addEventListener('visibilitychange', function () {
+    stopMotion();
+    if (document.hidden || !isOpen()) return;
+    const panel = mega.querySelector('.nav__mega-panel.is-active');
+    if (!panel) return;
+    const svg = drawables[panel.dataset.megaPanel];
+    if (svg && !reduce) { startDraw(svg); scheduleMotionReplay(svg, true); }
+    playMotion(panel.querySelector('.nav__mega-motion'));
+  });
+  menuMotionPreference.addEventListener('change', function (event) {
+    reduce = event.matches;
+    stopMotion();
+    const panel = mega.querySelector('.nav__mega-panel.is-active');
+    if (!panel || document.hidden) return;
+    const svg = drawables[panel.dataset.megaPanel];
+    if (svg) {
+      if (reduce) draw(svg);
+      else { startDraw(svg); scheduleMotionReplay(svg, true); }
+    }
+    playMotion(panel.querySelector('.nav__mega-motion'));
+  });
   window.__closeMegaMenu = function () {
     close(false);
     /* Hiding search can expose a link under a stationary pointer. Wait
@@ -3093,6 +3147,7 @@ window.__pageZoom = function () {
   /* A section link opens its panel. Pointer hover remains unchanged; focus
      adds an equivalent keyboard route and Arrow Down enters the submenu. */
   links.forEach(function (l) {
+    if (l.tagName === 'BUTTON') l.addEventListener('click', function () { open(l.dataset.mega, l); });
     if (hoverCapable) l.addEventListener('mouseenter', function () {
       if (suppressPointerOpen) return;
       if (l.dataset.mega) open(l.dataset.mega, l); else leaveSection();
@@ -4704,7 +4759,12 @@ window.__pageZoom = function () {
       bar.classList.toggle('is-under-nav', top > 0);
     }
     /* the current step: the last section whose top has passed the bar */
-    const line = (bar.getBoundingClientRect().bottom || 0) + 40;
+    /* Native anchor jumps stop at scroll-margin-top, which can be lower
+       than the bar. Use that same line so a landed step never reads as
+       the preceding one, particularly on phones. */
+    const zoom = window.__pageZoom ? window.__pageZoom() : 1;
+    const anchorInset = sections[0] ? parseFloat(getComputedStyle(sections[0]).scrollMarginTop) * zoom : 0;
+    const line = Math.max((bar.getBoundingClientRect().bottom || 0) + 40, anchorInset + 4);
     let current = -1;
     sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= line) current = i; });
     const faq = document.getElementById('frequently-asked-questions');
@@ -4716,6 +4776,7 @@ window.__pageZoom = function () {
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
+  window.addEventListener('hashchange', onScroll);
   if (nav && 'MutationObserver' in window) {
     new MutationObserver(onScroll).observe(nav, { attributes: true, attributeFilter: ['class'] });
   }

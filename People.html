@@ -23,7 +23,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 <!-- Site styles -->
-<link href="style.css?v=20261030-c47" rel="stylesheet"/>
+<link href="style.css?v=20261030-c48" rel="stylesheet"/>
   <link rel="stylesheet" href="typography.css?v=20261028-c46" />
 
 <link href="assets/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -38,7 +38,7 @@
 <a aria-label="D. H. Chen Foundation home" class="nav__logo" href="index.html">
 <img alt="D. H. Chen Foundation" class="nav__logo-img" src="assets/icons/logo-nav.png"/>
 </a>
-<nav aria-label="Main navigation" class="nav__menu"><a class="nav__link" data-mega="work" href="Approach.html">Approach</a>
+<nav aria-label="Main navigation" class="nav__menu"><button type="button" class="nav__link" data-mega="work">Approach</button>
 <a class="nav__link" data-mega="impact" href="Listing.html">Impact</a>
 <a class="nav__link" data-mega="partnership" href="Partnership.html">Partnership</a>
 <a class="nav__link" data-mega="about" href="Ethos.html">About</a></nav>
@@ -61,8 +61,8 @@
 <button aria-label="Search" class="nav__search-btn">
 <img alt="" src="assets/icons/icon-search.svg"/>
 </button>
-<a aria-disabled="true" class="nav__lang" data-placeholder-link="true" tabindex="-1">中文</a>
-        <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
+<a aria-disabled="true" class="nav__lang" data-placeholder-link="true" tabindex="-1">中</a>
+        <div class="a11y" data-a11y><button class="a11y__btn" aria-label="Accessibility" type="button" aria-expanded="false" aria-controls="a11y-panel-d"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-d" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-d">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-d"><span></span></button></div></div></div>
 <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="nav__hamburger">
 <img alt="" src="assets/icons/icon-hamburger.svg"/>
 </button>
@@ -74,25 +74,26 @@
          it drops below the pill and carries its own copy of the four
          sections (`.nav__mega-menu`). Same markup as the home page. -->
 <div aria-hidden="true" class="nav__mega" id="nav-mega" inert="">
-<div class="nav__mega-menu"><a class="nav__link" data-mega="work" href="Approach.html">Approach</a>
+<div class="nav__mega-menu"><button type="button" class="nav__link" data-mega="work">Approach</button>
 <a class="nav__link" data-mega="impact" href="Listing.html">Impact</a>
 <a class="nav__link" data-mega="partnership" href="Partnership.html">Partnership</a>
 <a class="nav__link" data-mega="about" href="Ethos.html">About</a></div>
-<div class="nav__mega-panel" data-mega-panel="work"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-approach-art.svg"/><ul class="nav__mega-links">
+<div class="nav__mega-panel" data-mega-panel="work"><div class="nav__mega-motion nav__mega-motion--dots dots" aria-hidden="true"><span class="dots__dot drift-a" style="--x:0.00%;  --y:22.58%; --s:1.72%; --o:1;  --dl:380ms"></span><span class="dots__dot drift-b" style="--x:94.42%; --y:44.21%; --s:1.72%; --o:1;  --dl:120ms"></span><span class="dots__dot drift-c" style="--x:96.35%; --y:0.00%;  --s:2.36%; --o:1;  --dl:640ms"></span><span class="dots__dot drift-d" style="--x:73.18%; --y:62.95%; --s:1.07%; --o:1;  --dl:240ms"></span><span class="dots__dot drift-a" style="--x:98.71%; --y:77.60%; --s:1.29%; --o:.3; --dl:820ms"></span><span class="dots__dot drift-b" style="--x:67.96%; --y:32.43%; --s:1.29%; --o:.1; --dl:60ms"></span><span class="dots__dot drift-c" style="--x:23.46%; --y:47.83%; --s:1.13%; --o:.5; --dl:500ms"></span><span class="dots__dot drift-d" style="--x:40.13%; --y:91.29%; --s:1.07%; --o:.6; --dl:700ms"></span><span class="dots__dot drift-a" style="--x:78.48%; --y:44.20%; --s:1.29%; --o:.3; --dl:300ms"></span><span class="dots__dot drift-b" style="--x:0.65%;  --y:95.65%; --s:3.88%; --o:.4; --dl:900ms"></span><span class="dots__dot drift-c" style="--x:87.70%; --y:23.01%; --s:2.59%; --o:.1; --dl:180ms"></span><span class="dots__dot drift-d" style="--x:44.17%; --y:64.13%; --s:2.59%; --o:.1; --dl:560ms"></span><span class="dots__dot dots__dot--core" style="--x:50.00%; --y:48.29%; --s:3.86%; --o:1; --dl:0ms"></span></div><ul class="nav__mega-links">
+<li><a href="Philosophy.html">Philosophy</a></li>
 <li><a href="Practices.html">Practices</a></li>
 <li><a href="Priorities.html">Priorities</a></li>
 </ul></div>
-<div class="nav__mega-panel" data-mega-panel="impact"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-impact-art.svg"/><ul class="nav__mega-links">
+<div class="nav__mega-panel" data-mega-panel="impact"><div class="nav__mega-motion nav__mega-motion--dotrow dotrow" aria-hidden="true"></div><ul class="nav__mega-links">
 <li><a href="Listing.html">Initiatives</a></li>
 <li><a href="Stories.html">Stories</a></li>
 <li><a href="Learning.html">Learning</a></li>
 </ul></div>
-<div class="nav__mega-panel" data-mega-panel="partnership"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-partnership-art.svg"/><ul class="nav__mega-links">
+<div class="nav__mega-panel" data-mega-panel="partnership"><div class="nav__mega-motion nav__mega-motion--lines lines" aria-hidden="true"></div><ul class="nav__mega-links">
 <li><a href="WhatWeFund.html">What We Fund</a></li>
           <li><a href="HowWeFund.html">How We Fund</a></li>
 <li><a href="Partnership.html">Collaboration</a></li>
 </ul></div>
-<div class="nav__mega-panel" data-mega-panel="about"><img alt="" aria-hidden="true" class="nav__mega-art" src="assets/images/menu-about-illustration.svg"/><ul class="nav__mega-links">
+<div class="nav__mega-panel" data-mega-panel="about"><img class="nav__mega-art nav__mega-art--seal" src="assets/images/menu-about-seal.svg?v=3" alt="" aria-hidden="true"/><ul class="nav__mega-links">
 <li><a href="Ethos.html">Values</a></li>
           <li><a href="Institutes.html">Institutes</a></li>
 <li><a href="People.html">People</a></li>
@@ -103,9 +104,9 @@
 <div aria-hidden="true" class="nav__mobile-menu" id="mobile-menu" inert="">
 <!-- Full-screen menu top bar: 中文 (left) · search + close (right) -->
 <div class="nav__mobile-bar">
-<a class="nav__mobile-lang" href="People.html">中文</a>
+<a class="nav__mobile-lang" href="People.html">中</a>
 <div class="nav__mobile-bar-actions">
-          <div class="a11y" data-a11y><button class="a11y__btn" type="button" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__text">Accessibility</span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
+          <div class="a11y" data-a11y><button class="a11y__btn" aria-label="Accessibility" type="button" aria-expanded="false" aria-controls="a11y-panel-m"><span class="a11y__icon" aria-hidden="true"></span></button><div class="a11y__panel" id="a11y-panel-m" role="group" aria-label="Accessibility" hidden><p class="a11y__title">Accessibility</p><div class="a11y__item"><p class="a11y__label">Text size</p><p class="a11y__hint">Use your browser to change the text size: press Ctrl (⌘ on a Mac) with + or −.</p></div><div class="a11y__item a11y__item--switch"><div><p class="a11y__label" id="a11y-contrast-m">High-contrast colours</p></div><button class="a11y__switch" type="button" role="switch" aria-checked="false" aria-labelledby="a11y-contrast-m"><span></span></button></div></div></div>
 <button aria-label="Search" class="nav__mobile-search">
 <img alt="" src="assets/icons/icon-search.svg"/>
 </button>
@@ -118,7 +119,7 @@
 <nav aria-label="Mobile navigation" class="nav__mobile-links">
 <div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">Approach</button>
 <div class="nav__mobile-sub">
-<div class="nav__mobile-sub-inner"><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
+<div class="nav__mobile-sub-inner"><a href="Philosophy.html">Philosophy</a><a href="Practices.html">Practices</a><a href="Priorities.html">Priorities</a></div></div></div>
 <div class="nav__mobile-item"><button aria-expanded="false" class="nav__mobile-link" type="button">Impact</button>
 <div class="nav__mobile-sub">
 <div class="nav__mobile-sub-inner"><a href="Listing.html">Initiatives</a><a href="Stories.html">Stories</a><a href="Learning.html">Learning</a></div></div></div>
@@ -188,8 +189,11 @@
     <h2 id="our-people-heading" class="people-finder__title">Our People</h2>
   <section class="people-filter" aria-label="Find a person" data-people-filter-root>
     <div class="people-filter__bar">
-      <label class="visually-hidden" for="people-name">Search by name</label>
-      <input class="people-filter__name" id="people-name" type="search" placeholder="Search by name" autocomplete="off" />
+      <div class="people-filter__query">
+        <span class="people-filter__search-icon" aria-hidden="true"></span>
+        <label class="visually-hidden" for="people-name">Search by name</label>
+        <input class="people-filter__name" id="people-name" type="search" placeholder="Search by name" autocomplete="off" />
+      </div>
       <button class="people-filter__toggle" type="button" aria-expanded="false" aria-controls="people-filter-panel"><span>Filter</span><span class="listing__count people-filter__count" hidden></span><svg class="listing__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="people-filter__go btn-pill" type="button">Show all<span class="btn-pill__arrow" aria-hidden="true"></span></button>
     </div>
@@ -516,6 +520,6 @@
 <img alt="" class="cursor__arrow" src="assets/icons/icon-arrow.svg"/>
 </div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="script.js?v=20261030-c47"></script>
+<script src="script.js?v=20261030-c48"></script>
 </body>
 </html>
