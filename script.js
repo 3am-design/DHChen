@@ -67,7 +67,6 @@ window.__pageZoom = function () {
     '我們的故事': 'Listing_tc.html',
     '最新消息': 'News.html',
     '關於我們': 'Ethos.html',
-    '基金會源起': 'Story.html',
     '我們的使命': 'Ethos.html',
     '核心價值': 'Ethos.html',
     '旗下機構': 'Institutes.html',
@@ -1433,7 +1432,7 @@ window.__pageZoom = function () {
        reaches the viewport — no in-group stagger to express */
     ['.article__related-title', 0], ['.article__related-item', 0],
 
-    /* Story.html — the same components in the other arrangement. The
+    /* The story layout — the same components in the other arrangement. The
        head, the lead image and the rail arrive first; the copy column
        is taken as a whole the way `.article__main > *` is, so anything
        added to it later joins in with no code change here. */
@@ -1452,7 +1451,7 @@ window.__pageZoom = function () {
     ['.connect__col--info', 0], ['.connect__col--aside', 120],
     ['.connect__funding', 0],
 
-    /* Approach.html — the opening line, then each section's own blocks.
+    /* Philosophy.html — the opening line, then each section's own blocks.
        `.longform__section > *` catches the eyebrow, heading, copy,
        figure and the two lists the same way `.article__main > *` does on
        Articles.html, so anything added to a section later joins in with
@@ -1495,10 +1494,7 @@ window.__pageZoom = function () {
     ['.content-page .strategy:nth-child(7)', 540],
     ['.longform__cta', 0],
 
-    /* Institutes.html and Institute.html — the opening
-       copy, then the cards. The cards are `.story-card`s, already
-       covered above, and take their stagger from `columnOf` like every
-       other card grid on the site. */
+    /* Institutes.html — the opening copy, then the blocks. */
     /* Legal pages (Privacy / Disclaimer / Accessibility), Sitemap,
        Partnership's closing blocks, Search, and two home blocks that
        had no entry */
@@ -3057,6 +3053,8 @@ window.__pageZoom = function () {
   function scheduleMotionReplay(el, svg) {
     if (reduce || document.hidden) return;
     clearTimeout(motionLoopTimer);
+    /* the dots hold, then gather, before the loop may fade them */
+    const hold = el.classList.contains('dots') ? 6400 : 4800;
     motionLoopTimer = setTimeout(function () {
       if (!isOpen() || !el.closest('.is-active') || document.hidden) return;
       el.classList.add('is-loop-fading');
@@ -3065,7 +3063,7 @@ window.__pageZoom = function () {
         else playMotion(el);
         el.classList.remove('is-loop-fading');
       }, 700);
-    }, 4800);
+    }, hold);
   }
   function playMotion(el) {
     if (!el) return;
@@ -3077,7 +3075,8 @@ window.__pageZoom = function () {
     el.classList.remove('is-loop-reset');
     el.classList.add('is-lit');
     if (el.classList.contains('dots')) {
-      motionTimer = setTimeout(function () { el.classList.add('is-on'); }, 900);
+      /* the last dot starts at 900ms and takes 1s to fade in */
+      motionTimer = setTimeout(function () { el.classList.add('is-on'); }, 2200);
     } else {
       requestAnimationFrame(function () { el.classList.add('is-on'); });
     }

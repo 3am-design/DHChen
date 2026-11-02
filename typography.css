@@ -7,6 +7,7 @@
   --type-subheading: 30px;
   --type-lead: 23px;
   --type-body: 17px;
+  --type-copy: var(--type-body);
   --type-meta: 14px;
   --type-menu: 23px;
 
@@ -15,6 +16,7 @@
   --font-subheading: calc(var(--type-subheading) / var(--zoom));
   --font-lead: calc(var(--type-lead) / var(--zoom));
   --font-body: calc(var(--type-body) / var(--zoom));
+  --font-copy: calc(var(--type-copy) / var(--zoom));
   --font-meta: calc(var(--type-meta) / var(--zoom));
   --font-menu: calc(var(--type-menu) / var(--zoom));
   --leading-title: 1.16;
@@ -36,20 +38,21 @@
   :root {
     --type-page: clamp(40px, 11vw, 48px);
     --type-section: clamp(32px, 9vw, 38px);
-    --type-subheading: 26px;
-    --type-lead: 20px;
+    --type-subheading: 28px;
+    --type-lead: 22px;
+    --type-copy: 19px;
   }
 }
 
 /* Default copy. Links and inline emphasis inherit their text role. */
 body {
-  font: 400 var(--font-body)/var(--leading-copy) var(--f-sans);
+  font: 400 var(--font-copy)/var(--leading-copy) var(--f-sans);
 }
 button, input, select, textarea { font: inherit; }
 p, blockquote, figcaption, dt, dd, label, small,
 .article__text, .legal__list, .career-job__copy {
   font-family: var(--f-sans);
-  font-size: var(--font-body);
+  font-size: var(--font-copy);
   font-weight: 400;
   line-height: var(--leading-copy);
   letter-spacing: normal;
@@ -132,7 +135,7 @@ h2:not(.news-v3__heading), h3, h4 {
 .career-job__summary, .career-job__detail p,
 .s-result__desc, .search__empty,
 .connect__value, .story__fact-value, .legal__list li {
-  font: 400 var(--font-body)/var(--leading-copy) var(--f-sans);
+  font: 400 var(--font-copy)/var(--leading-copy) var(--f-sans);
 }
 .article__text.story__lede {
   font: 400 var(--font-lead)/1.4 var(--f-serif);
@@ -164,7 +167,7 @@ h2:not(.news-v3__heading), h3, h4 {
 .footer-v3__copyright, .footer-v3__copyright a,
 .footer-v3__legal, .footer-v3__legal a,
 .s-result__kind, .s-result__path, .s-tab__count,
-.story__fact-label, .ethos__value-num, .values-founder figcaption,
+.story__fact-label, .values-founder figcaption,
 .legal__meta, .legal__toc-label, .legal__also-label,
 .connect__funding-eyebrow, .institute-card__eyebrow,
 .people-dialog__label, .people-dialog__motto-label,
@@ -254,7 +257,7 @@ h2:not(.news-v3__heading), h3, h4 {
 .acronym-card__letter, .practice-list--cards .practice__num,
 .practice-list .practice__letter { font: 400 var(--font-page)/1 var(--f-serif); }
 .acronym-card__title, .practice-list--cards .practice__name { font: 400 var(--font-lead)/var(--leading-subheading) var(--f-serif); }
-.acronym-card__desc, .practice-list--cards .practice__desc { font: 400 var(--font-body)/var(--leading-copy) var(--f-sans); }
+.acronym-card__desc, .practice-list--cards .practice__desc { font: 400 var(--font-copy)/var(--leading-copy) var(--f-sans); }
 
 /* Initiative facts: the label is a tag-tier caption, the value body copy. */
 .article__fact-label { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }

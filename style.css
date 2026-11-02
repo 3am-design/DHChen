@@ -6557,6 +6557,23 @@ body.inner-v3 {
   .inner-v3 .article { padding-top: 145px; }
 }
 
+/* Every page title starts where the Initiatives title does: the same gap
+   under the top inset, with the Articles breadcrumb lifted out of the flow
+   above it. Phones keep the breadcrumb in the flow, so the gap is under it
+   (Search, which has none, takes its height). */
+.article__head { position: relative; margin-top: 30px; }
+@media (min-width: 768px) {
+  .article-page .article__crumb {
+    position: absolute; left: 0; right: 0; bottom: 100%;
+    margin-bottom: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .article__head { margin-top: 0; }
+  .article__crumb { margin-bottom: 16px; }
+  .search .article__head { margin-top: 44px; }
+}
+
 /* The colour bar owns the gap below the content, so the sections give up
    their bottom padding entirely. R2 leaves 118 between the end of the
    content and the bar on both pages (listing: pager ends 1973, footer
@@ -7025,9 +7042,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   display: flex;
   flex-direction: column;
 }
-.ethos__value-num {
-  color: var(--c-orange);
-}
 .ethos__value-name {
   margin-top: 18px;
 }
@@ -7364,32 +7378,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   flex-direction: column;
   gap: clamp(24px, 2.4vw, 46px);
 }
-.institute-card {
-  background: var(--c-white);
-  display: grid;
-  grid-template-columns: 42% minmax(0, 1fr);
-  align-items: stretch;
-  transition: background var(--ease);
-}
-/* The picture fills its half whatever the copy beside it runs to —
-   `height: 100%` on a stretched grid item, so a longer paragraph makes
-   the image taller rather than leaving a band of white under it. */
-.institute-card__media { overflow: hidden; }
-.institute-card__media img {
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.institute-card:hover .institute-card__media img { transform: scale(1.04); }
-
-.institute-card__body {
-  padding: clamp(28px, 3vw, 56px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
 /* the same per-institute palette the story cards use, so an institute
    is the same colour wherever it appears */
 .institute-card__eyebrow {
@@ -7416,7 +7404,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    `.btn-pill` is the flex box that centres its own label, so padding on
    it pushes the label off-centre inside the capsule instead of moving
    the capsule down */
-.institute-card__tags { margin-top: 24px; margin-bottom: 32px; }
+.institute-card__tags { margin-top: 24px; margin-bottom: 0; }
 /* pushed to the foot of the card so the pills line up across a stack of
    cards whose paragraphs are different lengths */
 .institute-card__cta { margin-top: auto; }
@@ -7441,13 +7429,6 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
    link colour from `a { color: inherit }` in the reset, so nothing
    about the type changes. The hover already existed. */
 
-@media (max-width: 1023px) {
-  /* 42% of a tablet is not enough picture to be worth the column it
-     costs, and the paragraph beside it starts breaking every third
-     word — so the card stacks: picture over copy. */
-  .institute-card { grid-template-columns: minmax(0, 1fr); }
-  .institute-card__media img { min-height: 0; aspect-ratio: 16 / 9; }
-}
 @media (max-width: 767px) {
   .institutes__body,
   .institutes__intro,
@@ -8320,7 +8301,7 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
 .spotlight__image { position: relative; grid-column: 1; grid-row: 1 / 4; overflow: hidden; background: var(--c-panel); }
 .spotlight__image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .spotlight__card:hover img { transform: scale(1.035); }
-.spotlight__card h3 { grid-column: 2; min-width: 0; color: var(--c-orange); margin: 0; padding: 27px 27px 10px; }
+.spotlight__card h3 { grid-column: 2; min-width: 0; color: var(--cat, var(--c-orange)); margin: 0; padding: 27px 27px 10px; }
 .spotlight__card p { grid-column: 2; min-width: 0; padding: 0 27px; }
 .listing__all-title { margin-bottom: 28px; text-align: center; }
 .listing__filters { position: relative; z-index: 6; margin-top: 0; }
@@ -8498,9 +8479,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .story-card__desc { margin-top: 10px; }
   .story-card__tags { margin-top: 12px; margin-bottom: 16px; }
   .story-card__tags:last-child { margin-bottom: 0; }
-  .institute-card__body { padding: 22px; }
   .institute-card__lede { margin-top: 14px; }
-  .institute-card__tags { margin-top: 18px; margin-bottom: 22px; }
+  .institute-card__tags { margin-top: 18px; }
 }
 
 /* People: typography-led profiles, shared biography dialog and careers. */
@@ -8885,8 +8865,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 .values-founder figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; }
 .values-origin__copy .article__text:first-child { margin-top: 0; }
 .ethos__values--full { grid-template-columns: minmax(0, 1fr); gap: 20px; list-style: none; }
-.ethos__values--full .ethos__value { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr); gap: 32px; padding: 32px; }
-.ethos__values--full .ethos__value-name { margin-top: 16px; }
+.ethos__values--full .ethos__value { padding: clamp(28px, 3vw, 48px); background: var(--c-white); }
+.ethos__values--full .ethos__value-name { margin: 0 0 16px; }
 .ethos__values--full .ethos__value-desc { color: var(--c-black); margin-top: 16px; }
 
 @media (max-width: 1023px) {
@@ -8924,9 +8904,6 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .values-origin__body > .values-origin__copy { grid-row: 3; }
   .values-founder { width: min(220px, 65%); margin: 0; }
   .ethos__values--full { margin-top: 28px; gap: 16px; }
-  .ethos__values--full .ethos__value { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 24px; }
-  .ethos__values--full .ethos__value-heading { display: flex; align-items: baseline; gap: 16px; }
-  .ethos__values--full .ethos__value-name { margin: 0; }
 }
 @media (max-width: 599px) {
   .person-trigger--directory .person-trigger__copy { display: block; }
@@ -9388,7 +9365,8 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
    ================================================================ */
 
 /* Values: the portrait's illustration credit, under name and dates */
-.values-founder__credit { margin-top: 6px; color: var(--c-grey); }
+.values-founder__credit { margin-top: 6px; color: #999999; }
+html.hc .values-founder__credit { color: var(--c-grey); }
 
 /* CMS image blocks for long-form pages. Full width runs the reading
    column; half sits beside the next paragraphs on desktop and goes full
@@ -9649,7 +9627,7 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
 /* below 1024 the bar's own 中文 is gone, and the icon moves into the
    full-screen menu's top bar beside search */
 .nav__mobile-bar-actions .a11y { display: flex; }
-.nav__mobile-bar-actions .a11y__btn { width: 44px; height: 44px; }
+.nav__mobile-bar-actions .a11y__btn { width: 40px; height: 40px; padding: 8px; }
 /* the card anchors to the whole top bar, so it can use the phone's width */
 .nav__mobile-bar { position: relative; }
 .nav__mobile-bar-actions .a11y { position: static; }
@@ -10003,10 +9981,14 @@ html.hc .footer__social-link:hover img {
 .nav__mega-motion.is-loop-reset .dots__dot,
 .nav__mega-motion.is-loop-reset .dotrow__dot,
 .nav__mega-motion.is-loop-reset .lines__line { transition: none !important; }
+/* The Being dots are drawn for a panel twice this wide, so in the card they
+   run larger, with their faintest ones lifted, and fill most of its height. */
 .nav__mega-motion--dots {
   right: 60px; top: 50%; translate: 0 -50%;
-  width: 300px; max-width: 46%; aspect-ratio: 618 / 552;
+  width: 320px; max-width: 46%; height: 76%;
 }
+.nav__mega-motion--dots .dots__dot { width: calc(var(--s) * 1.6); }
+.nav__mega-motion--dots.is-lit:not(.is-on) .dots__dot { opacity: calc(.5 + var(--o) / 2); }
 .nav__mega-motion--dotrow {
   right: 42px; top: 50%; translate: 0 -50%;
   width: 360px; max-width: 52%; height: 40px;
@@ -10418,8 +10400,6 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 
 /* The human figure remains a comfortably sized pointer/touch target. */
 .a11y__btn { width: 44px; height: 44px; border-radius: 50%; padding: 10px; background: none; border: 0; cursor: pointer; }
-/* phone menu bar: the word needs air before the search icon */
-.nav__mobile-bar .a11y { margin-right: 16px; }
 /* Language, accessibility, search: keep the three controls centred. */
 @media (min-width: 1024px) {
   .nav.nav--v3 .nav__actions > .a11y { order: 1; }
@@ -10505,10 +10485,10 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 .spotlight__card { position: relative; min-height: 0; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: auto 1fr; }
 .spotlight__card::before {
   content: ''; position: absolute; z-index: 1; inset: 0 0 auto;
-  height: calc(10px / var(--zoom)); background: var(--cat, var(--c-orange));
+  height: calc(6px / var(--zoom)); background: var(--cat, var(--c-orange));
 }
 .spotlight__image { grid-row: 1 / 3; aspect-ratio: 3 / 2; }
-.spotlight__card h3 { padding-top: calc(27px + 10px / var(--zoom)); }
+.spotlight__card h3 { padding-top: calc(27px + 6px / var(--zoom)); }
 .spotlight__card p { padding-bottom: 27px; }
 @media (max-width: 767px) {
   .spotlight__card h3 { padding-top: 20px; }
@@ -10637,27 +10617,43 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 .philosophy-links { margin-top: 28px; }
 
 /* Brand-colour strips, in the order shown in the client reference. */
-.practice-list--value .practice, .priority-block {
+.practice-list--value .practice, .priority-block, .ethos__values--full .ethos__value {
   border-left: calc(6px / var(--zoom)) solid var(--section-colour);
 }
 .practice-list--value .practice:nth-child(1),
+.ethos__value:nth-child(1),
 #connecting-value-and-purpose { --section-colour: #2e8d46; }
 .practice-list--value .practice:nth-child(2),
+.ethos__value:nth-child(2),
 #advancing-holistic-wellbeing { --section-colour: #c6c925; }
 .practice-list--value .practice:nth-child(3),
+.ethos__value:nth-child(3),
 #reframing-ageing-and-dying { --section-colour: #36a4a5; }
 .practice-list--value .practice:nth-child(4),
+.ethos__value:nth-child(4),
 #energising-social-impact-ecosystems { --section-colour: #e88793; }
-.practice-list--value .practice:nth-child(5) { --section-colour: #573c83; }
+.practice-list--value .practice:nth-child(5),
+.ethos__value:nth-child(5) { --section-colour: #573c83; }
+.institute-card { --section-colour: var(--cat); }
+/* Half of a tablet leaves a tall sliver of picture, so the block stacks. */
+@media (max-width: 1023px) {
+  .institute-card.priority-block { grid-template-columns: minmax(0, 1fr); }
+  .institute-card.priority-block .content-split__media::before { padding-top: 56.25%; }
+}
 .practice-list--value .practice__letter,
-.priority-block .acronym-letter { color: var(--section-colour); }
+.priority-block .acronym-letter,
+.ethos__value-name, .institute-card__title { color: var(--section-colour); }
 html.hc .practice-list--value .practice:nth-child(1),
+html.hc .ethos__value:nth-child(1),
 html.hc #connecting-value-and-purpose { --section-colour: var(--cat-wellbeing); }
 html.hc .practice-list--value .practice:nth-child(2),
+html.hc .ethos__value:nth-child(2),
 html.hc #advancing-holistic-wellbeing { --section-colour: var(--cat-impact-strategy); }
 html.hc .practice-list--value .practice:nth-child(3),
+html.hc .ethos__value:nth-child(3),
 html.hc #reframing-ageing-and-dying { --section-colour: var(--cat-mindful-living); }
 html.hc .practice-list--value .practice:nth-child(4),
+html.hc .ethos__value:nth-child(4),
 html.hc #energising-social-impact-ecosystems { --section-colour: var(--cat-education-excellence); }
 
 /* CARE's divider, title and first card form one compact introduction. */

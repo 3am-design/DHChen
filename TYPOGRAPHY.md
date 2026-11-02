@@ -12,9 +12,10 @@ Short desktop windows retain the same readable type scale.
 |---|---:|---:|---:|
 | Page title | 70 | 56 | 40–48 |
 | Section title | 41 | 40 | 32–38 |
-| Card / subsection title | 30 | 28 | 26 |
-| Introduction / subtitle | 23 | 22 | 20 |
-| Body / primary button / controls / breadcrumbs | 17 | 17 | 17 |
+| Card / subsection title | 30 | 28 | 28 |
+| Introduction / subtitle | 23 | 22 | 22 |
+| Running copy | 17 | 17 | 19 |
+| Primary button / controls / breadcrumbs | 17 | 17 | 17 |
 | Tags / captions / metadata | 14 | 14 | 14 |
 
 Mobile page and section titles scale fluidly within these bounds. At 390px
@@ -33,8 +34,8 @@ wide, they render at 42.9px and 35.1px respectively.
 - The homepage hero and opening motto retain their existing display typography
   and animation. Being / Becoming / Belonging and the landing heading
   “Compassion is not only a value. It is a way of …” use the page-title tier.
-- Homepage banner description: card-title size (30 / 28 / 26px) in Fira
-  Sans 300, balanced over three lines on desktop (20px on phones). The
+- Homepage banner description: card-title size (30 / 28 / 28px) in Fira
+  Sans 300, balanced over three lines on desktop (22px on phones). The
   D'Ventures / Scholarship copy is 18px, one step above body.
 - Tag page (`Topic.html`) introduction: introduction tier, centred.
 - VALUE / CARE acronyms (Approach, Practices, Priorities): one line at the
