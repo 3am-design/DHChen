@@ -1214,9 +1214,10 @@ window.__pageZoom = function () {
     el.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--on-dark'); });
   });
 
-  /* listing story cards: big "DISCOVER" circle over the card body, but a
-     plain (clickable) cursor over the individual tags */
-  document.querySelectorAll('.story-card, .card-v3').forEach(function (card) {
+  /* listing story cards (and the homepage Being · Becoming · Belonging
+     panels, whose whole surface links to Philosophy): big "DISCOVER" circle
+     over the card body, but a plain (clickable) cursor over the tags */
+  document.querySelectorAll('.story-card, .card-v3, .panel__cover').forEach(function (card) {
     if (card.closest('[data-rail]')) return; // The rail owns edge arrows and Discover.
     card.addEventListener('mouseenter', function () { cursor.classList.add('cursor--discover'); });
     card.addEventListener('mouseleave', function () { cursor.classList.remove('cursor--discover'); });
@@ -1750,13 +1751,18 @@ window.__pageZoom = function () {
      Figma block, and an odd count so it opens on one centre rule */
   const RULES     = 25;
   document.querySelectorAll('.lines').forEach(function (box) {
+    /* in the menu the plane takes as long as the Impact row (~3.4s) */
+    const spread = box.closest('.nav__mega') ? 1900 : 1400;
     for (let i = 0; i < RULES; i++) {
       const line = document.createElement('span');
       line.className = 'lines__line';
       line.style.setProperty('--y', (i * 100 / RULES) + '%');
       /* Belonging: the rules arrive in a random order rather than opening
          out from the middle, each drawn in from the left or the right */
-      line.style.setProperty('--dl', Math.round(Math.random() * 1400) + 'ms');
+      line.style.setProperty('--dl', Math.round(Math.random() * spread) + 'ms');
+      /* 0 on the middle rule, 1 on the outermost: the menu's plane is
+         boldest in the middle and thins out above and below */
+      line.style.setProperty('--d', (Math.abs(i - (RULES - 1) / 2) / ((RULES - 1) / 2)).toFixed(3));
       if (Math.random() < 0.5) line.classList.add('lines__line--rtl');
       box.appendChild(line);
     }
@@ -2933,6 +2939,22 @@ window.__pageZoom = function () {
     const filled = svg.dataset.kind === 'filled';
     const paths = Array.prototype.slice.call(svg.querySelectorAll('path'));
     const step = +svg.dataset.step || 150;
+    /* About's seal is one continuous hand: each path starts as the last
+       one ends (D, then H, then 東), at an even speed, over the same
+       ~3.4s the Impact row takes to write itself out */
+    const seq = +svg.dataset.seq;
+    if (seq) {
+      const lens = paths.map(function (p) { return parseFloat(p.style.strokeDasharray) || 0; });
+      const total = lens.reduce(function (a, b) { return a + b; }, 0) || 1;
+      let at = 0;
+      paths.forEach(function (p, i) {
+        const dur = Math.round(seq * lens[i] / total);
+        p.style.transition = 'stroke-dashoffset ' + dur + 'ms linear ' + at + 'ms';
+        p.style.strokeDashoffset = '0';
+        at += dur;
+      });
+      return;
+    }
     paths.forEach(function (p, i) {
       const d = i * step;
       /* filled: trace the outline, ink the fill in while the line is still
@@ -2985,6 +3007,7 @@ window.__pageZoom = function () {
         }
         const filled = paths.some(fillOf);
         svg.dataset.kind = filled ? 'filled' : 'stroke';
+        if (panel.dataset.megaPanel === 'about') svg.dataset.seq = '3400';
         /* spread the stagger over a ~0.7s window so busy art (Work, 50+ shapes)
            still draws quickly; few clean paths (Impact/About) keep the 150ms beat */
         svg.dataset.step = paths.length > 12
@@ -3053,8 +3076,8 @@ window.__pageZoom = function () {
   function scheduleMotionReplay(el, svg) {
     if (reduce || document.hidden) return;
     clearTimeout(motionLoopTimer);
-    /* the dots hold, then gather, before the loop may fade them */
-    const hold = el.classList.contains('dots') ? 6400 : 4800;
+    /* all four motifs finish by ~3.4s, then hold before the loop fades them */
+    const hold = 4800;
     motionLoopTimer = setTimeout(function () {
       if (!isOpen() || !el.closest('.is-active') || document.hidden) return;
       el.classList.add('is-loop-fading');
@@ -3075,8 +3098,8 @@ window.__pageZoom = function () {
     el.classList.remove('is-loop-reset');
     el.classList.add('is-lit');
     if (el.classList.contains('dots')) {
-      /* the last dot starts at 900ms and takes 1s to fade in */
-      motionTimer = setTimeout(function () { el.classList.add('is-on'); }, 2200);
+      /* the last dot starts at 540ms and takes 0.7s to fade in (menu CSS) */
+      motionTimer = setTimeout(function () { el.classList.add('is-on'); }, 1300);
     } else {
       requestAnimationFrame(function () { el.classList.add('is-on'); });
     }

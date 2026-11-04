@@ -186,7 +186,7 @@ h2:not(.news-v3__heading), h3, h4 {
 /* On phones the single line shrinks with the screen (24px at 320, about 30px
    at 390) rather than wrapping, since the lockup should stay on one line. */
 @media (max-width: 767px) { .acronym { font-size: clamp(24px, 7.6vw, 36px); } }
-.practice__letter, .acronym-list__letter { font: 400 var(--font-section)/1 var(--f-serif); }
+.acronym-list__letter { font: 400 var(--font-section)/1 var(--f-serif); }
 .acronym-list__name { font: 400 var(--font-subheading)/var(--leading-subheading) var(--f-serif); }
 .topic-tags a { font: 400 var(--font-meta)/var(--leading-ui) var(--f-sans); }
 .listing__count { font: 400 var(--font-meta)/1 var(--f-sans); }
@@ -252,10 +252,8 @@ h2:not(.news-v3__heading), h3, h4 {
 
 /* VALUE / CARE cards: the letter at the section tier, the title at the
    introduction tier in the serif, the subtitle body copy. */
-/* the letters lead: page-title tier on the Approach cards and the
-   Practices rows (comments 26.10) */
-.acronym-card__letter, .practice-list--cards .practice__num,
-.practice-list .practice__letter { font: 400 var(--font-page)/1 var(--f-serif); }
+/* the letters lead: page-title tier on the Approach cards (comments 26.10) */
+.acronym-card__letter, .practice-list--cards .practice__num { font: 400 var(--font-page)/1 var(--f-serif); }
 .acronym-card__title, .practice-list--cards .practice__name { font: 400 var(--font-lead)/var(--leading-subheading) var(--f-serif); }
 .acronym-card__desc, .practice-list--cards .practice__desc { font: 400 var(--font-copy)/var(--leading-copy) var(--f-sans); }
 

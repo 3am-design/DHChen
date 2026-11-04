@@ -8173,7 +8173,12 @@ html[lang="zh-Hant"] .hero-v3__title .hw { white-space: nowrap; }
   min-height: 520px; padding-top: 42px; padding-bottom: 48px;
   transform-origin: center top;
 }
-:is(.home-v3, .journey-host) .journey__step .panel__head { position: relative; z-index: 2; }
+/* The head stays unpositioned so the `.panel__cover` link inside it is
+   measured against the whole panel: the lede and the empty card both click
+   through to Philosophy, not just the title. The title alone is lifted
+   over the motif. */
+:is(.home-v3, .journey-host) .journey__step .panel__head { position: static; }
+:is(.home-v3, .journey-host) .journey__step .panel__title { position: relative; z-index: 2; }
 :is(.home-v3, .journey-host) .journey__step .panel__title { margin-top: 0; }
 :is(.home-v3, .journey-host) .journey__step .panel__body { margin-top: 18px; }
 :is(.home-v3, .journey-host) .journey__step .panel__lede {
@@ -8699,7 +8704,12 @@ body.has-custom-cursor input[type="checkbox"] { cursor: none !important; }
   .nav--v3 .nav__mega {
     left: 50%;
     right: auto;
-    width: min(798px, calc(100% - 2 * var(--gm)));
+    /* 640, not 798: the sub-links and the graphic read as one group
+       rather than two ends of a wide white card (Karen 2.11) */
+    width: min(640px, calc(100% - 2 * var(--gm)));
+    /* a 1px rule in the page colour keeps the white card apart from the
+       white Being · Becoming · Belonging panels it opens over */
+    box-shadow: inset 0 0 0 1px var(--c-bg);
     top: 87px;
     height: min(401px, calc(100svh / var(--zoom) - 87px));
     transform: translateX(-50%);
@@ -9989,6 +9999,22 @@ html.hc .footer__social-link:hover img {
 }
 .nav__mega-motion--dots .dots__dot { width: calc(var(--s) * 1.6); }
 .nav__mega-motion--dots.is-lit:not(.is-on) .dots__dot { opacity: calc(.5 + var(--o) / 2); }
+/* Same ~3.4s as the Impact row (Karen 2.11), not the homepage panel's 5.9s:
+   the dots are all in by 1.24s, gather from 1.3s (script) and are one by
+   3.4s. Every step keeps its order, only the clock runs faster. */
+.nav__mega-motion--dots .dots__dot {
+  transition: opacity .7s ease calc(var(--dl, 0ms) * .6),
+              scale .7s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--dl, 0ms) * .6);
+}
+.nav__mega-motion--dots.is-on .dots__dot {
+  transition: left 1.7s cubic-bezier(0.45, 0, 0.15, 1) calc(var(--dl, 0ms) * .45),
+              top  1.7s cubic-bezier(0.45, 0, 0.15, 1) calc(var(--dl, 0ms) * .45),
+              scale 1.7s cubic-bezier(0.45, 0, 0.15, 1) calc(var(--dl, 0ms) * .45),
+              opacity 1.5s ease calc(var(--dl, 0ms) * .45);
+}
+.nav__mega-motion--dots.is-on .dots__dot--core {
+  transition: scale 1.6s cubic-bezier(0.34, 1.3, 0.5, 1) .5s;
+}
 .nav__mega-motion--dotrow {
   right: 42px; top: 50%; translate: 0 -50%;
   width: 360px; max-width: 52%; height: 40px;
@@ -9998,20 +10024,29 @@ html.hc .footer__social-link:hover img {
 .nav__mega-motion--dotrow .dotrow__dot { top: 12px; width: 2.4%; }
 .nav__mega-motion--lines {
   right: 42px; top: 50%; translate: 0 -50%;
-  width: 360px; max-width: 52%; height: 240px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.18) 0%, #000 45%, #000 55%, rgba(0,0,0,.18) 100%);
-          mask-image: linear-gradient(to bottom, rgba(0,0,0,.18) 0%, #000 45%, #000 55%, rgba(0,0,0,.18) 100%);
+  /* narrower than the Impact row: on short windows the type stays its
+     size while the card zooms down, and at 360 the plane ran into the
+     sub-links (1600 × 660) */
+  width: 290px; max-width: 45%; height: 240px;
 }
-.nav__mega-motion--lines .lines__line { transform-origin: 0 50%; }
+/* No fade mask here: the rules taper in weight instead, 3px on the middle
+   one down to 1px at the edges, so none of them reads as a weak line */
+.nav__mega-motion--lines .lines__line {
+  height: calc((3px - 2px * var(--d, 0)) / var(--zoom));
+  translate: 0 -50%;
+  transform-origin: 0 50%;
+}
 .nav__mega-motion--lines .lines__line--rtl { transform-origin: 100% 50%; }
-/* the seal's outline: a little under the motifs' 2px (0.4 units, about
-   1.6px at its drawn size) so the fine strokes of the character stay
-   open; drawn in the brand orange, which follows high contrast */
+/* the seal's outline: 0.6 units, about 2.4px at its drawn size, so it
+   carries the same weight as the motifs' middle rules (Karen 2.11);
+   drawn in the brand orange, which follows high contrast */
 .nav__mega-panel[data-mega-panel="about"] .nav__mega-art path { stroke: var(--c-orange); }
 @media (min-width: 1024px) {
   .nav--v3 .nav__mega-panel[data-mega-panel="about"] .nav__mega-art {
     width: 153px; max-width: 27%; max-height: 270px;   /* 10% under the first cut (comments 27.10) */
-    left: auto; right: 110px; bottom: auto; top: 50%; translate: 0 -50%;
+    /* 170 in, not 110: the narrow seal sat at the card's far edge, the
+       widest gap from its sub-links of the four (Karen 2.11) */
+    left: auto; right: 170px; bottom: auto; top: 50%; translate: 0 -50%;
   }
 }
 
@@ -10105,16 +10140,10 @@ html.hc .footer__social-link:hover img {
   .practice-list--cards .practice.is-open .practice__panel { margin-bottom: 16px; }
 }
 
-/* Practices rows (comments 26.10): five rows again, the letter at the
-   page-title tier, the practice name in orange like its letter and line,
-   the row centred on the larger letter. */
-.practice-list .practice__trigger { align-items: center; grid-template-columns: clamp(64px, 6vw, 110px) minmax(0, 1fr); }
-.practice-list .practice__name { color: var(--c-orange); }
-.practice-list .practice__body { padding-left: calc(clamp(64px, 6vw, 110px) + clamp(20px, 2vw, 40px)); }
-@media (max-width: 767px) {
-  .practice-list .practice__trigger { grid-template-columns: minmax(0, 1fr); }
-  .practice-list .practice__body { padding-left: 0; }
-}
+/* Practices rows (Karen 2.11): written like the Priorities blocks, with
+   no separate letter column. The name is black and only its first letter
+   carries the row's bar colour (see the colour block further down). */
+.practice-list .practice__trigger { align-items: center; grid-template-columns: minmax(0, 1fr); }
 .acronym-card__letter { margin-bottom: 14px; }
 
 /* Approach VALUE / CARE cards, second pass (comments 26.10): no subtitle
@@ -10392,9 +10421,8 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
 .practice-list .practice__trigger { padding-left: clamp(22px, 2.4vw, 40px); padding-right: 72px; }
 .practice-list .practice__icon { right: clamp(22px, 2.4vw, 40px); }
 .practice-list .practice__desc { color: var(--c-black); }
-.practice-list .practice__body { padding-right: clamp(22px, 2.4vw, 40px); padding-left: calc(clamp(22px, 2.4vw, 40px) + clamp(64px, 6vw, 110px) + clamp(20px, 2vw, 40px)); }
+.practice-list .practice__body { padding-right: clamp(22px, 2.4vw, 40px); padding-left: clamp(22px, 2.4vw, 40px); }
 @media (max-width: 767px) {
-  .practice-list .practice__body { padding-left: clamp(22px, 2.4vw, 40px); }
   .practice-list .practice__trigger { padding-right: 56px; }
 }
 
@@ -10640,7 +10668,7 @@ a.funding-process__card:focus-visible .funding-process__num { background: none; 
   .institute-card.priority-block { grid-template-columns: minmax(0, 1fr); }
   .institute-card.priority-block .content-split__media::before { padding-top: 56.25%; }
 }
-.practice-list--value .practice__letter,
+.practice-list--value .practice__name .acronym-letter,
 .priority-block .acronym-letter,
 .ethos__value-name, .institute-card__title { color: var(--section-colour); }
 html.hc .practice-list--value .practice:nth-child(1),
